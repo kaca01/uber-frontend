@@ -1,21 +1,52 @@
 form {
     margin-left: auto;
     margin-right: auto;
-    width: 23.7em;
+    width: 26.7em;
     height: fit-content;
 }
 
-mat-form-field {
-    width: 20em;
-    margin: 5px;
-    
+#left {
+    width: 55%;
+    float: left;
 }
 
 #signUpP{
-    font-size: xx-large;
+    font-size: 3em;
+    font-weight: 550;
     margin-left: 0.2em;
     margin-bottom: 0.8em;
-    font-weight: 550;
+}
+
+#right {
+    width: 35%;
+    float: right;
+    font-size: small;
+}
+
+#joined {
+    margin-bottom: 0.1em;
+    margin-top: -0.5em;
+}
+
+#login {
+    color : #96D49C;
+}
+
+#fields {
+    font-size: 18px;
+}
+
+mat-form-field {
+    width: 23em;
+    margin: 0px;
+}
+
+.formField {
+    border-radius: 25px;
+}
+
+mat-label {
+    font-size: small;
 }
 
 #button {
@@ -27,4 +58,10 @@ mat-form-field {
 
 button {
     width: 15em;
+    background-color: #96D49C;
+}
+
+.defaultColor {
+    background-color: #96D49C;
+    color: white;
 }
