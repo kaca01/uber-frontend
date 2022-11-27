@@ -1,0 +1,81 @@
+.column {
+  float: left;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+img {
+  width: 100%;
+  margin-left: 70%;
+  margin-top: 30%;
+}
+
+mat-card {
+    width: 30%;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 5px 15px 20px 0 #96d49c !important;
+  }
+
+mat-card-content {
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.welcome {
+  font-size: 18px;
+}
+
+.no-account {
+  text-align: end;
+  font-size: 12px;
+  color: #9f9f9f;
+}
+
+.sign-up {
+  float: right;
+  text-decoration: none;
+  color: #96d49c;
+}
+
+h1 {
+  font-size: 40px;
+  margin-top: 50px;
+}
+
+.email-input{
+  padding-top: 10px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.forgot-password{
+  float: right;
+  text-decoration: none;
+  color: #96d49c;
+  font-size: 12px;
+}
+
+.mat-green {
+  color: white !important;
+  background-color: #96d49c;
+}
+
+.login-btn {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 100%;
+}
