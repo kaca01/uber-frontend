@@ -1,7 +1,7 @@
 <form [formGroup]="registrationForm" (ngSubmit)="registrate()" fxLayout="column">
     <div>
         <div id="left">
-            <p id="signUpP">Sign up</p>
+            <p id="sign-up-p">Sign up</p>
         </div>
         <div id="right">
             <p id="joined">Joined us before?</p>
@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <mat-form-field class="formField" appearance="outline">
+    <mat-form-field appearance="outline">
     <mat-label>Name</mat-label>
     <input matInput type="text" name="name" formControlName="name" />
     </mat-form-field>
@@ -39,6 +39,6 @@
     </mat-form-field >
 
     <div id="button" fxLayout="row" fxLayoutAlign="space-between end">
-      <button class="defaultColor" type="submit" mat-raised-button>Sign up</button>
+      <button class="default-color" type="submit" mat-raised-button>Sign up</button>
     </div>
 </form>

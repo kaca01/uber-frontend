@@ -2,7 +2,7 @@ form {
     margin-left: auto;
     margin-right: auto;
     padding: 2em;
-    width: 26.7em;
+    width: 26.4em;
     height: fit-content;
     border: 1px solid white;
     border-radius: 20px;
@@ -17,9 +17,9 @@ form {
     border:black;
 }
 
-#signUpP{
+#sign-up-p{
     font-size: 3em;
-    font-weight: 550;
+    font-weight: 540;
     margin-left: 0.2em;
     margin-bottom: 0.8em;
 }
@@ -48,10 +48,6 @@ mat-form-field {
     margin: 0px;
 }
 
-.formField {
-    border-radius: 25px;
-}
-
 mat-label {
     font-size: small;
 }
@@ -64,11 +60,11 @@ mat-label {
 }
 
 button {
-    width: 15em;
+    width: 26.4em;
     background-color: #96D49C;
 }
 
-.defaultColor {
+.default-color {
     background-color: #96D49C;
     color: white;
 }
