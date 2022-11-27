@@ -1,3 +1,10 @@
+.background {
+  min-height: 100%;
+  padding: 5px 1rem;
+  background: linear-gradient(90deg, #96d49c 50%, #ffffff 50%);
+  display: block;
+
+}
 .column {
   float: left;
 }
@@ -10,16 +17,16 @@
 
 img {
   width: 100%;
-  margin-left: 70%;
+  margin-left: 30%;
   margin-top: 30%;
 }
 
 mat-card {
     width: 30%;
     margin-top: 5%;
-    margin-left: auto;
+    margin-left: 40%;
     margin-right: auto;
-    box-shadow: 5px 15px 20px 0 #96d49c !important;
+    box-shadow: 5px 15px 20px 5px #9f9f9f !important;
   }
 
 mat-card-content {
@@ -35,27 +42,32 @@ mat-card-content {
 
 .welcome {
   font-size: 18px;
+  font-weight: 450;
 }
 
 .no-account {
   text-align: end;
-  font-size: 12px;
+  font-size: small;
   color: #9f9f9f;
 }
 
 .sign-up {
   float: right;
+  margin-right: 12%;
   text-decoration: none;
+  font-size: small;
   color: #96d49c;
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 3em;
+  font-weight: 550;
   margin-top: 50px;
 }
 
 .email-input{
   padding-top: 10px;
+  font-size: 12px !important;
 }
 
 .full-width {
