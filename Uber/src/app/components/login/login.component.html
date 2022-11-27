@@ -8,13 +8,16 @@
   <mat-card>
     <mat-card-content>
       <div class="header">
-        <div class="title">
-          <span class="welcome">Welcome to Uber</span>
-          <span class="no-account">No Account ?</span>
+        <div class="left">
+          <p class="welcome">Welcome to Uber</p>
         </div>
-        <a class="text-link" class="sign-up" routerLink="/registration">Sign up</a>
-        <h1>Login</h1>
+        <div class="right">
+          <p class="no-account">No Account ?</p>
+          <a class="text-link" class="sign-up" routerLink="/registration">Sign up</a>
+        </div>
       </div>
+        <p class="title">Login</p>
+      
 
       <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="loginForm">
 

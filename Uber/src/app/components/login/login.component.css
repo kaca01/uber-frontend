@@ -17,52 +17,50 @@
 
 img {
   width: 100%;
-  margin-left: 30%;
+  margin-left: 25%;
   margin-top: 30%;
 }
 
 mat-card {
-    width: 30%;
-    margin-top: 5%;
-    margin-left: 40%;
-    margin-right: auto;
-    box-shadow: 5px 15px 20px 5px #9f9f9f !important;
-  }
-
-mat-card-content {
-    margin-top: 5%;
-    margin-left: 5%;
-    margin-right: 5%;
+  width: 30%;
+  margin-top: 5%;
+  margin-left: 35%;
+  margin-right: auto;
+  border: 1px solid white;
+  border-radius: 20px;
+  -webkit-box-shadow: 2px 9px 50px -21px rgba(0,0,0,0.81);
+  -moz-box-shadow: 2px 9px 50px -21px rgba(0,0,0,0.81);
+  box-shadow: 2px 9px 50px -21px rgba(0,0,0,0.81);
 }
 
-.title {
-  display: flex;
-  justify-content: space-between;
+mat-card-content {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 10%;
 }
 
 .welcome {
   font-size: 18px;
-  font-weight: 450;
+  font-weight: 540;
+  margin-left: 0.2em;
 }
 
 .no-account {
-  text-align: end;
-  font-size: small;
   color: #9f9f9f;
+  margin-bottom: 0.1em;
+  margin-top: -0.5em;
 }
 
 .sign-up {
-  float: right;
-  margin-right: 12%;
   text-decoration: none;
-  font-size: small;
   color: #96d49c;
 }
 
-h1 {
+.title {
   font-size: 3em;
   font-weight: 550;
-  margin-top: 50px;
+  margin-top: 70px;
+  margin-bottom: 20px;
 }
 
 .email-input{
@@ -90,4 +88,15 @@ h1 {
   margin-top: 50px;
   margin-bottom: 50px;
   width: 100%;
+}
+
+.left {
+  width: 55%;
+  float: left;
+}
+
+.right {
+  width: 35%;
+  float: right;
+  font-size: small;
 }
