@@ -1,1 +1,7 @@
+<form [formGroup]="welcomeForm" (ngSubmit)="welcome()" fxLayout="column">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <button color="primary" type="submit" mat-raised-button>Welcome!</button>
+  </div>
+</form>
+
 <router-outlet></router-outlet>
