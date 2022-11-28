@@ -3,8 +3,8 @@
   padding: 5px 1rem;
   background: linear-gradient(90deg, #96d49c 50%, #ffffff 50%);
   display: block;
-
 }
+
 .column {
   float: left;
 }
@@ -39,10 +39,21 @@ mat-card-content {
   margin-top: 10%;
 }
 
+.left {
+  width: 55%;
+  float: left;
+}
+
 .welcome {
   font-size: 18px;
   font-weight: 540;
   margin-left: 0.2em;
+}
+
+.right {
+  width: 35%;
+  float: right;
+  font-size: small;
 }
 
 .no-account {
@@ -72,7 +83,7 @@ mat-card-content {
   width: 100%;
 }
 
-.forgot-password{
+.forgot-password {
   float: right;
   text-decoration: none;
   color: #96d49c;
@@ -88,15 +99,4 @@ mat-card-content {
   margin-top: 50px;
   margin-bottom: 50px;
   width: 100%;
-}
-
-.left {
-  width: 55%;
-  float: left;
-}
-
-.right {
-  width: 35%;
-  float: right;
-  font-size: small;
 }
