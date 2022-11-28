@@ -1,9 +1,27 @@
+.background {
+    min-height: 100%;
+    padding: 5px 1rem;
+    background: linear-gradient(90deg, #96d49c 50%, #ffffff 50%);
+    display: block;
+  }
+  
+  .column {
+    float: left;
+  }
+  
+  img {
+    width: 100%;
+    margin-left: 25%;
+    margin-top: 30%;
+  }
+
 form {
     margin-left: auto;
     margin-right: auto;
     padding: 2em;
     width: 26.4em;
     height: fit-content;
+    background-color: #ffffff;
     border: 1px solid white;
     border-radius: 20px;
     -webkit-box-shadow: 2px 9px 50px -21px rgba(0,0,0,0.81);
@@ -39,6 +57,18 @@ form {
     color : #96D49C;
 }
 
+a:link {
+    text-decoration: none;
+  }
+  
+a:visited {
+text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
 #fields {
     font-size: 18px;
 }
@@ -59,12 +89,8 @@ mat-label {
     margin-right: auto;
 }
 
-button {
+.reg-btn {
     width: 26.4em;
     background-color: #96D49C;
-}
-
-.default-color {
-    background-color: #96D49C;
-    color: white;
+    color: white !important;
 }

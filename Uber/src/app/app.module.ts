@@ -8,7 +8,7 @@ import { MaterialModule } from 'src/infrastructure/material.module';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './components/login/login.component';
-import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 @NgModule({
   declarations: [
