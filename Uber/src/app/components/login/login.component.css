@@ -101,7 +101,7 @@ mat-card-content {
   width: 100%;
 }
 
-@media (max-width:870px) {
+@media (max-width:960px) {
   mat-card {
     width: 90%;
     margin-left: auto;

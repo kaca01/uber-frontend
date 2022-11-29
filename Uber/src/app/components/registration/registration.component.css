@@ -112,7 +112,13 @@ mat-label {
     margin-bottom: 10%;
 }
 
-@media (max-width:870px) {
+@media (max-width:1200px) {
+    #sign-up-p {
+        font-size: xx-large;
+    }
+}
+
+@media (max-width:960px) {
     mat-card {
         width: 90%;
         margin-left: auto;
