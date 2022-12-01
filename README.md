@@ -1,4 +1,4 @@
-# Uber Web application - backend
+# Uber Web application - frontend
 Project assignment for course Client Side Engineering.
 
 ## Team members
