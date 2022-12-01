@@ -1,0 +1,19 @@
+<mat-toolbar>
+    <!--TODO in .ts via click listener change route either to passenger-home or driver-home (depending on current user)-->
+    <!--TODO OR (alternative way) create new navigation (same like this one) with different routing-->
+    <span [routerLink]="['/passenger-home']">Uber</span>
+    <div id="navigation">
+      <button style="float: right" 
+      [routerLink]="['/login']" mat-button>
+        Login
+      </button>
+      <button
+        style="float: right"
+        [routerLink]="['/registration']"
+        mat-button
+        color="primary"
+      >
+        Signup
+      </button>
+    </div>
+  </mat-toolbar>
