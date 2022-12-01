@@ -9,7 +9,7 @@ import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { HomeComponent } from './components/home/home.component';
+import { UUHomeComponent } from './components/home/unregistered-user/uu-home.component';
 import { UUNavbarComponent } from './components/navbar/unregistered-user/uu-navbar.component';
 
 @NgModule({
@@ -17,7 +17,7 @@ import { UUNavbarComponent } from './components/navbar/unregistered-user/uu-navb
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    HomeComponent,
+    UUHomeComponent,
     UUNavbarComponent,
   ],
   imports: [

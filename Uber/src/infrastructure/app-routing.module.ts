@@ -4,14 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { RegistrationComponent } from 'src/app/components/registration/registration.component';
-import { HomeComponent } from 'src/app/components/home/home.component';
+import { UUHomeComponent } from 'src/app/components/home/unregistered-user/uu-home.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent},
-  { path: 'home', component: HomeComponent},
+  { path: 'uu-home', component: UUHomeComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', component: HomeComponent },
+  { path: '**', component: UUHomeComponent },
 ];
 
 @NgModule({
