@@ -1,0 +1,17 @@
+<mat-toolbar>
+    <span [routerLink]="['/home']">Uber</span>
+    <div id="navigation">
+      <button style="float: right" 
+      [routerLink]="['/login']" mat-button>
+        Login
+      </button>
+      <button
+        style="float: right"
+        [routerLink]="['/registration']"
+        mat-button
+        color="primary"
+      >
+        Signup
+      </button>
+    </div>
+  </mat-toolbar>
