@@ -8,14 +8,14 @@ mat-toolbar {
 }
 
 .loginBttn {
-  padding: 0 1.2em;
+  padding: 0 1.4em;
   margin-right: 8px;
 }
 
 .signupBttn {
     background-color: #96D49C;
     color: white !important;
-    padding: 0 1.2em;
+    padding: 0 1.4em;
 }
 
 mat-toolbar img{
@@ -24,11 +24,11 @@ mat-toolbar img{
   padding-right: 5px;
 }
 
-.logo:hover{
+.clickable:hover{
   cursor: pointer;
 }
 
-@media (max-width:312px) {
+@media (max-width:328px) {
   mat-toolbar{
     height: fit-content;
   }

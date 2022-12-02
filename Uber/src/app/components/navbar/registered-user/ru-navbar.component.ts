@@ -8,5 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class RUNavbarComponent implements OnInit {
   constructor() {}
 
+  isShowDivIf = true;
+  toggleDisplayDivIf() {
+    this.isShowDivIf = !this.isShowDivIf;
+  }
+  
   ngOnInit(): void {}
 }
