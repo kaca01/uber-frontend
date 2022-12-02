@@ -1,0 +1,116 @@
+.background {
+  min-height: 100%;
+  padding: 5px 1rem;
+  background: linear-gradient(90deg, #96d49c 50%, #ffffff 50%);
+  display: block;
+}
+
+.column {
+  float: left;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+img {
+  width: 100%;
+  margin-left: 25%;
+  margin-top: 30%;
+}
+
+mat-card {
+  width: 30%;
+  margin-top: 5%;
+  margin-left: 35%;
+  margin-right: auto;
+  border: 1px solid white;
+  border-radius: 20px;
+  -webkit-box-shadow: 2px 9px 50px -21px rgba(0,0,0,0.81);
+  -moz-box-shadow: 2px 9px 50px -21px rgba(0,0,0,0.81);
+  box-shadow: 2px 9px 50px -21px rgba(0,0,0,0.81);
+}
+
+mat-card-content {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 10%;
+}
+
+.left {
+  width: 55%;
+  float: left;
+}
+
+.welcome {
+  font-size: 18px;
+  font-weight: 540;
+  margin-left: 0.2em;
+}
+
+.right {
+  width: 35%;
+  float: right;
+  font-size: small;
+}
+
+.no-account {
+  color: #9f9f9f;
+  margin-bottom: 0.1em;
+  margin-top: -0.5em;
+}
+
+.sign-up {
+  text-decoration: none;
+  color: #96d49c;
+}
+
+.title {
+  font-size: 3em;
+  font-weight: 540;
+  margin-top: 70px;
+  margin-bottom: 25px;
+}
+
+.email-input{
+  padding-top: 10px;
+  font-size: 12px !important;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.forgot-password {
+  float: right;
+  text-decoration: none;
+  color: #96d49c;
+  font-size: 12px;
+}
+
+.mat-green {
+  color: white !important;
+  background-color: #96d49c;
+}
+
+.login-btn {
+  margin-top: 35px;
+  margin-bottom: 50px;
+  width: 100%;
+}
+
+@media (max-width:960px) {
+  mat-card {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .title {
+    font-size: xx-large;
+  }
+  #hide-image {
+      display: none;
+  }
+}
