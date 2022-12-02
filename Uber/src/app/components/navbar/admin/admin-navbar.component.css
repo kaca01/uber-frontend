@@ -1,5 +1,89 @@
 #navigation {
-    width: 100%;
-    justify-content: flex-end;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+mat-toolbar {
+  padding: 0 10%;
+}
+
+mat-toolbar ul{
+  margin-left: 70px;
+  float:left;
+  list-style: none;
+  display: flex; 
+  flex-direction: row; 
+  flex-wrap: wrap; 
+  justify-content: center ; 
+}
+
+mat-toolbar ul li a{
+  font-size: 17px;
+  display: inline-block;
+  color: black;
+  padding: 15px 17px;
+  text-decoration: none;
+}
+
+mat-toolbar ul li a:hover{
+  color:#96D49C;
+}
+
+mat-toolbar img{
+  width: 27px;
+  height: 27px;
+  padding-right: 5px;
+}
+
+.clickable:hover{
+  cursor: pointer;
+}
+
+#userName{
+  font-size: 17px;
+}
+
+#accountImg{
+  width: 25px;
+  height: 25px;
+  padding-left: 5px;
+}
+
+@media screen and (max-width: 950px){
+  #userName{
+    display: none;
+  }
+
+  #accountImg{
+    display: none;
+  }
+
+  mat-toolbar ul{
+    margin-left: auto;
+    margin-right: auto;
+    float:right;
+    padding: 0;
   }
   
+}
+
+@media (max-width:720px) {
+  .logo{
+    display: none;
+  }
+  mat-toolbar ul{
+    float:none;
+  }
+
+  @media (max-width:580px) {
+
+    mat-toolbar{
+      height: fit-content;
+    }
+
+    mat-toolbar ul{
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}
