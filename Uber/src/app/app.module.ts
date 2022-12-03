@@ -9,12 +9,24 @@ import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { UUHomeComponent } from './components/home/unregistered-user/uu-home.component';
+import { PassengerHomeComponent } from './components/home/passenger/passenger-home.component';
+import { AdminHomeComponent } from './components/home/admin/admin-home.component';
+import { UUNavbarComponent } from './components/navbar/unregistered-user/uu-navbar.component';
+import { RUNavbarComponent } from './components/navbar/registered-user/ru-navbar.component';
+import { AdminNavbarComponent } from './components/navbar/admin/admin-navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    UUHomeComponent,
+    PassengerHomeComponent,
+    AdminHomeComponent,
+    UUNavbarComponent,
+    RUNavbarComponent,
+    AdminNavbarComponent,
   ],
   imports: [
     BrowserModule,

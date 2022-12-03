@@ -1,0 +1,43 @@
+#navigation {
+  width: 100%;
+  justify-content: flex-end;
+}
+
+mat-toolbar {
+  padding: 0 10%;
+}
+
+.loginBttn {
+  padding: 0 1.4em;
+  margin-right: 8px;
+}
+
+.signupBttn {
+    background-color: #96D49C;
+    color: white !important;
+    padding: 0 1.4em;
+}
+
+mat-toolbar img{
+  width: 27px;
+  height: 27px;
+  padding-right: 5px;
+}
+
+.clickable:hover{
+  cursor: pointer;
+}
+
+@media (max-width:328px) {
+  mat-toolbar{
+    height: fit-content;
+  }
+
+  .loginBttn {
+    margin-bottom: 10px;
+  }
+  
+  .signupBttn {
+      margin-top: 10px;
+  }
+}
