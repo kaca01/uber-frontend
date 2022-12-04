@@ -1,0 +1,73 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+$md-mcgpalette: (
+    50 : #f2faf3,
+    100 : #e0f2e1,
+    200 : #cbeace,
+    300 : #b6e1ba,
+    400 : #a6daab,
+    500 : #96d49c,
+    600 : #8ecf94,
+    700 : #83c98a,
+    800 : #79c380,
+    900 : #68b96e,
+    A100 : #ffffff,
+    A200 : #fafffa,
+    A400 : #c7ffcb,
+    A700 : #adffb4,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$uber-primary: mat.define-palette($md-mcgpalette, 500);
+$uber-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$uber-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$uber-theme: mat.define-light-theme((
+  color: (
+    primary: $uber-primary,
+    accent: $uber-accent,
+    warn: $uber-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+.mat-green {
+  color: white !important;
+  background-color: #96d49c !important;
+} 
+
+@include mat.all-component-themes($uber-theme);
