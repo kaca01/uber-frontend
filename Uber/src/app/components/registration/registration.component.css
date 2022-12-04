@@ -37,35 +37,32 @@
   mat-card-content {
     margin-left: 5%;
     margin-right: 5%;
-    margin-top: 10%;
-  }
-
-  .advanced_width {
-    width: 100%;
-  }
-
-#left {
-    width: 55%;
-    float: left;
-    border:black;
 }
 
-#sign-up-p{
+.advanced_width {
+    width: 100%;
+}   
+
+#left {
+    width: 70%;
+    float: left;
+    align-content: center;
+}
+
+#sign-up-p {
     font-size: 3em;
     font-weight: 540;
-    margin-left: 0.2em;
-    margin-bottom: 0.8em;
 }
 
 #right {
-    width: 35%;
+    margin-top: 10%;
+    width: 25%;
     float: right;
     font-size: small;
 }
 
 #joined {
     margin-bottom: 0.1em;
-    margin-top: -0.5em;
     color: gray;
 }
 
@@ -107,8 +104,6 @@ mat-label {
 
 .reg-btn {
     width: 100%;
-    background-color: #96D49C;
-    color: white !important;
     margin-bottom: 10%;
 }
 
