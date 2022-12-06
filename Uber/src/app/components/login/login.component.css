@@ -24,6 +24,7 @@ img {
 mat-card {
   width: 30%;
   margin-top: 5%;
+  margin-bottom: 5%;
   margin-left: 35%;
   margin-right: auto;
   border: 1px solid white;
@@ -36,7 +37,7 @@ mat-card {
 mat-card-content {
   margin-left: 5%;
   margin-right: 5%;
-  margin-top: 10%;
+  margin-top: 5%;
 }
 
 .left {
@@ -47,11 +48,10 @@ mat-card-content {
 .welcome {
   font-size: 18px;
   font-weight: 540;
-  margin-left: 0.2em;
 }
 
 .right {
-  width: 35%;
+  width: 30%;
   float: right;
   font-size: small;
 }
@@ -59,7 +59,6 @@ mat-card-content {
 .no-account {
   color: #9f9f9f;
   margin-bottom: 0.1em;
-  margin-top: -0.5em;
 }
 
 .sign-up {
@@ -74,13 +73,10 @@ mat-card-content {
   margin-bottom: 25px;
 }
 
-.email-input{
-  padding-top: 10px;
-  font-size: 12px !important;
-}
-
 .full-width {
   width: 100%;
+  padding-top: 5px;
+  font-size: 14px !important;
 }
 
 .forgot-password {
@@ -88,11 +84,6 @@ mat-card-content {
   text-decoration: none;
   color: #96d49c;
   font-size: 12px;
-}
-
-.mat-green {
-  color: white !important;
-  background-color: #96d49c;
 }
 
 .login-btn {
