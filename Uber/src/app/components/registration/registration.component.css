@@ -37,7 +37,6 @@
   mat-card-content {
     margin-left: 5%;
     margin-right: 5%;
-    margin-top: 5%;
 }
 
 .advanced_width {
@@ -53,10 +52,11 @@
 #sign-up-p {
     font-size: 3em;
     font-weight: 540;
+    margin-top: 10%;
 }
 
 #right {
-    margin-top: 10%;
+    margin-top: 5%;
     width: 25%;
     float: right;
     font-size: small;
