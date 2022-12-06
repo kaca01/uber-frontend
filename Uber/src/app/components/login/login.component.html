@@ -1,4 +1,5 @@
 <div class="background">
+  <img src="../../assets/images/close.png" id="bgCloseImg" class="close" [routerLink]="['/uu-home']"/>
 <div class="row">
 
   <div class="column" id="hide-image">
@@ -7,16 +8,17 @@
 
   <mat-card>
     <mat-card-content>
-      <div class="header">
+      <img src="../../assets/images/close.png" id="cardCloseImg" class="close" [routerLink]="['/uu-home']"/>
+      <div id="cardHeader">
         <div class="left">
           <p class="welcome">Welcome to Uber</p>
+          <p class="title">Login</p>
         </div>
         <div class="right">
           <p class="no-account">No Account ?</p>
           <a class="text-link" class="sign-up" routerLink="/registration">Sign up</a>
         </div>
       </div>
-        <p class="title">Login</p>
       
 
       <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="loginForm">

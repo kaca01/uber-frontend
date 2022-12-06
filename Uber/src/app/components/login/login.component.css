@@ -5,6 +5,26 @@
   display: block;
 }
 
+#bgCloseImg{
+  float: right;
+  width: 30px;
+  height: 30px;
+  margin-left: 0;
+  margin-top: 32px;
+  margin-right: 60px;
+  padding: 8px;
+  border-radius: 20px;
+}
+
+#cardCloseImg{
+  display: none;
+}
+
+.close:hover{
+  background-color: rgb(243, 237, 237);
+  cursor: pointer;
+}
+
 .column {
   float: left;
 }
@@ -35,8 +55,14 @@ mat-card {
 
 mat-card-content {
   margin-left: 5%;
-  margin-right: 5%;
+}
+
+#cardHeader{
   margin-top: 10%;
+}
+
+form{
+  margin-right: 5%;
 }
 
 .left {
@@ -70,8 +96,8 @@ mat-card-content {
 .title {
   font-size: 3em;
   font-weight: 540;
-  margin-top: 70px;
-  margin-bottom: 25px;
+  margin-top: 30px;
+  margin-bottom: 0.8em;
 }
 
 .email-input{
@@ -113,4 +139,18 @@ mat-card-content {
   #hide-image {
       display: none;
   }
+
+  #bgCloseImg{
+    display: none;
+}
+
+#cardCloseImg{
+    display: flow-root;
+    float: right;
+    width: 26px;
+    height: 26px;
+    margin: 0;
+    padding: 5px;
+    border-radius: 20px;
+}
 }
