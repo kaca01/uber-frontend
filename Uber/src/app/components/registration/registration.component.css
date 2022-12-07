@@ -81,7 +81,7 @@
 }   
 
 #left {
-    width: 70%;
+    width: 60%;
     float: left;
     align-content: center;
 }
@@ -90,22 +90,24 @@
     font-size: 3em;
     font-weight: 540;
     margin-top: 10%;
+    margin-bottom: 0.8em;
 }
 
 #right {
     margin-top: 5%;
-    width: 25%;
+    width: 30%;
     float: right;
-    font-size: small;
 }
 
 #joined {
     margin-bottom: 0.1em;
-    color: gray;
+    color: #9f9f9f;
+    font-size: small;
 }
 
 #login {
     color : #96D49C;
+    font-size: small;
 }
 
 a:link {
