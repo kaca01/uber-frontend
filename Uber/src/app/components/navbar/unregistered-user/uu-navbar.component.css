@@ -13,8 +13,6 @@ mat-toolbar {
 }
 
 .signupBttn {
-    background-color: #96D49C;
-    color: white !important;
     padding: 0 1.4em;
 }
 
@@ -26,6 +24,10 @@ mat-toolbar img{
 
 .clickable:hover{
   cursor: pointer;
+}
+
+.clickable {
+  font-size: 20px
 }
 
 @media (max-width:328px) {

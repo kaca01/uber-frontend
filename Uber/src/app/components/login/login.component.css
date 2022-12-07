@@ -59,7 +59,7 @@ mat-card-content {
 }
 
 #cardHeader{
-  margin-top: 5%;
+  margin-top: 10%;
 }
 
 form{
@@ -77,19 +77,19 @@ form{
 }
 
 .right {
-  width: 30%;
+  width: 35%;
   float: right;
-  font-size: small;
 }
 
 .no-account {
   color: #9f9f9f;
-  margin-bottom: 0.1em;
+  font-size: small;
 }
 
 .sign-up {
   text-decoration: none;
   color: #96d49c;
+  font-size: small;
 }
 
 .title {
