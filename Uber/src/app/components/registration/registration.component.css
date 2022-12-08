@@ -5,6 +5,26 @@
     display: block;
   }
   
+#bgCloseImg{
+    float: right;
+    width: 30px;
+    height: 30px;
+    margin-left: 0;
+    margin-top: 32px;
+    margin-right: 60px;
+    padding: 8px;
+    border-radius: 20px;
+}
+
+#cardCloseImg{
+    display: none;
+}
+
+.close:hover{
+    background-color: rgb(243, 237, 237);
+    cursor: pointer;
+}
+
   .column {
     float: left;
   }
@@ -36,41 +56,53 @@
   
   mat-card-content {
     margin-left: 5%;
+  }
+
+  #cardHeader{
+    margin-top: 5%;
+  }
+
+  form{
     margin-right: 5%;
-    margin-top: 10%;
   }
 
   .advanced_width {
     width: 100%;
   }
 
+.advanced_width {
+    width: 100%;
+}   
+
 #left {
-    width: 55%;
+    width: 60%;
     float: left;
-    border:black;
+    align-content: center;
 }
 
-#sign-up-p{
+#sign-up-p {
     font-size: 3em;
     font-weight: 540;
-    margin-left: 0.2em;
+    margin-top: 10%;
     margin-bottom: 0.8em;
 }
 
 #right {
+    margin-top: 4%;
     width: 35%;
     float: right;
-    font-size: small;
 }
 
 #joined {
     margin-bottom: 0.1em;
-    margin-top: -0.5em;
-    color: gray;
+    margin-right: 0.2em;
+    color: #9f9f9f;
+    font-size: small;
 }
 
 #login {
     color : #96D49C;
+    font-size: small;
 }
 
 a:link {
@@ -107,8 +139,6 @@ mat-label {
 
 .reg-btn {
     width: 100%;
-    background-color: #96D49C;
-    color: white !important;
     margin-bottom: 10%;
 }
 
@@ -129,5 +159,19 @@ mat-label {
     }
     #hide-image {
         display: none;
+    }
+
+    #bgCloseImg{
+        display: none;
+    }
+
+    #cardCloseImg{
+        display: flow-root;
+        float: right;
+        width: 26px;
+        height: 26px;
+        margin: 0;
+        padding: 5px;
+        border-radius: 20px;
     }
 }

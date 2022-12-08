@@ -5,6 +5,26 @@
   display: block;
 }
 
+#bgCloseImg{
+  float: right;
+  width: 30px;
+  height: 30px;
+  margin-left: 0;
+  margin-top: 32px;
+  margin-right: 60px;
+  padding: 8px;
+  border-radius: 20px;
+}
+
+#cardCloseImg{
+  display: none;
+}
+
+.close:hover{
+  background-color: rgb(243, 237, 237);
+  cursor: pointer;
+}
+
 .column {
   float: left;
 }
@@ -24,6 +44,7 @@ img {
 mat-card {
   width: 30%;
   margin-top: 5%;
+  margin-bottom: 5%;
   margin-left: 35%;
   margin-right: auto;
   border: 1px solid white;
@@ -35,8 +56,14 @@ mat-card {
 
 mat-card-content {
   margin-left: 5%;
-  margin-right: 5%;
+}
+
+#cardHeader{
   margin-top: 10%;
+}
+
+form{
+  margin-right: 5%;
 }
 
 .left {
@@ -47,40 +74,35 @@ mat-card-content {
 .welcome {
   font-size: 18px;
   font-weight: 540;
-  margin-left: 0.2em;
 }
 
 .right {
   width: 35%;
   float: right;
-  font-size: small;
 }
 
 .no-account {
   color: #9f9f9f;
-  margin-bottom: 0.1em;
-  margin-top: -0.5em;
+  font-size: small;
 }
 
 .sign-up {
   text-decoration: none;
   color: #96d49c;
+  font-size: small;
 }
 
 .title {
   font-size: 3em;
   font-weight: 540;
-  margin-top: 70px;
-  margin-bottom: 25px;
-}
-
-.email-input{
-  padding-top: 10px;
-  font-size: 12px !important;
+  margin-top: 30px;
+  margin-bottom: 0.8em;
 }
 
 .full-width {
   width: 100%;
+  padding-top: 5px;
+  font-size: 14px !important;
 }
 
 .forgot-password {
@@ -88,11 +110,6 @@ mat-card-content {
   text-decoration: none;
   color: #96d49c;
   font-size: 12px;
-}
-
-.mat-green {
-  color: white !important;
-  background-color: #96d49c;
 }
 
 .login-btn {
@@ -113,4 +130,18 @@ mat-card-content {
   #hide-image {
       display: none;
   }
+
+  #bgCloseImg{
+    display: none;
+}
+
+#cardCloseImg{
+    display: flow-root;
+    float: right;
+    width: 26px;
+    height: 26px;
+    margin: 0;
+    padding: 5px;
+    border-radius: 20px;
+}
 }
