@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'passenger-home',
@@ -6,7 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./passenger-home.component.css'],
 })
 export class PassengerHomeComponent implements OnInit {
+  orderForm = new FormGroup({
+    pickup: new FormControl('', [Validators.required]),
+    destination: new FormControl('', [Validators.required]),
+  });
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  order(){}
 }

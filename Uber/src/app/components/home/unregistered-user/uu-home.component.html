@@ -18,21 +18,26 @@
         <img src="../../assets/images/close.png" id="close-dialog" class="close" [routerLink]="['/uu-home']"/>
 
         <p id="title" class="card-content">Choose your destionation!</p>
-        <div>
-            <mat-form-field id="pickup-location-field" class="card-content" appearance="outline">
-                <mat-label class="label">Add a pickup location</mat-label>
-                <input matInput placeholder="Type location">
-                <div id="square"></div>
-            </mat-form-field>
-            <div id="line"></div>
-            <mat-form-field id="destionation-field" class="card-content" appearance="outline">
-                <mat-label class="label">Enter your destination</mat-label>
-                <input matInput placeholder="Type location">
-                <div id="circle"></div>
-            </mat-form-field>
-        </div>
-        <p class="calculation card-content">Price: 456 RSD</p>
-        <p class="calculation card-content">Estimated time: 17 min</p>
+        <form [formGroup]="orderForm" (ngSubmit)="submit()" fxLayout="column">
+
+            <div>
+                <mat-form-field id="pickup-location-field" class="card-content" appearance="outline">
+                    <mat-label class="label">Add a pickup location</mat-label>
+                    <input matInput placeholder="Type location" type="text" name="pickup" formControlName="pickup">
+                    <div id="square"></div>
+                </mat-form-field>
+                <div id="line"></div>
+                <mat-form-field id="destionation-field" class="card-content" appearance="outline">
+                    <mat-label class="label">Enter your destination</mat-label>
+                    <input matInput placeholder="Type location" type="text" name="destination" formControlName="destination">
+                    <div id="circle"></div>
+                </mat-form-field>
+            </div>
+
+            <p class="calculation card-content">Price: 456 RSD</p>
+            <p class="calculation card-content">Estimated time: 17 min</p>
+        </form>
+
     </mat-card-content>
 </mat-card>
 </div>
