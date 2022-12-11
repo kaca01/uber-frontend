@@ -1,4 +1,47 @@
 <p>
     <ru-navbar></ru-navbar>
 </p>
-<p id="desc">This is home page of a passenger</p>
+<div id="container">
+    <div id="background-image">
+         <img src="../../../../assets/images/map.png"/>
+    </div>
+ 
+    <div id="padding">
+        <button id="menu-btn" mat-fab color="white" aria-label="Example icon button with a delete icon">
+            <mat-icon>
+                menu
+            </mat-icon>
+        </button>
+  
+        <mat-card id="form"> 
+        <mat-card-content>
+            <img src="../../assets/images/close.png" id="close-dialog" class="close" [routerLink]="['/passenger-home']"/>
+    
+            <p id="title" class="card-content">Choose your destionation!</p>
+            <div>
+                <mat-form-field id="pickup-location-field" class="card-content" appearance="outline">
+                    <mat-label class="label">Add a pickup location</mat-label>
+                    <input matInput placeholder="Type location">
+                    <div id="square"></div>
+                </mat-form-field>
+                <img class="star" src="../../../../assets/images/unfilled_star.png"/>
+
+                <div id="line"></div>
+                <mat-form-field id="destionation-field" class="card-content" appearance="outline">
+                    <mat-label class="label">Enter your destination</mat-label>
+                    <input matInput placeholder="Type location">
+                    <div id="circle"></div>
+                </mat-form-field>
+                <img class="star" src="../../../../assets/images/star.png"/>
+            </div>
+            <p class="calculation card-content">Price: 456 RSD</p>
+            <p class="calculation card-content">Estimated time: 17 min</p>
+            <div id="button-container">
+                <button mat-raised-button color="green" id="order-btn">Order now</button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+ </div>
+ 
+ </div>
+ 
