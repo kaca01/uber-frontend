@@ -5,10 +5,13 @@
    <div id="background-image">
         <img src="../../../../assets/images/map.png"/>
    </div>
+
    <div id="padding">
     <mat-card> 
         
     <mat-card-content>
+        <img src="../../assets/images/close.png" id="close-dialog" class="close" [routerLink]="['/uu-home']"/>
+
         <p id="title" class="card-content">Choose your destionation!</p>
         <div>
             <mat-form-field id="pickup-location-field" class="card-content" appearance="outline">
@@ -23,6 +26,8 @@
                 <div id="circle"></div>
             </mat-form-field>
         </div>
+        <p class="calculation card-content">Price: 456 RSD</p>
+        <p class="calculation card-content">Estimated time: 17 min</p>
     </mat-card-content>
 </mat-card>
 </div>
