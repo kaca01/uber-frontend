@@ -29,7 +29,7 @@ mat-card {
   width: 28%;
   z-index: 10;
   margin-bottom: 5%;
-  margin-left: 3%;
+  margin-left: 5%;
   margin-right: auto;
   border: 1px solid white;
   border-radius: 20px;
@@ -44,11 +44,10 @@ mat-card {
 
 #close-dialog{
   float: right;
-  width: 30px;
-  height: 30px;
-  margin-top: 32px;
-  margin-right: 20px;
-  padding: 8px;
+  width: 20px;
+  height: 20px;
+  margin-top: 6%;
+  margin-right: 5.5%;
   border-radius: 20px;
 }
 
@@ -58,7 +57,7 @@ mat-card {
 }
 
 #title {
-  margin-top: 18%;
+  margin-top: 12%;
   font-weight: bold;
   font-size: x-large;
   width: 10em;
