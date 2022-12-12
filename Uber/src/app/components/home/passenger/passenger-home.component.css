@@ -143,11 +143,6 @@ mat-form-field {
 
   #line {
     margin-left: 75.9%;
-    margin-top: -20%;
-    margin-bottom: -9%;
-    border-left: 0.2em solid gray;
-    height: 4em;
-    display: inline-block;
   }
 }
 
@@ -158,11 +153,6 @@ mat-form-field {
 
   #line {
     margin-left: 76.35%;
-    margin-top: -20%;
-    margin-bottom: -9%;
-    border-left: 0.2em solid gray;
-    height: 4em;
-    display: inline-block;
   }
 }
 
@@ -173,11 +163,6 @@ mat-form-field {
 
   #line {
     margin-left: 75.9%;
-    margin-top: -20%;
-    margin-bottom: -9%;
-    border-left: 0.2em solid gray;
-    height: 4em;
-    display: inline-block;
   }
 }
 
@@ -188,11 +173,7 @@ mat-form-field {
 
   #line {
     margin-left: 75.3%;
-    margin-top: -20%;
     margin-bottom: -10%;
-    border-left: 0.2em solid gray;
-    height: 4em;
-    display: inline-block;
   }
 }
 
@@ -203,11 +184,7 @@ mat-form-field {
 
   #line {
     margin-left: 75.7%;
-    margin-top: -20%;
     margin-bottom: -9.2%;
-    border-left: 0.2em solid gray;
-    height: 4em;
-    display: inline-block;
   }
 }
 
@@ -219,11 +196,8 @@ mat-form-field {
 
   #line {
     margin-left: 76.5%;
-    margin-top: -20%;
     margin-bottom: -7.4%;
-    border-left: 0.2em solid gray;
     height: 3.5em;
-    display: inline-block;
   }
 }
 
@@ -237,11 +211,8 @@ mat-form-field {
 
   #line {
     margin-left: 76%;
-    margin-top: -20%;
     margin-bottom: -8%;
-    border-left: 0.2em solid gray;
     height: 3.5em;
-    display: inline-block;
   }
 
   #padding {
