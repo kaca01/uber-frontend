@@ -18,6 +18,7 @@
 
 #menu-btn {
   margin-left: 3%;
+
 }
 
 mat-card {
@@ -194,6 +195,6 @@ mat-form-field {
   }
 
   #padding {
-    padding-top: 35%;
+    padding-top: 10%;
   }
 }
