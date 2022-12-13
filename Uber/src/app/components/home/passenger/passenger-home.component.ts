@@ -14,7 +14,35 @@ export class PassengerHomeComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const menu = document.getElementById("menu-btn");
+    
+    if (menu != null) {
+      menu.style.display = 'none';
+
+      menu.addEventListener('click', function open(event){
+        const form = document.getElementById("form");
+        if (form != null) {
+          form.style.display = 'block';
+        }
+        menu.style.display = 'none';
+      });
+    }
+
+    const close = document.getElementById("close-dialog");
+    if (close != null) {
+      close.addEventListener('click', function close(event){
+        const form = document.getElementById("form");
+        if (form != null) {
+          form.style.display = 'none';
+
+          if (menu != null) {
+            menu.style.display = 'block';
+          }
+        }
+      });
+    }
+  }
 
   order(){}
 }

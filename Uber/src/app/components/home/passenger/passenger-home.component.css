@@ -16,10 +16,9 @@
 }
 
 #menu-btn {
-  display: none;
   margin-left: 3%;
-  height: 4em;
-  width: 4em;
+  height: 3.5em;
+  width: 3.5em;
 }
 
 #form {
@@ -198,6 +197,10 @@ mat-form-field {
     margin-bottom: -7.4%;
     height: 3.5em;
   }
+
+  #padding {
+    padding-top: 10%;
+  }
 }
 
 @media (max-width: 430px) {
@@ -215,6 +218,6 @@ mat-form-field {
   }
 
   #padding {
-    padding-top: 35%;
+    padding-top: 10%;
   }
 }
