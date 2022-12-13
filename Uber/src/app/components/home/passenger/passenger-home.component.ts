@@ -15,30 +15,51 @@ export class PassengerHomeComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const menu = document.getElementById("menu-btn");
-    
-    if (menu != null) {
-      menu.style.display = 'none';
 
-      menu.addEventListener('click', function open(event){
-        const form = document.getElementById("form");
-        if (form != null) {
-          form.style.display = 'block';
-        }
-        menu.style.display = 'none';
+    const Menu = document.getElementById("menu-btn");
+    this.openDialog(Menu as HTMLButtonElement);
+    this.closeDialog(Menu as HTMLButtonElement);
+
+    const LocationStar = document.getElementById("location-star");
+    this.changeStar(LocationStar as HTMLImageElement);
+    
+    var DestinationStar = document.getElementById("destination-star");
+    this.changeStar(DestinationStar as HTMLImageElement);
+  }
+
+  openDialog(Menu : HTMLButtonElement) : void {
+    if (Menu != null) {
+      Menu.style.display = 'none';
+
+      Menu.addEventListener('click', function open(event){
+        const Form = document.getElementById("form");
+        if (Form != null) Form.style.display = 'block';
+        Menu.style.display = 'none';
       });
     }
+  }
 
-    const close = document.getElementById("close-dialog");
-    if (close != null) {
-      close.addEventListener('click', function close(event){
+  closeDialog(Menu : HTMLButtonElement) : void {
+    const Close = document.getElementById("close-dialog");
+    if (Close != null) {
+      Close.addEventListener('click', function close(event){
         const form = document.getElementById("form");
         if (form != null) {
           form.style.display = 'none';
+          if (Menu != null) Menu.style.display = 'block';
+          
+        }
+      });
+    }
+  }
 
-          if (menu != null) {
-            menu.style.display = 'block';
-          }
+  changeStar(Star : HTMLImageElement) : void {
+    if (Star != null) {
+      Star.addEventListener('click', function change(event){
+        if (Star.getAttribute('src') == "../../../../assets/images/unfilled_star.png") {
+          Star.setAttribute('src', "../../../../assets/images/star.png");
+        } else {
+          Star.setAttribute('src', "../../../../assets/images/unfilled_star.png");
         }
       });
     }

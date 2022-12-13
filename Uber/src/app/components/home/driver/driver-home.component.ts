@@ -10,15 +10,20 @@ export class DriverHomeComponent {
 
   ngOnInit() :void {
     const activityBtn = document.getElementById('activity-btn');
+    
 
     if (activityBtn != null) {
       activityBtn.innerHTML = "ACTIVE";
+      activityBtn.style.color = "black";
+      
       
       activityBtn.addEventListener('click', function handleClick(event) {
         if (activityBtn.innerHTML == "ACTIVE") {
           activityBtn.innerHTML = "INACTIVE";
+          activityBtn.style.color = "red";
         } else {
           activityBtn.innerHTML = "ACTIVE";
+          activityBtn.style.color = "black";
         }
 
       });

@@ -17,10 +17,7 @@
 }
 
 #menu-btn {
-  display: none;
   margin-left: 3%;
-  height: 4em;
-  width: 4em;
 }
 
 mat-card {
