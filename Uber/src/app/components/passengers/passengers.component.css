@@ -1,0 +1,32 @@
+table {
+    width: 100%;
+  }
+  
+#main-container{
+    margin: 25px 5%;
+}
+
+td.mat-cell {
+    /* row padding */
+    padding: 16px 0;
+    /* row border */
+    border-bottom: 0px solid #ffa600;
+    border-top: px solid #ffa600;
+   }
+   
+   td.mat-cell:first-child {
+     /* row border */
+     border-left: 1px solid #ffa600;
+   }
+   
+   td.mat-cell:last-child {
+     /* row border */
+     border-right: 1px solid #ffa600;
+   }
+   
+   table {
+     /* row spacing / margin */
+     border-spacing: 0 8px !important;
+   }
+
+
