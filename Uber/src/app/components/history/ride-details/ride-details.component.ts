@@ -11,4 +11,9 @@ export class RideDetailsComponent {
   navigateBack() {
     this.router.navigate(['ride-history'])
   }
+
+  openRatings() {
+    const BtnRatings = document.getElementById('ratings-btn');
+    this.router.navigate(['ratings'])
+  }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ratings',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./ratings.component.css']
 })
 export class RatingsComponent {
-
+  constructor(private router : Router) {}
+  navigateBack() {
+    this.router.navigate(['ride-details'])
+  }
 }
