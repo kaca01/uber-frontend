@@ -9,6 +9,9 @@ import { PassengerHomeComponent } from 'src/app/components/home/passenger/passen
 import { AdminHomeComponent } from 'src/app/components/home/admin/admin-home.component';
 import { PassengersComponent } from 'src/app/components/passengers/passengers.component';
 import { DriverHomeComponent } from 'src/app/components/home/driver/driver-home.component';
+import { RideHistoryComponent } from 'src/app/components/history/ride-history/ride-history.component';
+import { RideDetailsComponent } from 'src/app/components/history/ride-details/ride-details.component';
+import { RatingsComponent } from 'src/app/components/history/ratings/ratings/ratings.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,6 +21,9 @@ const routes: Routes = [
   { path: 'admin-home', component: AdminHomeComponent},
   { path: 'passengers', component: PassengersComponent},
   { path: 'driver-home', component: DriverHomeComponent},
+  { path: 'ride-history', component: RideHistoryComponent},
+  { path: 'ride-details', component: RideDetailsComponent},
+  { path: 'ratings', component: RatingsComponent},
   { path: '', redirectTo: '/uu-home', pathMatch: 'full' },
   { path: '**', component: UUHomeComponent },
 ];

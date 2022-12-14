@@ -16,8 +16,14 @@ import { AdminHomeComponent } from './components/home/admin/admin-home.component
 import { UUNavbarComponent } from './components/navbar/unregistered-user/uu-navbar.component';
 import { RUNavbarComponent } from './components/navbar/registered-user/ru-navbar.component';
 import { AdminNavbarComponent } from './components/navbar/admin/admin-navbar.component';
+import { PassengerHistoryComponent } from './components/history/passenger/passenger-history.component';
+import { PassengerDetailsComponent } from './components/history/details/passenger-details/passenger-details.component';
+import { RatingsComponent } from './components/history/ratings/ratings/ratings.component';
+import { RideDetailsComponent } from './components/history/ride-details/ride-details.component';
+import { RideHistoryComponent } from './components/history/ride-history/ride-history.component';
 import { PassengersComponent } from './components/passengers/passengers.component';
 import { PassengerService } from './service/passenger.service';
+
 
 @NgModule({
   declarations: [
@@ -31,6 +37,11 @@ import { PassengerService } from './service/passenger.service';
     UUNavbarComponent,
     RUNavbarComponent,
     AdminNavbarComponent,
+    PassengerHistoryComponent,
+    PassengerDetailsComponent,
+    RatingsComponent,
+    RideDetailsComponent,
+    RideHistoryComponent,
     PassengersComponent,
   ],
   imports: [
