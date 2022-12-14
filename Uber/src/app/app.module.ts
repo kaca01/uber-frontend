@@ -18,6 +18,8 @@ import { RUNavbarComponent } from './components/navbar/registered-user/ru-navbar
 import { AdminNavbarComponent } from './components/navbar/admin/admin-navbar.component';
 import { PassengersComponent } from './components/passengers/passengers.component';
 import { PassengerService } from './service/passenger.service';
+import { DriversComponent } from './components/drivers/drivers.component';
+import { DriverService } from './service/driver.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { PassengerService } from './service/passenger.service';
     RUNavbarComponent,
     AdminNavbarComponent,
     PassengersComponent,
+    DriversComponent,
   ],
   imports: [
     BrowserModule,
