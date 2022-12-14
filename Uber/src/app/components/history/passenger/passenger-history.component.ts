@@ -10,6 +10,6 @@ export class PassengerHistoryComponent {
   constructor(private router : Router) {}
 
   openDetails() {
-      this.router.navigate(['passenger-details']);
+      this.router.navigate(['ride-details']);
   }
 }

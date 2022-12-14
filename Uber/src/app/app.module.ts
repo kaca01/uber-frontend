@@ -19,6 +19,8 @@ import { AdminNavbarComponent } from './components/navbar/admin/admin-navbar.com
 import { PassengerHistoryComponent } from './components/history/passenger/passenger-history.component';
 import { PassengerDetailsComponent } from './components/history/details/passenger-details/passenger-details.component';
 import { RatingsComponent } from './components/history/ratings/ratings/ratings.component';
+import { RideDetailsComponent } from './components/history/ride-details/ride-details.component';
+import { RideHistoryComponent } from './components/history/ride-history/ride-history.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { RatingsComponent } from './components/history/ratings/ratings/ratings.c
     PassengerHistoryComponent,
     PassengerDetailsComponent,
     RatingsComponent,
+    RideDetailsComponent,
+    RideHistoryComponent,
   ],
   imports: [
     BrowserModule,
