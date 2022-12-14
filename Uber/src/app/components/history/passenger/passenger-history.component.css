@@ -42,7 +42,29 @@ ol {
     margin-left: 5%;
     margin-right: 5%;
     margin-top: 10%;
+    overflow: auto;
+    height: 400px;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #B4B4B4;
+    border-radius: 3px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 
 li {
     padding-top: 3%;
@@ -93,7 +115,7 @@ li:hover {
     }
   }
   
-  @media (max-width: 400px) {
+  @media (max-width: 550px) {
     #form {
       width: 90%;
       height: auto;
