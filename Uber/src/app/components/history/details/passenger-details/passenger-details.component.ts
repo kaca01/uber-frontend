@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-passenger-details',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./passenger-details.component.css']
 })
 export class PassengerDetailsComponent {
-
+  constructor(private router : Router) {}
+  navigateBack() {
+    this.router.navigate(['passenger-history'])
+  }
 }
