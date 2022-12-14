@@ -21,6 +21,8 @@ import { UserDataComponent } from 'src/app/components/account/passenger/data/use
 import { FavoriteLocationsComponent } from 'src/app/components/account/passenger/favorite-locations/favorite-locations.component';
 import { ProfileComponent } from './components/account/admin/profile/profile.component';
 import { DataComponent } from './components/account/admin/data/data.component';
+import { PassengersComponent } from './components/passengers/passengers.component';
+import { PassengerService } from './service/passenger.service';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { DataComponent } from './components/account/admin/data/data.component';
     FavoriteLocationsComponent,
     ProfileComponent,
     DataComponent,
+    PassengersComponent,
   ],
   imports: [
     BrowserModule,
