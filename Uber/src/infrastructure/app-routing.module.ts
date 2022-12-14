@@ -12,6 +12,8 @@ import { UserDataComponent } from 'src/app/components/account/passenger/data/use
 import { FavoriteLocationsComponent } from 'src/app/components/account/passenger/favorite-locations/favorite-locations.component';
 import { ProfileComponent } from 'src/app/components/account/admin/profile/profile.component';
 import { DataComponent } from 'src/app/components/account/admin/data/data.component';
+import { DriverHomeComponent } from 'src/app/components/home/driver/driver-home.component';
+
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,6 +26,7 @@ const routes: Routes = [
   { path: 'favorite-locations', component: FavoriteLocationsComponent},
   { path: 'app-profile', component: ProfileComponent},
   { path: 'app-data', component: DataComponent},
+  { path: 'driver-home', component: DriverHomeComponent},
   { path: '', redirectTo: '/uu-home', pathMatch: 'full' },
   { path: '**', component: UUHomeComponent },
 ];

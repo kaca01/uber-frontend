@@ -72,6 +72,10 @@ $uber-theme: mat.define-light-theme((
   font-size: medium;
 }
 
+.mat-white {
+  background-color: white !important;
+}
+
 .mat-green {
   color: white !important;
   background-color: #96d49c !important;
