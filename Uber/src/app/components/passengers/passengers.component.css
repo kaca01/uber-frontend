@@ -1,22 +1,22 @@
 
-  
 #main-container{
-    margin: 50px 5%;
+    margin: 50px 5% 65px 5%;
 }
 
+
 .title{
-    margin-top: 1.4em;
+    margin-top: 1.3em;
     font-size: 3em;
     font-weight: 600;
 }
-   
+
    table {
      width: 100%;
-     margin: 20px 0;
+     margin: 20px 0 10px 0;
    }
 
    .mat-mdc-table .mdc-data-table__row:hover{
-    background-color: #dddbdb7e;
+    background-color: #ebe9e956;
     cursor: pointer;
   }
 
@@ -43,10 +43,11 @@ form{
 #search
 {
     border-radius: 30px;
-    height: 30px;
+    height: 25px;
     width: 17em;
     padding: 5px 10px 5px 36px;
     border-color: rgba(116, 114, 114, 0.495);
+    margin-bottom: 10px;
 }
 
 #search:focus{
@@ -57,11 +58,76 @@ form{
 #search-icon{
         position: absolute;
         left: 13px;
-        top: 11px;
+        top: 9px;
         width: 20px;
         height: 20px;
 }
 
 td{
     color: rgba(63, 63, 63, 0.737);
+}
+
+.bottom-margin{
+    color: white;
+}
+
+footer{
+    position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+  background-color: white;
+}
+
+button{
+    padding: 0 1.8em;
+    margin: 0 2.7em;
+    font-size: 1.3em;
+    background-color: white;
+    border: none;
+    font-weight: 600;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+#block{
+    color: rgba(252, 83, 83, 0.685);
+}
+
+#history{
+    color: #96d49c;
+}
+
+@media (max-width:850px) {
+    .bottom-margin{
+        height: 40px;
+    }
+
+    .table-container{width: 100%;
+        overflow-x: auto;}
+
+    .title{
+        font-size: 2.5em;
+        margin-bottom: 15px;
+    }
+
+    #search{
+        height: 25px;
+        margin-bottom: 5px;
+        width: 15em;
+    }
+}
+
+@media (max-width:500px) {
+    .bottom-margin{
+        height: 70px;
+    }
+
+    #search{
+        width: 13em;
+    }
 }
