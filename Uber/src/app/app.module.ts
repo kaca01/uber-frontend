@@ -21,6 +21,9 @@ import { PassengerDetailsComponent } from './components/history/details/passenge
 import { RatingsComponent } from './components/history/ratings/ratings/ratings.component';
 import { RideDetailsComponent } from './components/history/ride-details/ride-details.component';
 import { RideHistoryComponent } from './components/history/ride-history/ride-history.component';
+import { PassengersComponent } from './components/passengers/passengers.component';
+import { PassengerService } from './service/passenger.service';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +42,7 @@ import { RideHistoryComponent } from './components/history/ride-history/ride-his
     RatingsComponent,
     RideDetailsComponent,
     RideHistoryComponent,
+    PassengersComponent,
   ],
   imports: [
     BrowserModule,
