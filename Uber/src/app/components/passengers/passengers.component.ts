@@ -40,6 +40,15 @@ export class PassengersComponent implements OnInit, AfterViewInit {
   changeState() {
     this.condition = !this.condition;
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  getPassenger(passenger : Passenger) {
+    alert("you have clicked");
+  }
 }
 
 export interface Passenger {

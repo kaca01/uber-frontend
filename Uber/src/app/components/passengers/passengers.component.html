@@ -2,15 +2,19 @@
     <admin-navbar></admin-navbar>
 </p>
 <div id="main-container">
-    <P>Passengers</P>
-    <p>Search polje</p>
+
+    <P class="title">Passengers</P>
+
+    <form>
+        <input id="search" matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+        <img id="search-icon" src="../../assets/images/search.png"/>
+    </form>
+
     <table 
-    *ngIf="condition"
     mat-table
     [dataSource]="dataSource"
-    class="mat-elevation-z0"
+    class="mat-elevation-z0 demo-table"
     matSort
-    selection="true"
     >
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>NAME</th>
@@ -38,12 +42,14 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="getPassenger(row)"></tr>
     </table>
 
     <mat-paginator
     [pageSizeOptions]="[5, 10, 25, 100]"
     showFirstLastButtons
     ></mat-paginator>
+
     <footer>Moja</footer>
+
 </div>
