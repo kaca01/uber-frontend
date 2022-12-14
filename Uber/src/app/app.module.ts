@@ -15,6 +15,8 @@ import { AdminHomeComponent } from './components/home/admin/admin-home.component
 import { UUNavbarComponent } from './components/navbar/unregistered-user/uu-navbar.component';
 import { RUNavbarComponent } from './components/navbar/registered-user/ru-navbar.component';
 import { AdminNavbarComponent } from './components/navbar/admin/admin-navbar.component';
+import { PassengersComponent } from './components/passengers/passengers.component';
+import { PassengerService } from './service/passenger.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { AdminNavbarComponent } from './components/navbar/admin/admin-navbar.com
     UUNavbarComponent,
     RUNavbarComponent,
     AdminNavbarComponent,
+    PassengersComponent,
   ],
   imports: [
     BrowserModule,
