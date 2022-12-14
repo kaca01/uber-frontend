@@ -91,3 +91,41 @@
     width: 20px;
     vertical-align: middle;
 }
+
+@media (max-width:1250px) {
+    #form {
+      width: 30%;
+    }
+  
+  }
+  
+@media(max-width: 1100px) {
+  #form {
+    width: 50%;
+  }
+
+}
+
+@media (max-width: 750px) {
+  #form {
+    margin-left: 5%;
+    width: 60%;
+  }
+
+  #padding {
+    padding-top: 10%;
+  }
+}
+  
+@media (max-width: 550px) {
+  #form {
+    width: 90%;
+    height: auto;
+    margin-left: 5%;
+    padding-bottom: 15%;
+  }
+
+  #padding {
+    padding-top: 10%;
+  }
+}
