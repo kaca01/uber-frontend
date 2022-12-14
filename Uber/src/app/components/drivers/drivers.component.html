@@ -5,11 +5,16 @@
 <div id="main-container">
 
     <P class="title">Drivers</P>
-
-    <form>
-        <input id="search" matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
-        <img id="search-icon" src="../../assets/images/search.png"/>
-    </form>
+    <div class="tools">
+        <div class="add">
+            <img id="plus-icon" src="../../assets/images/plus.png"/>
+            <span>Add driver</span>
+        </div>
+        <form>
+            <input id="search" matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+            <img id="search-icon" src="../../assets/images/search.png"/>
+        </form>
+    </div>
 
     <div class="table-container">
         <table 

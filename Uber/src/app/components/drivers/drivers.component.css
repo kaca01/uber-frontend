@@ -9,6 +9,31 @@
     font-weight: 600;
 }
 
+.tools{
+    display: flex;
+    float: right;
+}
+
+.add{
+    padding-top: 5px;
+}
+
+.add:hover{
+    cursor: pointer;
+}
+
+#plus-icon{
+    height: 17px;
+    width: 17px;
+    margin-right: 8px;
+}
+
+span{
+    margin-right: 37px;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
    table {
      width: 100%;
      margin: 20px 0 10px 0;
@@ -114,6 +139,11 @@ button:hover{
         margin-bottom: 15px;
     }
 
+    #view-changes{
+        margin-left: 0px;
+        padding-left: 0;
+    }
+
     #search{
         height: 25px;
         margin-bottom: 5px;
@@ -123,10 +153,30 @@ button:hover{
 
 @media (max-width:500px) {
     .bottom-margin{
-        height: 70px;
+        height: 95px;
+    }
+
+    .tools{
+        flex-direction: column;
+    }
+
+    .add{
+        padding-bottom: 13px;
     }
 
     #search{
         width: 13em;
+    }
+
+    #view-changes{
+        
+    padding: 0 1.8em;
+    margin: 0 2.7em;
+    }
+}
+
+@media (max-width:350px) {
+    .bottom-margin{
+        height: 135px;
     }
 }
