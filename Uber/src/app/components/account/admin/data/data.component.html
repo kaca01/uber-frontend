@@ -1,0 +1,49 @@
+<p>
+    <app-profile></app-profile>
+</p>
+
+<div class="right-side">
+    <form class="form" name="editForm" [formGroup]="editForm">
+
+        <div class="input-fields">
+          <mat-form-field class="full-width left" appearance="outline">
+            <mat-label>Vasa</mat-label>
+            <input matInput/>
+          </mat-form-field>
+
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Vasić</mat-label>
+            <input matInput/>
+          </mat-form-field>
+        </div>
+
+        <div class="input-fields">
+          <mat-form-field class="full-width left" appearance="outline">
+            <mat-label>vasica@gmail.com</mat-label>
+            <input formControlName="email" matInput />
+          </mat-form-field>
+
+          <mat-form-field class="full-width" appearance="outline" >
+              <mat-label>**************</mat-label>
+              <input matInput [disabled]="true"/>
+            </mat-form-field>
+        </div>
+
+        <div class="input-fields">
+          <mat-form-field class="full-width left" appearance="outline">
+            <mat-label>+3812345678</mat-label>
+            <input matInput />
+          </mat-form-field>
+
+          <mat-form-field class="full-width" appearance="outline" >
+              <mat-label>Bulevar Oslobođenja XX</mat-label>
+              <input matInput/>
+            </mat-form-field>
+        </div> 
+        
+        <div class="buttons">
+          <button mat-raised-button color="green" class="update">Update</button>
+          <button mat-button color="primary" class="reset">Reset Password</button>
+        </div>
+    </form>  
+</div>

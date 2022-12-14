@@ -1,0 +1,32 @@
+<p>
+    <ru-navbar></ru-navbar>
+</p>
+
+<div>
+    <div class="left-side">
+
+        <div class="profile">
+            <label class="hoverable" for="fileInput">
+                <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> 
+                <div class="hover-text">Choose file</div>
+                <div class="background"></div>
+            </label>
+            <br/>
+            <input id="fileInput" type='file' (change)="onSelectFile($event)">
+            <button mat-mini-fab class="delete" *ngIf="url" (click)="delete()" color="primary"
+            ><mat-icon>delete</mat-icon></button>
+        </div>
+
+        <div class="name-surname">
+            <span id="name">Marko</span>
+            <span id="surname">Marković</span>
+        </div>
+        <div id="passenger">Passenger</div>
+
+        <ul class="options">
+            <li><a [routerLink]="['/user-data']" id="profile" class="option">Profile</a></li>
+            <li><a [routerLink]="['/favorite-locations']" id="favorite" class="option">Favorite Locations</a></li>
+            <li><a [routerLink]="['/uu-home']" id="logOut" class="option">Log Out</a></li>
+        </ul>
+    </div>
+</div>

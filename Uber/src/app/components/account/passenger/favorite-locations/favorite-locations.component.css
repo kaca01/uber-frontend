@@ -1,0 +1,54 @@
+.right-side {
+    float: right;
+    margin-top: 5%;
+    margin-right: 15%;
+}
+
+.location {
+    margin-top: 30px !important;
+    margin-bottom: 30px;
+}
+
+.address {
+    display: inline;
+    font-size: large;
+    margin-left: 10%;
+}
+
+.star {
+    width: 25px;
+    height: 25px;
+    margin-right: 15%;
+    float: right;
+}
+
+hr {
+    border: 0.5px solid #9f9f9f;
+}
+
+.order {
+    width: 40%;
+}
+
+.button {
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    margin-top: 50px;
+    margin-bottom: 5%;
+}
+
+@media (max-width: 1030px) {
+    .right-side {
+        margin-top: 10%;
+        margin-right: 3%;
+    }
+}
+
+@media (max-width: 920px) {
+    .right-side {
+        float: none;
+        margin-right: 3%;
+        margin-left: 3%;
+    }
+}
