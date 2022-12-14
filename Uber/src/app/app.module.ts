@@ -18,6 +18,7 @@ import { RUNavbarComponent } from './components/navbar/registered-user/ru-navbar
 import { AdminNavbarComponent } from './components/navbar/admin/admin-navbar.component';
 import { PassengerHistoryComponent } from './components/history/passenger/passenger-history.component';
 import { PassengerDetailsComponent } from './components/history/details/passenger-details/passenger-details.component';
+import { RatingsComponent } from './components/history/ratings/ratings/ratings.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PassengerDetailsComponent } from './components/history/details/passenge
     AdminNavbarComponent,
     PassengerHistoryComponent,
     PassengerDetailsComponent,
+    RatingsComponent,
   ],
   imports: [
     BrowserModule,
