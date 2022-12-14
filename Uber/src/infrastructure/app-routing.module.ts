@@ -8,6 +8,7 @@ import { UUHomeComponent } from 'src/app/components/home/unregistered-user/uu-ho
 import { PassengerHomeComponent } from 'src/app/components/home/passenger/passenger-home.component';
 import { AdminHomeComponent } from 'src/app/components/home/admin/admin-home.component';
 import { PassengersComponent } from 'src/app/components/passengers/passengers.component';
+import { DriverHomeComponent } from 'src/app/components/home/driver/driver-home.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'passenger-home', component: PassengerHomeComponent},
   { path: 'admin-home', component: AdminHomeComponent},
   { path: 'passengers', component: PassengersComponent},
+  { path: 'driver-home', component: DriverHomeComponent},
   { path: '', redirectTo: '/uu-home', pathMatch: 'full' },
   { path: '**', component: UUHomeComponent },
 ];

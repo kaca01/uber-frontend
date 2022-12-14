@@ -1,4 +1,45 @@
 <p>
     <uu-navbar></uu-navbar>
 </p>
-<p id="desc">This is home page of a unregistered user</p>
+<div id="container">
+   <div id="background-image">
+        <img src="../../../../assets/images/map.png"/>
+   </div>
+
+   <div id="padding">
+        <button id="menu-btn" mat-fab color="white" aria-label="Example icon button with a delete icon">
+            <mat-icon>
+                menu
+            </mat-icon>
+        </button>
+
+        <mat-card id="form">    
+            <mat-card-content>
+                <img src="../../assets/images/close.png" id="close-dialog" class="close" [routerLink]="['/uu-home']"/>
+
+                <p id="title" class="card-content">Choose your destionation!</p>
+                <form [formGroup]="orderForm" (ngSubmit)="submit()" fxLayout="column">
+
+                    <div>
+                        <mat-form-field id="pickup-location-field" class="card-content" appearance="outline">
+                            <mat-label class="label">Add a pickup location</mat-label>
+                            <input matInput placeholder="Type location" type="text" name="pickup" formControlName="pickup">
+                            <div id="square"></div>
+                        </mat-form-field>
+                        <div id="line"></div>
+                        <mat-form-field id="destionation-field" class="card-content" appearance="outline">
+                            <mat-label class="label">Enter your destination</mat-label>
+                            <input matInput placeholder="Type location" type="text" name="destination" formControlName="destination">
+                            <div id="circle"></div>
+                        </mat-form-field>
+                    </div>
+
+                    <p class="calculation card-content">Price: 456 RSD</p>
+                    <p class="calculation card-content">Estimated time: 17 min</p>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+
