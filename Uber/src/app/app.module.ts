@@ -17,6 +17,7 @@ import { UUNavbarComponent } from './components/navbar/unregistered-user/uu-navb
 import { RUNavbarComponent } from './components/navbar/registered-user/ru-navbar.component';
 import { AdminNavbarComponent } from './components/navbar/admin/admin-navbar.component';
 import { PassengerHistoryComponent } from './components/history/passenger/passenger-history.component';
+import { PassengerDetailsComponent } from './components/history/details/passenger-details/passenger-details.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { PassengerHistoryComponent } from './components/history/passenger/passen
     RUNavbarComponent,
     AdminNavbarComponent,
     PassengerHistoryComponent,
+    PassengerDetailsComponent,
   ],
   imports: [
     BrowserModule,
