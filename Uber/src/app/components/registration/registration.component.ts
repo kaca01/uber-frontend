@@ -28,8 +28,8 @@ export class RegistrationComponent implements OnInit{
   }
 
   registrate() {
-    if (!this.registrationForm.valid) {
-      return;
+    if (this.registrationForm.valid) {
+      this.router.navigate(['passenger-home']);
     }
   }
 

@@ -21,7 +21,7 @@
       </div>
       
 
-      <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="loginForm">
+      <form name="loginForm" [formGroup]="loginForm">
 
         <div class="email-input">
           <mat-form-field class="full-width" appearance="outline">
@@ -51,7 +51,7 @@
           </mat-form-field>      
         </div>
         
-        <button mat-raised-button color="green" class="login-btn">Login</button>
+        <button mat-raised-button color="green" (click)="onLogin()" class="login-btn">Login</button>
       </form>
 
     </mat-card-content>
