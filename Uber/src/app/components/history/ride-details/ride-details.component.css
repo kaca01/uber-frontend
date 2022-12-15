@@ -29,26 +29,26 @@
     box-shadow: 2px 9px 50px -21px rgba(0,0,0,0.81);
 }
 
+#alignment {
+  margin-top: 10%;
+  margin-left: 3%;
+}
+
 #title {
-    margin-top: 10%;
     margin-left: 5%;
     margin-bottom: 7%;
     font-weight: bold;
     font-size: x-large;
     width: 10em;
     display: inline-block;
-}
-
-#back-container {
-    display: inline;
-    margin-left: 10px;
-    margin-top: 10px;
+    vertical-align: middle;
 }
 
 #back-arrow {
     height: 30px;
     width: 30px;
     border-radius: 20px;
+    vertical-align: top;
 }
 
 #back-arrow:hover {
