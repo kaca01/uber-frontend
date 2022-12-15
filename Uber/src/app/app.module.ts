@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {MatTreeModule} from '@angular/material/tree';
 
 import { AppRoutingModule } from '../infrastructure/app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { PassengerService } from './service/passenger.service';
 import { DriversComponent } from './components/drivers/drivers.component';
 import { DriverService } from './service/driver.service';
 import { AddDriverComponent } from './components/drivers/add-driver/add-driver.component';
+import { AddVehicleComponent } from './components/drivers/add-vehicle/add-vehicle.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { AddDriverComponent } from './components/drivers/add-driver/add-driver.c
     PassengersComponent,
     DriversComponent,
     AddDriverComponent,
+    AddVehicleComponent, 
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { AddDriverComponent } from './components/drivers/add-driver/add-driver.c
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTreeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
