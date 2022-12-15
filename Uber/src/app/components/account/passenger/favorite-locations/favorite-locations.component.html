@@ -4,33 +4,15 @@
 
 <div class="right-side">
     <div class="container">
-        <div class="location">
-            <p class="address">Bulevar Oslobođenja 51a</p>
-            <img class="star" src="../../assets/images/star.png"/>
-        </div>
+        <mat-selection-list #locations [multiple]="false" style="font-size: large;">
+            <mat-list-option *ngFor="let location of favoriteLocations" [value]="location">
+              {{location}}
+              <img class="star" src="../../assets/images/star.png"/>
+            </mat-list-option>
+        </mat-selection-list>
         <hr>
-        <div class="location">
-            <p class="address">Jovana Cvijića 12</p>
-            <img class="star" src="../../assets/images/star.png"/>
-        </div>
-        <hr>
-        <div class="location">
-            <p class="address">Bulevar Evrope 123</p>
-            <img class="star" src="../../assets/images/star.png"/>
-        </div>
-        <hr>
-        <div class="location">
-            <p class="address">Njegoševa 84</p>
-            <img class="star" src="../../assets/images/star.png"/>
-        </div>
-        <hr>
-        <div class="location">
-            <p class="address">Laze Kostića 41</p>
-            <img class="star" src="../../assets/images/star.png"/>
-        </div>
-        <hr>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
     </div>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
     <div class="button">
         <button mat-raised-button color="green" class="order">Order</button>
     </div>

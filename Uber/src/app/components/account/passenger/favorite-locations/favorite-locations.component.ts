@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./favorite-locations.component.css']
 })
 export class FavoriteLocationsComponent {
-
+  favoriteLocations: string[] = ['Bulevar Oslobođenja 51a', 
+  'Jovana Cvijića 12', 'Bulevar Evrope 123', 'Njegoševa 84', 'Laze Kostića 41',
+  'Bulevar Oslobođenja 51a', 
+  'Jovana Cvijića 12', 'Bulevar Evrope 123', 'Njegoševa 84', 'Laze Kostića 41'];
 }
