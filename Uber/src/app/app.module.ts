@@ -20,6 +20,7 @@ import { PassengersComponent } from './components/passengers/passengers.componen
 import { PassengerService } from './service/passenger.service';
 import { DriversComponent } from './components/drivers/drivers.component';
 import { DriverService } from './service/driver.service';
+import { AddDriverComponent } from './components/drivers/add-driver/add-driver.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { DriverService } from './service/driver.service';
     AdminNavbarComponent,
     PassengersComponent,
     DriversComponent,
+    AddDriverComponent,
   ],
   imports: [
     BrowserModule,

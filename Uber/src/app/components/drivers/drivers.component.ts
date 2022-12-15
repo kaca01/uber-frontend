@@ -12,7 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DriverService } from 'src/app/service/driver.service';
 
 @Component({
-  selector: 'app-passengers',
+  selector: 'app-drivers',
   templateUrl: './drivers.component.html',
   styleUrls: ['./drivers.component.css'],
 })

@@ -10,6 +10,7 @@ import { AdminHomeComponent } from 'src/app/components/home/admin/admin-home.com
 import { PassengersComponent } from 'src/app/components/passengers/passengers.component';
 import { DriversComponent } from 'src/app/components/drivers/drivers.component';
 import { DriverHomeComponent } from 'src/app/components/home/driver/driver-home.component';
+import { AddDriverComponent } from 'src/app/components/drivers/add-driver/add-driver.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'passengers', component: PassengersComponent},
   { path: 'drivers', component: DriversComponent},
   { path: 'driver-home', component: DriverHomeComponent},
+  { path: 'add-driver', component: AddDriverComponent},
   { path: '', redirectTo: '/uu-home', pathMatch: 'full' },
   { path: '**', component: UUHomeComponent },
 ];

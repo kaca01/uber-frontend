@@ -1,0 +1,47 @@
+
+.main-container{
+    margin: 5% 16%;
+}
+
+.title{
+    font-size: 3em;
+    font-weight: 600;
+    margin-bottom: 15px;
+    margin-left: 1.2em;
+}
+
+.group{
+    display:flex;
+    flex-direction: row;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+mat-form-field{
+    width: 25em;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+}
+
+.next-btn{
+    padding: 10px;
+    width: 11em;
+    margin-top: 30px;
+    margin-right: 65px;
+    float: right;
+}
+
+@media (max-width:750px) {
+    
+    .group{
+    flex-direction: column;
+    }
+
+    .next-btn{
+    width: 25em;
+    margin-right: auto;
+    margin-left: auto;
+    }
+}
