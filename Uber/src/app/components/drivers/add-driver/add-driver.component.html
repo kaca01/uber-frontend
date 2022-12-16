@@ -39,7 +39,7 @@
                 <mat-label>Password</mat-label>
                 <input name="password" formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required />
                 <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
-                        [attr.aria-pressed]="hide">
+                        [attr.aria-pressed]="hide" type="button">
                 <mat-icon>
                     {{hide ? 'visibility_off' : 'visibility'}}
                 </mat-icon>
@@ -54,7 +54,17 @@
             </mat-form-field >
         </div>
 
-        <button mat-raised-button color="green" (click)="addDriver()" class="next-btn">Next</button>
+        <div class="group">
+            <button mat-raised-button type="button" class="right files-btn" (click)="uploadDocuments()" >Upload documents</button>
+
+            <mat-form-field appearance="outline" class="advanced_width left">
+                <mat-label>Driving license</mat-label>
+                <input matInput type="number" name="license" formControlName="license" />
+                <mat-error *ngIf="!addDriverForm.controls['license'].valid"></mat-error>
+            </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="green" type="submit" (click)="addDriver()" class="next-btn">Next</button>
         <a class="back" [routerLink]="['/drivers']">Back to List</a>
     </form>
     <p class="bottom">Bottom</p>

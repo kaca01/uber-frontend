@@ -33,4 +33,8 @@ export class AddDriverComponent implements OnInit{
       this.router.navigate(['add-vehicle']);
     }
   }
+
+  uploadDocuments() {
+    return;
+  }
 }
