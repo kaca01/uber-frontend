@@ -5,7 +5,7 @@
 <div>
     <div class="left-side">
 
-        <div class="profile">
+        <div class="account">
             <label class="hoverable" for="fileInput">
                 <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> 
                 <div class="hover-text">Choose file</div>
@@ -27,5 +27,7 @@
             <li><a [routerLink]="['/admin-home']" id="logOut" class="option">Log Out</a></li>
         </ul>
     </div>
+
+    <app-data></app-data>
 </div>
 
