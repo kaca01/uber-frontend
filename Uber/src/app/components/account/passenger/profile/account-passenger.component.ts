@@ -8,14 +8,28 @@ import { Component, OnInit } from '@angular/core';
 
 export class AccountPassengerComponent implements OnInit{
   ngOnInit(): void {
-    
-    const profile = document.getElementById("profile");
-    this.changeColor(profile as HTMLButtonElement);
+    let data = document.getElementById("user-data");
+    let favorite = document.getElementById("favorite-locations");
 
-    const favoriteLocations = document.getElementById("favorite");
-    this.changeColor(favoriteLocations as HTMLButtonElement);
+    if(data != null && favorite != null) {
+      data.style.display = 'block';
+      favorite.style.display = 'none';
+    }
 
+    const profileBtn = document.getElementById("profile");
+    const favoriteBtn = document.getElementById("favorite");
+
+    if(profileBtn != null && favoriteBtn != null) {
+      profileBtn.style.setProperty("color", "black", "important");
+      favoriteBtn.style.setProperty("color", "#9f9f9f", "important");
+    }
+
+    this.changeToProfile(data as HTMLElement, favorite as HTMLElement, 
+      profileBtn as HTMLElement, favoriteBtn as HTMLElement);
+    this.changeToLocation(data as HTMLElement, favorite as HTMLElement,
+       favoriteBtn as HTMLElement, profileBtn as HTMLElement);
   }
+
   url: string | ArrayBuffer | null | undefined;
   
   onSelectFile(event : any) {
@@ -33,17 +47,27 @@ export class AccountPassengerComponent implements OnInit{
   public delete(){
     this.url = null;
   }
-  changeColor(button : HTMLButtonElement) : void {
-    if (button != null) {
-      button.addEventListener('click', function change(event){
-        button.style.color = 'red';
-        // button.setAttribute('src', "../../../../assets/images/unfilled_star.png");
-        // if (button.getAttribute('src') == "../../../../assets/images/unfilled_star.png") {
-        //   button.setAttribute('src', "../../../../assets/images/star.png");
-        // } else {
-        //   button.setAttribute('src', "../../../../assets/images/unfilled_star.png");
-        // }
-      });
-    }
+
+  changeToProfile(profile : HTMLElement, favorite : HTMLElement, 
+    profileBtn : HTMLElement, favoriteBtn : HTMLElement) : void {
+    profileBtn.addEventListener('click', function open(event) {
+      profile.style.display = 'block';
+      favorite.style.display = 'none';
+
+      profileBtn.style.setProperty("color", "black", "important");
+      favoriteBtn.style.setProperty("color", "#9f9f9f", "important");
+    });
   }
+
+  changeToLocation(profile : HTMLElement, favorite : HTMLElement, 
+    favoriteBtn : HTMLElement, profileBtn : HTMLElement) : void {
+    favoriteBtn.addEventListener('click', function open(event) {
+      profile.style.display = 'none';
+      favorite.style.display = 'block';
+
+      profileBtn.style.setProperty("color", "#9f9f9f", "important");
+      favoriteBtn.style.setProperty("color", "black", "important");
+    });
+  }
+  
 }
