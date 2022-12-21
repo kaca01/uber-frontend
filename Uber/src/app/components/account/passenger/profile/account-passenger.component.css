@@ -140,10 +140,9 @@ mat-icon{
   
   .account {
     margin-top: 5%;
-    display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 25%;
+    width: fit-content;
   }
 
   .name-surname {

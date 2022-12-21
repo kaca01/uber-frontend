@@ -38,7 +38,7 @@
     }
 }
 
-@media (min-width: 920px) and ( max-width: 1030px) {
+@media (min-width: 920px) and ( max-width: 1200px) {
     .right-side {
         float: none;
         margin-right: 1%;
@@ -47,5 +47,10 @@
 
     .input-fields {
         margin-left: 5%;
+    }
+
+    .reset {
+        float: none;
+        margin-left: 90px;
     }
 }
