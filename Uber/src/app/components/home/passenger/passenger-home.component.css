@@ -9,6 +9,10 @@
   padding-top: 3%;
 }
 
+mat-icon {
+  vertical-align: middle;
+}
+
 #background-image img{
   width: 100%;
   height: 95%;
