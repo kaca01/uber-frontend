@@ -16,6 +16,11 @@ import { AdminHomeComponent } from './components/home/admin/admin-home.component
 import { UUNavbarComponent } from './components/navbar/unregistered-user/uu-navbar.component';
 import { RUNavbarComponent } from './components/navbar/registered-user/ru-navbar.component';
 import { AdminNavbarComponent } from './components/navbar/admin/admin-navbar.component';
+import { AccountPassengerComponent } from 'src/app/components/account/passenger/profile/account-passenger.component';
+import { UserDataComponent } from 'src/app/components/account/passenger/data/user-data.component';
+import { FavoriteLocationsComponent } from 'src/app/components/account/passenger/favorite-locations/favorite-locations.component';
+import { ProfileComponent } from './components/account/admin/profile/profile.component';
+import { DataComponent } from './components/account/admin/data/data.component';
 import { PassengerHistoryComponent } from './components/history/passenger/passenger-history.component';
 import { PassengerDetailsComponent } from './components/history/details/passenger-details/passenger-details.component';
 import { RatingsComponent } from './components/history/ratings/ratings/ratings.component';
@@ -37,6 +42,11 @@ import { PassengerService } from './service/passenger.service';
     UUNavbarComponent,
     RUNavbarComponent,
     AdminNavbarComponent,
+    AccountPassengerComponent,
+    UserDataComponent,
+    FavoriteLocationsComponent,
+    ProfileComponent,
+    DataComponent,
     PassengerHistoryComponent,
     PassengerDetailsComponent,
     RatingsComponent,
