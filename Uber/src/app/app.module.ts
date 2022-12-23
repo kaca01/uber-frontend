@@ -33,6 +33,7 @@ import { DriversComponent } from './components/drivers/drivers.component';
 import { DriverService } from './service/driver.service';
 import { AddDriverComponent } from './components/drivers/add-driver/add-driver.component';
 import { AddVehicleComponent } from './components/drivers/add-vehicle/add-vehicle.component';
+import { BasePageComponent } from './components/base-page/base-page.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { AddVehicleComponent } from './components/drivers/add-vehicle/add-vehicl
     PassengersComponent,
     DriversComponent,
     AddDriverComponent,
-    AddVehicleComponent, 
+    AddVehicleComponent,
+    BasePageComponent, 
   ],
   imports: [
     BrowserModule,

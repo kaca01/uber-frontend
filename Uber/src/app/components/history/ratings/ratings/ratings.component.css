@@ -44,14 +44,14 @@
     vertical-align: middle;
 }
 
-#back-arrow {
+#back-to-details {
     vertical-align: top;
     height: 30px;
     width: 30px;
     border-radius: 20px;
 }
 
-#back-arrow:hover {
+#back-to-details:hover {
     background-color: rgb(243, 237, 237);
     cursor: pointer;
 }

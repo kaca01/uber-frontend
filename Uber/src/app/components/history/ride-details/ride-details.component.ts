@@ -8,12 +8,4 @@ import { Router } from '@angular/router';
 })
 export class RideDetailsComponent {
   constructor(private router : Router) {}
-  navigateBack() {
-    this.router.navigate(['ride-history'])
-  }
-
-  openRatings() {
-    const BtnRatings = document.getElementById('ratings-btn');
-    this.router.navigate(['ratings'])
-  }
 }

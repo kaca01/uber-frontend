@@ -20,6 +20,7 @@ import { AddVehicleComponent } from 'src/app/components/drivers/add-vehicle/add-
 import { RideHistoryComponent } from 'src/app/components/history/ride-history/ride-history.component';
 import { RideDetailsComponent } from 'src/app/components/history/ride-details/ride-details.component';
 import { RatingsComponent } from 'src/app/components/history/ratings/ratings/ratings.component';
+import { BasePageComponent } from 'src/app/components/base-page/base-page.component';
 
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'ride-history', component: RideHistoryComponent},
   { path: 'ride-details', component: RideDetailsComponent},
   { path: 'ratings', component: RatingsComponent},
+  { path: 'base-page', component: BasePageComponent},
   { path: '', redirectTo: '/uu-home', pathMatch: 'full' },
   { path: '**', component: UUHomeComponent },
 ];

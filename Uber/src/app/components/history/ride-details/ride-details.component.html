@@ -1,16 +1,9 @@
-<p>
-    <ru-navbar></ru-navbar>
-</p>
 <div id="container">
-    <div id="background-image">
-         <img src="../../../../assets/images/map.png"/>
-    </div>
- 
     <div id="padding">
         <mat-card id="form"> 
             <mat-card-content>
                 <div id="alignment">
-                    <img id="back-arrow" (click)="navigateBack()" src="../../../../../assets/images/green-back-arrow.png"/>
+                    <img id="back-to-history" src="../../../../../assets/images/green-back-arrow.png"/>
                     <p id="title" class="card-content">Ride details</p>
                 </div>
 
@@ -28,7 +21,7 @@
                 </div>
 
                 <div id="button-container">
-                    <button mat-raised-button color="green" id="ratings-btn" (click)="openRatings()">
+                    <button mat-raised-button color="green" id="ratings-btn">
                         <p id="ratings">View ratings</p>
                         <img id="right-arrow" src="../../../../../assets/images/right-arrow.png"/>
                     </button>
