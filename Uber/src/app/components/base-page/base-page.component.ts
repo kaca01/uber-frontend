@@ -81,7 +81,5 @@ export class BasePageComponent {
         });
       }
     }
-
   }
-
 }
