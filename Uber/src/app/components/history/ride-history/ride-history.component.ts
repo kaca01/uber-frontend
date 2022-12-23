@@ -8,8 +8,4 @@ import { Router } from '@angular/router';
 })
 export class RideHistoryComponent {
   constructor(private router : Router) {}
-
-  openDetails() {
-      this.router.navigate(['ride-details']);
-  }
 }

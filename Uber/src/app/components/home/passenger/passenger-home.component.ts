@@ -64,6 +64,4 @@ export class PassengerHomeComponent implements OnInit {
       });
     }
   }
-
-  order(){}
 }
