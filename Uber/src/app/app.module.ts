@@ -20,7 +20,7 @@ import { UserDataComponent } from 'src/app/components/account/passenger/data/use
 import { FavoriteLocationsComponent } from 'src/app/components/account/passenger/favorite-locations/favorite-locations.component';
 import { ProfileComponent } from './components/account/admin/profile/profile.component';
 import { DataComponent } from './components/account/admin/data/data.component';
-import { RatingsComponent } from './components/history/ratings/ratings/ratings.component';
+import { RatingsComponent } from './components/history/ratings/ratings.component';
 import { RideDetailsComponent } from './components/history/ride-details/ride-details.component';
 import { RideHistoryComponent } from './components/history/ride-history/ride-history.component';
 import { PassengersComponent } from './components/passengers/passengers.component';

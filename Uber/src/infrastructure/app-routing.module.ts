@@ -19,7 +19,7 @@ import { AddDriverComponent } from 'src/app/components/drivers/add-driver/add-dr
 import { AddVehicleComponent } from 'src/app/components/drivers/add-vehicle/add-vehicle.component';
 import { RideHistoryComponent } from 'src/app/components/history/ride-history/ride-history.component';
 import { RideDetailsComponent } from 'src/app/components/history/ride-details/ride-details.component';
-import { RatingsComponent } from 'src/app/components/history/ratings/ratings/ratings.component';
+import { RatingsComponent } from 'src/app/components/history/ratings/ratings.component';
 import { BasePageComponent } from 'src/app/components/base-page/base-page.component';
 
 
