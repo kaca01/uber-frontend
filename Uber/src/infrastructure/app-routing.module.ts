@@ -23,8 +23,7 @@ import { BasePageComponent } from 'src/app/components/base-page/base-page.compon
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent},
-  { path: 'uu-home', component: UUHomeComponent},
-  { path: 'passenger-home', component: PassengerHomeComponent},
+  { path: 'base-page', component: BasePageComponent},
   { path: 'admin-home', component: AdminHomeComponent},
   { path: 'account-passenger', component: AccountPassengerComponent},
   { path: 'user-data', component: UserDataComponent},
@@ -36,7 +35,6 @@ const routes: Routes = [
   { path: 'driver-home', component: DriverHomeComponent},
   { path: 'add-driver', component: AddDriverComponent},
   { path: 'add-vehicle', component: AddVehicleComponent},
-  { path: 'base-page', component: BasePageComponent},
   { path: '', redirectTo: '/uu-home', pathMatch: 'full' },
   { path: '**', component: UUHomeComponent },
 ];

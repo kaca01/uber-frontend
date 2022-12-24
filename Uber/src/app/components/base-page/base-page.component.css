@@ -13,3 +13,28 @@
     height: 95%;
     z-index: 9;
 }
+
+@media (max-width: 1450px) {
+    #container {
+        height: 102%;
+    }
+}
+
+@media (max-width: 1350px) {
+    #container {
+        height: 108%;
+    }
+}
+
+
+@media (max-width: 1250px) {
+    #container {
+        height: 110%;
+    }
+}
+
+@media (max-width: 850px) and (min-width: 560px) {
+    #container {
+        height: 120%;
+    }
+}

@@ -10,6 +10,7 @@
 }
 
 #form {
+  height: 38.5em;
     position : relative;
     padding-bottom: 3%;
     width: 28%;
@@ -53,7 +54,7 @@
 ul {
     margin-left: 5%;
     overflow: auto;
-    height: 400px;
+    height: 430px;
 }
 
 ::-webkit-scrollbar {

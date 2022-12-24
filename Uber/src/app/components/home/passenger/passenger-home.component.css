@@ -3,6 +3,12 @@
   padding-top: 3%;
 }
 
+#menu-container {
+  position: relative;
+  z-index: 10;
+  height: 38.5em;
+}
+
 mat-icon {
   vertical-align: middle;
 }
@@ -13,9 +19,9 @@ mat-icon {
 
 #form {
   position : relative;
+  z-index: 10;
   padding-bottom: 3%;
   width: 28%;
-  z-index: 10;
   margin-bottom: 5%;
   margin-left: 5%;
   margin-right: auto;
@@ -157,6 +163,7 @@ mat-form-field {
 @media(max-width: 850px) {
   #form {
     width: 40%;
+    margin-left: 8%;
   }
 
   #line {
@@ -168,18 +175,23 @@ mat-form-field {
 @media (max-width: 750px) {
   #form {
     width: 50%;
+    margin-left: 10%;
   }
 
   #line {
     margin-left: 75.7%;
     margin-bottom: -9.2%;
   }
+
+  #padding {
+    padding-top: 10%;
+  }
 }
 
 @media (max-width: 565px) {
   #form {
-    margin-left: 5%;
-    width: 90%;
+    margin-left: 10%;
+    width: 85%;
   }
 
   #line {

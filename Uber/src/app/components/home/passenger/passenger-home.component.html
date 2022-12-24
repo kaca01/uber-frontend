@@ -1,14 +1,16 @@
 <div id="container">
     <div id="padding">
-        <button id="menu-btn" mat-fab color="white" aria-label="Example icon button with a delete icon">
-            <mat-icon>
-                menu
-            </mat-icon>
-        </button>
+        <div id="menu-container">
+            <button id="menu-btn" mat-fab color="white" aria-label="Menu" (click)="openDialog()">
+                <mat-icon>
+                    menu
+                </mat-icon>
+            </button>
+        </div>
   
         <mat-card id="form"> 
             <mat-card-content>
-                <img src="../../assets/images/close.png" id="close-dialog" class="close" [routerLink]="['/passenger-home']"/>
+                <img src="../../assets/images/close.png" id="close-dialog" class="close" (click)="closeDialog()"/>
         
                 <p id="title" class="card-content">Choose your destionation!</p>
                 

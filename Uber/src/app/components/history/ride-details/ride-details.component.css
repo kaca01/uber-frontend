@@ -16,6 +16,7 @@
 }
 
 #form {
+    height: 38.5em;
     position : relative;
     padding-bottom: 3%;
     width: 28%;
@@ -56,8 +57,12 @@
     cursor: pointer;
 }
 
+#infos {
+  margin-top: 8%;
+}
+
 .info {
-    margin-top: 5%;
+    margin-top: 7.5%;
     margin-left: 3%;
     margin-right: 3%;
     padding-left: 6%;
@@ -69,7 +74,7 @@
 }
 
 #button-container {
-    margin-top: 8%;
+    margin-top: 10%;
     margin-right: 3%;
     text-align: right;
 
