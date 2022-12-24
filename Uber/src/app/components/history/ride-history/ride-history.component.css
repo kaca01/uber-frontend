@@ -101,26 +101,16 @@ li:hover {
 @media(max-width: 1100px) {
   #form {
     width: 50%;
+    margin-left: 7%;
   }
 
-}
-
-@media (max-width: 750px) {
-  #form {
-    margin-left: 5%;
-    width: 60%;
-  }
-
-  #padding {
-    padding-top: 10%;
-  }
 }
   
-@media (max-width: 550px) {
+@media (max-width: 650px) {
   #form {
-    width: 90%;
+    width: 80%;
     height: auto;
-    margin-left: 5%;
+    margin-left: 14%;
     padding-bottom: 15%;
   }
 
