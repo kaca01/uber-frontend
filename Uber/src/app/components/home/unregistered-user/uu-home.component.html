@@ -1,11 +1,4 @@
-<p>
-    <uu-navbar></uu-navbar>
-</p>
 <div id="container">
-   <div id="background-image">
-        <img src="../../../../assets/images/map.png"/>
-   </div>
-
    <div id="padding">
         <button id="menu-btn" mat-fab color="white" aria-label="Example icon button with a delete icon">
             <mat-icon>
@@ -18,7 +11,7 @@
                 <img src="../../assets/images/close.png" id="close-dialog" class="close" [routerLink]="['/uu-home']"/>
 
                 <p id="title" class="card-content">Choose your destionation!</p>
-                <form [formGroup]="orderForm" (ngSubmit)="submit()" fxLayout="column">
+                <form [formGroup]="orderForm" fxLayout="column">
 
                     <div>
                         <mat-form-field id="pickup-location-field" class="card-content" appearance="outline">

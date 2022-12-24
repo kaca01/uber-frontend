@@ -1,0 +1,15 @@
+#page-container {
+    position: relative;
+}
+
+#container {
+    width: 100%;
+    height: 83.9vh;
+    position: absolute;
+}
+
+@media (max-height: 660px) {
+    #container {
+        height: 100vh;
+    }
+}

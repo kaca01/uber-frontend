@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {MatTreeModule} from '@angular/material/tree';
-
 import { AppRoutingModule } from '../infrastructure/app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from 'src/infrastructure/material.module';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
-
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { UUHomeComponent } from './components/home/unregistered-user/uu-home.component';
@@ -22,9 +20,7 @@ import { UserDataComponent } from 'src/app/components/account/passenger/data/use
 import { FavoriteLocationsComponent } from 'src/app/components/account/passenger/favorite-locations/favorite-locations.component';
 import { ProfileComponent } from './components/account/admin/profile/profile.component';
 import { DataComponent } from './components/account/admin/data/data.component';
-import { PassengerHistoryComponent } from './components/history/passenger/passenger-history.component';
-import { PassengerDetailsComponent } from './components/history/details/passenger-details/passenger-details.component';
-import { RatingsComponent } from './components/history/ratings/ratings/ratings.component';
+import { RatingsComponent } from './components/history/ratings/ratings.component';
 import { RideDetailsComponent } from './components/history/ride-details/ride-details.component';
 import { RideHistoryComponent } from './components/history/ride-history/ride-history.component';
 import { PassengersComponent } from './components/passengers/passengers.component';
@@ -33,6 +29,9 @@ import { DriversComponent } from './components/drivers/drivers.component';
 import { DriverService } from './service/driver.service';
 import { AddDriverComponent } from './components/drivers/add-driver/add-driver.component';
 import { AddVehicleComponent } from './components/drivers/add-vehicle/add-vehicle.component';
+import { BasePageComponent } from './components/history/base-page/base-page.component';
+import { MapComponent } from './map/map.component';
+import { HomePageComponent } from './components/home/home-page/home-page.component';
 
 
 @NgModule({
@@ -52,15 +51,16 @@ import { AddVehicleComponent } from './components/drivers/add-vehicle/add-vehicl
     FavoriteLocationsComponent,
     ProfileComponent,
     DataComponent,
-    PassengerHistoryComponent,
-    PassengerDetailsComponent,
     RatingsComponent,
     RideDetailsComponent,
     RideHistoryComponent,
     PassengersComponent,
     DriversComponent,
     AddDriverComponent,
-    AddVehicleComponent, 
+    AddVehicleComponent,
+    BasePageComponent,
+    MapComponent,
+    HomePageComponent, 
   ],
   imports: [
     BrowserModule,

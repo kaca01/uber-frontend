@@ -1,25 +1,20 @@
-<p>
-    <ru-navbar></ru-navbar>
-</p>
 <div id="container">
-    <div id="background-image">
-         <img src="../../../../assets/images/map.png"/>
-    </div>
- 
     <div id="padding">
-        <button id="menu-btn" mat-fab color="white" aria-label="Example icon button with a delete icon">
-            <mat-icon>
-                menu
-            </mat-icon>
-        </button>
+        <div id="menu-container">
+            <button id="menu-btn" mat-fab color="white" aria-label="Menu">
+                <mat-icon>
+                    menu
+                </mat-icon>
+            </button>
+        </div>
   
         <mat-card id="form"> 
             <mat-card-content>
-                <img src="../../assets/images/close.png" id="close-dialog" class="close" [routerLink]="['/passenger-home']"/>
+                <img src="../../assets/images/close.png" id="close-dialog" class="close"/>
         
                 <p id="title" class="card-content">Choose your destionation!</p>
                 
-                <form [formGroup]="orderForm" (ngSubmit)="order()" fxLayout="column">
+                <form [formGroup]="orderForm" fxLayout="column">
                     <div>
                         <mat-form-field id="pickup-location-field" class="card-content" appearance="outline">
                             <mat-label class="label">Add a pickup location</mat-label>
@@ -42,7 +37,6 @@
                     <div id="button-container">
                         <button mat-raised-button color="green" id="order-btn">Order now</button>
                     </div>
-                
                 </form>
             </mat-card-content>
         </mat-card>

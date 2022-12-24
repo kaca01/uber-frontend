@@ -39,13 +39,8 @@ export class UUHomeComponent implements OnInit {
         if (form != null) {
           form.style.display = 'none';
           if (Menu != null) Menu.style.display = 'block';
-          
         }
       });
     }
-  }
-
-  submit() {
-
   }
 }

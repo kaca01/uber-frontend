@@ -16,9 +16,9 @@ export class PassengerHomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const Menu = document.getElementById("menu-btn");
-    this.openDialog(Menu as HTMLButtonElement);
-    this.closeDialog(Menu as HTMLButtonElement);
+    const Menu = document.getElementById("menu-container");
+    if(Menu != null) Menu.style.display = 'none';
+    
 
     const LocationStar = document.getElementById("location-star");
     this.changeStar(LocationStar as HTMLImageElement);
@@ -27,7 +27,8 @@ export class PassengerHomeComponent implements OnInit {
     this.changeStar(DestinationStar as HTMLImageElement);
   }
 
-  openDialog(Menu : HTMLButtonElement) : void {
+  openDialog() : void {
+    const Menu = document.getElementById("menu-container");
     if (Menu != null) {
       Menu.style.display = 'none';
 
@@ -39,13 +40,14 @@ export class PassengerHomeComponent implements OnInit {
     }
   }
 
-  closeDialog(Menu : HTMLButtonElement) : void {
+  closeDialog() : void {
+    const Menu = document.getElementById("menu-container");
     const Close = document.getElementById("close-dialog");
     if (Close != null) {
       Close.addEventListener('click', function close(event){
-        const form = document.getElementById("form");
-        if (form != null) {
-          form.style.display = 'none';
+        const Form = document.getElementById("form");
+        if (Form != null) {
+          Form.style.display = 'none';
           if (Menu != null) Menu.style.display = 'block';
           
         }
@@ -64,6 +66,4 @@ export class PassengerHomeComponent implements OnInit {
       });
     }
   }
-
-  order(){}
 }
