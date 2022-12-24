@@ -29,7 +29,9 @@ import { DriversComponent } from './components/drivers/drivers.component';
 import { DriverService } from './service/driver.service';
 import { AddDriverComponent } from './components/drivers/add-driver/add-driver.component';
 import { AddVehicleComponent } from './components/drivers/add-vehicle/add-vehicle.component';
-import { BasePageComponent } from './components/base-page/base-page.component';
+import { BasePageComponent } from './components/history/base-page/base-page.component';
+import { MapComponent } from './map/map.component';
+import { HomePageComponent } from './components/home/home-page/home-page.component';
 
 
 @NgModule({
@@ -56,7 +58,9 @@ import { BasePageComponent } from './components/base-page/base-page.component';
     DriversComponent,
     AddDriverComponent,
     AddVehicleComponent,
-    BasePageComponent, 
+    BasePageComponent,
+    MapComponent,
+    HomePageComponent, 
   ],
   imports: [
     BrowserModule,
