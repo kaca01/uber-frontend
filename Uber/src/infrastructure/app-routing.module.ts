@@ -17,12 +17,14 @@ import { DriversComponent } from 'src/app/components/drivers/drivers.component';
 import { DriverHomeComponent } from 'src/app/components/home/driver/driver-home.component';
 import { AddDriverComponent } from 'src/app/components/drivers/add-driver/add-driver.component';
 import { AddVehicleComponent } from 'src/app/components/drivers/add-vehicle/add-vehicle.component';
-import { BasePageComponent } from 'src/app/components/base-page/base-page.component';
+import { BasePageComponent } from 'src/app/components/history/base-page/base-page.component';
 
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent},
+  { path: 'uu-home', component: UUHomeComponent},
+  { path: 'passenger-home', component: PassengerHomeComponent},
   { path: 'base-page', component: BasePageComponent},
   { path: 'admin-home', component: AdminHomeComponent},
   { path: 'account-passenger', component: AccountPassengerComponent},
