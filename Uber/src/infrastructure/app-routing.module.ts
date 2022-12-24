@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { RegistrationComponent } from 'src/app/components/registration/registration.component';
+import { HomePageComponent } from 'src/app/components/home/home-page/home-page.component';
 import { UUHomeComponent } from 'src/app/components/home/unregistered-user/uu-home.component';
 import { PassengerHomeComponent } from 'src/app/components/home/passenger/passenger-home.component';
 import { AdminHomeComponent } from 'src/app/components/home/admin/admin-home.component';
@@ -23,6 +24,7 @@ import { BasePageComponent } from 'src/app/components/history/base-page/base-pag
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent},
+  { path: 'home-page', component: HomePageComponent},
   { path: 'uu-home', component: UUHomeComponent},
   { path: 'passenger-home', component: PassengerHomeComponent},
   { path: 'base-page', component: BasePageComponent},
