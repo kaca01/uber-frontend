@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, AfterViewChecked } from '@angular/core';
 import * as L from 'leaflet';
 
 @Component({
@@ -26,6 +26,10 @@ export class MapComponent implements AfterViewInit {
   constructor() { }
 
   ngAfterViewInit(): void { 
+    this.initMap();
+  }
+
+  ngAfterViewChecked(): void {
     this.initMap();
   }
 }
