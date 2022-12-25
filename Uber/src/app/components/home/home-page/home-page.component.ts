@@ -36,13 +36,11 @@ export class HomePageComponent implements OnInit {
 	}
 
 	getPickup(pickup: string) {
-		console.log(pickup);
 		this.pickup = pickup;
 		
 	}
 
 	getDestination(destination: string) {
-		console.log(destination);
 		this.destination = destination;
 	}
 
