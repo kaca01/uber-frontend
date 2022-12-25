@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./passenger-home.component.css'],
 })
 export class PassengerHomeComponent implements OnInit {
+  @Output() newItemEvent1 = new EventEmitter<string>();
+  @Output() newItemEvent2 = new EventEmitter<string>();
+  pickup = '';
+  destination = '';
+
   orderForm = new FormGroup({
     pickup: new FormControl('', [Validators.required]),
     destination: new FormControl('', [Validators.required]),
@@ -65,5 +70,10 @@ export class PassengerHomeComponent implements OnInit {
         }
       });
     }
+  }
+
+  sendLocations() {
+      this.newItemEvent1.emit(this.pickup);
+      this.newItemEvent2.emit(this.destination); 
   }
 }

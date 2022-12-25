@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {MatTreeModule} from '@angular/material/tree';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from '../infrastructure/app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -69,7 +70,8 @@ import { HomePageComponent } from './components/home/home-page/home-page.compone
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    MatTreeModule
+    MatTreeModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
