@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
-export class HomePageComponent implements OnInit{
+export class HomePageComponent implements OnInit {
+	@Input() pickup = '';
+	@Input() destination = '';
 
 	ngOnInit() : void {
 		const Menu = document.getElementById("menu-container");
@@ -21,7 +23,7 @@ export class HomePageComponent implements OnInit{
 			});
 		  }
 
-		  if (Close != null) {
+		if (Close != null) {
 			Close.addEventListener('click', function close(event){
 			  const Form = document.getElementById("form");
 			  if (Form != null) {
@@ -30,7 +32,16 @@ export class HomePageComponent implements OnInit{
 				
 			  }
 			});
-		  }
+		}
+	}
+
+	getPickup(pickup: string) {
+		this.pickup = pickup;
+		
+	}
+
+	getDestination(destination: string) {
+		this.destination = destination;
 	}
 
 }
