@@ -16,7 +16,7 @@ import { DriverService } from 'src/app/service/driver.service';
 export class DriversComponent implements OnInit {
   displayedColumns: string[] = ['name', 'email', 'phone', 'address', 'blocked', 'changes'];
   dataSource!: MatTableDataSource<Driver>;
-  drivers: Driver[] = [];
+  all: Driver[] = [];
   condition: boolean = true;
 
   valueFromCreateComponent = '';
@@ -32,8 +32,8 @@ export class DriversComponent implements OnInit {
     });
 
     this.driverService.getAll().subscribe((res) => {
-      this.drivers = res;
-      this.dataSource = new MatTableDataSource<Driver>(this.drivers);
+      this.all = res.results;
+      this.dataSource = new MatTableDataSource<Driver>(this.all);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -53,7 +53,12 @@ export class DriversComponent implements OnInit {
   }
 }
 
-export interface Driver {
+export interface All {
+  totalCount: number;
+  results: Driver[];
+}
+
+export interface Driver {  
   _id: number;
   name: string;
   surname: string;

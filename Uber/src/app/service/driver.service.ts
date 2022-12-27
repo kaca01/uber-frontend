@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { Driver } from '../components/drivers/drivers.component';
+import { All, Driver } from '../components/drivers/drivers.component';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class DriverService {
     this.value$.next(test);
   }
 
-  getAll(): Observable<Driver[]> {
-    return this.http.get<Driver[]>(environment.apiHost + 'api/driver');
+  getAll(): Observable<All> {
+    return this.http.get<All>(environment.apiHost + 'api/driver');
   }
 }
