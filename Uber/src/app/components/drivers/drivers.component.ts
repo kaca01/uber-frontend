@@ -21,7 +21,6 @@ export class DriversComponent implements OnInit {
   condition: boolean = true;
 
   valueFromCreateComponent = '';
-  private driverId : Number = new Number(-1);
   private driver = {} as Driver;
 
   @ViewChild(MatPaginator) paginator!: any;
@@ -54,7 +53,6 @@ export class DriversComponent implements OnInit {
   }
 
   getDriver(driver : Driver) {
-    this.driverId = driver.id;
     this.driver = driver;
   }
 
@@ -64,12 +62,12 @@ export class DriversComponent implements OnInit {
       return;
     }
     this.driver.blocked = true;
-    this.driverService.block(this.driverId).subscribe();
+    this.driverService.block(this.driver.id).subscribe();
   }
 
   unblockUser() : void {
     this.driver.blocked = false;
-    this.driverService.unblock(this.driverId).subscribe();
+    this.driverService.unblock(this.driver.id).subscribe();
   }
 }
 
