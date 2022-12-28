@@ -41,7 +41,8 @@ export class DriversComponent implements OnInit {
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = [{
-      message: "Poruka"
+      message: "Poruka",
+      date: "12/12/2022"
     }];
     this.dialog.open(NotesDialogComponent, dialogConfig);
 }

@@ -36,5 +36,6 @@ export class NotesDialogComponent {
 }
 
 export interface Note {  
-  message: string
+  message: string,
+  date: string
 }
