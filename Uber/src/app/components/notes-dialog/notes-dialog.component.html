@@ -1,0 +1,15 @@
+<div class="container">
+    <img src="../../assets/images/close.png" id="close-dialog" class="close" (click)="close()"/>
+
+    <div id="title">Notes</div>
+
+    <mat-dialog-content>
+        <ul>
+            <li class="list-item" *ngFor="let note of notes" [value]="note">
+                <p class="message">{{note.message}}</p>
+                <p class="date">{{note.date}}</p>
+                <div class="line"></div>
+            </li>
+        </ul>
+    </mat-dialog-content>
+</div>

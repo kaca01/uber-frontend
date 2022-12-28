@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PassengerService } from 'src/app/service/passenger.service';
 
 @Component({
   selector: 'app-registration',
@@ -10,26 +11,30 @@ import { Router } from '@angular/router';
 export class RegistrationComponent implements OnInit{
     registrationForm= new FormGroup({
     name: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+')]),
-    lastname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+')]),
+    surname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z][a-zA-Z ]+')]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
-    passwordAgain: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]+')]),
-    postalAddress: new FormControl('', [Validators.required]),
+    telephoneNumber: new FormControl('', [Validators.required, Validators.pattern('[- +()0-9]+')]),
+    address: new FormControl('', [Validators.required]),
+  
   }) ;
 
   hide : boolean = true;
   hideAgain : boolean = true;
 
-  constructor(private router : Router) {}
+  constructor(private router : Router, private service: PassengerService) {}
 
   ngOnInit(): void {
       
   }
 
-  registrate() {
-    if (!this.registrationForm.valid) {
-      return;
+  reg() {
+    if (this.registrationForm.valid) {
+      this.service.add(this.registrationForm.value)
+      .subscribe((res: any) => {
+        console.log(res);
+        this.router.navigate(['passenger-home']);
+      });
     }
   }
 

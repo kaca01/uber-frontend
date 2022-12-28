@@ -21,7 +21,7 @@
       </div>
       
 
-      <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="loginForm">
+      <form name="loginForm" [formGroup]="loginForm">
 
         <div class="email-input">
           <mat-form-field class="full-width" appearance="outline">
@@ -42,7 +42,7 @@
               matInput [type]=" hide ? 'password' : 'text'"
               required />
             <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
-              [attr.aria-pressed]="hide">
+              [attr.aria-pressed]="hide" type="button">
               <mat-icon>
                   {{hide ? 'visibility_off' : 'visibility'}}
               </mat-icon>
@@ -51,7 +51,7 @@
           </mat-form-field>      
         </div>
         
-        <button mat-raised-button color="green" class="login-btn">Login</button>
+        <button mat-raised-button color="green" (click)="onLogin()" class="login-btn">Login</button>
       </form>
 
     </mat-card-content>

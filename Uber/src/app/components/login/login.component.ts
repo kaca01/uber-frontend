@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,13 +15,13 @@ export class LoginComponent implements OnInit {
 
   hide: boolean = true;
 
-  constructor() {}
+  constructor(private router : Router) {}
 
   ngOnInit(): void {}
 
   onLogin() {
-    if (!this.loginForm.valid) {
-      return;
+    if (this.loginForm.valid) {
+      this.router.navigate(['admin-home']);
     }
   }
   

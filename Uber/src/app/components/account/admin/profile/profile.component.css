@@ -1,0 +1,172 @@
+/* navbar */
+#desc {
+    margin-left: 45%;
+    margin-top: 15%;
+}
+
+/* account page */
+.left-side {
+  float: left;
+  margin-left: 15%;
+  margin-top: 5%;
+}
+
+#account {
+  width: 100px;
+  height: 100px;
+  margin-left: 1%;
+}
+
+#add-image {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.name-surname {
+  margin-top: 20%;
+}
+
+#name {
+  margin-right: 10px;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+#surname {
+  font-size: x-large;
+  font-weight: bold;
+}
+
+#user {
+  font-size: small;
+}
+
+.options {
+  margin-bottom: 15%;
+  margin-top: 20%;
+  list-style: none;
+}
+
+.option {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+a {
+  font-size: large;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+}
+
+#logOut {
+  color: #96d49c;
+}
+
+/* add profile picture */
+.account {
+  position: relative;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.hoverable{
+  position: relative;
+  display: block;
+  cursor: pointer;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+}
+
+.hoverable .hover-text{
+  position: absolute;
+  display: none;
+  top: 50%;
+  left:  50%;
+  transform: translate(-50%,-50%);   
+  z-index: 2;
+}
+.hoverable .background{
+  position: absolute;
+  display: none;
+  top: 0;
+  left:  0;
+  bottom: 0;
+  right: 0;
+  background-color:rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 1;
+}
+.hoverable:hover .hover-text{
+  display: block;
+}
+.hoverable:hover .background{
+  display: block;
+}
+
+#fileInput{
+  display: none;
+}
+
+.delete {
+  position: absolute;
+  top: 70%;
+  left: 80%;
+}
+mat-icon{
+  color: white !important;
+}
+
+/* responsive */
+@media (max-width: 920px) {
+  .left-side {
+    float: none;
+    margin: auto;
+  }
+
+  .account {
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    width:fit-content
+  }
+  
+  .user {
+    display: block;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 10%;
+  }
+
+  .name-surname {
+    text-align: center;
+    margin-top: 10%;
+  }
+
+  #user {
+    text-align: center;
+  }
+
+  .options {
+    text-align: center;
+    margin-top: 10%;
+  }
+}
+
+@media (max-width: 380px) {
+  .account {
+    margin-top: 5%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+}

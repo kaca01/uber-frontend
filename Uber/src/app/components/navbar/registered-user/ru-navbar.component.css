@@ -26,6 +26,7 @@ mat-toolbar ul li a{
 
 mat-toolbar ul li a:hover{
   color:#96D49C;
+  cursor: pointer;
 }
 
 mat-toolbar img{

@@ -1,0 +1,48 @@
+<p>
+    <admin-navbar></admin-navbar>
+</p>
+
+<div class="main-container">
+    <p class="title">Driver's Vehicle</p>
+
+    <div class="group section">
+        <mat-checkbox class="checkbox" [(ngModel)]="baby" color="primary">Baby Transport</mat-checkbox>
+        <mat-checkbox class="checkbox" [(ngModel)]="pet" color="primary">Pet Transport</mat-checkbox>
+    </div>
+    <form [formGroup]="addVehicleForm" fxLayout="column">
+        <div class="group">
+            <mat-form-field appearance="outline" class="advanced_width right">
+                <mat-label>Model</mat-label>
+                <input matInput type="text" name="model" formControlName="model" />
+                <mat-error *ngIf="!addVehicleForm.controls['model'].valid"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="left">
+                <mat-label>Type</mat-label>
+                <mat-select [(ngModel)]="selectedValue" name="type"  [formControl]="addVehicleForm.controls['type']" required>
+                  <mat-option *ngFor="let type of types" [value]="type.value">
+                    {{type.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="addVehicleForm.controls['type'].hasError('required')">Please choose a type</mat-error>
+              </mat-form-field>
+        </div>
+
+        <div class="group">
+            <mat-form-field appearance="outline" class="advanced_width right">
+                <mat-label>Number of Seats</mat-label>
+                <input matInput type="number" name="seats" formControlName="seats" />
+                <mat-error *ngIf="!addVehicleForm.controls['seats'].valid"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="advanced_width left">
+                <mat-label>License Plate</mat-label>
+                <input matInput type="text" name="licensePlate" formControlName="licensePlate" />
+                <mat-error *ngIf="!addVehicleForm.controls['licensePlate'].valid"></mat-error>
+            </mat-form-field >
+        </div>
+        <button mat-raised-button color="green" (click)="addVehicle()" class="next-btn">Create</button>
+        <a class="back" [routerLink]="['/add-driver']">Go back</a>
+    </form>
+    <p class="bottom">Bottom</p>
+</div>
