@@ -72,4 +72,8 @@ export class MapComponent implements AfterViewInit {
     this.setPickup();
     this.setDestination();
   }
+
+  ngAfterViewChecked(): void {
+    this.initMap();
+  }
 }
