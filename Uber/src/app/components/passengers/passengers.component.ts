@@ -19,8 +19,10 @@ import { PassengerService } from 'src/app/service/passenger.service';
 export class PassengersComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['name', 'email', 'phone', 'address', 'blocked'];
   dataSource!: MatTableDataSource<Passenger>;
-  passengers: Passenger[] = [];
   condition: boolean = true;
+  all: Passenger[] = [];
+
+  valueFromCreateComponent = '';
 
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
@@ -28,8 +30,16 @@ export class PassengersComponent implements OnInit, AfterViewInit {
   constructor(private passengerService: PassengerService) {}
 
   ngOnInit(): void {
-    this.passengers = this.passengerService.getAll();
-    this.dataSource = new MatTableDataSource<Passenger>(this.passengers);
+    this.passengerService.selectedValue$.subscribe((value) => {
+      this.valueFromCreateComponent = value;
+    });
+
+    this.passengerService.getAll().subscribe((res) => {
+      this.all = res.results;
+      this.dataSource = new MatTableDataSource<Passenger>(this.all);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   ngAfterViewInit() {
@@ -51,11 +61,17 @@ export class PassengersComponent implements OnInit, AfterViewInit {
   }
 }
 
+export interface All {
+  totalCount : number;
+  results: Passenger[];
+}
+
+
 export interface Passenger {
   _id: number;
   name: string;
   email: string;
-  phone: string;
+  telephoneNumber: string;
   address: string;
   blocked: boolean;
   picture: string;

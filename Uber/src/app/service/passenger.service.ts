@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Passenger } from '../components/passengers/passengers.component';
+import { All, Passenger } from '../components/passengers/passengers.component';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
@@ -20,8 +20,8 @@ export class PassengerService {
     this.value$.next(test);
   }
 
-  getAll(): Passenger[] {
-    return this.passengerList;
+  getAll(): Observable<All> {
+    return this.http.get<All>(environment.apiHost + 'api/passenger');
   }
 
   add(passenger: any): Observable<any> {
