@@ -6,6 +6,7 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { RouterLinkWithHref } from '@angular/router';
 import { DriverService } from 'src/app/service/driver.service';
 
 @Component({
@@ -20,11 +21,13 @@ export class DriversComponent implements OnInit {
   condition: boolean = true;
 
   valueFromCreateComponent = '';
+  driverId = -1;
 
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private driverService: DriverService) {}
+  constructor(private driverService: DriverService) {
+  }
 
   ngOnInit(): void {
     this.driverService.selectedValue$.subscribe((value) => {
@@ -37,6 +40,7 @@ export class DriversComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+
   }
 
   changeState() {
@@ -49,7 +53,14 @@ export class DriversComponent implements OnInit {
   }
 
   getDriver(driver : Driver) {
-    alert("you have clicked");
+    this.driverId = driver.id;
+    console.log(this.driverId);
+  }
+
+  blockUser() : boolean{
+    console.log("Blokiranje...");
+    this.driverService.block(this.driverId).subscribe();
+    return true;
   }
 }
 
@@ -59,7 +70,7 @@ export interface All {
 }
 
 export interface Driver {  
-  _id: number;
+  id: number;
   name: string;
   surname: string;
   email: string;

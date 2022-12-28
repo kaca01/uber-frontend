@@ -21,4 +21,10 @@ export class DriverService {
   getAll(): Observable<All> {
     return this.http.get<All>(environment.apiHost + 'api/driver');
   }
+
+  block(driverId : Number) : Observable<void> {
+    console.log("Blokiranjeee");
+    console.log("api/user/" + driverId.toString() + "/block");
+    return this.http.put<any>(environment.apiHost + "api/user/" + driverId.toString() + "/block", {});
+  }
 }
