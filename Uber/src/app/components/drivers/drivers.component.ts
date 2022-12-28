@@ -56,38 +56,20 @@ export class DriversComponent implements OnInit {
   getDriver(driver : Driver) {
     this.driverId = driver.id;
     this.driver = driver;
-    console.log(this.driver.email);
   }
 
-  blockUser() : boolean{
+  blockUser() : void{
     if (this.driver.blocked == true) {
       this.unblockUser();
-      return true;
+      return;
     }
     this.driver.blocked = true;
     this.driverService.block(this.driverId).subscribe();
-    let id: Number = this.driverId;
-    this.dataSource.data.forEach(function (value){
-      if (id == value.id) {
-        // if (value.blocked == true) {
-        //   value.blocked = false;
-        // } else {
-        //   value.blocked = true;
-        // }
-        value.blocked = true;
-      }
-    })
-    return true;
   }
 
   unblockUser() : void {
-    console.log("Dosao sam");
     this.driver.blocked = false;
     this.driverService.unblock(this.driverId).subscribe();
-    let id: Number = this.driverId;
-    this.dataSource.data.forEach(function (value){
-      if (id == value.id) value.blocked = false;
-    })
   }
 }
 
