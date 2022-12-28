@@ -44,4 +44,5 @@ export class HomePageComponent implements OnInit {
 		this.destination = destination;
 	}
 
+	
 }
