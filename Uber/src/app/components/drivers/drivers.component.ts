@@ -20,9 +20,10 @@ export class DriversComponent implements OnInit {
   displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked', 'changes'];
   dataSource!: MatTableDataSource<Driver>;
   all: Driver[] = [];
+  private allNotes = {} as AllNotes;
   condition: boolean = true;
   message = '';
-  private requestNote = {} as Note;
+  private requestNote = {} as RequestNote;
 
   valueFromCreateComponent = '';
   private driver = {} as Driver;
@@ -40,10 +41,7 @@ export class DriversComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
-    dialogConfig.data = [{
-      message: "Poruka",
-      date: "12/12/2022"
-    }];
+    dialogConfig.data = this.allNotes.results;
     this.dialog.open(NotesDialogComponent, dialogConfig);
 }
 
@@ -72,6 +70,7 @@ export class DriversComponent implements OnInit {
 
   getDriver(driver : Driver) {
     this.driver = driver;
+    this.getNotes();
   }
 
   blockUser() : void{
@@ -97,6 +96,13 @@ export class DriversComponent implements OnInit {
       });
     }
   }
+
+  getNotes() : void {
+    this.driverService.getNotes(this.driver.id)
+    .subscribe((res: any) => {
+      this.allNotes = res;
+    }); 
+  }
 }
 
 export interface All {
@@ -116,7 +122,18 @@ export interface Driver {
   changes: boolean;
 }
 
+export interface AllNotes {
+  totalCount: number;
+  results: Note[];
+}
+
+export interface RequestNote {
+  message: string;
+}
+
 export interface Note {
+  id: number;
+  date: string;
   message: string;
 }
 

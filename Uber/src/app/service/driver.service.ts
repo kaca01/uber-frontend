@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { All, Driver, Note } from '../components/drivers/drivers.component';
+import { All, AllNotes, Driver, Note, RequestNote } from '../components/drivers/drivers.component';
 
 @Injectable({
   providedIn: 'root',
@@ -30,10 +30,14 @@ export class DriverService {
     return this.http.put<any>(environment.apiHost + "api/user/" + driverId.toString() + "/unblock", {});
   }
 
-  addNote(driverId: Number, note: Note) : Observable<any> {
+  addNote(driverId: Number, note: RequestNote) : Observable<any> {
     const options: any = {
       responseType: 'text',
     };
     return this.http.post<string>(environment.apiHost + "api/user/" + driverId.toString() + "/note", note, options);
+  }
+
+  getNotes(driverId: Number) : Observable<AllNotes> {
+    return this.http.get<AllNotes>(environment.apiHost + "api/user/" + driverId + "/note?page=1&size=2");
   }
 }
