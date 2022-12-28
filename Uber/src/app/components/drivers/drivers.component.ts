@@ -43,7 +43,7 @@ export class DriversComponent implements OnInit {
 
     dialogConfig.data = this.allNotes.results;
     this.dialog.open(NotesDialogComponent, dialogConfig);
-}
+  }
 
   ngOnInit(): void {
     this.driverService.selectedValue$.subscribe((value) => {

@@ -1,14 +1,15 @@
-<h2 mat-dialog-title>Notes</h2>
+<div class="container">
+    <img src="../../assets/images/close.png" id="close-dialog" class="close" (click)="close()"/>
 
-<mat-dialog-content>
-    <ul>
-        <li *ngFor="let note of notes" [value]="note">
-            <p>{{note.message}}</p>
-            <p>{{note.date}}</p>
-        </li>
-    </ul>
-</mat-dialog-content>
+    <div id="title">Notes</div>
 
-<mat-dialog-actions>
-    <button class="mat-raised-button"(click)="close()">Close</button>
-</mat-dialog-actions>
+    <mat-dialog-content>
+        <ul>
+            <li class="list-item" *ngFor="let note of notes" [value]="note">
+                <p class="message">{{note.message}}</p>
+                <p class="date">{{note.date}}</p>
+                <div class="line"></div>
+            </li>
+        </ul>
+    </mat-dialog-content>
+</div>

@@ -6,10 +6,12 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { PassengerService } from 'src/app/service/passenger.service';
+import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
 
 @Component({
   selector: 'app-passengers',
@@ -22,7 +24,8 @@ export class PassengersComponent implements OnInit{
   condition: boolean = true;
   all: Passenger[] = [];
   message = '';
-  private requestNote = {} as Note;
+  private requestNote = {} as RequestNote;
+  private allNotes = {} as AllNotes;
 
   valueFromCreateComponent = '';
   private passenger = {} as Passenger;
@@ -30,7 +33,17 @@ export class PassengersComponent implements OnInit{
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private passengerService: PassengerService) {}
+  constructor(private passengerService: PassengerService, private dialog: MatDialog) {}
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = this.allNotes.results;
+    this.dialog.open(NotesDialogComponent, dialogConfig);
+  }
 
   ngOnInit(): void {
     this.passengerService.selectedValue$.subscribe((value) => {
@@ -61,6 +74,7 @@ export class PassengersComponent implements OnInit{
 
   getPassenger(passenger : Passenger) {
     this.passenger = passenger;
+    this.getNotes();
   }
 
   blockUser() : void{
@@ -82,9 +96,15 @@ export class PassengersComponent implements OnInit{
       this.requestNote["message"] = this.message;
       this.passengerService.addNote(this.passenger.id, this.requestNote)
       .subscribe((res: any) => {
-        console.log(res);
       });
     }
+  }
+
+  getNotes() : void {
+    this.passengerService.getNotes(this.passenger.id)
+    .subscribe((res: any) => {
+      this.allNotes = res;
+    }); 
   }
 }
 
@@ -103,6 +123,17 @@ export interface Passenger {
   picture: string;
 }
 
+export interface AllNotes {
+  totalCount: number;
+  results: Note[];
+}
+
+export interface RequestNote {
+  message: string;
+}
+
 export interface Note {
+  id: number;
+  date: string;
   message: string;
 }

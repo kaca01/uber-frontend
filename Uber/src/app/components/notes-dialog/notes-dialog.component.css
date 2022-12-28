@@ -1,7 +1,57 @@
-ul {
-    list-style: none;
+.container {
+    margin: 10px;
 }
 
-p {
-    margin-top: 15px;
+#title {
+    margin-top: 10%;
+    margin-left: 5%;
+    font-weight: bold;
+    font-size: x-large;
+    width: 10em;
+}
+
+ul {
+    margin-top: 10%;
+    overflow: auto;
+    width: 400px;
+}
+
+li {
+    padding-top: 3%;
+    border-radius: 5px;
+}
+
+li:hover {
+    background-color: rgb(243, 237, 237);
+    cursor: pointer;
+}
+
+.message {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: black;
+    font-size: large;
+}
+
+.date {
+    text-align: right;
+    height: 2.15em;
+    color: gray;
+    font-size: small;
+}
+
+.line {
+    border-top: 0.1em solid #B4B4B4;
+}
+
+#close-dialog{
+    float: right;
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+  }
+  
+.close:hover{
+    background-color: rgb(243, 237, 237);
+    cursor: pointer;
 }
