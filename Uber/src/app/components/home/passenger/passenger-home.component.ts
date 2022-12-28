@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -9,6 +9,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class PassengerHomeComponent implements OnInit {
   @Output() newItemEvent1 = new EventEmitter<string>();
   @Output() newItemEvent2 = new EventEmitter<string>();
+  @Input() pickup_input = '';
+  @Input() destination_input = '';
   pickup = '';
   destination = '';
 
@@ -75,5 +77,19 @@ export class PassengerHomeComponent implements OnInit {
   sendLocations() {
       this.newItemEvent1.emit(this.pickup);
       this.newItemEvent2.emit(this.destination); 
+  }
+
+  setPickup(): void{
+    this.pickup = this.pickup_input;
+  }
+
+  setDestination(): void{
+    const destElement = document.getElementById("destination_id");
+    this.destination = this.destination_input;
+  }
+
+  ngOnChanges() { 
+    this.setPickup();
+    this.setDestination();
   }
 }

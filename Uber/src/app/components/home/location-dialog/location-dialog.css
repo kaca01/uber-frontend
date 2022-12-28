@@ -1,0 +1,29 @@
+.dialog{
+    display: flex; 
+    flex-direction: column;
+    padding: 25px 0px 20px 10px;
+}
+
+.close:hover{
+    background-color: rgb(243, 237, 237);
+    cursor: pointer;
+  }
+
+.close{
+    float: right;
+    height: 16px;
+    width: 16px;
+    margin: 15px 12px 10px 5px;
+}
+
+button{
+    padding: 15px 1.4em;
+    margin: 10px;
+    outline-style: none;
+    border: none;
+    background-color: rgb(248, 245, 245);
+}
+
+button:hover{
+    background-color: rgb(243, 237, 237);
+  }
