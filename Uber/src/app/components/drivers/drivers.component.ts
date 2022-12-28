@@ -22,6 +22,7 @@ export class DriversComponent implements OnInit {
 
   valueFromCreateComponent = '';
   private driverId : Number = new Number(-1);
+  private driver = {} as Driver;
 
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
@@ -54,19 +55,34 @@ export class DriversComponent implements OnInit {
 
   getDriver(driver : Driver) {
     this.driverId = driver.id;
-    console.log(this.driverId);
+    this.driver = driver;
+    console.log(this.driver.email);
   }
 
   blockUser() : boolean{
+    if (this.driver.blocked == true) {
+      this.unblockUser();
+      return true;
+    }
+    this.driver.blocked = true;
     this.driverService.block(this.driverId).subscribe();
     let id: Number = this.driverId;
     this.dataSource.data.forEach(function (value){
-      if (id == value.id) value.blocked = true;
+      if (id == value.id) {
+        // if (value.blocked == true) {
+        //   value.blocked = false;
+        // } else {
+        //   value.blocked = true;
+        // }
+        value.blocked = true;
+      }
     })
     return true;
   }
 
   unblockUser() : void {
+    console.log("Dosao sam");
+    this.driver.blocked = false;
     this.driverService.unblock(this.driverId).subscribe();
     let id: Number = this.driverId;
     this.dataSource.data.forEach(function (value){
