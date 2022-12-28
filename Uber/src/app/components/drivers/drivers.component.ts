@@ -1,7 +1,4 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   OnInit,
   ViewChild,
@@ -16,11 +13,13 @@ import { DriverService } from 'src/app/service/driver.service';
   templateUrl: './drivers.component.html',
   styleUrls: ['./drivers.component.css'],
 })
-export class DriversComponent implements OnInit, AfterViewInit {
+export class DriversComponent implements OnInit {
   displayedColumns: string[] = ['name', 'email', 'phone', 'address', 'blocked', 'changes'];
   dataSource!: MatTableDataSource<Driver>;
-  drivers: Driver[] = [];
+  all: Driver[] = [];
   condition: boolean = true;
+
+  valueFromCreateComponent = '';
 
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
@@ -28,13 +27,16 @@ export class DriversComponent implements OnInit, AfterViewInit {
   constructor(private driverService: DriverService) {}
 
   ngOnInit(): void {
-    this.drivers = this.driverService.getAll();
-    this.dataSource = new MatTableDataSource<Driver>(this.drivers);
-  }
+    this.driverService.selectedValue$.subscribe((value) => {
+      this.valueFromCreateComponent = value;
+    });
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.driverService.getAll().subscribe((res) => {
+      this.all = res.results;
+      this.dataSource = new MatTableDataSource<Driver>(this.all);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   changeState() {
@@ -51,13 +53,20 @@ export class DriversComponent implements OnInit, AfterViewInit {
   }
 }
 
-export interface Driver {
+export interface All {
+  totalCount: number;
+  results: Driver[];
+}
+
+export interface Driver {  
   _id: number;
   name: string;
+  surname: string;
   email: string;
-  phone: string;
+  telephoneNumber: string;
   address: string;
   blocked: boolean;
   picture: string;
   changes: boolean;
 }
+
