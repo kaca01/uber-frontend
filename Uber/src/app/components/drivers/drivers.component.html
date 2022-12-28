@@ -54,7 +54,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="getDriver(row)"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="getDriver(row)" [ngClass]="{'highlightTableColor': selectedRowIndex == row.id}"></tr>
         </table>
     </div>
 
@@ -71,7 +71,7 @@
 <p id="bottom-margin">test</p>
 
 <footer>
-    <button id="details" (click)="openDialog()">DETAILS</button>
+    <button id="details" (click)="openDialog()">NOTES</button>
     <button id="block" (click)="blockUser()">BLOCK</button>
     <button id="history">HISTORY</button>
     <button id="view-changes">VIEW CHANGES</button>

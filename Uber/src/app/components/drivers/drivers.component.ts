@@ -17,6 +17,7 @@ import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
   styleUrls: ['./drivers.component.css'],
 })
 export class DriversComponent implements OnInit {
+  selectedRowIndex : number = -1;
   displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked', 'changes'];
   dataSource!: MatTableDataSource<Driver>;
   all: Driver[] = [];
@@ -69,21 +70,31 @@ export class DriversComponent implements OnInit {
   }
 
   getDriver(driver : Driver) {
+    const block = document.getElementById("block");
+    this.selectedRowIndex=driver.id;
     this.driver = driver;
+    if (block != null) {
+      if (this.driver.blocked == true) block.innerText = "UNBLOCK";
+      else block.innerText = "BLOCK";
+    }
     this.getNotes();
   }
 
   blockUser() : void{
+    const block = document.getElementById("block");
     if (this.driver.blocked == true) {
       this.unblockUser();
       return;
     }
     this.driver.blocked = true;
+    if (block != null) block.innerText = "UNBLOCK";
     this.driverService.block(this.driver.id).subscribe();
   }
 
   unblockUser() : void {
+    const block = document.getElementById("block");
     this.driver.blocked = false;
+    if (block != null) block.innerText = "BLOCK";
     this.driverService.unblock(this.driver.id).subscribe();
   }
 
@@ -92,12 +103,15 @@ export class DriversComponent implements OnInit {
       this.requestNote["message"] = this.message;
       this.driverService.addNote(this.driver.id, this.requestNote)
       .subscribe((res: any) => {
-        console.log(res);
+        console.log("all notes");
+        console.log(this.allNotes);
+        this.selectedRowIndex = -1;
       });
     }
   }
 
   getNotes() : void {
+    console.log(this.driver.id);
     this.driverService.getNotes(this.driver.id)
     .subscribe((res: any) => {
       this.allNotes = res;
