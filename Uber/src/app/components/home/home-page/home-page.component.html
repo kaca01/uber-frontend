@@ -2,10 +2,10 @@
 
 <div id="page-container">
     <div id="container">
-        <app-map [pickup]="pickup" [destination]="destination"> </app-map>
+        <app-map [pickup]="pickup" [destination]="destination" (pickup_out)="getPickup($event)" (destination_out)="getDestination($event)"> </app-map>
     </div>
     
     <div id="all-components">
-        <passenger-home (newItemEvent1)="getPickup($event)" (newItemEvent2)="getDestination($event)" id="passenger-home"></passenger-home>
+        <passenger-home (newItemEvent1)="getPickup($event)" (newItemEvent2)="getDestination($event)" [pickup_input]="pickup" [destination_input]="destination" id="passenger-home"></passenger-home>
     </div>
 </div>
