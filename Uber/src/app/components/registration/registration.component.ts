@@ -30,7 +30,6 @@ export class RegistrationComponent implements OnInit{
 
   reg() {
     if (this.registrationForm.valid) {
-      console.log(this.registrationForm.value);
       this.service.add(this.registrationForm.value)
       .subscribe((res: any) => {
         console.log(res);

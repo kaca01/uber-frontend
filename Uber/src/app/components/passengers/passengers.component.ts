@@ -21,6 +21,8 @@ export class PassengersComponent implements OnInit{
   dataSource!: MatTableDataSource<Passenger>;
   condition: boolean = true;
   all: Passenger[] = [];
+  message = '';
+  private requestNote = {} as Note;
 
   valueFromCreateComponent = '';
   private passenger = {} as Passenger;
@@ -74,6 +76,16 @@ export class PassengersComponent implements OnInit{
     this.passenger.blocked = false;
     this.passengerService.unblock(this.passenger.id).subscribe();
   }
+
+  addNote() : void {
+    if(this.message != '') {
+      this.requestNote["message"] = this.message;
+      this.passengerService.addNote(this.passenger.id, this.requestNote)
+      .subscribe((res: any) => {
+        console.log(res);
+      });
+    }
+  }
 }
 
 export interface All {
@@ -89,4 +101,8 @@ export interface Passenger {
   address: string;
   blocked: boolean;
   picture: string;
+}
+
+export interface Note {
+  message: string;
 }

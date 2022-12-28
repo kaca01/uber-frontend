@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { All, Passenger } from '../components/passengers/passengers.component';
+import { All, Note, Passenger } from '../components/passengers/passengers.component';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
@@ -35,5 +35,12 @@ export class PassengerService {
 
   unblock(passengerId : Number) : Observable<void> {
     return this.http.put<any>(environment.apiHost + "api/user/" + passengerId.toString() + "/unblock", {});
+  }
+
+  addNote(passengerId: Number, note: Note) : Observable<any> {
+    const options: any = {
+      responseType: 'text',
+    };
+    return this.http.post<string>(environment.apiHost + "api/user/" + passengerId.toString() + "/note", note, options);
   }
 }

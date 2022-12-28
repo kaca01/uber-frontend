@@ -105,14 +105,14 @@ td{
     color: gray;
 }
 
-#done {
+#save {
     vertical-align: top;
     margin-top: 15px;
     color: gray;
     border-radius: 5px;
 }
 
-#done:hover{
+#save:hover{
     background-color: rgba(233, 233, 233, 1);
 }
 

@@ -53,8 +53,8 @@
             showFirstLastButtons
     ></mat-paginator>
     <div>
-        <textarea id="text-area" placeholder="Leave a note..."></textarea>
-        <button id="done">DONE</button>
+        <textarea id="text-area" placeholder="Leave a note..." [(ngModel)]="message"></textarea>
+        <button id="save" (click)="addNote()">SAVE</button>
     </div>
 
 </div>

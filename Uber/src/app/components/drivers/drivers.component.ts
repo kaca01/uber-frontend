@@ -19,6 +19,8 @@ export class DriversComponent implements OnInit {
   dataSource!: MatTableDataSource<Driver>;
   all: Driver[] = [];
   condition: boolean = true;
+  message = '';
+  private requestNote = {} as Note;
 
   valueFromCreateComponent = '';
   private driver = {} as Driver;
@@ -69,6 +71,16 @@ export class DriversComponent implements OnInit {
     this.driver.blocked = false;
     this.driverService.unblock(this.driver.id).subscribe();
   }
+
+  addNote() : void {
+    if(this.message != '') {
+      this.requestNote["message"] = this.message;
+      this.driverService.addNote(this.driver.id, this.requestNote)
+      .subscribe((res: any) => {
+        console.log(res);
+      });
+    }
+  }
 }
 
 export interface All {
@@ -86,5 +98,9 @@ export interface Driver {
   blocked: boolean;
   picture: string;
   changes: boolean;
+}
+
+export interface Note {
+  message: string;
 }
 
