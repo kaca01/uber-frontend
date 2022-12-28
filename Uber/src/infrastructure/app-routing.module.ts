@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'drivers', component: DriversComponent},
   { path: 'add-driver', component: AddDriverComponent},
   { path: 'add-vehicle', component: AddVehicleComponent},
-  { path: '', redirectTo: '/uu-home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: '**', component: HomePageComponent },
 ];
 
