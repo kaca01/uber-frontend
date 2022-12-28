@@ -16,13 +16,14 @@ import { PassengerService } from 'src/app/service/passenger.service';
   templateUrl: './passengers.component.html',
   styleUrls: ['./passengers.component.css'],
 })
-export class PassengersComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['name', 'email', 'phone', 'address', 'blocked'];
+export class PassengersComponent implements OnInit{
+  displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked'];
   dataSource!: MatTableDataSource<Passenger>;
   condition: boolean = true;
   all: Passenger[] = [];
 
   valueFromCreateComponent = '';
+  private passenger = {} as Passenger;
 
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
@@ -42,10 +43,10 @@ export class PassengersComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
+  // }
 
   changeState() {
     this.condition = !this.condition;
@@ -57,7 +58,21 @@ export class PassengersComponent implements OnInit, AfterViewInit {
   }
 
   getPassenger(passenger : Passenger) {
-    alert("you have clicked");
+    this.passenger = passenger;
+  }
+
+  blockUser() : void{
+    if (this.passenger.blocked == true) {
+      this.unblockUser();
+      return;
+    }
+    this.passenger.blocked = true;
+    this.passengerService.block(this.passenger.id).subscribe();
+  }
+
+  unblockUser() : void {
+    this.passenger.blocked = false;
+    this.passengerService.unblock(this.passenger.id).subscribe();
   }
 }
 
@@ -68,7 +83,7 @@ export interface All {
 
 
 export interface Passenger {
-  _id: number;
+  id: number;
   name: string;
   email: string;
   telephoneNumber: string;

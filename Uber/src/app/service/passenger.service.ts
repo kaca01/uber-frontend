@@ -25,10 +25,17 @@ export class PassengerService {
   }
 
   add(passenger: any): Observable<any> {
-    console.log("Pass" + passenger);
     const options: any = {
       responseType: 'text',
     };
     return this.http.post<string>(environment.apiHost + 'api/passenger', passenger, options);
+  }
+
+  block(passengerId : Number) : Observable<void> {
+    return this.http.put<any>(environment.apiHost + "api/user/" + passengerId.toString() + "/block", {});
+  }
+
+  unblock(passengerId : Number) : Observable<void> {
+    return this.http.put<any>(environment.apiHost + "api/user/" + passengerId.toString() + "/unblock", {});
   }
 }

@@ -28,7 +28,7 @@
             <td mat-cell *matCellDef="let element">  {{ element.email }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="phone">
+        <ng-container matColumnDef="telephoneNumber">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>PHONE</th>
             <td mat-cell *matCellDef="let element">{{ element.telephoneNumber }}</td>
         </ng-container>
@@ -63,6 +63,6 @@
 
 <footer>
     <button id="details">DETAILS</button>
-    <button id="block">BLOCK</button>
+    <button id="block" (click)="blockUser()">BLOCK</button>
     <button id="history">HISTORY</button>
 </footer>

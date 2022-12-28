@@ -15,7 +15,7 @@ import { DriverService } from 'src/app/service/driver.service';
   styleUrls: ['./drivers.component.css'],
 })
 export class DriversComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'email', 'phone', 'address', 'blocked', 'changes'];
+  displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked', 'changes'];
   dataSource!: MatTableDataSource<Driver>;
   all: Driver[] = [];
   condition: boolean = true;
