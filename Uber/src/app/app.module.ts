@@ -33,6 +33,8 @@ import { AddVehicleComponent } from './components/drivers/add-vehicle/add-vehicl
 import { BasePageComponent } from './components/history/base-page/base-page.component';
 import { MapComponent } from './map/map.component';
 import { HomePageComponent } from './components/home/home-page/home-page.component';
+import { NotesDialogComponent } from './components/notes-dialog/notes-dialog.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -61,19 +63,27 @@ import { HomePageComponent } from './components/home/home-page/home-page.compone
     AddVehicleComponent,
     BasePageComponent,
     MapComponent,
-    HomePageComponent, 
+    HomePageComponent,
+    NotesDialogComponent, 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
     MatTreeModule,
     HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    }
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [NotesDialogComponent]
 })
 export class AppModule { }

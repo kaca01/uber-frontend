@@ -20,6 +20,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
+import { NotesDialogComponent } from 'src/app/components/notes-dialog/notes-dialog.component';
 
 @NgModule({
   imports: [

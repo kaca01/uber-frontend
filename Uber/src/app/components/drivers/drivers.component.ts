@@ -3,10 +3,13 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { RouterLinkWithHref } from '@angular/router';
 import { DriverService } from 'src/app/service/driver.service';
+import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
 
 @Component({
   selector: 'app-drivers',
@@ -14,17 +17,34 @@ import { DriverService } from 'src/app/service/driver.service';
   styleUrls: ['./drivers.component.css'],
 })
 export class DriversComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'email', 'phone', 'address', 'blocked', 'changes'];
+  selectedRowIndex : number = -1;
+  displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked', 'changes'];
   dataSource!: MatTableDataSource<Driver>;
   all: Driver[] = [];
+  private allNotes = {} as AllNotes;
   condition: boolean = true;
+  message = '';
+  private requestNote = {} as RequestNote;
 
   valueFromCreateComponent = '';
+  private driver = {} as Driver;
 
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private driverService: DriverService) {}
+  constructor(private driverService: DriverService, private dialog: MatDialog) {
+    
+  }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = this.allNotes.results;
+    this.dialog.open(NotesDialogComponent, dialogConfig);
+  }
 
   ngOnInit(): void {
     this.driverService.selectedValue$.subscribe((value) => {
@@ -37,6 +57,7 @@ export class DriversComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+
   }
 
   changeState() {
@@ -49,7 +70,52 @@ export class DriversComponent implements OnInit {
   }
 
   getDriver(driver : Driver) {
-    alert("you have clicked");
+    const block = document.getElementById("block");
+    this.selectedRowIndex=driver.id;
+    this.driver = driver;
+    if (block != null) {
+      if (this.driver.blocked == true) block.innerText = "UNBLOCK";
+      else block.innerText = "BLOCK";
+    }
+    this.getNotes();
+  }
+
+  blockUser() : void{
+    const block = document.getElementById("block");
+    if (this.driver.blocked == true) {
+      this.unblockUser();
+      return;
+    }
+    this.driver.blocked = true;
+    if (block != null) block.innerText = "UNBLOCK";
+    this.driverService.block(this.driver.id).subscribe();
+  }
+
+  unblockUser() : void {
+    const block = document.getElementById("block");
+    this.driver.blocked = false;
+    if (block != null) block.innerText = "BLOCK";
+    this.driverService.unblock(this.driver.id).subscribe();
+  }
+
+  addNote() : void {
+    if(this.message != '') {
+      this.requestNote["message"] = this.message;
+      this.driverService.addNote(this.driver.id, this.requestNote)
+      .subscribe((res: any) => {
+        console.log("all notes");
+        console.log(this.allNotes);
+        this.selectedRowIndex = -1;
+      });
+    }
+  }
+
+  getNotes() : void {
+    console.log(this.driver.id);
+    this.driverService.getNotes(this.driver.id)
+    .subscribe((res: any) => {
+      this.allNotes = res;
+    }); 
   }
 }
 
@@ -59,7 +125,7 @@ export interface All {
 }
 
 export interface Driver {  
-  _id: number;
+  id: number;
   name: string;
   surname: string;
   email: string;
@@ -68,5 +134,20 @@ export interface Driver {
   blocked: boolean;
   picture: string;
   changes: boolean;
+}
+
+export interface AllNotes {
+  totalCount: number;
+  results: Note[];
+}
+
+export interface RequestNote {
+  message: string;
+}
+
+export interface Note {
+  id: number;
+  date: string;
+  message: string;
 }
 

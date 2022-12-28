@@ -1,3 +1,7 @@
+.highlightTableColor{
+    background-color: #ebe9e956;
+  }
+
 #main-container{
     margin: 50px 5% 65px 5%;
 }
@@ -34,9 +38,14 @@ span{
     font-weight: 600;
 }
 
+.table-container {
+    height: 25em;
+}
+
    table {
      width: 100%;
      margin: 20px 0 10px 0;
+     overflow: scroll;
    }
 
    .mat-mdc-table .mdc-data-table__row:hover{
@@ -91,6 +100,26 @@ td{
     color: rgba(63, 63, 63, 0.737);
 }
 
+#text-area {
+    width: 20em;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 2px;
+    color: gray;
+}
+
+#save {
+    vertical-align: top;
+    margin-top: 15px;
+    color: gray;
+    border-radius: 5px;
+}
+
+#save:hover{
+    background-color: rgba(233, 233, 233, 1);
+}
+
 .bottom-margin{
     color: white;
 }
@@ -119,6 +148,7 @@ button:hover{
 }
 
 #block{
+    width: 100px;
     color: rgba(252, 83, 83, 0.685);
 }
 
@@ -131,7 +161,8 @@ button:hover{
         height: 40px;
     }
 
-    .table-container{width: 100%;
+    .table-container{
+        width: 100%;
         overflow-x: auto;}
 
     .title{
