@@ -81,7 +81,6 @@ export interface All {
   results: Passenger[];
 }
 
-
 export interface Passenger {
   id: number;
   name: string;

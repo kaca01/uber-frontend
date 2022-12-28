@@ -11,8 +11,6 @@ export class PassengerService {
   private value$ = new BehaviorSubject<any>({});
   selectedValue$ = this.value$.asObservable();
   
-  private passengerList: Passenger[] = [];
-
   constructor(private http: HttpClient) {
   }
 
