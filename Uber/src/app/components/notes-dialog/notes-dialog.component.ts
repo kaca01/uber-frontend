@@ -14,8 +14,8 @@ export class NotesDialogComponent {
   constructor(private dialogRef: MatDialogRef<NotesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: Note[]) {
       console.log("Printam");
-      console.log(data);
       this.notes = data;
+      console.log(this.notes);
     }
 
     close() : void {

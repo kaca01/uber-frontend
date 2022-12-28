@@ -40,9 +40,9 @@ export class DriversComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
-    dialogConfig.data = {
+    dialogConfig.data = [{
       message: "Poruka"
-    };
+    }];
     this.dialog.open(NotesDialogComponent, dialogConfig);
 }
 
