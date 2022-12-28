@@ -27,4 +27,8 @@ export class DriverService {
     console.log("api/user/" + driverId.toString() + "/block");
     return this.http.put<any>(environment.apiHost + "api/user/" + driverId.toString() + "/block", {});
   }
+
+  unblock(driverId : Number) : Observable<void> {
+    return this.http.put<any>(environment.apiHost + "api/user/" + driverId.toString() + "/unblock", {});
+  }
 }

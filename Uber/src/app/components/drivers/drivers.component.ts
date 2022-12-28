@@ -21,7 +21,7 @@ export class DriversComponent implements OnInit {
   condition: boolean = true;
 
   valueFromCreateComponent = '';
-  driverId = -1;
+  private driverId : Number = new Number(-1);
 
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
@@ -58,9 +58,20 @@ export class DriversComponent implements OnInit {
   }
 
   blockUser() : boolean{
-    console.log("Blokiranje...");
     this.driverService.block(this.driverId).subscribe();
+    let id: Number = this.driverId;
+    this.dataSource.data.forEach(function (value){
+      if (id == value.id) value.blocked = true;
+    })
     return true;
+  }
+
+  unblockUser() : void {
+    this.driverService.unblock(this.driverId).subscribe();
+    let id: Number = this.driverId;
+    this.dataSource.data.forEach(function (value){
+      if (id == value.id) value.blocked = false;
+    })
   }
 }
 
