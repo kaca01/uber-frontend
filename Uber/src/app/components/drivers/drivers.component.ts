@@ -3,11 +3,13 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RouterLinkWithHref } from '@angular/router';
 import { DriverService } from 'src/app/service/driver.service';
+import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
 
 @Component({
   selector: 'app-drivers',
@@ -28,8 +30,21 @@ export class DriversComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private driverService: DriverService) {
+  constructor(private driverService: DriverService, private dialog: MatDialog) {
+    
   }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      message: "Poruka"
+    };
+    this.dialog.open(NotesDialogComponent, dialogConfig);
+}
 
   ngOnInit(): void {
     this.driverService.selectedValue$.subscribe((value) => {
