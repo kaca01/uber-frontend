@@ -19,6 +19,7 @@ import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
   styleUrls: ['./passengers.component.css'],
 })
 export class PassengersComponent implements OnInit{
+  selectedRowIndex : number = -1;
   displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked'];
   dataSource!: MatTableDataSource<Passenger>;
   condition: boolean = true;
@@ -73,21 +74,31 @@ export class PassengersComponent implements OnInit{
   }
 
   getPassenger(passenger : Passenger) {
+    const block = document.getElementById("block");
+    this.selectedRowIndex=passenger.id;
     this.passenger = passenger;
+    if (block != null) {
+      if (this.passenger.blocked == true) block.innerText = "UNBLOCK";
+      else block.innerText = "BLOCK";
+    }
     this.getNotes();
   }
 
   blockUser() : void{
+    const block = document.getElementById("block");
     if (this.passenger.blocked == true) {
       this.unblockUser();
       return;
     }
     this.passenger.blocked = true;
+    if (block != null) block.innerText = "UNBLOCK";
     this.passengerService.block(this.passenger.id).subscribe();
   }
 
   unblockUser() : void {
+    const block = document.getElementById("block");
     this.passenger.blocked = false;
+    if (block != null) block.innerText = "BLOCK";
     this.passengerService.unblock(this.passenger.id).subscribe();
   }
 
@@ -96,6 +107,7 @@ export class PassengersComponent implements OnInit{
       this.requestNote["message"] = this.message;
       this.passengerService.addNote(this.passenger.id, this.requestNote)
       .subscribe((res: any) => {
+        this.selectedRowIndex = -1;
       });
     }
   }

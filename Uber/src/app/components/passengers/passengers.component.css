@@ -1,3 +1,6 @@
+.highlightTableColor{
+    background-color: #ebe9e956;
+}
 
 #main-container{
     margin: 50px 5% 65px 5%;
@@ -119,6 +122,7 @@ button:hover{
 
 #block{
     color: rgba(252, 83, 83, 0.685);
+    width: 100px;
 }
 
 #history{
