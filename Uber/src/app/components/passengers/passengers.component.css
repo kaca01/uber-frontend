@@ -96,28 +96,6 @@ td{
     color: rgba(63, 63, 63, 0.737);
 }
 
-
-#text-area {
-    width: 20em;
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 5px;
-    padding: 2px;
-    color: gray;
-}
-
-#save {
-    vertical-align: top;
-    margin-top: 15px;
-    color: gray;
-    border-radius: 5px;
-}
-
-#save:hover{
-    background-color: rgba(233, 233, 233, 1);
-}
-
-
 .bottom-margin{
     color: white;
 }

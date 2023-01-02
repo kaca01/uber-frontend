@@ -1,1 +1,12 @@
-<p>add-note-dialog works!</p>
+<div class="container">
+    <img src="../../assets/images/close.png" id="close-dialog" class="close" (click)="close()"/>
+
+    <div id="title">Notes</div>
+
+    <mat-dialog-content>
+        <textarea id="textarea">Leave a note...</textarea>
+    </mat-dialog-content>
+    <div id="btn-container">
+        <button id="save">SAVE</button>
+    </div>  
+</div>

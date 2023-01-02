@@ -11,6 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { PassengerService } from 'src/app/service/passenger.service';
+import { AddNoteDialogComponent } from '../notes-dialog/add-note-dialog/add-note-dialog.component';
 import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
 
 @Component({
@@ -39,11 +40,22 @@ export class PassengersComponent implements OnInit{
   openDialog() {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
+    dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = this.allNotes.results;
     this.dialog.open(NotesDialogComponent, dialogConfig);
+  }
+
+  openAddNoteDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = this.passenger.id;
+
+    this.dialog.open(AddNoteDialogComponent, dialogConfig);
   }
 
   ngOnInit(): void {
@@ -59,10 +71,10 @@ export class PassengersComponent implements OnInit{
     });
   }
 
-  // ngAfterViewInit() {
-  //   this.dataSource.paginator = this.paginator;
-  //   this.dataSource.sort = this.sort;
-  // }
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   changeState() {
     this.condition = !this.condition;
