@@ -10,6 +10,10 @@
             <img id="plus-icon" src="../../assets/images/plus.png"/>
             <span>Add driver</span>
         </div>
+        <div class="add">
+            <img id="plus-icon" src="../../assets/images/plus.png"/>
+            <span>Add note</span>
+        </div>
         <form>
             <input id="search" matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
             <img id="search-icon" src="../../assets/images/search.png"/>
@@ -62,13 +66,11 @@
             [pageSizeOptions]="[5, 10, 25, 100]"
             showFirstLastButtons
     ></mat-paginator>
-    <div>
+    <!-- <div>
         <textarea id="text-area" placeholder="Leave a note..." [(ngModel)]="message"></textarea>
         <button id="save" (click)="addNote()">SAVE</button>
-    </div>
+    </div> -->
 </div>
-
-<p id="bottom-margin">test</p>
 
 <footer>
     <button id="details" (click)="openDialog()">NOTES</button>
