@@ -7,8 +7,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { RouterLinkWithHref } from '@angular/router';
 import { DriverService } from 'src/app/service/driver.service';
+import { AddNoteDialogComponent } from '../notes-dialog/add-note-dialog/add-note-dialog.component';
 import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
 
 @Component({
@@ -17,22 +17,20 @@ import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
   styleUrls: ['./drivers.component.css'],
 })
 export class DriversComponent implements OnInit {
-  selectedRowIndex : number = -1;
+  public selectedRowIndex : number = -1;
   displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked', 'changes'];
   dataSource!: MatTableDataSource<Driver>;
   all: Driver[] = [];
   private allNotes = {} as AllNotes;
   condition: boolean = true;
-  message = '';
-  private requestNote = {} as RequestNote;
-
+  public message = '';
   valueFromCreateComponent = '';
-  private driver = {} as Driver;
+  public driver = {} as Driver;
 
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private driverService: DriverService, private dialog: MatDialog) {
+  constructor(public driverService: DriverService, private dialog: MatDialog) {
     
   }
 
@@ -46,6 +44,18 @@ export class DriversComponent implements OnInit {
     this.dialog.open(NotesDialogComponent, dialogConfig);
   }
 
+  openAddNoteDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = this;
+
+    this.dialog.open(AddNoteDialogComponent, dialogConfig);
+    this.selectedRowIndex = -1;
+  }
+
   ngOnInit(): void {
     this.driverService.selectedValue$.subscribe((value) => {
       this.valueFromCreateComponent = value;
@@ -57,7 +67,6 @@ export class DriversComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-
   }
 
   changeState() {
@@ -98,18 +107,6 @@ export class DriversComponent implements OnInit {
     this.driverService.unblock(this.driver.id).subscribe();
   }
 
-  addNote() : void {
-    if(this.message != '') {
-      this.requestNote["message"] = this.message;
-      this.driverService.addNote(this.driver.id, this.requestNote)
-      .subscribe((res: any) => {
-        console.log("all notes");
-        console.log(this.allNotes);
-        this.selectedRowIndex = -1;
-      });
-    }
-  }
-
   getNotes() : void {
     console.log(this.driver.id);
     this.driverService.getNotes(this.driver.id)
@@ -141,13 +138,13 @@ export interface AllNotes {
   results: Note[];
 }
 
-export interface RequestNote {
-  message: string;
-}
-
 export interface Note {
   id: number;
   date: string;
+  message: string;
+}
+
+export interface RequestNote {
   message: string;
 }
 

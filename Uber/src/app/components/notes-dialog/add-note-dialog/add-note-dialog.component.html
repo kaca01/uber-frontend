@@ -4,9 +4,9 @@
     <div id="title">Notes</div>
 
     <mat-dialog-content>
-        <textarea id="textarea">Leave a note...</textarea>
+        <textarea id="textarea" placeholder="Leave a note..." [(ngModel)]="message"></textarea>
     </mat-dialog-content>
     <div id="btn-container">
-        <button id="save">SAVE</button>
+        <button id="save" (click)="save()">SAVE</button>
     </div>  
 </div>
