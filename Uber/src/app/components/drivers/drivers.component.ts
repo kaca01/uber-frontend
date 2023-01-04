@@ -30,7 +30,7 @@ export class DriversComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private driverService: UserService, private dialog: MatDialog) {
+  constructor(private userService: UserService, private dialog: MatDialog) {
     
   }
 
@@ -57,11 +57,11 @@ export class DriversComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.driverService.selectedValue$.subscribe((value) => {
+    this.userService.selectedValue$.subscribe((value) => {
       this.valueFromCreateComponent = value;
     });
 
-    this.driverService.getAllDrivers().subscribe((res) => {
+    this.userService.getAllDrivers().subscribe((res) => {
       this.all = res.results;
       this.dataSource = new MatTableDataSource<User>(this.all);
       this.dataSource.paginator = this.paginator;
@@ -97,19 +97,19 @@ export class DriversComponent implements OnInit {
     }
     this.user.blocked = true;
     if (block != null) block.innerText = "UNBLOCK";
-    this.driverService.block(this.user.id).subscribe();
+    this.userService.block(this.user.id).subscribe();
   }
 
   unblockUser() : void {
     const block = document.getElementById("block");
     this.user.blocked = false;
     if (block != null) block.innerText = "BLOCK";
-    this.driverService.unblock(this.user.id).subscribe();
+    this.userService.unblock(this.user.id).subscribe();
   }
 
   getNotes() : void {
     console.log(this.user.id);
-    this.driverService.getNotes(this.user.id)
+    this.userService.getNotes(this.user.id)
     .subscribe((res: any) => {
       this.allNotes = res;
     }); 

@@ -22,12 +22,9 @@ export class AddNoteDialogComponent {
   }
 
   save() : void {
-    console.log(this.message);
+    this.message = this.message.trim();
     if(this.message != '') {
-      console.log("Printam usera");
       this.requestNote["message"] = this.message;
-      console.log(this.users.user.id);
-      console.log(this.requestNote);
       this.userService.addNote(this.users.user.id, this.requestNote)
       .subscribe((res: any) => {
       });
