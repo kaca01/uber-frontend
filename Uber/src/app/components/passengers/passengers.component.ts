@@ -9,7 +9,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DriverService } from 'src/app/service/driver.service';
+import { UserService } from 'src/app/service/user.service';
 import { AddNoteDialogComponent } from '../notes-dialog/add-note-dialog/add-note-dialog.component';
 import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
 
@@ -34,7 +34,7 @@ export class PassengersComponent implements OnInit{
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private userService: DriverService, private dialog: MatDialog) {}
+  constructor(private userService: UserService, private dialog: MatDialog) {}
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();

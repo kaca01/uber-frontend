@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DriverService } from 'src/app/service/driver.service';
-import { PassengerService } from 'src/app/service/passenger.service';
+import { UserService } from 'src/app/service/user.service';
 import { DriversComponent } from '../../drivers/drivers.component';
 
 @Component({
@@ -13,7 +12,7 @@ export class AddNoteDialogComponent {
   private users = {} as DriversComponent;
   private requestNote = {} as RequestNote;
   message = "";
-  constructor(private userService : DriverService, private dialogRef: MatDialogRef<AddNoteDialogComponent>,
+  constructor(private userService : UserService, private dialogRef: MatDialogRef<AddNoteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: any) {
       this.users = data;
     }

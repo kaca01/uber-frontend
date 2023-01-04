@@ -7,7 +7,7 @@ import { All, AllNotes, User, Note, RequestNote } from '../components/drivers/dr
 @Injectable({
   providedIn: 'root',
 })
-export class DriverService {
+export class UserService {
   private value$ = new BehaviorSubject<any>({});
   selectedValue$ = this.value$.asObservable();
 
@@ -35,10 +35,6 @@ export class DriverService {
   }
 
   addNote(userId: Number, note: RequestNote) : Observable<any> {
-    console.log("User id");
-    console.log(userId);
-    console.log("req note");
-    console.log(note);
     const options: any = {
       responseType: 'text',
     };
