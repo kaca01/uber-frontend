@@ -31,7 +31,6 @@ export class MapHistoryPageComponent{
       iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
     });
     L.Marker.prototype.options.icon = DefaultIcon;
-    this.initMap();
   }
 
   ngAfterViewChecked() : void {

@@ -10,7 +10,7 @@ import { LocationDialog } from '../components/home/location-dialog/location_dial
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit, AfterViewChecked {
   @Input() pickup = '';
   @Input() destination = '';
   @Output() pickup_out = new EventEmitter<string>();
@@ -33,7 +33,7 @@ export class MapComponent implements AfterViewInit {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
     tiles.addTo(this.map);
-     this.registerOnClick();
+    this.registerOnClick();
   }
 
   constructor(
@@ -117,7 +117,6 @@ export class MapComponent implements AfterViewInit {
       iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
     });
     L.Marker.prototype.options.icon = DefaultIcon;
-    this.initMap();
   }
 
   ngOnChanges() { 
