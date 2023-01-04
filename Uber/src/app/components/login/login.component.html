@@ -8,20 +8,22 @@
 
   <mat-card>
     <mat-card-content>
+
       <img src="../../assets/images/close.png" id="cardCloseImg" class="close" [routerLink]="['/uu-home']"/>
       <div id="cardHeader">
         <div class="left">
           <p class="welcome">Welcome to Uber</p>
-          <p class="title">Login</p>
         </div>
         <div class="right">
           <p class="no-account">No Account ?</p>
           <a class="text-link" class="sign-up" routerLink="/registration">Sign up</a>
         </div>
-      </div>
-      
+        <p class="title">Login</p>
+      </div>    
 
-      <form name="loginForm" [formGroup]="loginForm">
+      <form *ngIf="!submitted" name="loginForm" [formGroup]="loginForm">
+
+        <p *ngIf="notification" [class]="notification.msgType">{{notification.msgBody}}</p>
 
         <div class="email-input">
           <mat-form-field class="full-width" appearance="outline">
@@ -51,7 +53,7 @@
           </mat-form-field>      
         </div>
         
-        <button mat-raised-button color="green" (click)="onLogin()" class="login-btn">Login</button>
+        <button mat-raised-button color="green" (click)="login()" class="login-btn">Login</button>
       </form>
 
     </mat-card-content>

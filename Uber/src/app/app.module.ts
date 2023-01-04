@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {MatTreeModule} from '@angular/material/tree';
+import { MatTreeModule } from '@angular/material/tree';
 import { HttpClientModule } from '@angular/common/http';
+
 import { AppRoutingModule } from '../infrastructure/app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,6 +36,14 @@ import { MapComponent } from './map/map.component';
 import { HomePageComponent } from './components/home/home-page/home-page.component';
 import { NotesDialogComponent } from './components/notes-dialog/notes-dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+
+import {ApiService} from './service/api.service';
+import {AuthService} from './service/auth.service';
+import {UserService} from './service/user.service';
+import {ConfigService} from './service/config.service';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptor/TokenInterceptor';
 
 
 @NgModule({
@@ -79,11 +88,19 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
   ],
   providers: [
     {
-      provide: MatDialogRef,
-      useValue: {}
-    }
+      // provide: MatDialogRef, 
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+      // useValue: {}
+    },
+    AuthService,
+    ApiService,
+    UserService,
+    ConfigService,
   ],
   bootstrap: [AppComponent],
-  entryComponents: [NotesDialogComponent]
+  schemas: [NO_ERRORS_SCHEMA],
+  // entryComponents: [NotesDialogComponent]
 })
 export class AppModule { }
