@@ -32,9 +32,9 @@ import { AddVehicleComponent } from './components/drivers/add-vehicle/add-vehicl
 import { BasePageComponent } from './components/history/base-page/base-page.component';
 import { MapComponent } from './map/map.component';
 import { HomePageComponent } from './components/home/home-page/home-page.component';
-import { NotesDialogComponent } from './components/notes-dialog/notes-dialog.component';
+import { NotesDialogComponent } from './components/dialogs/notes-dialog/notes-dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { AddNoteDialogComponent } from './components/notes-dialog/add-note-dialog/add-note-dialog.component';
+import { AddNoteDialogComponent } from './components/dialogs/add-note-dialog/add-note-dialog.component';
 
 
 @NgModule({

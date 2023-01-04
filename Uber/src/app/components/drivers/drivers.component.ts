@@ -8,8 +8,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/service/user.service';
-import { AddNoteDialogComponent } from '../notes-dialog/add-note-dialog/add-note-dialog.component';
-import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
+import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dialog.component';
+import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.component';
 
 @Component({
   selector: 'app-drivers',
