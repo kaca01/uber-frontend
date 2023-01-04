@@ -35,6 +35,7 @@ import { MapComponent } from './map/map.component';
 import { HomePageComponent } from './components/home/home-page/home-page.component';
 import { NotesDialogComponent } from './components/notes-dialog/notes-dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MapHistoryPageComponent } from './map-history-page/map-history-page.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     BasePageComponent,
     MapComponent,
     HomePageComponent,
-    NotesDialogComponent, 
+    NotesDialogComponent,
+    MapHistoryPageComponent, 
   ],
   imports: [
     BrowserModule,
