@@ -19,25 +19,25 @@ import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
 export class DriversComponent implements OnInit {
   public selectedRowIndex : number = -1;
   displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked', 'changes'];
-  dataSource!: MatTableDataSource<Driver>;
-  all: Driver[] = [];
+  dataSource!: MatTableDataSource<User>;
+  all: User[] = [];
   private allNotes = {} as AllNotes;
   condition: boolean = true;
   public message = '';
   valueFromCreateComponent = '';
-  public driver = {} as Driver;
+  public user = {} as User;
 
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(public driverService: DriverService, private dialog: MatDialog) {
+  constructor(private driverService: DriverService, private dialog: MatDialog) {
     
   }
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
+    dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = this.allNotes.results;
@@ -61,9 +61,9 @@ export class DriversComponent implements OnInit {
       this.valueFromCreateComponent = value;
     });
 
-    this.driverService.getAll().subscribe((res) => {
+    this.driverService.getAllDrivers().subscribe((res) => {
       this.all = res.results;
-      this.dataSource = new MatTableDataSource<Driver>(this.all);
+      this.dataSource = new MatTableDataSource<User>(this.all);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -78,12 +78,12 @@ export class DriversComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  getDriver(driver : Driver) {
+  getDriver(driver : User) {
     const block = document.getElementById("block");
     this.selectedRowIndex=driver.id;
-    this.driver = driver;
+    this.user = driver;
     if (block != null) {
-      if (this.driver.blocked == true) block.innerText = "UNBLOCK";
+      if (this.user.blocked == true) block.innerText = "UNBLOCK";
       else block.innerText = "BLOCK";
     }
     this.getNotes();
@@ -91,25 +91,25 @@ export class DriversComponent implements OnInit {
 
   blockUser() : void{
     const block = document.getElementById("block");
-    if (this.driver.blocked == true) {
+    if (this.user.blocked == true) {
       this.unblockUser();
       return;
     }
-    this.driver.blocked = true;
+    this.user.blocked = true;
     if (block != null) block.innerText = "UNBLOCK";
-    this.driverService.block(this.driver.id).subscribe();
+    this.driverService.block(this.user.id).subscribe();
   }
 
   unblockUser() : void {
     const block = document.getElementById("block");
-    this.driver.blocked = false;
+    this.user.blocked = false;
     if (block != null) block.innerText = "BLOCK";
-    this.driverService.unblock(this.driver.id).subscribe();
+    this.driverService.unblock(this.user.id).subscribe();
   }
 
   getNotes() : void {
-    console.log(this.driver.id);
-    this.driverService.getNotes(this.driver.id)
+    console.log(this.user.id);
+    this.driverService.getNotes(this.user.id)
     .subscribe((res: any) => {
       this.allNotes = res;
     }); 
@@ -118,10 +118,10 @@ export class DriversComponent implements OnInit {
 
 export interface All {
   totalCount: number;
-  results: Driver[];
+  results: User[];
 }
 
-export interface Driver {  
+export interface User {  
   id: number;
   name: string;
   surname: string;

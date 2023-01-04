@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { All, AllNotes, Note, Passenger, RequestNote } from '../components/passengers/passengers.component';
+import { All, AllNotes, Note, User, RequestNote } from '../components/passengers/passengers.component';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { HttpClient } from '@angular/common/http';

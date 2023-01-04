@@ -10,12 +10,12 @@ import { DriversComponent } from '../../drivers/drivers.component';
   styleUrls: ['./add-note-dialog.component.css']
 })
 export class AddNoteDialogComponent {
-  private drivers = {} as DriversComponent;
+  private users = {} as DriversComponent;
   private requestNote = {} as RequestNote;
   message = "";
-  constructor(private dialogRef: MatDialogRef<AddNoteDialogComponent>,
+  constructor(private userService : DriverService, private dialogRef: MatDialogRef<AddNoteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: any) {
-      this.drivers = data;
+      this.users = data;
     }
 
   close() : void {
@@ -23,15 +23,13 @@ export class AddNoteDialogComponent {
   }
 
   save() : void {
-    console.log("Printam message");
     console.log(this.message);
     if(this.message != '') {
+      console.log("Printam usera");
       this.requestNote["message"] = this.message;
-      console.log("driver");
-      console.log(this.drivers.driver.id);
-      console.log("req note");
-      console.log(this.requestNote)
-      this.drivers.driverService.addNote(this.drivers.driver.id, this.requestNote)
+      console.log(this.users.user.id);
+      console.log(this.requestNote);
+      this.userService.addNote(this.users.user.id, this.requestNote)
       .subscribe((res: any) => {
       });
     }

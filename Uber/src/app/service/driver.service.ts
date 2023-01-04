@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { All, AllNotes, Driver, Note, RequestNote } from '../components/drivers/drivers.component';
+import { All, AllNotes, User, Note, RequestNote } from '../components/drivers/drivers.component';
 
 @Injectable({
   providedIn: 'root',
@@ -18,26 +18,41 @@ export class DriverService {
     this.value$.next(test);
   }
 
-  getAll(): Observable<All> {
+  getAllDrivers(): Observable<All> {
     return this.http.get<All>(environment.apiHost + 'api/driver');
   }
 
-  block(driverId : Number) : Observable<void> {
-    return this.http.put<any>(environment.apiHost + "api/user/" + driverId.toString() + "/block", {});
+  getAllPassengers(): Observable<All> {
+    return this.http.get<All>(environment.apiHost + 'api/passenger');
   }
 
-  unblock(driverId : Number) : Observable<void> {
-    return this.http.put<any>(environment.apiHost + "api/user/" + driverId.toString() + "/unblock", {});
+  block(userId : Number) : Observable<void> {
+    return this.http.put<any>(environment.apiHost + "api/user/" + userId.toString() + "/block", {});
   }
 
-  addNote(driverId: Number, note: RequestNote) : Observable<any> {
+  unblock(userId : Number) : Observable<void> {
+    return this.http.put<any>(environment.apiHost + "api/user/" + userId.toString() + "/unblock", {});
+  }
+
+  addNote(userId: Number, note: RequestNote) : Observable<any> {
+    console.log("User id");
+    console.log(userId);
+    console.log("req note");
+    console.log(note);
     const options: any = {
       responseType: 'text',
     };
-    return this.http.post<string>(environment.apiHost + "api/user/" + driverId.toString() + "/note", note, options);
+    return this.http.post<string>(environment.apiHost + "api/user/" + userId.toString() + "/note", note, options);
   }
 
   getNotes(driverId: Number) : Observable<AllNotes> {
     return this.http.get<AllNotes>(environment.apiHost + "api/user/" + driverId + "/note?page=1&size=2");
+  }
+
+  addPassenger(passenger: any): Observable<any> {
+    const options: any = {
+      responseType: 'text',
+    };
+    return this.http.post<string>(environment.apiHost + 'api/passenger', passenger, options);
   }
 }
