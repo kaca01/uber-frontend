@@ -1,7 +1,4 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   OnInit,
   ViewChild,
@@ -11,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { PassengerService } from 'src/app/service/passenger.service';
+import { UserService, AllNotes, RequestNote } from 'src/app/service/user.service';
 import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
 
 @Component({
@@ -34,7 +32,9 @@ export class PassengersComponent implements OnInit{
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private passengerService: PassengerService, private dialog: MatDialog) {}
+  constructor(private passengerService: PassengerService, 
+    private userService: UserService,
+    private dialog: MatDialog) {}
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -92,20 +92,20 @@ export class PassengersComponent implements OnInit{
     }
     this.passenger.blocked = true;
     if (block != null) block.innerText = "UNBLOCK";
-    this.passengerService.block(this.passenger.id).subscribe();
+    this.userService.block(this.passenger.id).subscribe();
   }
 
   unblockUser() : void {
     const block = document.getElementById("block");
     this.passenger.blocked = false;
     if (block != null) block.innerText = "BLOCK";
-    this.passengerService.unblock(this.passenger.id).subscribe();
+    this.userService.unblock(this.passenger.id).subscribe();
   }
 
   addNote() : void {
     if(this.message != '') {
       this.requestNote["message"] = this.message;
-      this.passengerService.addNote(this.passenger.id, this.requestNote)
+      this.userService.addNote(this.passenger.id, this.requestNote)
       .subscribe((res: any) => {
         this.selectedRowIndex = -1;
       });
@@ -113,7 +113,7 @@ export class PassengersComponent implements OnInit{
   }
 
   getNotes() : void {
-    this.passengerService.getNotes(this.passenger.id)
+    this.userService.getNotes(this.passenger.id)
     .subscribe((res: any) => {
       this.allNotes = res;
     }); 
@@ -133,19 +133,4 @@ export interface Passenger {
   address: string;
   blocked: boolean;
   picture: string;
-}
-
-export interface AllNotes {
-  totalCount: number;
-  results: Note[];
-}
-
-export interface RequestNote {
-  message: string;
-}
-
-export interface Note {
-  id: number;
-  date: string;
-  message: string;
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { All, AllNotes, Note, Passenger, RequestNote } from '../components/passengers/passengers.component';
+import { All } from '../components/passengers/passengers.component';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
@@ -27,24 +27,5 @@ export class PassengerService {
       responseType: 'text',
     };
     return this.http.post<string>(environment.apiHost + 'api/passenger', passenger, options);
-  }
-
-  block(passengerId : Number) : Observable<void> {
-    return this.http.put<any>(environment.apiHost + "api/user/" + passengerId.toString() + "/block", {});
-  }
-
-  unblock(passengerId : Number) : Observable<void> {
-    return this.http.put<any>(environment.apiHost + "api/user/" + passengerId.toString() + "/unblock", {});
-  }
-
-  addNote(passengerId: Number, note: RequestNote) : Observable<any> {
-    const options: any = {
-      responseType: 'text',
-    };
-    return this.http.post<string>(environment.apiHost + "api/user/" + passengerId.toString() + "/note", note, options);
-  }
-
-  getNotes(driverId: Number) : Observable<AllNotes> {
-    return this.http.get<AllNotes>(environment.apiHost + "api/user/" + driverId + "/note?page=1&size=2");
   }
 }

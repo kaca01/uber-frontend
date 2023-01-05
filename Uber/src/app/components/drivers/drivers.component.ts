@@ -7,8 +7,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { RouterLinkWithHref } from '@angular/router';
 import { DriverService } from 'src/app/service/driver.service';
+import { UserService, AllNotes, RequestNote } from 'src/app/service/user.service';
 import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
 
 @Component({
@@ -32,9 +32,8 @@ export class DriversComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private driverService: DriverService, private dialog: MatDialog) {
-    
-  }
+  constructor(private driverService: DriverService, private userService: UserService, 
+    private dialog: MatDialog) {}
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -88,20 +87,20 @@ export class DriversComponent implements OnInit {
     }
     this.driver.blocked = true;
     if (block != null) block.innerText = "UNBLOCK";
-    this.driverService.block(this.driver.id).subscribe();
+    this.userService.block(this.driver.id).subscribe();
   }
 
   unblockUser() : void {
     const block = document.getElementById("block");
     this.driver.blocked = false;
     if (block != null) block.innerText = "BLOCK";
-    this.driverService.unblock(this.driver.id).subscribe();
+    this.userService.unblock(this.driver.id).subscribe();
   }
 
   addNote() : void {
     if(this.message != '') {
       this.requestNote["message"] = this.message;
-      this.driverService.addNote(this.driver.id, this.requestNote)
+      this.userService.addNote(this.driver.id, this.requestNote)
       .subscribe((res: any) => {
         console.log("all notes");
         console.log(this.allNotes);
@@ -112,7 +111,7 @@ export class DriversComponent implements OnInit {
 
   getNotes() : void {
     console.log(this.driver.id);
-    this.driverService.getNotes(this.driver.id)
+    this.userService.getNotes(this.driver.id)
     .subscribe((res: any) => {
       this.allNotes = res;
     }); 
@@ -135,19 +134,3 @@ export interface Driver {
   picture: string;
   changes: boolean;
 }
-
-export interface AllNotes {
-  totalCount: number;
-  results: Note[];
-}
-
-export interface RequestNote {
-  message: string;
-}
-
-export interface Note {
-  id: number;
-  date: string;
-  message: string;
-}
-
