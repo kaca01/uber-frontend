@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
 
-interface DisplayMessage {
-  msgType: string;
-  msgBody: string;
-}
 
 @Component({
   selector: 'app-login',
@@ -25,44 +21,39 @@ export class LoginComponent implements OnInit {
   returnUrl!: string;
   submitted = false;
   notification!: DisplayMessage;
+  // private currentUser = {} as User;
 
 
   constructor(private router : Router, 
-    private route: ActivatedRoute,
     private authService: AuthService,
     private userService: UserService) {}
 
-  ngOnInit(): void {
-    // this.route.params
-    // .pipe(takeUntil(this.ngUnsubscribe))
-    // .subscribe((params: any) => {
-    //   // this.notification = params as DisplayMessage;
-    // });
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-  }
+  ngOnInit(): void { }
 
   login(): void { 
     this.notification;
     this.submitted = true;
 
-    // if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value)
-      .subscribe(data => {
-        console.log(data);
-        localStorage.setItem('user', JSON.stringify(data));
-        this.authService.setUser();
-        //   this.userService.getMyInfo().subscribe((res: any) => {
-        //   console.log(res);
-        // });
-          this.router.navigate([this.returnUrl]);
+    this.authService.login(this.loginForm.value)
+    .subscribe(data => {
+        this.userService.getMyInfo().subscribe((res: any) => {
+          if(this.userService.currentUser != null) {
+          if(this.userService.currentUser.roles.find(x => x.authority === "ROLE_ADMIN"))
+            this.router.navigate(['admin-home']);
+          else 
+            this.router.navigate(['home-page']);
+          }
+          });
         },
-        error => {
-          console.log(error);
-          this.submitted = false;
-          this.notification = {msgType: 'error', msgBody: 'Incorrect username or password.'};
-        });
-    // }
-  }
-  
+    error => {
+      console.log(error);
+      this.submitted = false;
+      this.notification = {msgType: 'error', msgBody: 'Incorrect username or password'};
+    });
+  } 
+}
+
+interface DisplayMessage {
+  msgType: string;
+  msgBody: string;
 }
