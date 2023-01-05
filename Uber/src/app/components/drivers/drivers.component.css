@@ -176,9 +176,20 @@ button:hover {
         margin-bottom: 5px;
         width: 15em;
     }
+
+    footer{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    footer button {
+        margin: 0;
+        padding: 0;
+    }
 }
 
-@media (max-width:500px) {
+@media (max-width:510px) {
     .bottom-margin{
         height: 95px;
     }
@@ -192,13 +203,7 @@ button:hover {
     }
 
     #search{
-        width: 13em;
-    }
-
-    #view-changes{
-        
-    padding: 0 1.8em;
-    margin: 0 2.7em;
+        width: 11em;
     }
 }
 

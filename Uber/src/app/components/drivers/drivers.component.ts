@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/service/user.service';
 import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dialog.component';
 import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-drivers',
@@ -30,11 +31,15 @@ export class DriversComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private userService: UserService, private dialog: MatDialog) {
+  constructor(private userService: UserService, private dialog: MatDialog, private _snackBar: MatSnackBar) {
     
   }
 
   openDialog() {
+    if(this.selectedRowIndex==-1){
+      this.openSnackBar("Please select a driver!");
+      return;
+    }
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = false;
@@ -45,15 +50,27 @@ export class DriversComponent implements OnInit {
   }
 
   openAddNoteDialog() {
+    if(this.selectedRowIndex==-1){
+      this.openSnackBar("User not selected!");
+      return;
+    }
+
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-
     dialogConfig.data = this;
 
-    this.dialog.open(AddNoteDialogComponent, dialogConfig);
-    this.selectedRowIndex = -1;
+    const dialogRef = this.dialog.open(AddNoteDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((res: any) => {
+      this.selectedRowIndex = -1;
+    });
+  }
+
+  openSnackBar(snackMsg : string) : void {
+    this._snackBar.open(snackMsg, "Dismiss", {
+      duration: 2000
+    });
   }
 
   ngOnInit(): void {

@@ -12,10 +12,10 @@
 }
 
 #textarea {
-    width: 95%;
-    height: 20%;
     border: 1px solid gray;
     border-radius: 5px;
+    padding: 2px 0 0 5px;
+    height: 80px;
 }
 
 #close-dialog {
