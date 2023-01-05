@@ -16,6 +16,8 @@ import { AddDriverComponent } from 'src/app/components/drivers/add-driver/add-dr
 import { AddVehicleComponent } from 'src/app/components/drivers/add-vehicle/add-vehicle.component';
 import { BasePageComponent } from 'src/app/components/history/base-page/base-page.component';
 
+import { UUHomeComponent } from 'src/app/components/home/unregistered-user/uu-home.component';
+import { AdminHomeComponent } from 'src/app/components/home/admin/admin-home.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -31,8 +33,12 @@ const routes: Routes = [
   { path: 'drivers', component: DriversComponent},
   { path: 'add-driver', component: AddDriverComponent},
   { path: 'add-vehicle', component: AddVehicleComponent},
+
+  { path: 'uu-home', component:UUHomeComponent},
+  { path: 'admin-home', component: AdminHomeComponent },
+
   { path: '', redirectTo: '/uu-home', pathMatch: 'full' },
-  { path: '**', component: HomePageComponent },
+  { path: '**', component: UUHomeComponent },
 ];
 
 @NgModule({
