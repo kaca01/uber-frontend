@@ -20,6 +20,7 @@ export class MapComponent implements AfterViewInit, AfterViewChecked {
   json_result : any;
 
   private map : any;
+  private routingControl: any;
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -33,13 +34,13 @@ export class MapComponent implements AfterViewInit, AfterViewChecked {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
     tiles.addTo(this.map);
+
     this.registerOnClick();
   }
 
   constructor(
     private mapService: MapService,
-    private dialog: MatDialog) {
-     }
+    private dialog: MatDialog) {}
 
     openDialog(): void {
       let dialogRef = this.dialog.open(LocationDialog);
@@ -122,9 +123,43 @@ export class MapComponent implements AfterViewInit, AfterViewChecked {
   ngOnChanges() { 
     this.setPickup();
     this.setDestination();
+    this.route();
   }
 
   ngAfterViewChecked() : void {
     this.initMap();
+  }
+
+  route(): void {
+    if (this.routingControl != null)
+        this.removeRoutingControl();
+
+    this.mapService.search(this.pickup).subscribe({
+      next: (pickupLocation) => {
+        this.mapService.search(this.destination).subscribe({
+          next: (destinationLocation) => {
+            this.routingControl = L.Routing.control({
+              router: L.Routing.osrmv1({
+                serviceUrl: `http://router.project-osrm.org/route/v1/`
+            }),
+              show: false,
+              collapsible: true,
+              waypoints: [L.latLng(pickupLocation[0].lat, pickupLocation[0].lon), 
+              L.latLng(destinationLocation[0].lat, destinationLocation[0].lon)],
+            }).addTo(this.map);
+          },
+          error: () => {},
+        });
+      },
+      error: () => {},
+    }); 
+    
+  }
+
+  removeRoutingControl(): void {
+    if (this.routingControl != null) {
+      this.map.removeControl(this.routingControl);
+      this.routingControl = null;
+    }
   }
 }
