@@ -1,8 +1,8 @@
 <mat-toolbar>
     <!--TODO in .ts via click listener change route either to passenger-home or driver-home (depending on current user)-->
     <!--TODO OR (alternative way) create new navigation (same like this one) with different routing-->
-    <img src="../../assets/images/logo.png" class="clickable logo" [routerLink]="['/passenger-home']"/>
-  <span [routerLink]="['/passenger-home']" class="clickable logo">Uber</span>
+    <img src="../../assets/images/logo.png" class="clickable logo" [routerLink]="['/home-page']"/>
+  <span [routerLink]="['/home-page']" class="clickable logo">Uber</span>
   <div id="navigation">
     <ul>
       <li><a [routerLink]="['/home-page']" id="nav-home">Home</a></li>

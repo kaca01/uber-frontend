@@ -37,8 +37,8 @@ const routes: Routes = [
   { path: 'uu-home', component:UUHomeComponent},
   { path: 'admin-home', component: AdminHomeComponent },
 
-  { path: '', redirectTo: '/uu-home', pathMatch: 'full' },
-  { path: '**', component: UUHomeComponent },
+  { path: '', redirectTo: '/home-page', pathMatch: 'full' },
+  { path: '**', component: HomePageComponent },
 ];
 
 @NgModule({

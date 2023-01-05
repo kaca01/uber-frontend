@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { UserService } from '../../../service/user.service';
 
 @Component({
   selector: 'app-home-page',
@@ -8,6 +9,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class HomePageComponent implements OnInit {
 	@Input() pickup = '';
 	@Input() destination = '';
+
+	constructor(private userService: UserService){}
 
 	ngOnInit() : void {
 		const Menu = document.getElementById("menu-container");
@@ -44,5 +47,10 @@ export class HomePageComponent implements OnInit {
 		this.destination = destination;
 	}
 
-	
+	isLoggedIn(): boolean {
+		console.log(this.userService.getMyInfo());
+		if(this.userService.currentUser?.name != undefined) 
+			return true;
+		return false;
+		}
 }
