@@ -10,7 +10,6 @@ import { MaterialModule } from 'src/infrastructure/material.module';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { UUHomeComponent } from './components/home/unregistered-user/uu-home.component';
 import { PassengerHomeComponent } from './components/home/passenger/passenger-home.component';
 import { DriverHomeComponent } from './components/home/driver/driver-home.component';
 import { AdminHomeComponent } from './components/home/admin/admin-home.component';
@@ -51,7 +50,6 @@ import { TokenInterceptor } from './interceptor/TokenInterceptor';
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    UUHomeComponent,
     PassengerHomeComponent,
     AdminHomeComponent,
     DriverHomeComponent,
