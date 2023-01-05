@@ -25,16 +25,16 @@ import { RatingsComponent } from './components/history/ratings/ratings.component
 import { RideDetailsComponent } from './components/history/ride-details/ride-details.component';
 import { RideHistoryComponent } from './components/history/ride-history/ride-history.component';
 import { PassengersComponent } from './components/passengers/passengers.component';
-import { PassengerService } from './service/passenger.service';
 import { DriversComponent } from './components/drivers/drivers.component';
-import { DriverService } from './service/driver.service';
+import { UserService } from './service/user.service';
 import { AddDriverComponent } from './components/drivers/add-driver/add-driver.component';
 import { AddVehicleComponent } from './components/drivers/add-vehicle/add-vehicle.component';
 import { BasePageComponent } from './components/history/base-page/base-page.component';
 import { MapComponent } from './map/map.component';
 import { HomePageComponent } from './components/home/home-page/home-page.component';
-import { NotesDialogComponent } from './components/notes-dialog/notes-dialog.component';
+import { NotesDialogComponent } from './components/dialogs/notes-dialog/notes-dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { AddNoteDialogComponent } from './components/dialogs/add-note-dialog/add-note-dialog.component';
 
 
 @NgModule({
@@ -64,7 +64,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     BasePageComponent,
     MapComponent,
     HomePageComponent,
-    NotesDialogComponent, 
+    NotesDialogComponent,
+    AddNoteDialogComponent, 
   ],
   imports: [
     BrowserModule,
