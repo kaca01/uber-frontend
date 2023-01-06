@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AllRides, RideReview } from 'src/app/domains';
 import { HistoryService } from 'src/app/service/history.service';
 import { BasePageComponent } from '../base-page/base-page.component';
-import { AllRides } from '../ride-history/ride-history.component';
 
 @Component({
   selector: 'app-ratings',
@@ -40,21 +39,4 @@ export class RatingsComponent implements OnInit {
   backToHistoryDetails() : void {
     this.basePage.display("details");
   }
-}
-
-export interface RideReview {
-  vehicleReview : Review;
-  driverReview : Review;
-}
-
-export interface Review {
-  id : Number;
-  rating : Number;
-  comment : String;
-  passenger : User;
-}
-
-export interface User {
-  id : Number;
-  email : String;
 }

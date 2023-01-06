@@ -11,6 +11,7 @@ import { UserService } from 'src/app/service/user.service';
 import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dialog.component';
 import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { AllNotes, User } from 'src/app/domains';
 
 @Component({
   selector: 'app-drivers',
@@ -132,36 +133,3 @@ export class DriversComponent implements OnInit {
     }); 
   }
 }
-
-export interface All {
-  totalCount: number;
-  results: User[];
-}
-
-export interface User {  
-  id: number;
-  name: string;
-  surname: string;
-  email: string;
-  telephoneNumber: string;
-  address: string;
-  blocked: boolean;
-  picture: string;
-  changes: boolean;
-}
-
-export interface AllNotes {
-  totalCount: number;
-  results: Note[];
-}
-
-export interface Note {
-  id: number;
-  date: string;
-  message: string;
-}
-
-export interface RequestNote {
-  message: string;
-}
-

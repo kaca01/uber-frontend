@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/cor
 import { Router } from '@angular/router';
 import { HistoryService } from 'src/app/service/history.service';
 import { BasePageComponent } from '../base-page/base-page.component';
-import { AllRides, Ride } from '../ride-history/ride-history.component';
+import { AllRides, Ride } from 'src/app/domains';
 
 @Component({
   selector: 'app-ride-details',

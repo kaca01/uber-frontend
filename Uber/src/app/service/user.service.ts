@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { All, AllNotes, User, Note, RequestNote } from '../components/drivers/drivers.component';
+import { AllUsers, AllNotes, User, Note, RequestNote } from 'src/app/domains';
 
 @Injectable({
   providedIn: 'root',
@@ -18,12 +18,12 @@ export class UserService {
     this.value$.next(test);
   }
 
-  getAllDrivers(): Observable<All> {
-    return this.http.get<All>(environment.apiHost + 'api/driver');
+  getAllDrivers(): Observable<AllUsers> {
+    return this.http.get<AllUsers>(environment.apiHost + 'api/driver');
   }
 
-  getAllPassengers(): Observable<All> {
-    return this.http.get<All>(environment.apiHost + 'api/passenger');
+  getAllPassengers(): Observable<AllUsers> {
+    return this.http.get<AllUsers>(environment.apiHost + 'api/passenger');
   }
 
   block(userId : Number) : Observable<void> {

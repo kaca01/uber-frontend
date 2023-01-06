@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import {  MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Note } from 'src/app/domains';
 
 @Component({
   selector: 'app-notes-dialog',
@@ -30,9 +31,4 @@ export class NotesDialogComponent {
   onDestination() : void {
     this.dialogRef.close(2);
   }
-}
-
-export interface Note {  
-  message: string,
-  date: string
 }

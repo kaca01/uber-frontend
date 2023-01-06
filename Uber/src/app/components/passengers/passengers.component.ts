@@ -12,7 +12,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/service/user.service';
 import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dialog.component';
 import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.component';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AllNotes, RequestNote, User } from 'src/app/domains';
 
 @Component({
   selector: 'app-passengers',
@@ -21,12 +22,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class PassengersComponent implements OnInit{
   selectedRowIndex : number = -1;
-  displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked'];
+  displayedColumns: string[] = ['name', 'surname', 'email', 'telephoneNumber', 'address', 'blocked'];
   dataSource!: MatTableDataSource<User>;
   condition: boolean = true;
   all: User[] = [];
   message = '';
-  private requestNote = {} as RequestNote;
   private allNotes = {} as AllNotes;
 
   valueFromCreateComponent = '';
@@ -36,38 +36,6 @@ export class PassengersComponent implements OnInit{
   @ViewChild(MatSort) sort!: any;
 
   constructor(private userService: UserService, private dialog: MatDialog, private _snackBar: MatSnackBar) {}
-
-  openDialog() {
-    if(this.selectedRowIndex==-1){
-      this.openSnackBar("Please select a passenger!");
-      return;
-    }
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
-
-    dialogConfig.data = this.allNotes.results;
-    this.dialog.open(NotesDialogComponent, dialogConfig);
-  }
-
-  openAddNoteDialog() {
-    if(this.selectedRowIndex==-1){
-      this.openSnackBar("User not selected!");
-      return;
-    }
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = this;
-
-    const dialogRef = this.dialog.open(AddNoteDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe((res: any) => {
-        this.selectedRowIndex = -1;
-      });
-    }
 
   ngOnInit(): void {
     this.userService.selectedValue$.subscribe((value) => {
@@ -81,6 +49,32 @@ export class PassengersComponent implements OnInit{
       this.dataSource.sort = this.sort;
     });
   }
+
+  openDialog() {
+    if(this.checkSelection()) return;
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = this.allNotes.results;
+    this.dialog.open(NotesDialogComponent, dialogConfig);
+  }
+
+  openAddNoteDialog() {
+    if (this.checkSelection()) return;
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = this;
+
+    const dialogRef = this.dialog.open(AddNoteDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((res: any) => {
+        this.selectedRowIndex = -1;
+      });
+    }
 
   // ngAfterViewInit() {
   //   this.dataSource.paginator = this.paginator;
@@ -114,6 +108,7 @@ export class PassengersComponent implements OnInit{
   }
 
   blockUser() : void{
+    this.checkSelection();
     const block = document.getElementById("block");
     if (this.user.blocked == true) {
       this.unblockUser();
@@ -125,6 +120,7 @@ export class PassengersComponent implements OnInit{
   }
 
   unblockUser() : void {
+    this.checkSelection();
     const block = document.getElementById("block");
     this.user.blocked = false;
     if (block != null) block.innerText = "BLOCK";
@@ -137,34 +133,12 @@ export class PassengersComponent implements OnInit{
       this.allNotes = res;
     }); 
   }
-}
 
-export interface All {
-  totalCount : number;
-  results: User[];
-}
-
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  telephoneNumber: string;
-  address: string;
-  blocked: boolean;
-  picture: string;
-}
-
-export interface AllNotes {
-  totalCount: number;
-  results: Note[];
-}
-
-export interface RequestNote {
-  message: string;
-}
-
-export interface Note {
-  id: number;
-  date: string;
-  message: string;
+  private checkSelection() : boolean {
+    if(this.selectedRowIndex==-1){
+      this.openSnackBar("User not selected!");
+      return true;
+    }
+    return false;
+  }
 }

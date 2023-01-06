@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AllRides } from 'src/app/domains';
 import { HistoryService } from 'src/app/service/history.service';
 import { BasePageComponent } from '../base-page/base-page.component';
 
@@ -31,46 +31,4 @@ export class RideHistoryComponent implements OnInit {
     this.service.sendMessage(this.chosenRide);
   }
   
-}
-
-export interface AllRides {
-  totalCount : Number;
-  results : Ride[];
-}
-
-export interface Ride {
-  id: Number;
-  startTime: String; 
-  endTime: String;
-  totalCost: Number;
-  driver: User;
-  passengers: User[];
-  estimatedTimeInMinutes : Number;
-  vehicleType: String;
-  babyTransport: String;
-  petTransport: String;
-  rejection : Rejection;
-  locations: Route[];
-}
-
-export interface User {
-  id: Number;
-  email: String;
-}
-
-export interface Rejection {
-  reason: String;
-  timeOfRejection: String;
-}
-
-export interface Location {
-  address: String;
-  longitude: Number;
-  latitude: Number;
-}
-
-// this is not that route...
-export interface Route {
-    departure: Location;
-    destination: Location;
 }
