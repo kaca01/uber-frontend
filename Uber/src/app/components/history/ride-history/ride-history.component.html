@@ -4,8 +4,8 @@
             <mat-card-content>
                 <p id="title" class="card-content">Ride history</p>
                   <ol>
-                    <li class="list-item" *ngFor="let a of all.results">
-                        <p class="address">{{a.id}}. {{a.locations[0].departure.address}} - {{a.locations[0].destination.address}}</p>
+                    <li class="list-item" *ngFor="let a of all.results; index as i">
+                        <p class="address">{{i+1}}. {{a.locations[0].departure.address}} - {{a.locations[0].destination.address}}</p>
                         <p class="date"> {{a.startTime}}</p>
                         <div class="line"></div>
                     </li>
