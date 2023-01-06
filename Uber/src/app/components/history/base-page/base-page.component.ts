@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
 
 
 @Component({
@@ -10,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class BasePageComponent implements OnInit{
 
-  constructor() {}
+  	constructor() {}
 
   ngOnInit() : void {
 	// getting all dialogs

@@ -11,20 +11,27 @@ import { BasePageComponent } from '../base-page/base-page.component';
 export class RideHistoryComponent implements OnInit {
   all : AllRides = {} as AllRides;
   baseComponent : BasePageComponent = new BasePageComponent();
+  private chosenRide : number = -1;
   constructor(private service : HistoryService) {}
   
   ngOnInit(): void {
+    this.service.currentMessage.subscribe(message => this.chosenRide = message);
     this.service.getHistory().subscribe((res) => {
       this.all = res;
-      console.log("Printing history...");
-      console.log(res);
     });
   }
 
-  openDetails(id : Number) {
-    this.service.chosenRide = id;
+  openDetails(id : number) {
+    // this.router.navigate(['base-page/', id]);
     this.baseComponent.display("details");
+    this.chosenRide = id;
+    this.sendMessage();
   }
+
+  sendMessage() {
+    this.service.sendMessage(this.chosenRide);
+  }
+  
 }
 
 export interface AllRides {
