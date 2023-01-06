@@ -22,7 +22,6 @@ export class RideHistoryComponent implements OnInit {
   }
 
   openDetails(id : number) {
-    // this.router.navigate(['base-page/', id]);
     this.baseComponent.display("details");
     this.chosenRide = id;
     this.sendMessage();

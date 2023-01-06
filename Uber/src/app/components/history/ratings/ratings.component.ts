@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HistoryService } from 'src/app/service/history.service';
+import { BasePageComponent } from '../base-page/base-page.component';
 import { AllRides } from '../ride-history/ride-history.component';
 
 @Component({
@@ -9,6 +10,7 @@ import { AllRides } from '../ride-history/ride-history.component';
   styleUrls: ['./ratings.component.css']
 })
 export class RatingsComponent implements OnInit {
+  private basePage : BasePageComponent = new BasePageComponent();
   history : AllRides = {} as AllRides;
   ratings : RideReview[] = [];
   constructor(private service: HistoryService) {}
@@ -33,6 +35,10 @@ export class RatingsComponent implements OnInit {
     } else {
       return "unfilled_star";
     }
+  }
+
+  backToHistoryDetails() : void {
+    this.basePage.display("details");
   }
 }
 

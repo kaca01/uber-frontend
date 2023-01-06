@@ -10,78 +10,15 @@ export class BasePageComponent implements OnInit{
 
   	constructor() {}
 
-  ngOnInit() : void {
-	// getting all dialogs
-    const history = document.getElementById('history');
-    const details = document.getElementById('details');
-    const ratings = document.getElementById('ride-ratings');
-
-	// navigation
-    const navHistory = document.getElementById('nav-history');
-
-	// other elements
-	const histories = document.getElementsByClassName("list-item");
-	const arr = Array.from(histories);
-
-	const viewRatings = document.getElementById('ratings-btn');
-	const backToHistory = document.getElementById('back-to-history');
-	const backToDetails = document.getElementById('back-to-details');
-
-    if (history && details && ratings && navHistory) {
-		// adding click listeners
-		display("history");
-
-		navHistory.addEventListener('click', function click(event){
-			display("history");
-		});
-
-		arr.forEach (oneHistory =>{
-			if (oneHistory != null) {
-			oneHistory.addEventListener('click', function click(event){
-				display("details");
-			});
-			}
-		});
-
-		if (viewRatings != null) {
-			viewRatings.addEventListener('click', function click(event){
-			display("ratings");
-			});
+	ngOnInit() : void {
+		const history = document.getElementById('history');
+		if (history) {
+			this.display("history");
 		}
-		
-		if (backToHistory != null) {
-			backToHistory.addEventListener('click', function click(event){
-			display("history");
-			});
-		}
-
-		if (backToDetails != null) {
-			backToDetails.addEventListener('click', function click(event){
-			display("details");
-			});
-		}
-    }
-
-	function display(dialog : String) : void {
-		closeAllDialogs();
-		if (history && details && ratings != null) {
-			if (dialog == "history") history.style.display = 'block';
-			else if (dialog == "details") details.style.display = 'block';
-			else if (dialog == 'ratings') ratings.style.display = 'block';
-		}
-	}
-
-	function closeAllDialogs() : void {
-		if (history && details && ratings != null) {
-			history.style.display = 'none';
-			details.style.display = 'none';
-			ratings.style.display = 'none';
-		}
-	}
 	}
 
 	private closeAllDialogs(history : HTMLElement, details : HTMLElement, ratings : HTMLElement) : void {
-		if (history && details && ratings != null) {
+		if (history && details && ratings) {
 			history.style.display = 'none';
 			details.style.display = 'none';
 			ratings.style.display = 'none';
@@ -92,11 +29,8 @@ export class BasePageComponent implements OnInit{
 		const history = document.getElementById('history');
 		const details = document.getElementById('details');
 		const ratings = document.getElementById('ride-ratings');
-		if (history && details && ratings != null) {
+		if (history && details && ratings) {
 			this.closeAllDialogs(history, details, ratings);
-			history.style.display = 'none';
-			details.style.display = 'none';
-			ratings.style.display = 'none';
 			if (dialog == "history") history.style.display = 'block';
 			else if (dialog == "details") details.style.display = 'block';
 			else if (dialog == 'ratings') ratings.style.display = 'block';
