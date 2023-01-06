@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class BasePageComponent implements OnInit{
 
-  constructor(private router : Router) {}
+  constructor() {}
 
   ngOnInit() : void {
 	// getting all dialogs
@@ -25,7 +25,7 @@ export class BasePageComponent implements OnInit{
 	const histories = document.getElementsByClassName("list-item");
 	const arr = Array.from(histories);
 
-	const viewRatings = document.getElementById('ratings');
+	const viewRatings = document.getElementById('ratings-btn');
 	const backToHistory = document.getElementById('back-to-history');
 	const backToDetails = document.getElementById('back-to-details');
 
@@ -80,5 +80,28 @@ export class BasePageComponent implements OnInit{
 			ratings.style.display = 'none';
 		}
 	}
+	}
+
+	private closeAllDialogs(history : HTMLElement, details : HTMLElement, ratings : HTMLElement) : void {
+		if (history && details && ratings != null) {
+			history.style.display = 'none';
+			details.style.display = 'none';
+			ratings.style.display = 'none';
+		}
+	}
+
+	display(dialog : String) {
+		const history = document.getElementById('history');
+		const details = document.getElementById('details');
+		const ratings = document.getElementById('ride-ratings');
+		if (history && details && ratings != null) {
+			this.closeAllDialogs(history, details, ratings);
+			history.style.display = 'none';
+			details.style.display = 'none';
+			ratings.style.display = 'none';
+			if (dialog == "history") history.style.display = 'block';
+			else if (dialog == "details") details.style.display = 'block';
+			else if (dialog == 'ratings') ratings.style.display = 'block';
+		}
 	}
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HistoryService } from 'src/app/service/history.service';
+import { BasePageComponent } from '../base-page/base-page.component';
 
 @Component({
   selector: 'app-ride-history',
@@ -9,6 +10,7 @@ import { HistoryService } from 'src/app/service/history.service';
 })
 export class RideHistoryComponent implements OnInit {
   all : AllRides = {} as AllRides;
+  baseComponent : BasePageComponent = new BasePageComponent();
   constructor(private service : HistoryService) {}
   
   ngOnInit(): void {
@@ -17,6 +19,11 @@ export class RideHistoryComponent implements OnInit {
       console.log("Printing history...");
       console.log(res);
     });
+  }
+
+  openDetails(id : Number) {
+    this.service.chosenRide = id;
+    this.baseComponent.display("details");
   }
 }
 

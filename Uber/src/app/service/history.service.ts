@@ -10,6 +10,7 @@ import { AllRides } from '../components/history/ride-history/ride-history.compon
 export class HistoryService {
   // TODO : after implementation of login, change the next line
   private currentUserId : Number = 1;
+  public chosenRide : Number = -1;
 
   constructor(private http : HttpClient) { }
 
