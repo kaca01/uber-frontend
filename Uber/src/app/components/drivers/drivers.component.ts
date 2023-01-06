@@ -10,7 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/service/user.service';
 import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dialog.component';
 import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.component';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AllNotes, User } from 'src/app/domains';
 
 @Component({
@@ -49,11 +49,26 @@ export class DriversComponent implements OnInit {
     });
   }
 
+  changeState() {
+    this.condition = !this.condition;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  getDriver(driver : User) {
+    this.selectedRowIndex=driver.id;
+    this.user = driver;
+    if (this.user.blocked == true) this.changeBlockButton(0);
+    else this.changeBlockButton(1);
+    this.getNotes();
+  }
+
+  // notes
   openDialog() {
-    if(this.selectedRowIndex==-1){
-      this.openSnackBar("Please select a driver!");
-      return;
-    }
+    if(this.checkIfSelected()) return;
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = false;
@@ -63,11 +78,16 @@ export class DriversComponent implements OnInit {
     this.dialog.open(NotesDialogComponent, dialogConfig);
   }
 
+  getNotes() : void {
+    console.log(this.user.id);
+    this.userService.getNotes(this.user.id)
+    .subscribe((res: any) => {
+      this.allNotes = res;
+    }); 
+  }  
+
   openAddNoteDialog() {
-    if(this.selectedRowIndex==-1){
-      this.openSnackBar("User not selected!");
-      return;
-    }
+    if(this.checkIfSelected()) return;
 
     const dialogConfig = new MatDialogConfig();
 
@@ -81,55 +101,44 @@ export class DriversComponent implements OnInit {
     });
   }
 
+  // blocking
+  blockUser() : void{
+    this.checkIfSelected();
+    if (this.user.blocked == true) {
+      this.unblockUser();
+      return;
+    }
+    this.user.blocked = true;
+    this.changeBlockButton(0);
+    this.userService.block(this.user.id).subscribe();
+  }
+
+  unblockUser() : void {
+    this.checkIfSelected();
+    this.user.blocked = false;
+    this.changeBlockButton(1);
+    this.userService.unblock(this.user.id).subscribe();
+  }
+
+  changeBlockButton(change : number) {
+    const block = document.getElementById("block");
+    if (block) {
+      if (change == 0) block.innerText = "UNBLOCK";
+      else block.innerText = "BLOCK";
+    }
+  }
+
   openSnackBar(snackMsg : string) : void {
     this._snackBar.open(snackMsg, "Dismiss", {
       duration: 2000
     });
   }
 
-  changeState() {
-    this.condition = !this.condition;
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  getDriver(driver : User) {
-    const block = document.getElementById("block");
-    this.selectedRowIndex=driver.id;
-    this.user = driver;
-    if (block != null) {
-      if (this.user.blocked == true) block.innerText = "UNBLOCK";
-      else block.innerText = "BLOCK";
+  private checkIfSelected() : boolean {
+    if(this.selectedRowIndex==-1){
+      this.openSnackBar("User not selected!");
+      return true;
     }
-    this.getNotes();
-  }
-
-  blockUser() : void{
-    const block = document.getElementById("block");
-    if (this.user.blocked == true) {
-      this.unblockUser();
-      return;
-    }
-    this.user.blocked = true;
-    if (block != null) block.innerText = "UNBLOCK";
-    this.userService.block(this.user.id).subscribe();
-  }
-
-  unblockUser() : void {
-    const block = document.getElementById("block");
-    this.user.blocked = false;
-    if (block != null) block.innerText = "BLOCK";
-    this.userService.unblock(this.user.id).subscribe();
-  }
-
-  getNotes() : void {
-    console.log(this.user.id);
-    this.userService.getNotes(this.user.id)
-    .subscribe((res: any) => {
-      this.allNotes = res;
-    }); 
+    return false;
   }
 }

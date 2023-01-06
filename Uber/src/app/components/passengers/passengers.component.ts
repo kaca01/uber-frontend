@@ -50,8 +50,26 @@ export class PassengersComponent implements OnInit{
     });
   }
 
+  changeState() {
+    this.condition = !this.condition;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  getPassenger(passenger : User) {
+    this.selectedRowIndex=passenger.id;
+    this.user = passenger;
+    if (this.user.blocked == true) this.changeBlockButton(0);
+    else this.changeBlockButton(1);
+    this.getNotes();
+  }
+
+  // notes
   openDialog() {
-    if(this.checkSelection()) return;
+    if(this.checkIfSelected()) return;
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = false;
@@ -62,7 +80,7 @@ export class PassengersComponent implements OnInit{
   }
 
   openAddNoteDialog() {
-    if (this.checkSelection()) return;
+    if (this.checkIfSelected()) return;
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
@@ -75,14 +93,44 @@ export class PassengersComponent implements OnInit{
         this.selectedRowIndex = -1;
       });
     }
+    
+  getNotes() : void {
+    this.userService.getNotes(this.user.id)
+    .subscribe((res: any) => {
+      this.allNotes = res;
+    }); 
+  }
 
   // ngAfterViewInit() {
   //   this.dataSource.paginator = this.paginator;
   //   this.dataSource.sort = this.sort;
   // }
 
-  changeState() {
-    this.condition = !this.condition;
+  // blocking
+  blockUser() : void{
+    this.checkIfSelected();
+    if (this.user.blocked == true) {
+      this.unblockUser();
+      return;
+    }
+    this.user.blocked = true;
+    this.changeBlockButton(0);
+    this.userService.block(this.user.id).subscribe();
+  }
+
+  unblockUser() : void {
+    this.checkIfSelected();
+    this.user.blocked = false;
+    this.changeBlockButton(1);
+    this.userService.unblock(this.user.id).subscribe();
+  }
+
+  changeBlockButton(change : number) {
+    const block = document.getElementById("block");
+    if (block) {
+      if (change == 0) block.innerText = "UNBLOCK";
+      else block.innerText = "BLOCK";
+    }
   }
 
   openSnackBar(snackMsg : string) : void {
@@ -91,50 +139,7 @@ export class PassengersComponent implements OnInit{
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  getPassenger(passenger : User) {
-    const block = document.getElementById("block");
-    this.selectedRowIndex=passenger.id;
-    this.user = passenger;
-    if (block != null) {
-      if (this.user.blocked == true) block.innerText = "UNBLOCK";
-      else block.innerText = "BLOCK";
-    }
-    this.getNotes();
-  }
-
-  blockUser() : void{
-    this.checkSelection();
-    const block = document.getElementById("block");
-    if (this.user.blocked == true) {
-      this.unblockUser();
-      return;
-    }
-    this.user.blocked = true;
-    if (block != null) block.innerText = "UNBLOCK";
-    this.userService.block(this.user.id).subscribe();
-  }
-
-  unblockUser() : void {
-    this.checkSelection();
-    const block = document.getElementById("block");
-    this.user.blocked = false;
-    if (block != null) block.innerText = "BLOCK";
-    this.userService.unblock(this.user.id).subscribe();
-  }
-
-  getNotes() : void {
-    this.userService.getNotes(this.user.id)
-    .subscribe((res: any) => {
-      this.allNotes = res;
-    }); 
-  }
-
-  private checkSelection() : boolean {
+  private checkIfSelected() : boolean {
     if(this.selectedRowIndex==-1){
       this.openSnackBar("User not selected!");
       return true;
