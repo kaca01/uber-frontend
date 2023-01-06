@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, zipAll } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { Review, RideReview } from '../components/history/ratings/ratings.component';
 import { AllRides } from '../components/history/ride-history/ride-history.component';
 
 @Injectable({
@@ -21,9 +22,12 @@ export class HistoryService {
     return this.http.get<AllRides>(environment.apiHost + "api/user/" + this.userId.toString() + "/ride?page=1&size=10&sort='DATE'&from='bla'&to='bla'");
   }
 
+  getReviews(all : AllRides) : Observable<RideReview[]> {
+    return this.http.get<RideReview[]>(environment.apiHost + "api/review/" + all.results[this.selectedRide].id);
+  }
+
   sendMessage(message: number) {
     this.messageSource.next(message);
   }
-
   
 }

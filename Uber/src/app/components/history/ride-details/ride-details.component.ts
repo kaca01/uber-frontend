@@ -20,7 +20,7 @@ export class RideDetailsComponent implements OnInit{
     });
     this.service.currentMessage.subscribe(message => {
       this.chosenRide = message;
-      if (this.all.results != undefined)this.ride = this.all.results[this.chosenRide];
+      if (this.all.results != undefined) this.ride = this.all.results[this.chosenRide];
     });
 
   }
