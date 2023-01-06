@@ -34,6 +34,19 @@ export class DriversComponent implements OnInit {
   constructor(private userService: UserService, private dialog: MatDialog, private _snackBar: MatSnackBar) {
     
   }
+  
+  ngOnInit(): void {
+    this.userService.selectedValue$.subscribe((value) => {
+      this.valueFromCreateComponent = value;
+    });
+
+    this.userService.getAllDrivers().subscribe((res) => {
+      this.all = res.results;
+      this.dataSource = new MatTableDataSource<User>(this.all);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
 
   openDialog() {
     if(this.selectedRowIndex==-1){
@@ -70,19 +83,6 @@ export class DriversComponent implements OnInit {
   openSnackBar(snackMsg : string) : void {
     this._snackBar.open(snackMsg, "Dismiss", {
       duration: 2000
-    });
-  }
-
-  ngOnInit(): void {
-    this.userService.selectedValue$.subscribe((value) => {
-      this.valueFromCreateComponent = value;
-    });
-
-    this.userService.getAllDrivers().subscribe((res) => {
-      this.all = res.results;
-      this.dataSource = new MatTableDataSource<User>(this.all);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
     });
   }
 
