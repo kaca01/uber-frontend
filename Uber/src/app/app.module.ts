@@ -38,7 +38,6 @@ import { AddNoteDialogComponent } from './components/dialogs/add-note-dialog/add
 
 import {ApiService} from './service/api.service';
 import {AuthService} from './service/auth.service';
-import {UserService} from './service/user.service';
 import {ConfigService} from './service/config.service';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
