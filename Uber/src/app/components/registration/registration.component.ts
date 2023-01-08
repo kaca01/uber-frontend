@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PassengerService } from 'src/app/service/passenger.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-registration',
@@ -22,7 +22,7 @@ export class RegistrationComponent implements OnInit{
   hide : boolean = true;
   hideAgain : boolean = true;
 
-  constructor(private router : Router, private service: PassengerService) {}
+  constructor(private router : Router, private service: UserService) {}
 
   ngOnInit(): void {
       
@@ -30,10 +30,10 @@ export class RegistrationComponent implements OnInit{
 
   reg() {
     if (this.registrationForm.valid) {
-      this.service.add(this.registrationForm.value)
+      this.service.addPassenger(this.registrationForm.value)
       .subscribe((res: any) => {
         console.log(res);
-        this.router.navigate(['passenger-home']);
+        this.router.navigate(['home-page']);
       });
     }
   }

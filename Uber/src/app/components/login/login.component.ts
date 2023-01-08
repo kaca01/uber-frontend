@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../service/auth.service';
+import { UserService } from '../../service/user.service';
+
 
 @Component({
   selector: 'app-login',
@@ -13,16 +16,44 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required]),
   });
 
+
   hide: boolean = true;
+  returnUrl!: string;
+  submitted = false;
+  notification!: DisplayMessage;
+  // private currentUser = {} as User;
 
-  constructor(private router : Router) {}
 
-  ngOnInit(): void {}
+  constructor(private router : Router, 
+    private authService: AuthService,
+    private userService: UserService) {}
 
-  onLogin() {
-    if (this.loginForm.valid) {
-      this.router.navigate(['admin-home']);
-    }
-  }
-  
+  ngOnInit(): void { }
+
+  login(): void { 
+    this.notification;
+    this.submitted = true;
+
+    this.authService.login(this.loginForm.value)
+    .subscribe(data => {
+        this.userService.getMyInfo().subscribe((res: any) => {
+          if(this.userService.currentUser != null) {
+          if(this.userService.currentUser.roles.find(x => x.authority === "ROLE_ADMIN"))
+            this.router.navigate(['admin-home']);
+          else 
+            this.router.navigate(['home-page']);
+          }
+          });
+        },
+    error => {
+      console.log(error);
+      this.submitted = false;
+      this.notification = {msgType: 'error', msgBody: 'Incorrect username or password'};
+    });
+  } 
+}
+
+interface DisplayMessage {
+  msgType: string;
+  msgBody: string;
 }

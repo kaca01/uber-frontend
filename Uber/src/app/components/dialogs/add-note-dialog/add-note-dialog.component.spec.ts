@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UUHomeComponent } from './uu-home.component';
+import { AddNoteDialogComponent } from './add-note-dialog.component';
 
-describe('UUHomeComponent', () => {
-  let component: UUHomeComponent;
-  let fixture: ComponentFixture<UUHomeComponent>;
+describe('AddNoteDialogComponent', () => {
+  let component: AddNoteDialogComponent;
+  let fixture: ComponentFixture<AddNoteDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UUHomeComponent ]
+      declarations: [ AddNoteDialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UUHomeComponent);
+    fixture = TestBed.createComponent(AddNoteDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
