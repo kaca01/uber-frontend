@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {  MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-notes-dialog',
@@ -13,26 +12,24 @@ export class NotesDialogComponent {
   id: any;
   constructor(private dialogRef: MatDialogRef<NotesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: Note[]) {
-      console.log("Printam");
       this.notes = data;
-      console.log(this.notes);
     }
 
-    close() : void {
-      this.dialogRef.close();
-    }
+  close() : void {
+    this.dialogRef.close();
+  }
 
-    save() : void {
+  save() : void {
 
-    }
+  }
 
-    onDeparture() : void {
-      this.dialogRef.close(1);
-    }
+  onDeparture() : void {
+    this.dialogRef.close(1);
+  }
 
-    onDestination() : void {
-      this.dialogRef.close(2);
-    }
+  onDestination() : void {
+    this.dialogRef.close(2);
+  }
 }
 
 export interface Note {  

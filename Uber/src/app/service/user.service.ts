@@ -5,11 +5,15 @@ import { environment } from 'src/environments/environment.prod';
 import {ApiService} from './api.service';
 import {ConfigService} from './config.service';
 import {map} from 'rxjs/operators';
+import { All } from '../components/drivers/drivers.component';
+
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
+  private value$ = new BehaviorSubject<any>({});
+  selectedValue$ = this.value$.asObservable();
 
   public currentUser = {} as User | null;
 
@@ -25,24 +29,42 @@ export class UserService {
         return user;
     }));
   }
-
-  block(driverId : Number) : Observable<void> {
-    return this.http.put<any>(environment.apiHost + "api/user/" + driverId.toString() + "/block", {});
+  setValue(test: any) {
+    this.value$.next(test);
   }
 
-  unblock(driverId : Number) : Observable<void> {
-    return this.http.put<any>(environment.apiHost + "api/user/" + driverId.toString() + "/unblock", {});
+  getAllDrivers(): Observable<All> {
+    return this.http.get<All>(environment.apiHost + 'api/driver');
   }
 
-  addNote(driverId: Number, note: RequestNote) : Observable<any> {
+  getAllPassengers(): Observable<All> {
+    return this.http.get<All>(environment.apiHost + 'api/passenger');
+  }
+
+  block(userId : Number) : Observable<void> {
+    return this.http.put<any>(environment.apiHost + "api/user/" + userId.toString() + "/block", {});
+  }
+
+  unblock(userId : Number) : Observable<void> {
+    return this.http.put<any>(environment.apiHost + "api/user/" + userId.toString() + "/unblock", {});
+  }
+
+  addNote(userId: Number, note: RequestNote) : Observable<any> {
     const options: any = {
       responseType: 'text',
     };
-    return this.http.post<string>(environment.apiHost + "api/user/" + driverId.toString() + "/note", note, options);
+    return this.http.post<string>(environment.apiHost + "api/user/" + userId.toString() + "/note", note, options);
   }
 
   getNotes(driverId: Number) : Observable<AllNotes> {
     return this.http.get<AllNotes>(environment.apiHost + "api/user/" + driverId + "/note?page=1&size=2");
+  }
+
+  addPassenger(passenger: any): Observable<any> {
+    const options: any = {
+      responseType: 'text',
+    };
+    return this.http.post<string>(environment.apiHost + 'api/passenger', passenger, options);
   }
 }
 

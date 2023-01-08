@@ -7,9 +7,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DriverService } from 'src/app/service/driver.service';
-import { UserService, AllNotes, RequestNote } from 'src/app/service/user.service';
-import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
+import { AllNotes, UserService } from 'src/app/service/user.service';
+import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dialog.component';
+import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-drivers',
@@ -17,46 +18,72 @@ import { NotesDialogComponent } from '../notes-dialog/notes-dialog.component';
   styleUrls: ['./drivers.component.css'],
 })
 export class DriversComponent implements OnInit {
-  selectedRowIndex : number = -1;
+  public selectedRowIndex : number = -1;
   displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked', 'changes'];
-  dataSource!: MatTableDataSource<Driver>;
-  all: Driver[] = [];
+  dataSource!: MatTableDataSource<User>;
+  all: User[] = [];
   private allNotes = {} as AllNotes;
   condition: boolean = true;
-  message = '';
-  private requestNote = {} as RequestNote;
-
+  public message = '';
   valueFromCreateComponent = '';
-  private driver = {} as Driver;
+  public user = {} as User;
 
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private driverService: DriverService, private userService: UserService, 
-    private dialog: MatDialog) {}
+  constructor(private userService: UserService, private dialog: MatDialog, private _snackBar: MatSnackBar) {
+    
+  }
 
   openDialog() {
+    if(this.selectedRowIndex==-1){
+      this.openSnackBar("Please select a driver!");
+      return;
+    }
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
+    dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = this.allNotes.results;
     this.dialog.open(NotesDialogComponent, dialogConfig);
   }
 
+  openAddNoteDialog() {
+    if(this.selectedRowIndex==-1){
+      this.openSnackBar("User not selected!");
+      return;
+    }
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = this;
+
+    const dialogRef = this.dialog.open(AddNoteDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((res: any) => {
+      this.selectedRowIndex = -1;
+    });
+  }
+
+  openSnackBar(snackMsg : string) : void {
+    this._snackBar.open(snackMsg, "Dismiss", {
+      duration: 2000
+    });
+  }
+
   ngOnInit(): void {
-    this.driverService.selectedValue$.subscribe((value) => {
+    this.userService.selectedValue$.subscribe((value) => {
       this.valueFromCreateComponent = value;
     });
 
-    this.driverService.getAll().subscribe((res) => {
+    this.userService.getAllDrivers().subscribe((res) => {
       this.all = res.results;
-      this.dataSource = new MatTableDataSource<Driver>(this.all);
+      this.dataSource = new MatTableDataSource<User>(this.all);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-
   }
 
   changeState() {
@@ -68,12 +95,12 @@ export class DriversComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  getDriver(driver : Driver) {
+  getDriver(driver : User) {
     const block = document.getElementById("block");
     this.selectedRowIndex=driver.id;
-    this.driver = driver;
+    this.user = driver;
     if (block != null) {
-      if (this.driver.blocked == true) block.innerText = "UNBLOCK";
+      if (this.user.blocked == true) block.innerText = "UNBLOCK";
       else block.innerText = "BLOCK";
     }
     this.getNotes();
@@ -81,37 +108,25 @@ export class DriversComponent implements OnInit {
 
   blockUser() : void{
     const block = document.getElementById("block");
-    if (this.driver.blocked == true) {
+    if (this.user.blocked == true) {
       this.unblockUser();
       return;
     }
-    this.driver.blocked = true;
+    this.user.blocked = true;
     if (block != null) block.innerText = "UNBLOCK";
-    this.userService.block(this.driver.id).subscribe();
+    this.userService.block(this.user.id).subscribe();
   }
 
   unblockUser() : void {
     const block = document.getElementById("block");
-    this.driver.blocked = false;
+    this.user.blocked = false;
     if (block != null) block.innerText = "BLOCK";
-    this.userService.unblock(this.driver.id).subscribe();
-  }
-
-  addNote() : void {
-    if(this.message != '') {
-      this.requestNote["message"] = this.message;
-      this.userService.addNote(this.driver.id, this.requestNote)
-      .subscribe((res: any) => {
-        console.log("all notes");
-        console.log(this.allNotes);
-        this.selectedRowIndex = -1;
-      });
-    }
+    this.userService.unblock(this.user.id).subscribe();
   }
 
   getNotes() : void {
-    console.log(this.driver.id);
-    this.userService.getNotes(this.driver.id)
+    console.log(this.user.id);
+    this.userService.getNotes(this.user.id)
     .subscribe((res: any) => {
       this.allNotes = res;
     }); 
@@ -120,10 +135,10 @@ export class DriversComponent implements OnInit {
 
 export interface All {
   totalCount: number;
-  results: Driver[];
+  results: User[];
 }
 
-export interface Driver {  
+export interface User {  
   id: number;
   name: string;
   surname: string;

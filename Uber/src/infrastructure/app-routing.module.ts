@@ -32,7 +32,6 @@ const routes: Routes = [
   { path: 'add-driver', component: AddDriverComponent},
   { path: 'add-vehicle', component: AddVehicleComponent},
   { path: 'admin-home', component: AdminHomeComponent },
-
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: '**', component: HomePageComponent },
 ];

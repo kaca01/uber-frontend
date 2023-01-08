@@ -1,0 +1,12 @@
+<div class="container">
+    <img src="../../assets/images/close.png" id="close-dialog" class="close" (click)="close()"/>
+
+    <div id="title">Add a note</div>
+
+    <mat-dialog-content>
+        <textarea id="textarea" placeholder="Leave a note..." [(ngModel)]="message"></textarea>
+    </mat-dialog-content>
+    <div id="btn-container">
+        <button id="save" (click)="save()">SAVE</button>
+    </div>  
+</div>
