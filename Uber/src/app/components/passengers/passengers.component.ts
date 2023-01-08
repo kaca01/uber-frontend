@@ -1,6 +1,4 @@
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   OnInit,
   ViewChild,
@@ -13,6 +11,7 @@ import { UserService } from 'src/app/service/user.service';
 import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dialog.component';
 import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { RequestNote, AllNotes } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-passengers',
@@ -152,19 +151,4 @@ export interface User {
   address: string;
   blocked: boolean;
   picture: string;
-}
-
-export interface AllNotes {
-  totalCount: number;
-  results: Note[];
-}
-
-export interface RequestNote {
-  message: string;
-}
-
-export interface Note {
-  id: number;
-  date: string;
-  message: string;
 }

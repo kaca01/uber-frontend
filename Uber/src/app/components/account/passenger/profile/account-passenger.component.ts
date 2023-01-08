@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'account-passenger',
@@ -6,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./account-passenger.component.css']
 })
 
-export class AccountPassengerComponent implements OnInit{
+export class AccountPassengerComponent implements OnInit {
+
+  constructor(private authService: AuthService) {}
+
   ngOnInit(): void {
     let data = document.getElementById("user-data");
     let favorite = document.getElementById("favorite-locations");
@@ -68,6 +72,10 @@ export class AccountPassengerComponent implements OnInit{
       profileBtn.style.setProperty("color", "#9f9f9f", "important");
       favoriteBtn.style.setProperty("color", "black", "important");
     });
+  }
+
+  logOut() {
+    this.authService.logout();
   }
   
 }

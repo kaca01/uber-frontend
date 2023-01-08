@@ -1,8 +1,12 @@
+import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { All, AllNotes, User, Note, RequestNote } from '../components/drivers/drivers.component';
+import {ApiService} from './api.service';
+import {ConfigService} from './config.service';
+import {map} from 'rxjs/operators';
+import { All } from '../components/drivers/drivers.component';
+
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +15,20 @@ export class UserService {
   private value$ = new BehaviorSubject<any>({});
   selectedValue$ = this.value$.asObservable();
 
-  constructor(private http: HttpClient) {
-  }
+  public currentUser = {} as User | null;
 
+  constructor(
+    private apiService: ApiService,
+    private config: ConfigService,
+    private http: HttpClient) { }
+
+  getMyInfo() {
+    return this.apiService.get(this.config.current_user_url)
+      .pipe(map(user => {
+        this.currentUser = user;
+        return user;
+    }));
+  }
   setValue(test: any) {
     this.value$.next(test);
   }
@@ -51,4 +66,41 @@ export class UserService {
     };
     return this.http.post<string>(environment.apiHost + 'api/passenger', passenger, options);
   }
+}
+
+interface User {
+  active: Boolean,
+  address: String,
+  blocked: Boolean,
+  email: String,
+  enabled: Boolean,
+  id: Number,
+  lastPasswordResetDate: Number,
+  name: String,
+  profilePicture: String,
+  roles: Role[],
+  surname: String,
+  telephoneNumber: String,
+  username: String
+}
+
+interface Role {
+  id: Number,
+  name: String,
+  authority: String
+}
+
+export interface AllNotes {
+  totalCount: number;
+  results: Note[];
+}
+
+export interface RequestNote {
+  message: string;
+}
+
+export interface Note {
+  id: number;
+  date: string;
+  message: string;
 }

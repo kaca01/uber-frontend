@@ -1,5 +1,7 @@
-<ru-navbar></ru-navbar>
-
+<ru-navbar *ngIf="isLoggedIn(); else secondNavbar"></ru-navbar>
+<ng-template #secondNavbar>
+    <uu-navbar></uu-navbar>
+</ng-template>
 <div id="page-container">
     <div id="container">
         <app-map [pickup]="pickup" [destination]="destination" (pickup_out)="getPickup($event)" (destination_out)="getDestination($event)"> </app-map>

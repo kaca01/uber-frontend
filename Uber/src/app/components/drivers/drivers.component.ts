@@ -7,7 +7,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { UserService } from 'src/app/service/user.service';
+import { AllNotes, UserService } from 'src/app/service/user.service';
 import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dialog.component';
 import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -149,19 +149,3 @@ export interface User {
   picture: string;
   changes: boolean;
 }
-
-export interface AllNotes {
-  totalCount: number;
-  results: Note[];
-}
-
-export interface Note {
-  id: number;
-  date: string;
-  message: string;
-}
-
-export interface RequestNote {
-  message: string;
-}
-

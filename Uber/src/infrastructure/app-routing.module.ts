@@ -15,7 +15,7 @@ import { DriversComponent } from 'src/app/components/drivers/drivers.component';
 import { AddDriverComponent } from 'src/app/components/drivers/add-driver/add-driver.component';
 import { AddVehicleComponent } from 'src/app/components/drivers/add-vehicle/add-vehicle.component';
 import { BasePageComponent } from 'src/app/components/history/base-page/base-page.component';
-
+import { AdminHomeComponent } from 'src/app/components/home/admin/admin-home.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -31,6 +31,7 @@ const routes: Routes = [
   { path: 'drivers', component: DriversComponent},
   { path: 'add-driver', component: AddDriverComponent},
   { path: 'add-vehicle', component: AddVehicleComponent},
+  { path: 'admin-home', component: AdminHomeComponent },
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: '**', component: HomePageComponent },
 ];
