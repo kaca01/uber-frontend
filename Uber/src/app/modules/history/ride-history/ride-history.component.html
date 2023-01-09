@@ -1,0 +1,18 @@
+<div id="container">
+    <div id="padding">
+        <mat-card id="form"> 
+            <mat-card-content>
+                <p id="title" class="card-content">Ride history</p>
+                  <ol>
+                    <li class="list-item" (click)="openDetails(i)" *ngFor="let a of all.results; index as i">
+                        <p class="address">{{i+1}}. {{a.locations[0].departure.address}} - {{a.locations[0].destination.address}}</p>
+                        <p class="date"> {{a.startTime}}</p>
+                        <div class="line"></div>
+                    </li>
+                  </ol>
+            </mat-card-content>
+        </mat-card>
+    </div>
+ </div>
+ 
+

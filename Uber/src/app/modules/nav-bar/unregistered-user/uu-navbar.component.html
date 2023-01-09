@@ -1,0 +1,16 @@
+<mat-toolbar>
+    <img src="../../assets/images/logo.png" class="clickable" [routerLink]="['/home-page']"/>
+    <span [routerLink]="['/home-page']" class="clickable">Uber</span>
+    <div id="navigation">
+      <button class="signupBttn"
+        style="float: right"
+        [routerLink]="['/registration']"
+        mat-raised-button color="green">
+        Sign Up
+      </button>
+      <button class="loginBttn" style="float: right" 
+      [routerLink]="['/login']" mat-button>
+        Login
+      </button>
+    </div>
+</mat-toolbar>
