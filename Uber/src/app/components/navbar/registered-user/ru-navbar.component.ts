@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'ru-navbar',
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ru-navbar.component.css'],
 })
 export class RUNavbarComponent implements OnInit {
-  constructor() {}
+
+  constructor(private userService: UserService) {}
 
   isShowDivIf = true;
   toggleDisplayDivIf() {
@@ -14,4 +16,16 @@ export class RUNavbarComponent implements OnInit {
   }
   
   ngOnInit(): void {}
+
+  hasSignedIn() {
+    return !!this.userService.currentUser;
+  }
+
+  userName() {
+    if(this.userService.currentUser != null){
+      const user = this.userService.currentUser;
+      return user.name + ' ' + user.surname;
+      }
+      return "";
+  }
 }

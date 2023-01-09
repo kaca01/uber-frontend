@@ -1,6 +1,4 @@
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   OnInit,
   ViewChild,
@@ -14,6 +12,7 @@ import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dial
 import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AllNotes, RequestNote, User } from 'src/app/domains';
+
 
 @Component({
   selector: 'app-passengers',

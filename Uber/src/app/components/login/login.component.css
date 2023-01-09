@@ -94,8 +94,6 @@ form{
 
 .title {
   font-size: 3em;
-  font-weight: 540;
-  margin-top: 30px;
   margin-bottom: 0.8em;
 }
 
@@ -116,6 +114,11 @@ form{
   margin-top: 35px;
   margin-bottom: 50px;
   width: 100%;
+}
+
+.error {
+  width: 100%;
+  color: red;
 }
 
 @media (max-width:960px) {

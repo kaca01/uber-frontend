@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -6,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+
+  constructor(private authService: AuthService) {}
   
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   url: string | ArrayBuffer | null | undefined;
   
@@ -26,5 +28,9 @@ export class ProfileComponent implements OnInit {
   
   public delete(){
     this.url = null;
+  }
+
+  logOut() {
+    this.authService.logout();
   }
 }

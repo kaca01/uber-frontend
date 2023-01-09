@@ -33,7 +33,7 @@ export class RegistrationComponent implements OnInit{
       this.service.addPassenger(this.registrationForm.value)
       .subscribe((res: any) => {
         console.log(res);
-        this.router.navigate(['passenger-home']);
+        this.router.navigate(['home-page']);
       });
     }
   }
