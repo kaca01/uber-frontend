@@ -5,8 +5,9 @@ import { DataComponent } from './admin/data/data.component';
 import { ProfileComponent } from './admin/profile/profile.component';
 import { UserDataComponent } from './passenger/data/user-data.component';
 import { FavoriteLocationsComponent } from './passenger/favorite-locations/favorite-locations.component';
-
-
+import { MaterialModule } from 'src/infrastructure/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NavBarModule } from '../nav-bar/nav-bar.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,10 @@ import { FavoriteLocationsComponent } from './passenger/favorite-locations/favor
     FavoriteLocationsComponent
     ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    NavBarModule
   ]
 })
 export class AccountModule { }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AllRides, RideReview } from 'src/app/domains';
-import { HistoryService } from 'src/app/service/history.service';
+import { HistoryService } from 'src/app/modules/history/history.service';
 import { BasePageComponent } from '../base-page/base-page.component';
 
 @Component({

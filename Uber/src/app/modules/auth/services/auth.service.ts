@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ApiService } from './api.service';
-import { UserService } from './user.service';
 import { ConfigService } from './config.service';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { UserService } from '../../list-of-users/user.service';
 
 @Injectable()
 export class AuthService {

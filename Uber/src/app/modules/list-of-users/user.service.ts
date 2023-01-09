@@ -4,9 +4,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { AllUsers, AllNotes, User, Note, RequestNote } from 'src/app/domains';
 
-import {ApiService} from './api.service';
-import {ConfigService} from './config.service';
 import {map} from 'rxjs/operators'
+import { ApiService } from '../auth/services/api.service';
+import { ConfigService } from '../auth/services/config.service';
 
 
 @Injectable({

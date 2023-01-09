@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
-import { HistoryService } from 'src/app/service/history.service';
+import { HistoryService } from 'src/app/modules/history/history.service';
 import { BasePageComponent } from '../base-page/base-page.component';
 import { AllRides, Ride } from 'src/app/domains';
 

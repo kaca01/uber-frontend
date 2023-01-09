@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UserService } from 'src/app/service/user.service';
+import { UserService } from 'src/app/modules/list-of-users/user.service';
 import { DriversComponent } from '../../drivers/drivers.component';
 import { HttpErrorResponse } from "@angular/common/http";
 import {MatSnackBar} from '@angular/material/snack-bar';

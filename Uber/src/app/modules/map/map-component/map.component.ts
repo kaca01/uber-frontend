@@ -2,8 +2,8 @@ import { Component, Input, AfterViewInit, AfterViewChecked, Output, EventEmitter
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
-import { MapService } from 'src/app/service/map.service';
-import { LocationDialog } from '../components/home/location-dialog/location_dialog';
+import { LocationDialog } from '../../home/location-dialog/location_dialog';
+import { MapService } from '../map.service';
 
 @Component({
   selector: 'app-map',

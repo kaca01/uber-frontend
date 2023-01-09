@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/service/user.service';
+import { UserService } from 'src/app/modules/list-of-users/user.service';
 
 @Component({
   selector: 'admin-navbar',

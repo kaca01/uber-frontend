@@ -5,8 +5,10 @@ import { DriverHomeComponent } from './driver/driver-home.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { LocationDialog } from './location-dialog/location_dialog';
 import { PassengerHomeComponent } from './passenger/passenger-home.component';
-
-
+import { MaterialModule } from 'src/infrastructure/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MapModule } from '../map/map.module';
+import { NavBarModule } from '../nav-bar/nav-bar.module';
 
 @NgModule({
   declarations: [
@@ -14,10 +16,21 @@ import { PassengerHomeComponent } from './passenger/passenger-home.component';
     DriverHomeComponent,
     HomePageComponent,
     LocationDialog,
-    PassengerHomeComponent
+    PassengerHomeComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    MapModule,
+    NavBarModule
+  ],
+  exports: [
+    AdminHomeComponent,
+    DriverHomeComponent,
+    HomePageComponent,
+    LocationDialog,
+    PassengerHomeComponent,
   ]
 })
 export class HomeModule { }
