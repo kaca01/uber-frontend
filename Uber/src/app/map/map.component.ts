@@ -10,7 +10,7 @@ import { LocationDialog } from '../components/home/location-dialog/location_dial
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements AfterViewInit, AfterViewChecked {
+export class MapComponent implements AfterViewInit {
   @Input() pickup = '';
   @Input() destination = '';
   @Output() pickup_out = new EventEmitter<string>();
@@ -118,48 +118,12 @@ export class MapComponent implements AfterViewInit, AfterViewChecked {
       iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
     });
     L.Marker.prototype.options.icon = DefaultIcon;
+    this.initMap();
   }
 
   ngOnChanges() { 
     this.setPickup();
     this.setDestination();
-    this.route();
   }
 
-  ngAfterViewChecked() : void {
-    this.initMap();
-  }
-
-  route(): void {
-    if (this.routingControl != null)
-        this.removeRoutingControl();
-
-    this.mapService.search(this.pickup).subscribe({
-      next: (pickupLocation) => {
-        this.mapService.search(this.destination).subscribe({
-          next: (destinationLocation) => {
-            this.routingControl = L.Routing.control({
-              router: L.Routing.osrmv1({
-                serviceUrl: `http://router.project-osrm.org/route/v1/`
-            }),
-              show: false,
-              collapsible: true,
-              waypoints: [L.latLng(pickupLocation[0].lat, pickupLocation[0].lon), 
-              L.latLng(destinationLocation[0].lat, destinationLocation[0].lon)],
-            }).addTo(this.map);
-          },
-          error: () => {},
-        });
-      },
-      error: () => {},
-    }); 
-    
-  }
-
-  removeRoutingControl(): void {
-    if (this.routingControl != null) {
-      this.map.removeControl(this.routingControl);
-      this.routingControl = null;
-    }
-  }
 }

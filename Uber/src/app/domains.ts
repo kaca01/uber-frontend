@@ -21,15 +21,19 @@ export interface AllUsers {
 }
 
 export interface User {  
-  id: number;
-  name: string;
-  surname: string;
-  email: string;
-  telephoneNumber: string;
-  address: string;
-  blocked: boolean;
-  picture: string;
-  changes: boolean;
+  active: Boolean,
+  address: String,
+  blocked: Boolean,
+  email: String,
+  enabled: Boolean,
+  id: number,
+  lastPasswordResetDate: Number,
+  name: String,
+  profilePicture: String,
+  roles: Role[],
+  surname: String,
+  telephoneNumber: String,
+  username: String
 }
 
 export interface AllRides {
@@ -51,7 +55,6 @@ petTransport: String;
 rejection : Rejection;
 locations: Route[];
 }
-
 
 export interface Rejection {
 reason: String;
@@ -83,4 +86,11 @@ export interface Note {
 export interface RequestNote {
     message: string;
 }
+
+interface Role {
+  id: Number,
+  name: String,
+  authority: String
+}
+
   

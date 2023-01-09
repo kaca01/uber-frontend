@@ -48,7 +48,6 @@ export class HomePageComponent implements OnInit {
 	}
 
 	isLoggedIn(): boolean {
-		console.log(this.userService.getMyInfo());
 		if(this.userService.currentUser?.name != undefined) 
 			return true;
 		return false;

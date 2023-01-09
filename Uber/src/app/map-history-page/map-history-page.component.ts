@@ -32,8 +32,4 @@ export class MapHistoryPageComponent{
     });
     L.Marker.prototype.options.icon = DefaultIcon;
   }
-
-  ngAfterViewChecked() : void {
-    this.initMap();
-  }
 }
