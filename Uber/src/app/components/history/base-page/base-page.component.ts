@@ -25,7 +25,7 @@ export class BasePageComponent implements OnInit{
 	const histories = document.getElementsByClassName("list-item");
 	const arr = Array.from(histories);
 
-	const viewRatings = document.getElementById('ratings');
+	const viewRatings = document.getElementById('ratings-btn');
 	const backToHistory = document.getElementById('back-to-history');
 	const backToDetails = document.getElementById('back-to-details');
 

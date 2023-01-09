@@ -34,14 +34,14 @@ import { MapComponent } from './map/map.component';
 import { HomePageComponent } from './components/home/home-page/home-page.component';
 import { NotesDialogComponent } from './components/dialogs/notes-dialog/notes-dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MapHistoryPageComponent } from './map-history-page/map-history-page.component';
 import { AddNoteDialogComponent } from './components/dialogs/add-note-dialog/add-note-dialog.component';
-
 import {ApiService} from './service/api.service';
 import {AuthService} from './service/auth.service';
 import {ConfigService} from './service/config.service';
-
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptor/TokenInterceptor';
+
 
 
 @NgModule({
@@ -71,6 +71,7 @@ import { TokenInterceptor } from './interceptor/TokenInterceptor';
     MapComponent,
     HomePageComponent,
     NotesDialogComponent,
+    MapHistoryPageComponent, 
     AddNoteDialogComponent, 
   ],
   imports: [

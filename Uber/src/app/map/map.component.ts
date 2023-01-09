@@ -10,7 +10,7 @@ import { LocationDialog } from '../components/home/location-dialog/location_dial
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit, AfterViewChecked {
   @Input() pickup = '';
   @Input() destination = '';
   @Output() pickup_out = new EventEmitter<string>();
@@ -20,6 +20,7 @@ export class MapComponent implements AfterViewInit {
   json_result : any;
 
   private map : any;
+  private routingControl: any;
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -33,13 +34,13 @@ export class MapComponent implements AfterViewInit {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
     tiles.addTo(this.map);
-     this.registerOnClick();
+
+    this.registerOnClick();
   }
 
   constructor(
     private mapService: MapService,
-    private dialog: MatDialog) {
-     }
+    private dialog: MatDialog) {}
 
     openDialog(): void {
       let dialogRef = this.dialog.open(LocationDialog);
@@ -117,11 +118,48 @@ export class MapComponent implements AfterViewInit {
       iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
     });
     L.Marker.prototype.options.icon = DefaultIcon;
-    this.initMap();
   }
 
   ngOnChanges() { 
     this.setPickup();
     this.setDestination();
+    this.route();
+  }
+
+  ngAfterViewChecked() : void {
+    this.initMap();
+  }
+
+  route(): void {
+    if (this.routingControl != null)
+        this.removeRoutingControl();
+
+    this.mapService.search(this.pickup).subscribe({
+      next: (pickupLocation) => {
+        this.mapService.search(this.destination).subscribe({
+          next: (destinationLocation) => {
+            this.routingControl = L.Routing.control({
+              router: L.Routing.osrmv1({
+                serviceUrl: `http://router.project-osrm.org/route/v1/`
+            }),
+              show: false,
+              collapsible: true,
+              waypoints: [L.latLng(pickupLocation[0].lat, pickupLocation[0].lon), 
+              L.latLng(destinationLocation[0].lat, destinationLocation[0].lon)],
+            }).addTo(this.map);
+          },
+          error: () => {},
+        });
+      },
+      error: () => {},
+    }); 
+    
+  }
+
+  removeRoutingControl(): void {
+    if (this.routingControl != null) {
+      this.map.removeControl(this.routingControl);
+      this.routingControl = null;
+    }
   }
 }
