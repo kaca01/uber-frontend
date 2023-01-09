@@ -21,7 +21,7 @@ import { AuthService } from './modules/auth/services/auth.service';
 import { ApiService } from './modules/auth/services/api.service';
 import { UserService } from './modules/list-of-users/user.service';
 import { ConfigService } from './modules/auth/services/config.service';
-import { TokenInterceptor } from './modules/auth/interceptor/tokenInterceptor';
+import { TokenInterceptor } from './modules/auth/interceptor/TokenInterceptor';
 
 @NgModule({
   declarations: [
