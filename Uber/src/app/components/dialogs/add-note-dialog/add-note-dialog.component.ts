@@ -4,6 +4,7 @@ import { UserService } from 'src/app/service/user.service';
 import { DriversComponent } from '../../drivers/drivers.component';
 import { HttpErrorResponse } from "@angular/common/http";
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { RequestNote } from 'src/app/domains';
 
 @Component({
   selector: 'app-add-note-dialog',
@@ -56,9 +57,4 @@ export class AddNoteDialogComponent {
       duration: 2000
     });
   }
-}
-
-
-export interface RequestNote {
-  message: string;
 }

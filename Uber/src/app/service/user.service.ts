@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { AllUsers, AllNotes, User, Note, RequestNote } from 'src/app/domains';
+
 import {ApiService} from './api.service';
 import {ConfigService} from './config.service';
-import {map} from 'rxjs/operators';
-import { All } from '../components/drivers/drivers.component';
+import {map} from 'rxjs/operators'
 
 
 @Injectable({
@@ -33,12 +34,12 @@ export class UserService {
     this.value$.next(test);
   }
 
-  getAllDrivers(): Observable<All> {
-    return this.http.get<All>(environment.apiHost + 'api/driver');
+  getAllDrivers(): Observable<AllUsers> {
+    return this.http.get<AllUsers>(environment.apiHost + 'api/driver');
   }
 
-  getAllPassengers(): Observable<All> {
-    return this.http.get<All>(environment.apiHost + 'api/passenger');
+  getAllPassengers(): Observable<AllUsers> {
+    return this.http.get<AllUsers>(environment.apiHost + 'api/passenger');
   }
 
   block(userId : Number) : Observable<void> {

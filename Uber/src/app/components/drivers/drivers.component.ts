@@ -10,7 +10,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AllNotes, UserService } from 'src/app/service/user.service';
 import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dialog.component';
 import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.component';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AllNotes, User } from 'src/app/domains';
 
 @Component({
   selector: 'app-drivers',
@@ -34,45 +35,7 @@ export class DriversComponent implements OnInit {
   constructor(private userService: UserService, private dialog: MatDialog, private _snackBar: MatSnackBar) {
     
   }
-
-  openDialog() {
-    if(this.selectedRowIndex==-1){
-      this.openSnackBar("Please select a driver!");
-      return;
-    }
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
-
-    dialogConfig.data = this.allNotes.results;
-    this.dialog.open(NotesDialogComponent, dialogConfig);
-  }
-
-  openAddNoteDialog() {
-    if(this.selectedRowIndex==-1){
-      this.openSnackBar("User not selected!");
-      return;
-    }
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = this;
-
-    const dialogRef = this.dialog.open(AddNoteDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe((res: any) => {
-      this.selectedRowIndex = -1;
-    });
-  }
-
-  openSnackBar(snackMsg : string) : void {
-    this._snackBar.open(snackMsg, "Dismiss", {
-      duration: 2000
-    });
-  }
-
+  
   ngOnInit(): void {
     this.userService.selectedValue$.subscribe((value) => {
       this.valueFromCreateComponent = value;
@@ -96,32 +59,23 @@ export class DriversComponent implements OnInit {
   }
 
   getDriver(driver : User) {
-    const block = document.getElementById("block");
     this.selectedRowIndex=driver.id;
     this.user = driver;
-    if (block != null) {
-      if (this.user.blocked == true) block.innerText = "UNBLOCK";
-      else block.innerText = "BLOCK";
-    }
+    if (this.user.blocked == true) this.changeBlockButton(0);
+    else this.changeBlockButton(1);
     this.getNotes();
   }
 
-  blockUser() : void{
-    const block = document.getElementById("block");
-    if (this.user.blocked == true) {
-      this.unblockUser();
-      return;
-    }
-    this.user.blocked = true;
-    if (block != null) block.innerText = "UNBLOCK";
-    this.userService.block(this.user.id).subscribe();
-  }
+  // notes
+  openDialog() {
+    if(this.checkIfSelected()) return;
+    const dialogConfig = new MatDialogConfig();
 
-  unblockUser() : void {
-    const block = document.getElementById("block");
-    this.user.blocked = false;
-    if (block != null) block.innerText = "BLOCK";
-    this.userService.unblock(this.user.id).subscribe();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = this.allNotes.results;
+    this.dialog.open(NotesDialogComponent, dialogConfig);
   }
 
   getNotes() : void {
@@ -130,22 +84,61 @@ export class DriversComponent implements OnInit {
     .subscribe((res: any) => {
       this.allNotes = res;
     }); 
+  }  
+
+  openAddNoteDialog() {
+    if(this.checkIfSelected()) return;
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = this;
+
+    const dialogRef = this.dialog.open(AddNoteDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((res: any) => {
+      this.selectedRowIndex = -1;
+    });
   }
-}
 
-export interface All {
-  totalCount: number;
-  results: User[];
-}
+  // blocking
+  blockUser() : void{
+    this.checkIfSelected();
+    if (this.user.blocked == true) {
+      this.unblockUser();
+      return;
+    }
+    this.user.blocked = true;
+    this.changeBlockButton(0);
+    this.userService.block(this.user.id).subscribe();
+  }
 
-export interface User {  
-  id: number;
-  name: string;
-  surname: string;
-  email: string;
-  telephoneNumber: string;
-  address: string;
-  blocked: boolean;
-  picture: string;
-  changes: boolean;
+  unblockUser() : void {
+    this.checkIfSelected();
+    this.user.blocked = false;
+    this.changeBlockButton(1);
+    this.userService.unblock(this.user.id).subscribe();
+  }
+
+  changeBlockButton(change : number) {
+    const block = document.getElementById("block");
+    if (block) {
+      if (change == 0) block.innerText = "UNBLOCK";
+      else block.innerText = "BLOCK";
+    }
+  }
+
+  openSnackBar(snackMsg : string) : void {
+    this._snackBar.open(snackMsg, "Dismiss", {
+      duration: 2000
+    });
+  }
+
+  private checkIfSelected() : boolean {
+    if(this.selectedRowIndex==-1){
+      this.openSnackBar("User not selected!");
+      return true;
+    }
+    return false;
+  }
 }

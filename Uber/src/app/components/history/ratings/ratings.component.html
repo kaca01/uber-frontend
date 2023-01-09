@@ -3,62 +3,44 @@
         <mat-card id="form"> 
             <mat-card-content>
                 <div id="alignment">
-                    <img id="back-to-details" src="../../../../../assets/images/green-back-arrow.png"/>
+                    <img id="back-to-details" (click)="backToHistoryDetails()" src="../../../../../assets/images/green-back-arrow.png"/>
                     <p id="title" class="card-content">Ratings</p>
 
                     <ul>
-                        <li>
+                        <li *ngFor="let r of ratings">
                             <span class="item">
                                 <img class="picture" src="../../../../../assets/images/account.png"/>
                                 <div class="name-stars">
-                                    <p class="name">Mica Žica</p>
+                                    <p class="name">{{ r.vehicleReview.passenger.email }}</p>
                                     <div class="stars">
-                                        <img class="star" src="../../../../../assets/images/star.png">
-                                        <img class="star" src="../../../../../assets/images/star.png">
-                                        <img class="star" src="../../../../../assets/images/star.png">
-                                        <img class="star" src="../../../../../assets/images/star.png">
-                                        <img class="star" src="../../../../../assets/images/unfilled_star.png">
+                                        <img class="star" src="../../../../../assets/images/{{ showIcon(0, r.vehicleReview.rating) }}.png">
+                                        <img class="star" src="../../../../../assets/images/{{ showIcon(1, r.vehicleReview.rating) }}.png">
+                                        <img class="star" src="../../../../../assets/images/{{ showIcon(2, r.vehicleReview.rating) }}.png">
+                                        <img class="star" src="../../../../../assets/images/{{ showIcon(3, r.vehicleReview.rating) }}.png">
+                                        <img class="star" src="../../../../../assets/images/{{ showIcon(4, r.vehicleReview.rating) }}.png">
                                     </div>
                                 </div>
-                                <p class="date">14.11.2022.</p>
-                                <p class="description">Driver was a bit annoying...:///</p>
+                                <!-- <p class="date">{{ r.vehicleReview.date }}</p> -->
+                                <p class="type">TYPE: VEHICLE </p>
+                                <p class="description">{{ r.vehicleReview.comment}}</p>
                             </span>
                         </li>
-                        <li>
+                        <li *ngFor="let r of ratings">
                             <span class="item">
                                 <img class="picture" src="../../../../../assets/images/account.png"/>
                                 <div class="name-stars">
-                                    <p class="name">Boki Smoki</p>
-
+                                    <p class="name">{{ r.driverReview.passenger.email }}</p>
                                     <div class="stars">
-                                        <img class="star" src="../../../../../assets/images/star.png">
-                                        <img class="star" src="../../../../../assets/images/star.png">
-                                        <img class="star" src="../../../../../assets/images/star.png">
-                                        <img class="star" src="../../../../../assets/images/unfilled_star.png">
-                                        <img class="star" src="../../../../../assets/images/unfilled_star.png">
+                                        <img class="star" src="../../../../../assets/images/{{ showIcon(0, r.driverReview.rating) }}.png">
+                                        <img class="star" src="../../../../../assets/images/{{ showIcon(1, r.driverReview.rating) }}.png">
+                                        <img class="star" src="../../../../../assets/images/{{ showIcon(2, r.driverReview.rating) }}.png">
+                                        <img class="star" src="../../../../../assets/images/{{ showIcon(3, r.driverReview.rating) }}.png">
+                                        <img class="star" src="../../../../../assets/images/{{ showIcon(4, r.driverReview.rating) }}.png">
                                     </div>
                                 </div>
-                                <p class="date">14.11.2022.</p>
-                                <p class="description">I didn't like the music</p>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="item">
-                                <img class="picture" src="../../../../../assets/images/account.png"/>
-                                <div class="name-stars">
-                                    <p class="name">Ana Banana</p>
-                                    <div class="stars">
-                                        <img class="star" src="../../../../../assets/images/star.png">
-                                        <img class="star" src="../../../../../assets/images/star.png">
-                                        <img class="star" src="../../../../../assets/images/star.png">
-                                        <img class="star" src="../../../../../assets/images/star.png">
-                                        <img class="star" src="../../../../../assets/images/star.png">
-                                    </div>
-                                </div>
-                                <p class="date">14.11.2022.</p>
-                                <p class="description">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa.
-                                     Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis
-                                      urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.</p>
+                                <!-- <p class="date">{{ r.vehicleReview.date }}</p> -->
+                                <p class="type">TYPE: DRIVER</p>
+                                <p class="description">{{ r.driverReview.comment}}</p>
                             </span>
                         </li>
                     </ul>

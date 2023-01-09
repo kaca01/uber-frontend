@@ -3,30 +3,31 @@
         <mat-card id="form"> 
             <mat-card-content>
                 <div id="alignment">
-                    <img id="back-to-history" src="../../../../../assets/images/green-back-arrow.png"/>
+                    <img id="back-to-history" (click)="backToHistory()" src="../../../../../assets/images/green-back-arrow.png"/>
                     <p id="title" class="card-content">Ride details</p>
                 </div>
                 <div id="infos">
 
                     <div class="info">
-                        <p class="text">Date: 22.11.2022.</p>
+                        <p class="text">Start time: {{ride.startTime}}</p>
                     </div>
                     <div class="info">
-                        <p class="text">Time: 14:47 - 15:22</p>
+                        <p class="text">End time: {{ride.endTime}}</p>
                     </div>
                     <div class="info">
-                        <p class="text">Distance: 3.7 km</p>
+                        <p class="text">Estimated time: {{ride.estimatedTimeInMinutes}}</p>
                     </div>
                     <div class="info">
-                        <p class="text">Price : 429 RSD</p>
+                        <p class="text">Price: {{ride.totalCost}}</p>
                     </div>
                 </div>
 
+                <button mat-button id="order-btn">Order now</button>
                 <div id="button-container">
-                    <button mat-raised-button color="green" id="ratings-btn">
-                        <p id="ratings">View ratings</p>
-                        <img id="right-arrow" src="../../../../../assets/images/right-arrow.png"/>
-                    </button>
+                        <button mat-raised-button color="green" id="ratings-btn" (click)="openRatings()">
+                            <p id="ratings">View ratings</p>
+                            <img id="right-arrow" src="../../../../../assets/images/right-arrow.png"/>
+                        </button>
                 </div>
             </mat-card-content>
         </mat-card>
