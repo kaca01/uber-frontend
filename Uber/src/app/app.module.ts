@@ -11,7 +11,6 @@ import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';import { AuthModule } from './modules/auth/auth.module';
 import { AccountModule } from './modules/account/account.module';
-import { HomeModule } from './modules/home/home.module';
 import { HistoryModule } from './modules/history/history.module';
 import { ListOfUsersModule } from './modules/list-of-users/list-of-users.module';
 import { MapModule } from './modules/map/map.module';
@@ -22,6 +21,7 @@ import { ApiService } from './modules/auth/services/api.service';
 import { UserService } from './modules/list-of-users/user.service';
 import { ConfigService } from './modules/auth/services/config.service';
 import { TokenInterceptor } from './modules/auth/interceptor/TokenInterceptor';
+import { HomeModule } from './modules/home/home.module';
 
 @NgModule({
   declarations: [

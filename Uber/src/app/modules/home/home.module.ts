@@ -9,6 +9,7 @@ import { MaterialModule } from 'src/infrastructure/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MapModule } from '../map/map.module';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
+import { UUHomeComponent } from './unregistered-user/uu-home.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
     HomePageComponent,
     LocationDialog,
     PassengerHomeComponent,
+    UUHomeComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
     HomePageComponent,
     LocationDialog,
     PassengerHomeComponent,
+    UUHomeComponent
   ]
 })
 export class HomeModule { }

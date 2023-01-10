@@ -8,6 +8,17 @@
     </div>
     
     <div id="all-components">
-        <passenger-home (newItemEvent1)="getPickup($event)" (newItemEvent2)="getDestination($event)" [pickup_input]="pickup" [destination_input]="destination" id="passenger-home"></passenger-home>
+        <ng-template [ngIf]="user == 'passenger'">
+            <passenger-home (newItemEvent1)="getPickup($event)" (newItemEvent2)="getDestination($event)" [pickup_input]="pickup" [destination_input]="destination" id="passenger-home"></passenger-home>
+        </ng-template>
+        <ng-template [ngIf]="user == 'driver'">
+            <app-driver-home></app-driver-home>
+        </ng-template>
+        <ng-template [ngIf]="user == 'admin'">
+            <admin-home></admin-home>
+        </ng-template>
+        <ng-template [ngIf]="user == 'none'">
+            <app-uu-home></app-uu-home>
+        </ng-template>
     </div>
 </div>

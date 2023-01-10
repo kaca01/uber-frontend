@@ -1,22 +1,17 @@
-import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'passenger-home',
-  templateUrl: './passenger-home.component.html',
-  styleUrls: ['./passenger-home.component.css'],
+  selector: 'app-uu-home',
+  templateUrl: './uu-home.component.html',
+  styleUrls: ['./uu-home.component.css']
 })
-export class PassengerHomeComponent implements OnInit {
-  @Output() newItemEvent1 = new EventEmitter<string>();
-  @Output() newItemEvent2 = new EventEmitter<string>();
-  @Input() pickup_input = '';
-  @Input() destination_input = '';
+export class UUHomeComponent implements OnInit {
   pickup = '';
   destination = '';
 
   price!: number;
   time!: number;
-  notification = "";
 
   orderForm = new FormGroup({
     pickup: new FormControl('', [Validators.required]),
@@ -58,32 +53,10 @@ export class PassengerHomeComponent implements OnInit {
     }
   }
 
-  sendLocations() {
-      this.newItemEvent1.emit(this.pickup);
-      this.newItemEvent2.emit(this.destination); 
-  }
-
-  setPickup(): void{
-    this.pickup = this.pickup_input;
-  }
-
-  setDestination(): void{
-    const destElement = document.getElementById("destination_id");
-    this.destination = this.destination_input;
-  }
-
-  ngOnChanges() { 
-    this.setPickup();
-    this.setDestination();
-  }
-
   calculateEstimatedValues() {
     if(this.pickup != '' && this.destination != '') {
       this.price = 456;
       this.time = 17;
-      this.notification = "";
     }
-    else
-      this.notification = "Fill all fields!"
   }
 }

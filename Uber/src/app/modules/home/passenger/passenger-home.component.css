@@ -52,6 +52,7 @@ mat-icon {
 
 #title {
   margin-top: 12%;
+  margin-bottom: 12%;
   font-weight: bold;
   font-size: x-large;
   width: 10em;
@@ -71,7 +72,6 @@ mat-form-field {
 }
 
 #pickup-location-field { 
-  margin-top: 15%;
   margin-bottom: -7.5%;
 }
 
@@ -88,20 +88,6 @@ mat-form-field {
   margin-left: 92%;
 }
 
-.star {
-  display: inline-block;
-  height: 1.5em;
-  width: 1.5em;
-  margin-left: 5%;
-  vertical-align: middle;
-  border-radius: 10px;
-}
-
-.star:hover {
-  cursor: pointer;
-  background-color: rgb(243, 237, 237);
-}
-
 #destionation-field {
   margin-top: 3%;
 }
@@ -116,8 +102,22 @@ mat-form-field {
 }
 
 .calculation {
-  margin-top: 6%;
+  margin-top: 3%;
   font-weight: bold;
+  margin-bottom: 5%;
+}
+
+#calculate {
+  cursor: pointer;
+  font-weight: bold;
+  color: #96d49c;
+  font-size: 17px;
+  margin-left: 3%;
+  padding: 2%;
+}
+
+#calculate:hover {
+  background-color:aliceblue;
 }
 
 #button-container {
@@ -128,6 +128,12 @@ mat-form-field {
 #order-btn {
   margin-top: 15%;
   width: 50%;
+}
+
+.error {
+  margin-left: 5%;
+  width: 100%;
+  color: red;
 }
 
 @media (max-width:1280px) {

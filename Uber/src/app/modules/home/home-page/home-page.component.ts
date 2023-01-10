@@ -9,6 +9,7 @@ import { UserService } from '../../list-of-users/user.service';
 export class HomePageComponent implements OnInit {
 	@Input() pickup = '';
 	@Input() destination = '';
+	user!: string;
 
 	constructor(private userService: UserService){}
 
@@ -36,6 +37,7 @@ export class HomePageComponent implements OnInit {
 			  }
 			});
 		}
+		this.whoIsUser();
 	}
 
 	getPickup(pickup: string) {
@@ -51,5 +53,17 @@ export class HomePageComponent implements OnInit {
 		if(this.userService.currentUser?.name != undefined) 
 			return true;
 		return false;
+	}
+
+	whoIsUser(): string {
+		if(this.userService.currentUser?.roles != undefined) {
+			if(this.userService.currentUser?.roles.find(x => x.authority === "ROLE_PASSENGER")) 
+				return this.user = "passenger";
+			else if(this.userService.currentUser?.roles.find(x => x.authority === "ROLE_DRIVER")) 
+				return this.user = "driver";
+			else if(this.userService.currentUser?.roles.find(x => x.authority === "ROLE_ADMIN")) 
+			return this.user = "admin";
 		}
+		return this.user = "none";
+	}
 }
