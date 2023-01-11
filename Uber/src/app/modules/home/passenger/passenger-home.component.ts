@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../list-of-users/user.service';
 
 @Component({
   selector: 'passenger-home',
@@ -27,7 +28,7 @@ export class PassengerHomeComponent implements OnInit {
     favorite: new FormControl('', [Validators.required]),
   });
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     const Menu = document.getElementById("menu-container");
@@ -36,6 +37,12 @@ export class PassengerHomeComponent implements OnInit {
     const order = document.getElementById("order");
     if(order != null) order.style.display = 'none';
   }
+
+  isLoggedIn(): boolean {
+		if(this.userService.currentUser?.name != undefined) 
+			return true;
+		return false;
+	}
 
   openDialog() : void {
     const Menu = document.getElementById("menu-container");

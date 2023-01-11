@@ -11,7 +11,6 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import { MapModule } from '../map/map.module';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
-import { UUHomeComponent } from './unregistered-user/uu-home.component';
 import { OrderDetailsDialog } from './order-details-dialog/order-details-dialog';
 import { MatChipsModule } from '@angular/material/chips';
 import { FavoriteRideDialogComponent } from './favorite-ride-dialog/favorite-ride-dialog.component';
@@ -23,7 +22,6 @@ import { FavoriteRideDialogComponent } from './favorite-ride-dialog/favorite-rid
     HomePageComponent,
     LocationDialog,
     PassengerHomeComponent,
-    UUHomeComponent,
     OrderDetailsDialog,
     FavoriteRideDialogComponent
   ],
@@ -43,7 +41,6 @@ import { FavoriteRideDialogComponent } from './favorite-ride-dialog/favorite-rid
     HomePageComponent,
     LocationDialog,
     PassengerHomeComponent,
-    UUHomeComponent,
     OrderDetailsDialog,
     FavoriteRideDialogComponent
   ]

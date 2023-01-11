@@ -35,7 +35,7 @@
                     <a id="calculate" color="green" (click)="calculateEstimatedValues()">Calculate</a>
                     
                     <div id="button-container">
-                        <button mat-raised-button (click)="openOrderDetails();sendLocations()" color="green" id="order-now-btn">Order now</button>
+                        <button *ngIf="isLoggedIn()" mat-raised-button (click)="openOrderDetails();sendLocations()" color="green" id="order-now-btn">Order now</button>
                     </div>
                 </form>
             </mat-card-content>
