@@ -1,5 +1,7 @@
 import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { OrderDetailsDialog } from '../order-details-dialog/order-details-dialog';
 
 @Component({
   selector: 'passenger-home',
@@ -23,7 +25,7 @@ export class PassengerHomeComponent implements OnInit {
     destination: new FormControl('', [Validators.required]),
   });
 
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
     const Menu = document.getElementById("menu-container");
@@ -85,5 +87,16 @@ export class PassengerHomeComponent implements OnInit {
     }
     else
       this.notification = "Fill all fields!"
+  }
+
+  openOrderDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = this;
+
+    if(this.pickup != '' && this.destination != '')
+      this.dialog.open(OrderDetailsDialog, dialogConfig);
   }
 }

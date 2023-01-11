@@ -35,7 +35,7 @@
                     <a id="calculate" color="green" (click)="calculateEstimatedValues()">Calculate</a>
                     
                     <div id="button-container">
-                        <button mat-raised-button (click)="sendLocations()" color="green" id="order-btn">Order now</button>
+                        <button mat-raised-button (click)="sendLocations();openOrderDialog()" color="green" id="order-btn">Order now</button>
                     </div>
                 </form>
             </mat-card-content>

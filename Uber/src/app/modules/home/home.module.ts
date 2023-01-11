@@ -6,10 +6,14 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { LocationDialog } from './location-dialog/location_dialog';
 import { PassengerHomeComponent } from './passenger/passenger-home.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 import { MapModule } from '../map/map.module';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
 import { UUHomeComponent } from './unregistered-user/uu-home.component';
+import { OrderDetailsDialog } from './order-details-dialog/order-details-dialog';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -19,13 +23,17 @@ import { UUHomeComponent } from './unregistered-user/uu-home.component';
     LocationDialog,
     PassengerHomeComponent,
     UUHomeComponent,
+    OrderDetailsDialog
   ],
   imports: [
+    NgxMaterialTimepickerModule,
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     MapModule,
-    NavBarModule
+    NavBarModule,
+    FormsModule,
+    MatChipsModule
   ],
   exports: [
     AdminHomeComponent,
@@ -33,7 +41,8 @@ import { UUHomeComponent } from './unregistered-user/uu-home.component';
     HomePageComponent,
     LocationDialog,
     PassengerHomeComponent,
-    UUHomeComponent
+    UUHomeComponent,
+    OrderDetailsDialog
   ]
 })
 export class HomeModule { }

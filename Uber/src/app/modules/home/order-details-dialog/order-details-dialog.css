@@ -1,0 +1,61 @@
+.container {
+    margin: 10px;
+}
+
+.dialog {
+    display: flex; 
+    flex-direction: column;
+}
+
+#title {
+    margin-top: 10%;
+    margin-left: 10%;
+    margin-bottom: 5%;
+    font-weight: bold;
+    font-size: x-large;
+    width: 10em;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.toggle {
+    display:flex;
+    margin-top: 5%;
+}
+
+input {
+    border: none;
+    border-bottom: 2px solid black;
+    width: 100%;
+}
+
+::ng-deep .ngx-timepicker {
+    height: 60% !important;
+}
+
+.section {
+    margin-top: 5%;
+}
+
+#babies {
+    width: 80%;
+}
+
+.favorite {
+    margin-top: 5%;
+}
+
+#cancel {
+    margin-top: 5%;
+    width: 25%;
+    background-color: #FF6961;
+    color: white;
+}
+
+#order-btn {
+    margin-top: 5%;
+    margin-left: 50%;
+    width: 25%;
+}
