@@ -1,9 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FavoriteRideDialogComponent } from '../favorite-ride-dialog/favorite-ride-dialog.component';
 
 interface VehicleType {
   value: string;
@@ -37,11 +38,10 @@ export class OrderDetailsDialog {
     vehicleType: new FormControl(''),
     email: new FormControl('', [Validators.required]),
     time: new FormControl('', [Validators.required]),
-    // checkbox: new FormControl('', [Validators.required]),
     favorite: new FormControl('', [Validators.required]),
   });
   
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -76,6 +76,16 @@ export class OrderDetailsDialog {
     if (index > 0) {
       this.emails[index].name = value;
     }
+  }
+
+  openFavRideDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = this;
+
+    this.dialog.open(FavoriteRideDialogComponent, dialogConfig);
   }
 
 
