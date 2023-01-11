@@ -8,7 +8,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./favorite-ride-dialog.component.css']
 })
 export class FavoriteRideDialogComponent {
-  message = "";
+  name = "";
   constructor(private _snackBar: MatSnackBar, private dialogRef: MatDialogRef<FavoriteRideDialogComponent>) {}
 
   close() : void {
@@ -16,8 +16,12 @@ export class FavoriteRideDialogComponent {
   }
 
   save() : void {
-    this.message = this.message.trim();
-    this.openSnackBar("Name should not be empty!");
+    this.name = this.name.trim();
+    if(this.name != '') 
+      this.openSnackBar("Successfully added!");
+    else
+      this.openSnackBar("Name should not be empty!");
+      
     this.dialogRef.close();
   }
 
