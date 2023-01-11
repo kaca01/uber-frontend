@@ -6,13 +6,13 @@
             </button>
         </div>
   
-        <mat-card id="form"> 
+        <mat-card id="form" class="form"> 
             <mat-card-content>
                 <img src="../../assets/images/close.png" id="close-dialog" class="close" (click)="closeDialog()"/>
         
-                <p id="title" class="card-content">Choose your destination!</p>
+                <p class="card-content title">Choose your destination!</p>
                 
-                <form [formGroup]="orderForm" fxLayout="column">
+                <form [formGroup]="destinationForm" fxLayout="column">
 
                     <p class="error">{{notification}}</p>
 
@@ -35,11 +35,29 @@
                     <a id="calculate" color="green" (click)="calculateEstimatedValues()">Calculate</a>
                     
                     <div id="button-container">
-                        <button mat-raised-button (click)="sendLocations();openOrderDialog()" color="green" id="order-btn">Order now</button>
+                        <button mat-raised-button (click)="openOrderDetails();sendLocations()" color="green" id="order-now-btn">Order now</button>
                     </div>
                 </form>
             </mat-card-content>
         </mat-card>
+
+        <div id="order" class="container">
+
+            <mat-card class="dialog form"> 
+              <mat-card-content>
+
+                <div class="order-title">Order details</div>
+
+                <form [formGroup]="orderForm" fxLayout="column">
+                <order-details-dialog></order-details-dialog>   
+
+                <button mat-button id="cancel" (click)="cancelRide()">Cancel</button>
+                <button mat-raised-button color="green" id="order-btn">Order</button>
+              </form>
+            </mat-card-content>
+          </mat-card>
+
+        </div> 
     </div>
  </div>
  

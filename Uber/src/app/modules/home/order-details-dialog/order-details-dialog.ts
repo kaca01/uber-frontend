@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 interface VehicleType {
   value: string;
@@ -31,21 +32,16 @@ export class OrderDetailsDialog {
     {value: 'luxury-1', viewValue: 'LUXURY'},
     {value: 'van-2', viewValue: 'VAN'},
   ];
-  
-  constructor
-  (public dialogRef: MatDialogRef<OrderDetailsDialog>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  onClose(): void{
-      this.dialogRef.close();
-  }
-
-  onDeparture(): void {
-      this.dialogRef.close(1);
-  }
+  orderForm = new FormGroup({
+    vehicleType: new FormControl(''),
+    email: new FormControl('', [Validators.required]),
+    time: new FormControl('', [Validators.required]),
+    // checkbox: new FormControl('', [Validators.required]),
+    favorite: new FormControl('', [Validators.required]),
+  });
   
-  onDestination(): void{
-      this.dialogRef.close(2);
-  }
+  constructor() { }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();

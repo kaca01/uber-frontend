@@ -1,7 +1,5 @@
 import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { OrderDetailsDialog } from '../order-details-dialog/order-details-dialog';
 
 @Component({
   selector: 'passenger-home',
@@ -20,16 +18,23 @@ export class PassengerHomeComponent implements OnInit {
   time!: number;
   notification = "";
 
-  orderForm = new FormGroup({
+  destinationForm = new FormGroup({
     pickup: new FormControl('', [Validators.required]),
     destination: new FormControl('', [Validators.required]),
   });
 
-  constructor(private dialog: MatDialog) {}
+  orderForm = new FormGroup({
+    favorite: new FormControl('', [Validators.required]),
+  });
+
+  constructor() {}
 
   ngOnInit(): void {
     const Menu = document.getElementById("menu-container");
     if(Menu != null) Menu.style.display = 'none';
+
+    const order = document.getElementById("order");
+    if(order != null) order.style.display = 'none';
   }
 
   openDialog() : void {
@@ -89,14 +94,21 @@ export class PassengerHomeComponent implements OnInit {
       this.notification = "Fill all fields!"
   }
 
-  openOrderDialog() {
-    const dialogConfig = new MatDialogConfig();
+  openOrderDetails() {
+    if(this.pickup != '' && this.destination != '') {
+      const startForm = document.getElementById("form");
+      if(startForm != null) startForm.style.display = 'none';
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = this;
+      const order = document.getElementById("order");
+      if(order != null) order.style.display = 'block';
+    }
+  }
 
-    if(this.pickup != '' && this.destination != '')
-      this.dialog.open(OrderDetailsDialog, dialogConfig);
+  cancelRide() {
+    const startForm = document.getElementById("form");
+    if(startForm != null) startForm.style.display = 'block';
+
+    const order = document.getElementById("order");
+    if(order != null) order.style.display = 'none';
   }
 }

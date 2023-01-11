@@ -14,6 +14,7 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
 import { UUHomeComponent } from './unregistered-user/uu-home.component';
 import { OrderDetailsDialog } from './order-details-dialog/order-details-dialog';
 import { MatChipsModule } from '@angular/material/chips';
+import { FavoriteRideDialogComponent } from './favorite-ride-dialog/favorite-ride-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MatChipsModule } from '@angular/material/chips';
     LocationDialog,
     PassengerHomeComponent,
     UUHomeComponent,
-    OrderDetailsDialog
+    OrderDetailsDialog,
+    FavoriteRideDialogComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -42,7 +44,8 @@ import { MatChipsModule } from '@angular/material/chips';
     LocationDialog,
     PassengerHomeComponent,
     UUHomeComponent,
-    OrderDetailsDialog
+    OrderDetailsDialog,
+    FavoriteRideDialogComponent
   ]
 })
 export class HomeModule { }

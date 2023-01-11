@@ -2,11 +2,6 @@
     margin: 10px;
 }
 
-.dialog {
-    display: flex; 
-    flex-direction: column;
-}
-
 #title {
     margin-top: 10%;
     margin-left: 10%;
@@ -40,22 +35,15 @@ input {
 }
 
 #babies {
-    width: 80%;
+    width: 60%;
 }
 
 .favorite {
     margin-top: 5%;
 }
 
-#cancel {
+#fav {
     margin-top: 5%;
-    width: 25%;
-    background-color: #FF6961;
-    color: white;
-}
-
-#order-btn {
-    margin-top: 5%;
-    margin-left: 50%;
-    width: 25%;
+    margin-bottom: 10%;
+    width: 100%;
 }

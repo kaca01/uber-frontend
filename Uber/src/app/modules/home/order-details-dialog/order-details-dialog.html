@@ -1,58 +1,46 @@
 <div class="container">
     <!-- <img src="../../assets/images/close.png" class="close" (click)="onClose()"/> -->
 
-    <div id="title">Order details</div>
+      <mat-form-field class="vehicle-type" appearance="fill">
+          <mat-label>Choose vehicle type</mat-label>
+          <mat-select formControlName="vehicleType" [(ngModel)]="selectedValue" name="vehicle">
+            <mat-option *ngFor="let type of types" [value]="type.value">
+              {{type.viewValue}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
 
-    <div mat-dialog-actions class="dialog">
-        <form>
-        <mat-form-field class="vehicle-type" appearance="fill">
-            <mat-label>Choose vehicle type</mat-label>
-            <mat-select [(ngModel)]="selectedValue" name="vehicle">
-              <mat-option *ngFor="let type of types" [value]="type.value">
-                {{type.viewValue}}
-              </mat-option>
-            </mat-select>
+      <mat-form-field class="example-chip-list" appearance="fill">
+          <mat-label>Invite friends by email</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Enter emails">
+            <mat-chip-row *ngFor="let email of emails"
+                          (removed)="remove(email)"
+                          [editable]="true"
+                          (edited)="edit(email, $event)">
+              {{email.name}}
+              <button matChipRemove [attr.aria-label]="'remove ' + email">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+            <input placeholder="New passenger..."
+                    [matChipInputFor]="chipGrid"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="add($event)"
+                    formControlName="email"/>
+          </mat-chip-grid>
         </mat-form-field>
 
-        <mat-form-field class="example-chip-list" appearance="fill">
-            <mat-label>Invite friends by email</mat-label>
-            <mat-chip-grid #chipGrid aria-label="Enter fruits">
-              <mat-chip-row *ngFor="let email of emails"
-                            (removed)="remove(email)"
-                            [editable]="true"
-                            (edited)="edit(email, $event)">
-                {{email.name}}
-                <button matChipRemove [attr.aria-label]="'remove ' + email">
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip-row>
-              <input placeholder="New passenger..."
-                     [matChipInputFor]="chipGrid"
-                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                     [matChipInputAddOnBlur]="addOnBlur"
-                     (matChipInputTokenEnd)="add($event)"/>
-            </mat-chip-grid>
-          </mat-form-field>
+      <div class="toggle">
+          <input formControlName="time" [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
+          <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
+          <ngx-material-timepicker #toggleTimepicker [theme]="timePickerTheme"></ngx-material-timepicker>
+      </div>
 
-        <div class="toggle">
-            <input [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
-            <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
-            <ngx-material-timepicker #toggleTimepicker [theme]="timePickerTheme"></ngx-material-timepicker>
-        </div>
+      <section class="section">
+          <mat-checkbox id="babies" [(ngModel)]="babies">Babies</mat-checkbox>
+          <mat-checkbox id="pets" [(ngModel)]="pets">Pets</mat-checkbox>
+      </section>
 
-        <section class="section">
-            <mat-checkbox id="babies" [(ngModel)]="babies">Babies</mat-checkbox>
-            <mat-checkbox id="pets" [(ngModel)]="pets">Pets</mat-checkbox>
-        </section>
-
-        <mat-form-field class="favorite">
-            <mat-label>Name for a favorite ride</mat-label>
-            <input matInput>
-        </mat-form-field>
-
-        <button mat-button id="cancel" (click)="onClose()">Cancel</button>
-        <button mat-raised-button color="green" id="order-btn">Order</button>
-        
-        </form>
-    </div>
+      <button mat-raised-button id="fav">Add to favorite</button>
 </div>
