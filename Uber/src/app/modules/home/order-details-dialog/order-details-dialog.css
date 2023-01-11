@@ -1,0 +1,49 @@
+.container {
+    margin: 10px;
+}
+
+#title {
+    margin-top: 10%;
+    margin-left: 10%;
+    margin-bottom: 5%;
+    font-weight: bold;
+    font-size: x-large;
+    width: 10em;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.toggle {
+    display:flex;
+    margin-top: 5%;
+}
+
+input {
+    border: none;
+    border-bottom: 2px solid black;
+    width: 100%;
+}
+
+::ng-deep .ngx-timepicker {
+    height: 60% !important;
+}
+
+.section {
+    margin-top: 5%;
+}
+
+#babies {
+    width: 60%;
+}
+
+.favorite {
+    margin-top: 5%;
+}
+
+#fav {
+    margin-top: 5%;
+    margin-bottom: 10%;
+    width: 100%;
+}

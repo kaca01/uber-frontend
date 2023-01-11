@@ -6,9 +6,14 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { LocationDialog } from './location-dialog/location_dialog';
 import { PassengerHomeComponent } from './passenger/passenger-home.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 import { MapModule } from '../map/map.module';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
+import { OrderDetailsDialog } from './order-details-dialog/order-details-dialog';
+import { MatChipsModule } from '@angular/material/chips';
+import { FavoriteRideDialogComponent } from './favorite-ride-dialog/favorite-ride-dialog.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +22,18 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
     HomePageComponent,
     LocationDialog,
     PassengerHomeComponent,
+    OrderDetailsDialog,
+    FavoriteRideDialogComponent
   ],
   imports: [
+    NgxMaterialTimepickerModule,
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     MapModule,
-    NavBarModule
+    NavBarModule,
+    FormsModule,
+    MatChipsModule
   ],
   exports: [
     AdminHomeComponent,
@@ -31,6 +41,8 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
     HomePageComponent,
     LocationDialog,
     PassengerHomeComponent,
+    OrderDetailsDialog,
+    FavoriteRideDialogComponent
   ]
 })
 export class HomeModule { }

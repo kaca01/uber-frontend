@@ -1,0 +1,46 @@
+<div class="container">
+    <!-- <img src="../../assets/images/close.png" class="close" (click)="onClose()"/> -->
+
+      <mat-form-field class="vehicle-type" appearance="fill">
+          <mat-label>Choose vehicle type</mat-label>
+          <mat-select formControlName="vehicleType" [(ngModel)]="selectedValue" name="vehicle">
+            <mat-option *ngFor="let type of types" [value]="type.value">
+              {{type.viewValue}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="example-chip-list" appearance="fill">
+          <mat-label>Invite friends by email</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Enter emails">
+            <mat-chip-row *ngFor="let email of emails"
+                          (removed)="remove(email)"
+                          [editable]="true"
+                          (edited)="edit(email, $event)">
+              {{email.name}}
+              <button matChipRemove [attr.aria-label]="'remove ' + email">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+            <input placeholder="New passenger..."
+                    [matChipInputFor]="chipGrid"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="add($event)"
+                    formControlName="email"/>
+          </mat-chip-grid>
+        </mat-form-field>
+
+      <div class="toggle">
+          <input formControlName="time" [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
+          <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
+          <ngx-material-timepicker #toggleTimepicker [theme]="timePickerTheme"></ngx-material-timepicker>
+      </div>
+
+      <section class="section">
+          <mat-checkbox id="babies" [(ngModel)]="babies">Babies</mat-checkbox>
+          <mat-checkbox id="pets" [(ngModel)]="pets">Pets</mat-checkbox>
+      </section>
+
+      <button mat-raised-button id="fav" (click)="openFavRideDialog()">Add to favorite</button>
+</div>

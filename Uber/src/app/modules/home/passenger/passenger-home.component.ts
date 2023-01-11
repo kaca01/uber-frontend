@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../list-of-users/user.service';
 
 @Component({
   selector: 'passenger-home',
@@ -14,25 +15,34 @@ export class PassengerHomeComponent implements OnInit {
   pickup = '';
   destination = '';
 
-  orderForm = new FormGroup({
+  price!: number;
+  time!: number;
+  notification = "";
+
+  destinationForm = new FormGroup({
     pickup: new FormControl('', [Validators.required]),
     destination: new FormControl('', [Validators.required]),
   });
 
-  constructor() {}
+  orderForm = new FormGroup({
+    favorite: new FormControl('', [Validators.required]),
+  });
+
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-
     const Menu = document.getElementById("menu-container");
     if(Menu != null) Menu.style.display = 'none';
-    
 
-    const LocationStar = document.getElementById("location-star");
-    this.changeStar(LocationStar as HTMLImageElement);
-    
-    var DestinationStar = document.getElementById("destination-star");
-    this.changeStar(DestinationStar as HTMLImageElement);
+    const order = document.getElementById("order");
+    if(order != null) order.style.display = 'none';
   }
+
+  isLoggedIn(): boolean {
+		if(this.userService.currentUser?.name != undefined) 
+			return true;
+		return false;
+	}
 
   openDialog() : void {
     const Menu = document.getElementById("menu-container");
@@ -62,18 +72,6 @@ export class PassengerHomeComponent implements OnInit {
     }
   }
 
-  changeStar(Star : HTMLImageElement) : void {
-    if (Star != null) {
-      Star.addEventListener('click', function change(event){
-        if (Star.getAttribute('src') == "../../../../assets/images/unfilled_star.png") {
-          Star.setAttribute('src', "../../../../assets/images/star.png");
-        } else {
-          Star.setAttribute('src', "../../../../assets/images/unfilled_star.png");
-        }
-      });
-    }
-  }
-
   sendLocations() {
       this.newItemEvent1.emit(this.pickup);
       this.newItemEvent2.emit(this.destination); 
@@ -91,5 +89,33 @@ export class PassengerHomeComponent implements OnInit {
   ngOnChanges() { 
     this.setPickup();
     this.setDestination();
+  }
+
+  calculateEstimatedValues() {
+    if(this.pickup != '' && this.destination != '') {
+      this.price = 456;
+      this.time = 17;
+      this.notification = "";
+    }
+    else
+      this.notification = "Fill all fields!"
+  }
+
+  openOrderDetails() {
+    if(this.pickup != '' && this.destination != '') {
+      const startForm = document.getElementById("form");
+      if(startForm != null) startForm.style.display = 'none';
+
+      const order = document.getElementById("order");
+      if(order != null) order.style.display = 'block';
+    }
+  }
+
+  cancelRide() {
+    const startForm = document.getElementById("form");
+    if(startForm != null) startForm.style.display = 'block';
+
+    const order = document.getElementById("order");
+    if(order != null) order.style.display = 'none';
   }
 }
