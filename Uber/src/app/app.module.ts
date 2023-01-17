@@ -22,6 +22,7 @@ import { UserService } from './modules/list-of-users/user.service';
 import { ConfigService } from './modules/auth/services/config.service';
 import { TokenInterceptor } from './modules/auth/interceptor/TokenInterceptor';
 import { HomeModule } from './modules/home/home.module';
+import { NotificationsService } from './modules/notifications/notifications.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { HomeModule } from './modules/home/home.module';
     HistoryModule,
     ListOfUsersModule,
     MapModule,
-    NavBarModule
+    NavBarModule,
   ],
   providers: [
     {
@@ -55,6 +56,7 @@ import { HomeModule } from './modules/home/home.module';
     ApiService,
     UserService,
     ConfigService,
+    NotificationsService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@stomp/rx-stomp": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/stompjs": "^2.3.5"
+  }
+}
