@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../list-of-users/user.service';
+import { NotificationsService } from '../../notifications/notifications.service';
 
 @Component({
   selector: 'passenger-home',
@@ -28,7 +29,7 @@ export class PassengerHomeComponent implements OnInit {
     favorite: new FormControl('', [Validators.required]),
   });
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private ntfService: NotificationsService) {}
 
   ngOnInit(): void {
     const Menu = document.getElementById("menu-container");
@@ -117,5 +118,11 @@ export class PassengerHomeComponent implements OnInit {
 
     const order = document.getElementById("order");
     if(order != null) order.style.display = 'none';
+  }
+
+  orderRide(){
+    this.ntfService.startClicked();
+    this.ntfService.connectClicked();
+    this.cancelRide();
   }
 }

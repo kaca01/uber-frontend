@@ -8,12 +8,14 @@ import { map } from 'rxjs/operators';
   export class NotificationsService {
     private client: RxStomp | undefined;
     public notifications: string[] = [];
+
+    constructor() { }
   
     connectClicked() {
       if (!this.client || !this.client.connected()) {
         this.client = new RxStomp();
         this.client.configure({
-          //webSocketFactory: () => new SockJS('http://localhost:8081/notifications'),
+          webSocketFactory: () => new SockJS('http://localhost:8081/notifications'),
           debug: (msg: string) => console.log(msg)
         });
         this.client.activate();

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from '../../list-of-users/user.service';
+import { NotificationsService } from '../../notifications/notifications.service';
 
 @Component({
   selector: 'app-home-page',
