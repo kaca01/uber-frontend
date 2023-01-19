@@ -19,12 +19,20 @@ mat-toolbar ul{
 
 mat-toolbar ul li a{
   display: inline-block;
-  color: black;
   padding: 15px 17px;
+  cursor: pointer;
   text-decoration: none;
 }
 
-mat-toolbar ul li a:hover{
+.nav {
+  color: black; 
+}
+
+.nav:hover {
+  color:#96D49C;
+}
+
+#logout {
   color:#96D49C;
 }
 
