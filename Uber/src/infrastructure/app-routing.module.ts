@@ -6,7 +6,7 @@ import { DataComponent } from 'src/app/modules/account/admin/data/data.component
 import { ProfileComponent } from 'src/app/modules/account/admin/profile/profile.component';
 import { UserDataComponent } from 'src/app/modules/account/passenger/data/user-data.component';
 import { FavoriteLocationsComponent } from 'src/app/modules/account/passenger/favorite-locations/favorite-locations.component';
-import { AccountPassengerComponent } from 'src/app/modules/account/passenger/profile/account-passenger.component';
+import { AccountPassengerComponent } from 'src/app/modules/account/passenger/options/account-passenger.component';
 import { LoginComponent } from 'src/app/modules/auth/login/login.component';
 import { RegistrationComponent } from 'src/app/modules/auth/registration/registration.component';
 import { BasePageComponent } from 'src/app/modules/history/base-page/base-page.component';
