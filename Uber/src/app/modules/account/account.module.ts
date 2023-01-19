@@ -8,6 +8,7 @@ import { FavoriteLocationsComponent } from './passenger/favorite-locations/favor
 import { MaterialModule } from 'src/infrastructure/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
+import { ChangesDialogComponent } from './changes-dialog/changes-dialog.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
     DataComponent,
     ProfileComponent,
     UserDataComponent,
-    FavoriteLocationsComponent
+    FavoriteLocationsComponent,
+    ChangesDialogComponent
     ],
   imports: [
     CommonModule,
