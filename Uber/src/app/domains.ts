@@ -21,19 +21,19 @@ export interface AllUsers {
 }
 
 export interface User {  
-  active: Boolean,
-  address: String,
-  blocked: Boolean,
-  email: String,
-  enabled: Boolean,
+  active: boolean,
+  address: string,
+  blocked: boolean,
+  email: string,
+  enabled: boolean,
   id: number,
-  lastPasswordResetDate: Number,
-  name: String,
-  profilePicture: String,
+  lastPasswordResetDate: number,
+  name: string,
+  profilePicture: string,
   roles: Role[],
-  surname: String,
-  telephoneNumber: String,
-  username: String
+  surname: string,
+  telephoneNumber: string,
+  username: string
 }
 
 export interface AllRides {
@@ -88,9 +88,17 @@ export interface RequestNote {
 }
 
 interface Role {
-  id: Number,
-  name: String,
-  authority: String
+  id: number,
+  name: string,
+  authority: string
 }
 
-  
+export interface UpdateUser {  
+  address: string,
+  email: string,
+  name: string,
+  profilePicture: string,
+  surname: string,
+  telephoneNumber: string,
+  username: string
+}

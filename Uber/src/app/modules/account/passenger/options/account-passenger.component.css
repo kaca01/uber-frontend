@@ -25,15 +25,7 @@
 
 .name-surname {
   margin-top: 20%;
-}
-
-#name {
   margin-right: 10px;
-  font-size: x-large;
-  font-weight: bold;
-}
-
-#surname {
   font-size: x-large;
   font-weight: bold;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { UserService } from 'src/app/modules/list-of-users/user.service';
 
 @Component({
   selector: 'account-passenger',
@@ -8,10 +8,17 @@ import { AuthService } from 'src/app/modules/auth/services/auth.service';
 })
 
 export class AccountPassengerComponent implements OnInit {
+  name: String = "";
+  surname: String = "";
 
-  constructor(private authService: AuthService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    if(this.userService.currentUser != undefined) {
+      this.name = this.userService.currentUser.name;
+      this.surname = this.userService.currentUser.surname;
+    }
+
     let data = document.getElementById("user-data");
     let favorite = document.getElementById("favorite-locations");
 
@@ -74,8 +81,10 @@ export class AccountPassengerComponent implements OnInit {
     });
   }
 
-  logOut() {
-    this.authService.logout();
+  userName() {
+    if(this.userService.currentUser != null) {
+      const user = this.userService.currentUser;
+      return user.name + "  " + user.surname;
+    } return "";
   }
-  
 }

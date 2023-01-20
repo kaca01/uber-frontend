@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { AllUsers, AllNotes, User, Note, RequestNote } from 'src/app/domains';
+import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser } from 'src/app/domains';
 
 import {map} from 'rxjs/operators'
 import { ApiService } from '../auth/services/api.service';
@@ -58,7 +58,7 @@ export class UserService {
   }
 
   getNotes(driverId: Number) : Observable<AllNotes> {
-    return this.http.get<AllNotes>(environment.apiHost + "api/user/" + driverId + "/note?page=1&size=2");
+    return this.http.get<AllNotes>(environment.apiHost + "api/user/" + driverId + "/note");
   }
 
   addPassenger(passenger: any): Observable<any> {
@@ -67,4 +67,8 @@ export class UserService {
     };
     return this.http.post<string>(environment.apiHost + 'api/passenger', passenger, options);
   }
+
+  updatePassenger(passengerId: number, passeneger: UpdateUser): Observable<any> {
+    return this.http.put<any>(environment.apiHost + "api/passenger/" + passengerId.toString(), passeneger);
+  } 
 }

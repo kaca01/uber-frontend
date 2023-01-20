@@ -11,16 +11,19 @@ export class ChangesDialogComponent {
   notes: Note[] = [];
   description:string = "";
   id: any;
+
   constructor(private dialogRef: MatDialogRef<ChangesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: Note[]) {
       this.notes = data;
     }
 
   close() : void {
-    this.dialogRef.close();
+    this.dialogRef.close({event:'Cancel'});
   }
 
-  save() : void { }
+  save() : void {
+    this.dialogRef.close({event:'Edit'});
+  }
 
   onDeparture() : void {
     this.dialogRef.close(1);
