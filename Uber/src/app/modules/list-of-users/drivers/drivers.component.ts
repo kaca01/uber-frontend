@@ -79,7 +79,6 @@ export class DriversComponent implements OnInit {
   }
 
   getNotes() : void {
-    console.log(this.user.id);
     this.userService.getNotes(this.user.id)
     .subscribe((res: any) => {
       this.allNotes = res;
@@ -140,5 +139,21 @@ export class DriversComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  getChanges() {
+    if(!this.checkIfSelected()) {
+      if(this.user['changed']) {
+        this.userService.getChanges(this.user.id)
+        .subscribe((res: any) => {
+          console.log(res);
+        }); 
+      }
+
+      else 
+        this.openSnackBar("The selected driver has no changes!");
+    }
+      
+    
   }
 }

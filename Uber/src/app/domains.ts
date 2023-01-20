@@ -33,7 +33,8 @@ export interface User {
   roles: Role[],
   surname: string,
   telephoneNumber: string,
-  username: string
+  username: string,
+  changed: boolean
 }
 
 export interface AllRides {

@@ -71,4 +71,8 @@ export class UserService {
   updatePassenger(passengerId: number, passeneger: UpdateUser): Observable<any> {
     return this.http.put<any>(environment.apiHost + "api/passenger/" + passengerId.toString(), passeneger);
   } 
+
+  getChanges(driverId: number): Observable<User>  {
+    return this.http.get<User>(environment.apiHost + "api/driver/changes/" + driverId);
+  }
 }

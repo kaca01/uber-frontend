@@ -3,16 +3,19 @@ import {
   HttpRequest,
   HttpHandler,
   HttpInterceptor,
-  HttpEvent
+  HttpEvent,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { Observable} from 'rxjs';
+import { catchError, Observable, throwError} from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(public auth: AuthService) { }
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+  constructor(public auth: AuthService, private _snackBar: MatSnackBar) { }
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.auth.tokenIsPresent()) {
       request = request.clone({
         setHeaders: {
@@ -20,6 +23,26 @@ export class TokenInterceptor implements HttpInterceptor {
         }
       });
     }
-    return next.handle(request);
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.error instanceof ErrorEvent) {
+          // client-side error or network error
+        } else {
+          if (error.status === 401) { 
+            this.openSnackBar("Permission denied!");
+          }
+          else if(error.status === 404) {
+            this.openSnackBar("Not found!");
+          }
+        }
+        return throwError(error);
+      })
+    );;
+  }
+
+  openSnackBar(snackMsg : string) : void {
+    this._snackBar.open(snackMsg, "Dismiss", {
+      duration: 2000
+    });
   }
 }
