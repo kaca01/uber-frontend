@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AppComponent } from 'src/app/app.component';
-import { DataComponent } from 'src/app/modules/account/admin/data/data.component';
-import { ProfileComponent } from 'src/app/modules/account/admin/profile/profile.component';
-import { UserDataComponent } from 'src/app/modules/account/passenger/data/user-data.component';
-import { FavoriteLocationsComponent } from 'src/app/modules/account/passenger/favorite-locations/favorite-locations.component';
-import { AccountPassengerComponent } from 'src/app/modules/account/passenger/options/account-passenger.component';
+import { UserDataComponent } from 'src/app/modules/account/user-data/user-data.component';
+import { FavoriteLocationsComponent } from 'src/app/modules/account/favorite-locations/favorite-locations.component';
+import { OptionsComponent } from 'src/app/modules/account/options/options.component';
 import { LoginComponent } from 'src/app/modules/auth/login/login.component';
 import { RegistrationComponent } from 'src/app/modules/auth/registration/registration.component';
 import { BasePageComponent } from 'src/app/modules/history/base-page/base-page.component';
@@ -22,11 +19,9 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent},
   { path: 'home-page', component: HomePageComponent},
   { path: 'base-page', component: BasePageComponent},
-  { path: 'account-passenger', component: AccountPassengerComponent},
+  { path: 'account', component: OptionsComponent},
   { path: 'user-data', component: UserDataComponent},
   { path: 'favorite-locations', component: FavoriteLocationsComponent},
-  { path: 'app-profile', component: ProfileComponent},
-  { path: 'app-data', component: DataComponent},
   { path: 'passengers', component: PassengersComponent},
   { path: 'drivers', component: DriversComponent},
   { path: 'add-driver', component: AddDriverComponent},
