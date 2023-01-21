@@ -1,6 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import {  MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Note } from 'src/app/domains';
+import { Component } from '@angular/core';
+import {  MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-changes-dialog',
@@ -8,14 +7,8 @@ import { Note } from 'src/app/domains';
   styleUrls: ['./changes-dialog.component.css']
 })
 export class ChangesDialogComponent {
-  notes: Note[] = [];
-  description:string = "";
-  id: any;
 
-  constructor(private dialogRef: MatDialogRef<ChangesDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data: Note[]) {
-      this.notes = data;
-    }
+  constructor(private dialogRef: MatDialogRef<ChangesDialogComponent>) { }
 
   close() : void {
     this.dialogRef.close({event:'Cancel'});

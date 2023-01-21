@@ -10,6 +10,7 @@ import { MaterialModule } from 'src/infrastructure/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
 import { AppRoutingModule } from 'src/infrastructure/app-routing.module';
+import { DriverChangesComponent } from './dialogs/driver-changes/driver-changes.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AppRoutingModule } from 'src/infrastructure/app-routing.module';
     DriversComponent,
     PassengersComponent,
     AddDriverComponent,
-    AddVehicleComponent
+    AddVehicleComponent,
+    DriverChangesComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,32 @@
+<div class="container">
+    <!-- <img src="../../assets/images/close.png" id="close-dialog" class="close" (click)="close()"/> -->
+
+    <div id="title">Driver changes</div>
+
+    <mat-dialog-content>
+        <div class="field">
+            <span class="left">Name:</span>
+            <span class="right">{{editDriver.name}}</span>
+        </div>
+
+        <div class="field">
+            <span class="left">Surname:</span>
+            <span class="right">{{editDriver.surname}}</span>
+        </div>
+
+        <div class="field">
+            <span class="left">Phone:</span>
+            <span class="right">{{editDriver.telephoneNumber}}</span>
+        </div>
+
+        <div class="field">
+            <span class="left">Address:</span>
+            <span class="right">{{editDriver.address}}</span>
+        </div>
+
+        <div class="buttons">
+            <button mat-raised-button id="later" (click)="close()">Later</button>
+            <button mat-raised-button color="green" id="accept" (click)="save()">Accept</button>
+        </div>
+    </mat-dialog-content>
+</div>
