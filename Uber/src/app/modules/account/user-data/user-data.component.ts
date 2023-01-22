@@ -64,11 +64,14 @@ export class UserDataComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
           if(result.event == 'Edit') {
-            if(this.userService.currentUser?.roles.find(x => x.authority === "ROLE_PASSENGER")) 
+            if(this.userService.currentUser?.roles.find(x => x.authority === "ROLE_PASSENGER")) {
               this.updatePassenger();
-            else
+              this.openSnackBar("Your changes are saved!");
+            }
+            else {
               this.updateDriver();
-          this.openSnackBar("Your changes are saved!");
+              this.openSnackBar("Your request has been sent!");
+            }
           }
         })
       }
