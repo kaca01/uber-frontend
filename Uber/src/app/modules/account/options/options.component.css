@@ -25,15 +25,7 @@
 
 .name-surname {
   margin-top: 20%;
-}
-
-#name {
   margin-right: 10px;
-  font-size: x-large;
-  font-weight: bold;
-}
-
-#surname {
   font-size: x-large;
   font-weight: bold;
 }
@@ -51,6 +43,7 @@
 .option {
   margin-top: 10px;
   margin-bottom: 10px;
+  color: #9f9f9f !important;
 }
 
 a {
@@ -61,14 +54,10 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  background-color:#f1ecec !important;
+.selected {
+  color: black !important;
+  font-size: larger;
 }
-
-#logOut {
-  color: #96d49c !important;
-}
-
 
 /* add profile picture */
 .account {
@@ -127,6 +116,7 @@ img {
   top: 70%;
   left: 80%;
 }
+
 mat-icon{
   color: white !important;
 }

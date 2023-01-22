@@ -30,10 +30,6 @@ export class ApiService {
       headers: this.headers,
     };
 
-    if (args) {
-     // options['params'] = this.serialize(args);
-    }
-
     return this.http.get(path, options)
       .pipe(catchError(this.checkError.bind(this)));
   }
@@ -57,24 +53,11 @@ export class ApiService {
 
     return this.http.request(req)
       .pipe(filter(response => response instanceof HttpResponse))
-     // .pipe(map((response: HttpResponse<any>) => response.body))
       .pipe(catchError(error => this.checkError(error)));
   }
 
   private checkError(error: any): any {
     throw error;
-  }
-
-  private serialize(obj: any): HttpParams {
-    let params = new HttpParams();
-  
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key) && !this.looseInvalid(obj[key])) {
-        params = params.set(key, obj[key]);
-      }
-    }
-  
-    return params;
   }
 
   private looseInvalid(a: string | number): boolean {

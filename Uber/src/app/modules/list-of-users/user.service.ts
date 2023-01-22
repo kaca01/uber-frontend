@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { AllUsers, AllNotes, User, Note, RequestNote } from 'src/app/domains';
+import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser } from 'src/app/domains';
 
 import {map} from 'rxjs/operators'
 import { ApiService } from '../auth/services/api.service';
@@ -58,7 +58,7 @@ export class UserService {
   }
 
   getNotes(driverId: Number) : Observable<AllNotes> {
-    return this.http.get<AllNotes>(environment.apiHost + "api/user/" + driverId + "/note?page=1&size=2");
+    return this.http.get<AllNotes>(environment.apiHost + "api/user/" + driverId + "/note");
   }
 
   addPassenger(passenger: any): Observable<any> {
@@ -66,5 +66,35 @@ export class UserService {
       responseType: 'text',
     };
     return this.http.post<string>(environment.apiHost + 'api/passenger', passenger, options);
+  }
+
+  updatePassenger(passengerId: number, passeneger: UpdateUser): Observable<User> {
+    return this.http.put<User>(environment.apiHost + "api/passenger/" + passengerId.toString(), passeneger);
+  } 
+
+  getChanges(driverId: number): Observable<User>  {
+    return this.http.get<User>(environment.apiHost + "api/driver/changes/" + driverId);
+  }
+
+  updateDriver(driverId: number, driver: UpdateUser): Observable<User> {
+    return this.http.put<User>(environment.apiHost + "api/driver/" + driverId.toString(), driver);
+  }
+
+  addChanges(driverId: number, driver: UpdateUser): Observable<User> {
+    return this.http.post<User>(environment.apiHost + 'api/driver/changes/' + driverId, driver);
+  }
+
+  addImage(userId: number, file: File): Observable<void> {
+    let formParams = new FormData();
+    formParams.append('file', file)
+    return this.http.put<void>(environment.apiHost + 'api/picture/' + userId, formParams);
+  }
+
+  getImage(userId: number): Observable<any> {
+    return this.http.get<void>(environment.apiHost + 'api/picture/' + userId);
+  }
+
+  deleteImage(userId: number) {
+    return this.http.delete<void>(environment.apiHost + 'api/picture/' + userId);
   }
 }

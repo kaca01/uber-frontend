@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
   selector: 'ru-navbar',
@@ -8,7 +9,7 @@ import { UserService } from 'src/app/modules/list-of-users/user.service';
 })
 export class RUNavbarComponent implements OnInit {
 
-  constructor(private userService: UserService) {}
+  constructor(private authService: AuthService, private userService: UserService) {}
 
   isShowDivIf = true;
   toggleDisplayDivIf() {
@@ -27,5 +28,9 @@ export class RUNavbarComponent implements OnInit {
       return user.name + ' ' + user.surname;
       }
       return "";
+  }
+
+  logOut() {
+    this.authService.logout();
   }
 }
