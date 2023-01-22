@@ -68,8 +68,8 @@ export class UserService {
     return this.http.post<string>(environment.apiHost + 'api/passenger', passenger, options);
   }
 
-  updatePassenger(passengerId: number, passeneger: UpdateUser): Observable<any> {
-    return this.http.put<any>(environment.apiHost + "api/passenger/" + passengerId.toString(), passeneger);
+  updatePassenger(passengerId: number, passeneger: UpdateUser): Observable<User> {
+    return this.http.put<User>(environment.apiHost + "api/passenger/" + passengerId.toString(), passeneger);
   } 
 
   getChanges(driverId: number): Observable<User>  {
@@ -82,5 +82,19 @@ export class UserService {
 
   addChanges(driverId: number, driver: UpdateUser): Observable<User> {
     return this.http.post<User>(environment.apiHost + 'api/driver/changes/' + driverId, driver);
+  }
+
+  addImage(userId: number, file: File): Observable<void> {
+    let formParams = new FormData();
+    formParams.append('file', file)
+    return this.http.put<void>(environment.apiHost + 'api/picture/' + userId, formParams);
+  }
+
+  getImage(userId: number): Observable<any> {
+    return this.http.get<void>(environment.apiHost + 'api/picture/' + userId);
+  }
+
+  deleteImage(userId: number) {
+    return this.http.delete<void>(environment.apiHost + 'api/picture/' + userId);
   }
 }

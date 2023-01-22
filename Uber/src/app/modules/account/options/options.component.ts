@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
 
 @Component({
@@ -17,15 +18,27 @@ export class OptionsComponent implements OnInit {
 
   url: string | ArrayBuffer | null | undefined;
 
-  constructor(private userService: UserService) {}
+  image: string = '';
+
+  constructor(private userService: UserService, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     if(this.userService.currentUser != undefined) {
+      this.image = this.userService.currentUser.profilePicture;
+
       if(this.userService.currentUser.roles.find(x => x.authority === "ROLE_DRIVER")) 
 				this.passenger = false;
 
-      this.name = this.userService.currentUser.name;
-      this.surname = this.userService.currentUser.surname;
+      this.userService.getImage(this.userService.currentUser?.id).subscribe( {
+        next: (res) => {
+          console.log(res['byte']);
+          this.url = "data:image/png;base64,"+res['byte'];
+        },
+        error: (e) => {
+          console.log(e);
+          this.url = "https://www.w3schools.com/howto/img_avatar.png"
+        },
+      })
     }
   }
 
@@ -35,17 +48,29 @@ export class OptionsComponent implements OnInit {
 
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
-      reader.onload = (event) => { // called once readAsDataURL is completed
-        this.url = event.target?.result;
+      const file = event.target.files[0];
+
+      if(file['size'] < 1048576) {
+        if(this.userService.currentUser != undefined) {
+          this.userService.addImage(this.userService.currentUser?.id, file).subscribe();
+        }
+        reader.onload = (event) => { // called once readAsDataURL is completed
+          this.url = event.target?.result;
+          console.log(this.url);
+        }
       }
+      else 
+        this.openSnackBar("Image file is too big!");
     }
   }
-  
-  public delete(){
+
+  delete() {
+    if(this.userService.currentUser != undefined)
+      this.userService.deleteImage(this.userService.currentUser?.id).subscribe();
     this.url = null;
   }
   
-  userName() {
+  userName() : string {
     if(this.userService.currentUser != null) {
       const user = this.userService.currentUser;
       return user.name + "  " + user.surname;
@@ -60,5 +85,11 @@ export class OptionsComponent implements OnInit {
   loadFavoriteLocations() {
     this.updateData = false;
     this.favoriteLocations = true;
+  }
+
+  openSnackBar(snackMsg : string) : void {
+    this._snackBar.open(snackMsg, "Dismiss", {
+      duration: 2000
+    });
   }
 }

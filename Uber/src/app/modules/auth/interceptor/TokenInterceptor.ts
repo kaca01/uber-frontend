@@ -26,13 +26,9 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.error instanceof ErrorEvent) {
-          // client-side error or network error
         } else {
           if (error.status === 401) { 
             this.openSnackBar("Permission denied!");
-          }
-          else if(error.status === 404) {
-            this.openSnackBar("Not found!");
           }
         }
         return throwError(error);
