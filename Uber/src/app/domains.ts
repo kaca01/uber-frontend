@@ -36,6 +36,33 @@ export interface User {
   username: String
 }
 
+export interface Driver {
+  active: Boolean,
+  address: String,
+  blocked: Boolean,
+  email: String,
+  id: Number,
+  lastPasswordResetDate: Number,
+  name: String,
+  profilePicture: String,
+  roles: Role[],
+  surname: String,
+  telephoneNumber: String,
+  username: String,
+  drivingLicense : String,
+  password : String
+}
+
+export interface Vehicle{
+  babyTransport: Boolean,
+  petTransport: Boolean,
+  model: String,
+  vehicleType: String,
+  passengerSeats: Number,
+  licenseNumber: String,
+  currentLocation: Location
+}
+
 export interface AllRides {
     totalCount : Number;
     results : Ride[];
