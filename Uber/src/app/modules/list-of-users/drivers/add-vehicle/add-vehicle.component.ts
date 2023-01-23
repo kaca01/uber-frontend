@@ -29,14 +29,16 @@ export class AddVehicleComponent implements OnInit{
   constructor(private router : Router,  private service: UserService, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-      
+    let d = history.state.vehicle as Vehicle;
+    if (d != undefined) {
+      this.addVehicleForm.controls['model'].setValue(d.model.valueOf());
+      this.addVehicleForm.controls['seats'].setValue(d.passengerSeats.toString());
+      this.addVehicleForm.controls['licensePlate'].setValue(d.licenseNumber.valueOf());
+      this.addVehicleForm.controls['type'].setValue(d.vehicleType.valueOf());
+      this.pet = d.petTransport.valueOf();
+      this.baby = d.babyTransport.valueOf();
+    }
   }
-
-  types: Type[] = [
-    {value: 'STANDARD', viewValue: 'STANDARD'},
-    {value: 'LUXURY', viewValue: 'LUXURY'},
-    {value: 'VAN', viewValue: 'VAN'},
-  ];
 
   addVehicle() {
     if (this.addVehicleForm.valid) {
@@ -80,7 +82,8 @@ export class AddVehicleComponent implements OnInit{
   }
 
   goBack() {
-    this.router.navigate(['add-driver']);
+    this.setVehicle();
+    this.router.navigate(['add-driver'], {state:{data:this.driver, vehicle:this.vehicle}});
 
   }
 
@@ -89,6 +92,12 @@ export class AddVehicleComponent implements OnInit{
       duration: 2000
     });
   }
+
+  types: Type[] = [
+    {value: 'STANDARD', viewValue: 'STANDARD'},
+    {value: 'LUXURY', viewValue: 'LUXURY'},
+    {value: 'VAN', viewValue: 'VAN'},
+  ];
 }
 
 interface Type {
