@@ -2,15 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, zipAll } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { AllRides, RideReview } from '../../domains';
-import { UserService } from '../list-of-users/user.service';
-import { OnInit } from '@angular/core';
+import { AllRides, Ride, RideReview } from '../../domains';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HistoryService {
-  // TODO : after implementation of login, change the next line
   public selectedRide : number = -1;
 
   private messageSource = new BehaviorSubject<number>(this.selectedRide);
@@ -30,6 +27,10 @@ export class HistoryService {
 
   sendMessage(message: number) {
     this.messageSource.next(message);
+  }
+
+  getSelectedRide(all : AllRides) : Ride {
+    return all.results[this.selectedRide];  
   }
   
 }

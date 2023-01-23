@@ -1,3 +1,4 @@
+import { P } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AllRides, RideReview, User } from 'src/app/domains';
@@ -28,6 +29,7 @@ export class RatingsComponent implements OnInit {
         if (this.service.selectedRide != -1)
         this.service.getReviews(this.history).subscribe((res) =>{
           this.ratings = res;
+          this.setDisplayReviewButton();
         });
       });
   }
@@ -51,5 +53,55 @@ export class RatingsComponent implements OnInit {
     dialogConfig.autoFocus = true;
 
     this.dialog.open(ReviewDialogComponent, dialogConfig);
+  }
+
+  setDisplayReviewButton() : void {
+    const reviewBtn = document.getElementById('rate');
+    if (this.isReviewed()){
+      if (reviewBtn != null) reviewBtn.style.display = 'none';
+    }
+    else {
+      if(!this.isExpired(this.service.getSelectedRide(this.history).endTime)) {
+        if (reviewBtn != null) reviewBtn.style.display = 'block';
+      } else {
+        if (reviewBtn != null) reviewBtn.style.display = 'none';
+      }
+    }
+  }
+
+  isExpired(rideDate : String) : boolean {
+    let date : Date | null = this.parseStringToDate(rideDate);
+    // here it is not expired, but it is not finished
+    // so it means that passenger can not rate this ride
+    if (date == null) return true;
+    let now : Date = new Date();
+    const msInDay = 24 * 60 * 60 * 1000;
+
+    let diff : number =  Math.round(Math.abs(Number(now) - Number(date)) / msInDay);
+    if (diff > 3) return true;
+    
+    return false;
+  }
+
+  parseStringToDate(rideDate : String) : Date | null {
+    if (rideDate != 'null') {
+      const [dateStr, timeStr] = rideDate.split('T');
+      const [year, month, day] = dateStr.split("-");  
+      const [hours, minutes, seconds] = timeStr.split(":");
+      const secondsStr : string = seconds.split(".")[0];
+      let date : Date  = new Date(+year, +month, +day, +hours, +minutes, +secondsStr); 
+      return date;
+    }
+    return null;
+  }
+
+  isReviewed() : boolean {
+    let isReviewed : boolean = false;
+    this.ratings.forEach(element => {
+      if ((element.driverReview.passenger.id || element.vehicleReview.passenger.id) == this.userService.currentUser?.id) {
+        isReviewed = true;
+      }
+    });
+    return isReviewed;
   }
 }
