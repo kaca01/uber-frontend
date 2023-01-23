@@ -18,7 +18,7 @@ export class HistoryService {
   constructor(private http : HttpClient) { }
 
   getHistory() : Observable<AllRides> {
-    return this.http.get<AllRides>(environment.apiHost + "api/user/" + this.userId.toString() + "/ride?page=1&size=10&sort='DATE'&from='bla'&to='bla'");
+    return this.http.get<AllRides>(environment.apiHost + "api/passenger/" + this.userId.toString() + "/ride?page=1&size=10&sort='DATE'&from='bla'&to='bla'");
   }
 
   getReviews(all : AllRides) : Observable<RideReview[]> {
