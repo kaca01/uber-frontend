@@ -98,11 +98,11 @@ export class UserService {
     return this.http.delete<void>(environment.apiHost + 'api/picture/' + userId);
   }
 
-  sendEmail(userId: number): Observable<void> {
+  sendEmail(userId: string): Observable<void> {
     return this.http.get<void>(environment.apiHost + 'api/user/' + userId + "/resetPassword");
   }
 
-  resetPassword(userId: number, resetPassword: ResetPassword): Observable<void> {
+  resetPassword(userId: string, resetPassword: ResetPassword): Observable<void> {
     return this.http.put<void>(environment.apiHost + 'api/user/' + userId + "/resetPassword", resetPassword);
   }
 }

@@ -13,6 +13,7 @@ import { AddDriverComponent } from 'src/app/modules/list-of-users/drivers/add-dr
 import { AddVehicleComponent } from 'src/app/modules/list-of-users/drivers/add-vehicle/add-vehicle.component';
 import { DriversComponent } from 'src/app/modules/list-of-users/drivers/drivers.component';
 import { PassengersComponent } from 'src/app/modules/list-of-users/passengers/passengers.component';
+import { ResetPasswordComponent } from 'src/app/modules/auth/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'add-driver', component: AddDriverComponent},
   { path: 'add-vehicle', component: AddVehicleComponent},
   { path: 'admin-home', component: AdminHomeComponent},
+  { path: 'reset-password', component: ResetPasswordComponent },
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: '**', component: HomePageComponent },
 ];
