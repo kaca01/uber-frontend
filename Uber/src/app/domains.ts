@@ -108,3 +108,8 @@ export interface ResetPassword {
   newPassword: string,
   code: string
 }
+
+export interface ChangePassword {  
+  newPassword: string,
+  oldPassword: string
+}
