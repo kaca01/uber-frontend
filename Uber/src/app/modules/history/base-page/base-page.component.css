@@ -1,3 +1,8 @@
+body {
+    background-image: url("../../../../assets/images/map.jpg");
+    background-size: cover;
+}
+
 #page-container {
     position: relative;
 }
