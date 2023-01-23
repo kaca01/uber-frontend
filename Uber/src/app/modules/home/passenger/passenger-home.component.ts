@@ -1,6 +1,8 @@
 import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserService } from '../../list-of-users/user.service';
+import { ReviewDialogComponent } from '../../review/review-dialog/review-dialog.component';
 
 @Component({
   selector: 'passenger-home',
@@ -28,7 +30,7 @@ export class PassengerHomeComponent implements OnInit {
     favorite: new FormControl('', [Validators.required]),
   });
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     const Menu = document.getElementById("menu-container");
@@ -99,6 +101,13 @@ export class PassengerHomeComponent implements OnInit {
     }
     else
       this.notification = "Fill all fields!"
+      // TODO : delete code below
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.disableClose = false;
+      dialogConfig.autoFocus = true;
+  
+      this.dialog.open(ReviewDialogComponent, dialogConfig);
   }
 
   openOrderDetails() {

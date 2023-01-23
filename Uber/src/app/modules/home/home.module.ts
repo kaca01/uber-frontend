@@ -14,6 +14,7 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
 import { OrderDetailsDialog } from './order-details-dialog/order-details-dialog';
 import { MatChipsModule } from '@angular/material/chips';
 import { FavoriteRideDialogComponent } from './favorite-ride-dialog/favorite-ride-dialog.component';
+import { ReviewModule } from '../review/review.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { FavoriteRideDialogComponent } from './favorite-ride-dialog/favorite-rid
     MapModule,
     NavBarModule,
     FormsModule,
-    MatChipsModule
+    MatChipsModule,
+    ReviewModule
   ],
   exports: [
     AdminHomeComponent,

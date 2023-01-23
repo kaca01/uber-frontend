@@ -1,0 +1,38 @@
+<img src="../../assets/images/close.png" id="close-dialog" class="close" (click)="close()"/>
+<p id="title">Leave your review</p>
+
+<p class="review-type">Rate the driver</p>
+
+<button mat-icon-button [color]="color" *ngFor="let ratingId of ratingArr;index as i" [id]="'star_'+i" (click)="onClick(i+1)" [matTooltip]="(ratingId+1).toString()" matTooltipPosition="above">
+    <mat-icon>
+      {{showIcon(i)}}
+    </mat-icon>
+</button>
+
+<p class="body-2">
+    Your rated <span class="body-2">{{rating}}</span> / <span class="body-2">{{starCount}}</span>
+</p>
+
+<mat-dialog-content>
+    <textarea id="textarea" placeholder="Leave a comment..." [(ngModel)]="comment"></textarea>
+</mat-dialog-content>
+
+<p class="review-type">Rate the vehicle</p> 
+
+<button class="star" mat-icon-button [color]="color" *ngFor="let ratingId of ratingArr2;index as i" [id]="'star_'+i" (click)="onClick2(i+1)" [matTooltip]="(ratingId+1).toString()" matTooltipPosition="above">
+    <mat-icon>
+    {{showIcon2(i)}}
+    </mat-icon>
+</button>
+
+<p class="body-2">
+    Your rated <span class="body-2">{{rating2}}</span> / <span class="body-2">{{starCount}}</span>
+</p>
+
+<mat-dialog-content>
+    <textarea id="textarea" placeholder="Leave a comment..." [(ngModel)]="comment"></textarea>
+</mat-dialog-content>
+
+<div id="btn-container">
+    <button id="save" (click)="save()">SAVE</button>
+</div>  
