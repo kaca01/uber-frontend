@@ -89,7 +89,7 @@ export class RatingsComponent implements OnInit {
       const [year, month, day] = dateStr.split("-");  
       const [hours, minutes, seconds] = timeStr.split(":");
       const secondsStr : string = seconds.split(".")[0];
-      let date : Date  = new Date(+year, +month, +day, +hours, +minutes, +secondsStr); 
+      let date : Date  = new Date(+year, +month - 1, +day, +hours, +minutes, +secondsStr); 
       return date;
     }
     return null;
