@@ -46,6 +46,7 @@ export class AddVehicleComponent implements OnInit{
       .subscribe((res: any) => {
 
         let resJson = JSON.parse(res);
+        console.log(resJson);
         this.driver.id = resJson["id"];
         this.setVehicle();
 
@@ -55,13 +56,18 @@ export class AddVehicleComponent implements OnInit{
         this.openSnackBar("Driver and vehicle have been successfully created!");
         this.router.navigate(['drivers']);
       },
-        (error) => {             ;
-          this.openSnackBar(JSON.parse(error.error).message);
-          }
+        (error) => {    
+          this.service.deleteDriver(this.driver.id)
+          .subscribe((res2: any) => {
+            console.log(this.driver.id);
+          }, (error) => {console.log(error);}
+          )
+          this.handleErrors(error);
+        }
         );
       },
       (error) => {                 
-        this.openSnackBar(JSON.parse(error.error).message);
+        this.handleErrors(error);
         }
       );
     }
@@ -91,6 +97,15 @@ export class AddVehicleComponent implements OnInit{
     this._snackBar.open(snackMsg, "Dismiss", {
       duration: 2000
     });
+  }
+
+  handleErrors(error: any) {
+    let e = JSON.parse(error.error);
+    if(e.message!= null || e.message != undefined)  
+    this.openSnackBar(e.message);
+    else if(e.errors != null || e.errors != undefined)
+    this.openSnackBar(e.errors);
+    else this.openSnackBar("Some error occurred");
   }
 
   types: Type[] = [
