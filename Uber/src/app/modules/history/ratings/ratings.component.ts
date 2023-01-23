@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { AllRides, RideReview } from 'src/app/domains';
+import { AllRides, RideReview, User } from 'src/app/domains';
 import { HistoryService } from 'src/app/modules/history/history.service';
+import { UserService } from '../../list-of-users/user.service';
 import { ReviewDialogComponent } from '../../review/review-dialog/review-dialog.component';
 import { BasePageComponent } from '../base-page/base-page.component';
 
@@ -14,10 +15,11 @@ export class RatingsComponent implements OnInit {
   private basePage : BasePageComponent = new BasePageComponent();
   history : AllRides = {} as AllRides;
   ratings : RideReview[] = [];
-  constructor(private service: HistoryService, private dialog: MatDialog) {}
+  constructor(private service: HistoryService, private userService: UserService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-      this.service.getHistory().subscribe((res) =>{
+    if (this,this.userService.currentUser != undefined)
+      this.service.getPassengerHistory(this.userService.currentUser.id).subscribe((res) =>{
         this.history = res;
       });
 

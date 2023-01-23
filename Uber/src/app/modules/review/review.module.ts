@@ -5,6 +5,7 @@ import { ReviewRoutingModule } from './review-routing.module';
 import { ReviewDialogComponent } from './review-dialog/review-dialog.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ListOfUsersModule } from '../list-of-users/list-of-users.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReviewRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ListOfUsersModule
   ],
   exports: [
     ReviewDialogComponent
