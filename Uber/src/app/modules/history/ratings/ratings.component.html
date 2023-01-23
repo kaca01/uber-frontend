@@ -20,7 +20,6 @@
                                         <img class="star" src="../../../../../assets/images/{{ showIcon(4, r.vehicleReview.rating) }}.png">
                                     </div>
                                 </div>
-                                <!-- <p class="date">{{ r.vehicleReview.date }}</p> -->
                                 <p class="type">TYPE: VEHICLE </p>
                                 <p class="description">{{ r.vehicleReview.comment}}</p>
                             </span>
@@ -38,13 +37,13 @@
                                         <img class="star" src="../../../../../assets/images/{{ showIcon(4, r.driverReview.rating) }}.png">
                                     </div>
                                 </div>
-                                <!-- <p class="date">{{ r.vehicleReview.date }}</p> -->
                                 <p class="type">TYPE: DRIVER</p>
                                 <p class="description">{{ r.driverReview.comment}}</p>
                             </span>
                         </li>
                     </ul>
                 </div>
+                <button id="rate" (click)="openReviewDialog()">LEAVE YOUR REVIEW</button>
             </mat-card-content>
         </mat-card>
     </div>

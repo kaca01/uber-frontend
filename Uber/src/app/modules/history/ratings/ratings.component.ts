@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AllRides, RideReview } from 'src/app/domains';
 import { HistoryService } from 'src/app/modules/history/history.service';
+import { ReviewDialogComponent } from '../../review/review-dialog/review-dialog.component';
 import { BasePageComponent } from '../base-page/base-page.component';
 
 @Component({
@@ -12,7 +14,7 @@ export class RatingsComponent implements OnInit {
   private basePage : BasePageComponent = new BasePageComponent();
   history : AllRides = {} as AllRides;
   ratings : RideReview[] = [];
-  constructor(private service: HistoryService) {}
+  constructor(private service: HistoryService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
       this.service.getHistory().subscribe((res) =>{
@@ -38,5 +40,14 @@ export class RatingsComponent implements OnInit {
 
   backToHistoryDetails() : void {
     this.basePage.display("details");
+  }
+
+  openReviewDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+
+    this.dialog.open(ReviewDialogComponent, dialogConfig);
   }
 }

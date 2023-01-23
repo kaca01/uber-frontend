@@ -123,6 +123,22 @@ li {
     margin-left: 1%;
     color: gray;
 }
+
+#rate {
+    margin-left: 5%;
+    width: 50%;
+    margin-top: 15px;
+    background-color: #96D49C;
+    color: white;
+    opacity: 0.8;
+    border-radius: 5px;
+    border: none;
+    font-size: larger;
+}
+
+#rate:hover {
+    cursor: pointer;
+}
   
 @media(max-width: 1150px) {
   #form {
