@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, ViewEncapsulation, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-review-dialog',
@@ -19,7 +20,11 @@ export class ReviewDialogComponent implements OnInit {
   comment = "";
   comment2 = "";
 
-  constructor() {}
+  // TODO : add service here
+  constructor(private dialogRef: MatDialogRef<ReviewDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) data: any) {
+      // TODO : set data here
+    }
 
   ngOnInit() {
     for (let index = 0; index < this.starCount; index++) {
@@ -60,11 +65,11 @@ export class ReviewDialogComponent implements OnInit {
     }
   }
 
-  save() {
+  save() : void {
 
   }
 
-  close() {
-
+  close() : void{
+    this.dialogRef.close();
   }
 }
