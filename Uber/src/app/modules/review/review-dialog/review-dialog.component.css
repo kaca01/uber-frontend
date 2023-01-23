@@ -25,6 +25,8 @@ p {
 }
 
 .review-type {
+    height: 22px;
+    vertical-align: middle;
     margin-top: -20px;
     margin-right: 10px;
     font-size: large;
