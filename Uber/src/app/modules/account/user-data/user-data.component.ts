@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UpdateUser } from 'src/app/domains';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
 import { ChangesDialogComponent } from '../changes-dialog/changes-dialog.component';
+import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 
 @Component({
   selector: 'user-data',
@@ -109,5 +110,20 @@ export class UserDataComponent implements OnInit {
     this._snackBar.open(snackMsg, "Dismiss", {
       duration: 2000
     });
+  }
+
+  sendEmail() {
+    if(this.userService.currentUser != undefined) {
+      this.userService.sendEmail(this.userService.currentUser.id).subscribe();
+      this.openSnackBar("A verification code has been sent to your email!");
+
+      const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = this;
+
+        const dialogRef = this.dialog.open(ResetPasswordComponent, dialogConfig);
+    }
   }
 }
