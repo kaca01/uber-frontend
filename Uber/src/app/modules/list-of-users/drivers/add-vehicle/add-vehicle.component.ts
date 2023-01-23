@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
 import { Driver, Vehicle, Location } from 'src/app/domains';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'add-vehicle',
@@ -25,7 +26,7 @@ export class AddVehicleComponent implements OnInit{
   private driver = history.state.data as Driver;
   private vehicle = {} as Vehicle;
 
-  constructor(private router : Router,  private service: UserService) {}
+  constructor(private router : Router,  private service: UserService, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
       
@@ -41,15 +42,26 @@ export class AddVehicleComponent implements OnInit{
     if (this.addVehicleForm.valid) {
       this.service.addDriver(this.driver)
       .subscribe((res: any) => {
+
         let resJson = JSON.parse(res);
         this.driver.id = resJson["id"];
         this.setVehicle();
+
         this.service.addVehicle(this.vehicle, this.driver.id )
-        .subscribe((res: any) => {
+        .subscribe((res2: any) => {
+
+        this.openSnackBar("Driver and vehicle have been successfully created!");
         this.router.navigate(['drivers']);
-        // prikazati neki snackbar
-      });
-      });
+      },
+        (error) => {             ;
+          this.openSnackBar(JSON.parse(error.error).message);
+          }
+        );
+      },
+      (error) => {                 
+        this.openSnackBar(JSON.parse(error.error).message);
+        }
+      );
     }
   }
 
@@ -67,7 +79,16 @@ export class AddVehicleComponent implements OnInit{
       this.vehicle.currentLocation = l;
   }
 
-  // todo: back navigation 
+  goBack() {
+    this.router.navigate(['add-driver']);
+
+  }
+
+   openSnackBar(snackMsg : string) : void {
+    this._snackBar.open(snackMsg, "Dismiss", {
+      duration: 2000
+    });
+  }
 }
 
 interface Type {
