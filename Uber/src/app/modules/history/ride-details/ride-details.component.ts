@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HistoryService } from 'src/app/modules/history/history.service';
 import { BasePageComponent } from '../base-page/base-page.component';
 import { AllRides, Ride } from 'src/app/domains';
+import { UserService } from '../../list-of-users/user.service';
 
 @Component({
   selector: 'app-ride-details',
@@ -14,10 +15,11 @@ export class RideDetailsComponent implements OnInit{
   all : AllRides = {} as AllRides;
   ride : Ride = {} as Ride;
   chosenRide : number = -1;
-  constructor(private service : HistoryService) {}
+  constructor(private service : HistoryService, private userService: UserService) {}
 
   ngOnInit(): void {
-    this.service.getHistory().subscribe((res) => {
+    if (this.userService.currentUser != undefined)
+    this.service.getPassengerHistory(this.userService.currentUser.id).subscribe((res) => {
       this.all = res;
     });
     this.service.currentMessage.subscribe(message => {
