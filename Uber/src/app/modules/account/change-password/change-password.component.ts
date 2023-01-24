@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
+import { AuthService } from '../../auth/services/auth.service';
 import { HttpErrorResponse } from "@angular/common/http";
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { ChangePassword } from 'src/app/domains';
@@ -25,7 +26,7 @@ export class ChangePasswordComponent {
   hideOld: boolean = true;
 
   constructor(private userService : UserService, private _snackBar: MatSnackBar, private router: Router,
-    private dialogRef: MatDialogRef<ChangePasswordComponent>) {}
+    private dialogRef: MatDialogRef<ChangePasswordComponent>, private authService : AuthService) {}
 
   close() : void {
     this.dialogRef.close();
@@ -42,6 +43,7 @@ export class ChangePasswordComponent {
       .subscribe(
         (res: any) => {
         this.openSnackBar("Successfully changed password!");
+        this.authService.logout();
         this.router.navigate(['login']);
       },
         (error: HttpErrorResponse) => {

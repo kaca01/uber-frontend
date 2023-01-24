@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../list-of-users/user.service';
 import { Router } from '@angular/router'; 
 import { ResetPassword } from 'src/app/domains';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'reset-password',
@@ -28,7 +29,8 @@ export class ResetPasswordComponent {
   resetPassword = {} as ResetPassword;
   email: string = "";
 
-  constructor(private userService: UserService, private _snackBar: MatSnackBar, private router: Router) {}
+  constructor(private userService: UserService, private _snackBar: MatSnackBar, private router: Router,
+     private authService: AuthService) {}
 
   openSnackBar(snackMsg : string) : void {
     this._snackBar.open(snackMsg, "Dismiss", {
@@ -64,6 +66,7 @@ export class ResetPasswordComponent {
       .subscribe(
         (res: any) => {
         this.openSnackBar("Successfully reset password!");
+        this.authService.logout();
         this.router.navigate(['login']);
       },
         (error: HttpErrorResponse) => {
