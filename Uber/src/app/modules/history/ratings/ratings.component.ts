@@ -1,4 +1,3 @@
-import { P } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AllRides, RideReview, User } from 'src/app/domains';
@@ -73,7 +72,9 @@ export class RatingsComponent implements OnInit {
     let date : Date | null = this.parseStringToDate(rideDate);
     // here it is not expired, but it is not finished
     // so it means that passenger can not rate this ride
-    if (date == null) return true;
+    if (date == null) {
+      return true;
+    }
     let now : Date = new Date();
     const msInDay = 24 * 60 * 60 * 1000;
 
@@ -84,7 +85,7 @@ export class RatingsComponent implements OnInit {
   }
 
   parseStringToDate(rideDate : String) : Date | null {
-    if (rideDate != 'null') {
+    if (rideDate != null) {
       const [dateStr, timeStr] = rideDate.split('T');
       const [year, month, day] = dateStr.split("-");  
       const [hours, minutes, seconds] = timeStr.split(":");
