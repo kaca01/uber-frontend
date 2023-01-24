@@ -33,6 +33,14 @@ export class RatingsComponent implements OnInit {
       });
   }
 
+  public refresh() : void {
+    if (this.service.selectedRide != -1)
+        this.service.getReviews(this.history).subscribe((res) =>{
+          this.ratings = res;
+          this.setDisplayReviewButton();
+        });
+  }
+
   showIcon(index: number, rating: Number) {
     if (rating >= index + 1) {
       return "star";
@@ -50,6 +58,7 @@ export class RatingsComponent implements OnInit {
 
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
+    dialogConfig.data = this;
 
     this.dialog.open(ReviewDialogComponent, dialogConfig);
   }

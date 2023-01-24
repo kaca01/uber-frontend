@@ -10,11 +10,11 @@
 </button>
 
 <p class="body-2">
-    You rated {{rating}} / {{starCount}}
+    You rated {{reviewDriver.rating}} / {{starCount}}
 </p>
 
 <mat-dialog-content>
-    <textarea id="textarea" placeholder="Leave a comment a driver..." [(ngModel)]="comment"></textarea>
+    <textarea id="textarea" placeholder="Leave a comment a driver (optional)" [(ngModel)]="reviewDriver.comment"></textarea>
 </mat-dialog-content>
 
 <p class="review-type">Rate the vehicle</p> 
@@ -26,11 +26,11 @@
 </button>
 
 <p class="body-2">
-    You rated {{rating2}} / {{starCount}}
+    You rated {{reviewVehicle.rating}} / {{starCount}}
 </p>
 
 <mat-dialog-content>
-    <textarea id="textarea" placeholder="Leave a comment for the vehicle..." [(ngModel)]="comment2"></textarea>
+    <textarea id="textarea" placeholder="Leave a comment for the vehicle (optional)" [(ngModel)]="reviewVehicle.comment"></textarea>
 </mat-dialog-content>
 
 <span id="btn-container">

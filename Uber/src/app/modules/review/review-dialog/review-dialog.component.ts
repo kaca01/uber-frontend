@@ -5,6 +5,7 @@ import { HistoryService } from '../../history/history.service';
 import { UserService } from '../../list-of-users/user.service';
 import { HttpErrorResponse } from "@angular/common/http";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RatingsComponent } from '../../history/ratings/ratings.component';
 
 @Component({
   selector: 'app-review-dialog',
@@ -14,27 +15,29 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ReviewDialogComponent implements OnInit {
 
-  @Input('rating') public rating: number = 0;
-  @Input('rating2') public rating2 : number = 0;
   @Input('starCount') public starCount: number = 5;
   @Input('color') public color: string = 'accent';
   @Output() private ratingUpdated = new EventEmitter();
 
+  private ratings : RatingsComponent = {} as RatingsComponent;
+
   public ratingArr = [] as number[];
   public ratingArr2 = [] as number[];
-  public review : ReviewRequest = {} as ReviewRequest;
-  comment = "";
-  comment2 = "";
+  public reviewDriver : ReviewRequest = {} as ReviewRequest;
+  public reviewVehicle : ReviewRequest = {} as ReviewRequest;
   all : AllRides = {} as AllRides;
 
   // TODO : add service here
   constructor(private service : HistoryService, private userService: UserService, private _snackBar : MatSnackBar,
               private dialogRef: MatDialogRef<ReviewDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: any) {
+      this.ratings = data;
       // TODO : set data here
     }
 
   ngOnInit() {
+    this.reviewDriver.rating = 0;
+    this.reviewVehicle.rating = 0;
     for (let index = 0; index < this.starCount; index++) {
       this.ratingArr.push(index);
     }
@@ -54,13 +57,13 @@ export class ReviewDialogComponent implements OnInit {
   }
 
   onClick(rating:number) {
-    this.rating = rating;
+    this.reviewDriver.rating = rating;
     this.ratingUpdated.emit(rating); 
     return true;
   }
 
   showIcon(index:number) {
-    if (this.rating >= index + 1) {
+    if (this.reviewDriver.rating >= index + 1) {
       return 'star';
     } else {
       return 'star_border';
@@ -68,13 +71,13 @@ export class ReviewDialogComponent implements OnInit {
   }
 
   onClick2(rating:number) {
-    this.rating2 = rating;
+    this.reviewVehicle.rating = rating;
     this.ratingUpdated.emit(rating); 
     return true;
   }
 
   showIcon2(index:number) {
-    if (this.rating2 >= index + 1) {
+    if (this.reviewVehicle.rating >= index + 1) {
       return 'star';
     } else {
       return 'star_border';
@@ -82,19 +85,36 @@ export class ReviewDialogComponent implements OnInit {
   }
 
   save() : void {
-    this.review.comment = this.comment;
-    this.review.rating = this.rating;
-    if (this.userService.currentUser != null)
-    this.service.leaveReviewForDriver(this.review, this.all).subscribe(
-      (res: any) => {
-      this.openSnackBar("Successfully added!");
-      this.dialogRef.close();
-    },
-      (error: HttpErrorResponse) => {
-        // Handle error
-        // Use if conditions to check error code, this depends on your api, how it sends error messages
+    if (this.reviewDriver.rating == 0) {
+      this.openSnackBar("Enter both reviews!");
+      return;
     }
-  );
+
+    if (this.reviewVehicle.rating == 0) {
+      this.openSnackBar("Enter both reviews!")
+      return;
+    }
+
+    if (this.userService.currentUser != null) {
+      this.service.leaveReviewForDriver(this.reviewDriver, this.all).subscribe(
+        (res: any) => {
+      },
+        (error: HttpErrorResponse) => {
+          // Handle error
+          // Use if conditions to check error code, this depends on your api, how it sends error messages
+      });
+
+      this.service.leaveReviewForDriver(this.reviewVehicle, this.all).subscribe(
+        (res: any) => {
+        this.openSnackBar("Successfully added!");
+        this.ratings.refresh();
+        this.dialogRef.close();
+      },
+        (error: HttpErrorResponse) => {
+          // Handle error
+          // Use if conditions to check error code, this depends on your api, how it sends error messages
+      });
+    }
   }
 
   close() : void{
