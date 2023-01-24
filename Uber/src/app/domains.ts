@@ -9,6 +9,11 @@ rating : Number;
 comment : String;
 passenger : UserEmail;
 }
+
+export interface ReviewRequest {
+  rating : number;
+  comment : string;
+}
   
 export interface UserEmail {
 id : Number;

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, zipAll } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { AllRides, Ride, RideReview } from '../../domains';
+import { AllRides, Review, ReviewRequest, Ride, RideReview } from '../../domains';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,23 @@ export class HistoryService {
   }
 
   getPassengerHistory(userId : number) : Observable<AllRides> {
-    console.log("USERRRR " + userId);
     return this.http.get<AllRides>(environment.apiHost + "api/passenger/" + userId.toString() + "/ride?page=1&size=10&sort='DATE'&from='bla'&to='bla'");
   }
 
   getReviews(all : AllRides) : Observable<RideReview[]> {
     return this.http.get<RideReview[]>(environment.apiHost + "api/review/" + all.results[this.selectedRide].id);
+  }
+
+  leaveReviewForVehicle(review : ReviewRequest, all : AllRides) : Observable<Review> {
+    return this.http.post<Review>(environment.apiHost + "api/review/" + all.results[this.selectedRide].id + "/vehicle", review);
+  }
+
+  leaveReviewForDriver(review : ReviewRequest, all : AllRides) : Observable<Review> {
+    console.log("ALLLLL " + all.results);
+    console.log("REVIEWWWWW comment" + review.comment);
+    console.log("REVIEWWWW rating " + review.rating);
+    return this.http.post<Review>(environment.apiHost + "api/review/" + all.results[this.selectedRide].id + "/driver", review);
+
   }
 
   sendMessage(message: number) {
