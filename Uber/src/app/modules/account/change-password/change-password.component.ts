@@ -21,7 +21,8 @@ export class ChangePasswordComponent {
     oldPassword: new FormControl('', [Validators.required]),
   });
 
-  hide: boolean = true;
+  hideNew: boolean = true;
+  hideOld: boolean = true;
 
   constructor(private userService : UserService, private _snackBar: MatSnackBar, private router: Router,
     private dialogRef: MatDialogRef<ChangePasswordComponent>) {}
