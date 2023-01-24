@@ -25,14 +25,6 @@ export class FavoriteRideDialogComponent {
     this.dialogRef.close();
   }
 
-  onDeparture() : void {
-    this.dialogRef.close(1);
-  }
-
-  onDestination() : void {
-    this.dialogRef.close(2);
-  }
-
   openSnackBar(snackMsg : string) : void {
     this._snackBar.open(snackMsg, "Dismiss", {
       duration: 2000

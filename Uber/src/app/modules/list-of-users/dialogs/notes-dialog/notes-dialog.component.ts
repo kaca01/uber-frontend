@@ -19,16 +19,4 @@ export class NotesDialogComponent {
   close() : void {
     this.dialogRef.close();
   }
-
-  save() : void {
-
-  }
-
-  onDeparture() : void {
-    this.dialogRef.close(1);
-  }
-
-  onDestination() : void {
-    this.dialogRef.close(2);
-  }
 }

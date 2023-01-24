@@ -17,12 +17,4 @@ export class ChangesDialogComponent {
   save() : void {
     this.dialogRef.close({event:'Edit'});
   }
-
-  onDeparture() : void {
-    this.dialogRef.close(1);
-  }
-
-  onDestination() : void {
-    this.dialogRef.close(2);
-  }
 }

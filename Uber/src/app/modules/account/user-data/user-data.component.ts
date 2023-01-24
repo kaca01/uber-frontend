@@ -119,7 +119,6 @@ export class UserDataComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = this;
 
-    const dialogRef = this.dialog.open(ChangePasswordComponent, dialogConfig);
-    
+    this.dialog.open(ChangePasswordComponent, dialogConfig);
   }
 }

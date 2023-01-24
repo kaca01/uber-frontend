@@ -35,12 +35,4 @@ export class DriverChangesComponent {
 
     this.dialogRef.close({event:'Accept'});
   }
-
-  onDeparture() : void {
-    this.dialogRef.close(1);
-  }
-
-  onDestination() : void {
-    this.dialogRef.close(2);
-  }
 }
