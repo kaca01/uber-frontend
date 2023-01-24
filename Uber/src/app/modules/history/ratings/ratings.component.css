@@ -53,7 +53,7 @@
 ul {
     margin-left: 5%;
     overflow: auto;
-    height: 430px;
+    height: 380px;
 }
 
 ::-webkit-scrollbar {
@@ -126,7 +126,7 @@ li {
 
 #rate {
     margin-left: 5%;
-    width: 50%;
+    width: 60%;
     height: 2em;
     margin-top: 15px;
     background-color: #96D49C;
