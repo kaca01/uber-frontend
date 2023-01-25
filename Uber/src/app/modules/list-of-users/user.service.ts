@@ -76,6 +76,10 @@ export class UserService {
     return this.http.get<User>(environment.apiHost + "api/driver/changes/" + driverId);
   }
 
+  getActivation(activationId: number): Observable<String>  {
+    return this.http.get<String>(environment.apiHost + "api/passenger/activate/" + activationId);
+  }
+
   updateDriver(driverId: number, driver: UpdateUser): Observable<User> {
     return this.http.put<User>(environment.apiHost + "api/driver/" + driverId.toString(), driver);
   }
