@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';

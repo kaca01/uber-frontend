@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser } from 'src/app/domains';
+import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser, ResetPassword, ChangePassword } from 'src/app/domains';
 
 import {map} from 'rxjs/operators'
 import { ApiService } from '../auth/services/api.service';
@@ -94,7 +94,19 @@ export class UserService {
     return this.http.get<void>(environment.apiHost + 'api/picture/' + userId);
   }
 
-  deleteImage(userId: number) {
+  deleteImage(userId: number): Observable<void> {
     return this.http.delete<void>(environment.apiHost + 'api/picture/' + userId);
+  }
+
+  sendEmail(userEmail: string): Observable<void> {
+    return this.http.get<void>(environment.apiHost + 'api/user/' + userEmail + "/resetPassword");
+  }
+
+  resetPassword(userEmail: string, resetPassword: ResetPassword): Observable<void> {
+    return this.http.put<void>(environment.apiHost + 'api/user/' + userEmail + "/resetPassword", resetPassword);
+  }
+
+  changePassword(userId: number, changePassword: ChangePassword): Observable<void> {
+    return this.http.put<void>(environment.apiHost + 'api/user/' + userId + "/changePassword", changePassword);
   }
 }

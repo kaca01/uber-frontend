@@ -7,13 +7,15 @@ import { MaterialModule } from 'src/infrastructure/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
 import { ChangesDialogComponent } from './changes-dialog/changes-dialog.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
     OptionsComponent,
     UserDataComponent,
     FavoriteLocationsComponent,
-    ChangesDialogComponent
+    ChangesDialogComponent, 
+    ChangePasswordComponent
     ],
   imports: [
     CommonModule,

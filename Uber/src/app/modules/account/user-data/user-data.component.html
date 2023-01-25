@@ -1,5 +1,5 @@
 <div class="right-side">
-    <form class="form" name="editForm" [formGroup]="editForm" (ngSubmit)="openDialog()">
+    <form class="form" name="editForm" [formGroup]="editForm" (ngSubmit)="openEditDialog()">
 
         <div class="input-fields">
           <mat-form-field class="full-width left" appearance="outline">
@@ -42,6 +42,6 @@
         </div> 
         
         <button mat-raised-button color="green" class="update">Update</button>
-        <a mat-button color="primary" class="reset">Reset Password</a>
+        <a (click)="openChangePasswordDialog()" mat-button color="primary" class="reset">Change Password</a>
     </form>  
 </div>

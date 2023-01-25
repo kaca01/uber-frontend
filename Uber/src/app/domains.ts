@@ -108,3 +108,13 @@ export interface UpdateUser {
   telephoneNumber: string,
   username: string
 }
+
+export interface ResetPassword {  
+  newPassword: string,
+  code: string
+}
+
+export interface ChangePassword {  
+  newPassword: string,
+  oldPassword: string
+}
