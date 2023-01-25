@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserService } from '../../list-of-users/user.service';
+import { MapService } from '../../map/map.service';
 
 @Component({
   selector: 'passenger-home',
@@ -29,7 +30,7 @@ export class PassengerHomeComponent implements OnInit {
     favorite: new FormControl('', [Validators.required]),
   });
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private mapService: MapService) {}
 
   ngOnInit(): void {
     const Menu = document.getElementById("menu-container");
@@ -121,6 +122,22 @@ export class PassengerHomeComponent implements OnInit {
   }
 
   orderRide() {
-    
+    let depratureLat : number = 0;
+    let departureLong : number = 0;
+    let destinationLat : number = 0;
+    let destinationLong : number = 0;
+    this.mapService.search(this.pickup).subscribe({
+      next: (result) => {
+        depratureLat = result[0].lat;
+        departureLong = result[0].lon;
+
+        this.mapService.search(this.destination).subscribe({
+          next: (result) => {
+            destinationLat = result[0].lat;
+            destinationLong = result[0].lon;
+          }
+        });
+      }
+    });
   }
 }

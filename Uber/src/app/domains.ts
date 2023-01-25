@@ -62,6 +62,15 @@ rejection : Rejection;
 locations: Route[];
 }
 
+export interface RideRequest {
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: String;
+  babyTransport: boolean;
+  petTransport: boolean;
+  scheduledTime: String;
+}
+
 export interface Rejection {
 reason: String;
 timeOfRejection: String;
