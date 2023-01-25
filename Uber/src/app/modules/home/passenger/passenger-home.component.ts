@@ -119,4 +119,8 @@ export class PassengerHomeComponent implements OnInit {
     const order = document.getElementById("order");
     if(order != null) order.style.display = 'none';
   }
+
+  orderRide() {
+    
+  }
 }
