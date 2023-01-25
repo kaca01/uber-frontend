@@ -1,10 +1,11 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FavoriteRideDialogComponent } from '../favorite-ride-dialog/favorite-ride-dialog.component';
+import { MapService } from '../../map/map.service';
 
 interface VehicleType {
   value: string;
@@ -20,7 +21,9 @@ export interface Email {
   templateUrl: './order-details-dialog.html',
   styleUrls: ['./order-details-dialog.css'],
 })
-export class OrderDetailsDialog {
+export class OrderDetailsDialog implements OnInit {
+  private departure: string = "";
+  private destination: string = "";
   selectedValue!: string;
   babies = false;
   pets = false;
@@ -41,7 +44,14 @@ export class OrderDetailsDialog {
     favorite: new FormControl('', [Validators.required]),
   });
   
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private mapService: MapService) { }
+  
+  ngOnInit(): void {
+    this.mapService.currentMessage.subscribe(message => {
+      this.departure = message[0];
+      this.destination = message[1];
+    });
+  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -104,5 +114,26 @@ export class OrderDetailsDialog {
         clockFaceTimeInactiveColor: '#555'
     }
   };
+
+  orderRide() {
+    let depratureLat : number = 0;
+    let departureLong : number = 0;
+    let destinationLat : number = 0;
+    let destinationLong : number = 0;
+    this.mapService.search(this.departure).subscribe({
+      next: (result) => {
+        depratureLat = result[0].lat;
+        departureLong = result[0].lon;
+
+        this.mapService.search(this.destination).subscribe({
+          next: (result) => {
+            destinationLat = result[0].lat;
+            destinationLong = result[0].lon;
+
+          }
+        });
+      }
+    });
+  }
 }
 
