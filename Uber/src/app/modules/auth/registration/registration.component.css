@@ -16,6 +16,12 @@
     border-radius: 20px;
 }
 
+.activation {
+    width: 100%;
+    color: #96d49c;
+    margin-bottom: 15px;
+  }
+
 #cardCloseImg{
     display: none;
 }

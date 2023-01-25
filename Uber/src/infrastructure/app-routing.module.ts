@@ -14,8 +14,9 @@ import { AddVehicleComponent } from 'src/app/modules/list-of-users/drivers/add-v
 import { DriversComponent } from 'src/app/modules/list-of-users/drivers/drivers.component';
 import { PassengersComponent } from 'src/app/modules/list-of-users/passengers/passengers.component';
 import { ResetPasswordComponent } from 'src/app/modules/auth/reset-password/reset-password.component';
+import { ActivationComponent } from 'src/app/modules/auth/registration/activation/activation.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent},
   { path: 'home-page', component: HomePageComponent},
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'add-vehicle', component: AddVehicleComponent},
   { path: 'admin-home', component: AdminHomeComponent},
   { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'activation/:id', component: ActivationComponent},
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: '**', component: HomePageComponent },
 ];
