@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser, ResetPassword, ChangePassword } from 'src/app/domains';
+import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser, ResetPassword, ChangePassword, Vehicle, Driver } from 'src/app/domains';
 
 import {map} from 'rxjs/operators'
 import { ApiService } from '../auth/services/api.service';
@@ -108,5 +108,26 @@ export class UserService {
 
   changePassword(userId: number, changePassword: ChangePassword): Observable<void> {
     return this.http.put<void>(environment.apiHost + 'api/user/' + userId + "/changePassword", changePassword);
+  }
+
+  addDriver(user : Driver): Observable<any> {
+    const options: any = {
+      responseType: 'text',
+    };
+    return this.http.post<string>(environment.apiHost + 'api/driver', user, options);
+  }
+
+  deleteDriver(driverId : Number): Observable<any> {
+    const options: any = {
+      responseType: 'text',
+    };
+    return this.http.delete<string>(environment.apiHost + 'api/driver/' + driverId, options);
+  }
+
+  addVehicle(vehicle : any, driverId : Number): Observable<any> {
+    const options: any = {
+      responseType: 'text',
+    };
+    return this.http.post<string>(environment.apiHost + "api/driver/" + driverId + "/vehicle", vehicle, options);
   }
 }
