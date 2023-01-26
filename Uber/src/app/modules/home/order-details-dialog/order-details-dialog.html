@@ -1,6 +1,7 @@
 <div class="container">
     <!-- <img src="../../assets/images/close.png" class="close" (click)="onClose()"/> -->
 
+    <form [formGroup]="orderForm">
       <mat-form-field class="vehicle-type" appearance="fill">
           <mat-label>Choose vehicle type</mat-label>
           <mat-select formControlName="vehicleType" [(value)]="selectedValue" name="vehicle">
@@ -32,7 +33,7 @@
         </mat-form-field>
 
       <div class="toggle">
-          <input matInput formControlName="time" [format]="24" [ngxTimepicker]="toggleTimepicker" [disableClick]="true" [(ngModel)]='pickedTime' readonly>
+          <input matInput [(ngModel)]="pickedTime" formControlName="time" [format]="24" [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
           <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
           <ngx-material-timepicker #toggleTimepicker [theme]="timePickerTheme"></ngx-material-timepicker>
       </div>
@@ -45,4 +46,5 @@
       <button mat-raised-button id="fav" (click)="openFavRideDialog()">Add to favorite</button>
 
       <button mat-raised-button color="green" id="order-btn" (click)="orderRide()">Order</button>
+    </form>
 </div>
