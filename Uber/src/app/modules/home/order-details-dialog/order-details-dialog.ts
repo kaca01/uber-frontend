@@ -6,6 +6,10 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FavoriteRideDialogComponent } from '../favorite-ride-dialog/favorite-ride-dialog.component';
 import { MapService } from '../../map/map.service';
+import { RideRequest, Location, Route, UserEmail, User } from 'src/app/domains';
+import { HttpErrorResponse } from '@angular/common/http';
+import { RideService } from '../service/ride.service';
+import { UserService } from '../../list-of-users/user.service';
 
 interface VehicleType {
   value: string;
@@ -44,7 +48,8 @@ export class OrderDetailsDialog implements OnInit {
     favorite: new FormControl('', [Validators.required]),
   });
   
-  constructor(private dialog: MatDialog, private mapService: MapService) { }
+  constructor(private dialog: MatDialog, private mapService: MapService, private rideService: RideService,
+              private userService: UserService) { }
   
   ngOnInit(): void {
     this.mapService.currentMessage.subscribe(message => {
@@ -115,21 +120,84 @@ export class OrderDetailsDialog implements OnInit {
     }
   };
 
+  convertEmailsToUsers() : UserEmail[] {
+    let users : UserEmail[] = [];
+    let userEmail : UserEmail = {} as UserEmail;
+
+    if (this.userService.currentUser) {
+      userEmail.id = this.userService.currentUser.id;
+      userEmail.email = this.userService.currentUser.email;
+      users.push(userEmail);
+    }
+
+    this.emails.forEach(email => {
+      this.rideService.checkIfInvitedPassengerExists(email.name).subscribe(
+        (res: UserEmail) => {
+          users.push(res);
+        },
+        (error: HttpErrorResponse) => {
+          // handle error
+          console.log("ERROR 404!!!");
+          console.log(error.message);
+      });
+    });
+
+    return users;
+  }
+
   orderRide() {
-    let depratureLat : number = 0;
-    let departureLong : number = 0;
-    let destinationLat : number = 0;
-    let destinationLong : number = 0;
     this.mapService.search(this.departure).subscribe({
       next: (result) => {
-        depratureLat = result[0].lat;
-        departureLong = result[0].lon;
+        let depratureLat : number = Number(result[0].lat);
+        let departureLong : number = Number(result[0].lon);
+        let departureLocation : Location = {} as Location;
+        departureLocation.address = "adresa";
+        departureLocation.latitude = 42.2;
+        departureLocation.longitude = 18.2;
 
         this.mapService.search(this.destination).subscribe({
           next: (result) => {
-            destinationLat = result[0].lat;
-            destinationLong = result[0].lon;
+            let destinationLat : number = Number(result[0].lat);
+            let destinationLong : number = Number(result[0].lon);
 
+            let destinationLocation : Location = {} as Location;
+            destinationLocation.address = "adresa";
+            destinationLocation.latitude = 42.2;
+            destinationLocation.longitude = 18.2;
+
+            let route : Route = {} as Route;
+            route["departure"] = departureLocation;
+            route["destination"] = destinationLocation;
+
+            // this list will always have only one element
+            // because on front we don't have more than one route
+
+            let userEmail : UserEmail = {} as UserEmail;
+            userEmail["id"] = 3;
+            userEmail["email"] = "pera@gmail.com"
+
+            let locations : Route[] = [route];
+            
+            let rideRequest : RideRequest = {} as RideRequest;
+            rideRequest["locations"] = locations;
+            rideRequest["passengers"] = [userEmail];
+            rideRequest["vehicleType"] = "STANDARD";
+            rideRequest["babyTransport"] = true;
+            rideRequest["petTransport"] = true;
+            rideRequest["scheduledTime"] = "2023-01-13T16:00:24.893Z";
+            console.log("RIDE REQUESTTT");
+            console.log(rideRequest);
+            this.rideService.createRide(rideRequest).subscribe(
+              (res: any) => {
+                console.log("ORDERED RIDEEEE");
+            },
+              (error: HttpErrorResponse) => {
+                console.log(error.name);
+                console.log(error.status);
+                console.log(error.statusText);
+                console.log(error.type);
+                console.log(error.message);
+            });
           }
         });
       }

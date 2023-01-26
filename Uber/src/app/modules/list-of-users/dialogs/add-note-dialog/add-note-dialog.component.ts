@@ -31,6 +31,7 @@ export class AddNoteDialogComponent {
       this.userService.addNote(this.users.user.id, this.requestNote)
       .subscribe(
         (res: any) => {
+          console.log(this.requestNote);
         this.openSnackBar("Successfully added!");
       },
         (error: HttpErrorResponse) => {
