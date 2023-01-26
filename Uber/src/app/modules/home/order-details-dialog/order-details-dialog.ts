@@ -136,7 +136,10 @@ export class OrderDetailsDialog implements OnInit {
     this.emails.forEach(email => {
       this.rideService.checkIfInvitedPassengerExists(email.name).subscribe(
         (res: UserEmail) => {
-          users.push(res);
+          let linkedPassenger : UserEmail = {} as UserEmail;
+          linkedPassenger.id = res.id;
+          linkedPassenger.email = res.email;
+          users.push(linkedPassenger);
         },
         (error: HttpErrorResponse) => {
           // handle error
