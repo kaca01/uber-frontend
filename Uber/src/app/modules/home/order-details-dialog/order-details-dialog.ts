@@ -199,12 +199,11 @@ export class OrderDetailsDialog implements OnInit {
             this.rideService.createRide(rideRequest)
             .subscribe(
               (res: any) => {
-                console.log("DODAOOOOOOOOOOOO");
+                this.openSnackBar("Please wait. System is searching for drivers.")
             },
               (error: HttpErrorResponse) => {
-                console.log("PUKAOOOOOOOOOOOOO");
-                // Handle error
-                // Use if conditions to check error code, this depends on your api, how it sends error messages
+                this.openSnackBar("Can't order a ride while you have one already pending!");
+
             }
           );
             
@@ -216,7 +215,7 @@ export class OrderDetailsDialog implements OnInit {
 
   openSnackBar(snackMsg : string) : void {
     this.snackBar.open(snackMsg, "Dismiss", {
-      duration: 2000
+      duration: 3000
     });
   }
 }
