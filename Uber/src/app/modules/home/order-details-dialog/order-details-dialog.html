@@ -33,7 +33,7 @@
         </mat-form-field>
 
       <div class="toggle">
-          <input matInput [(ngModel)]="pickedTime" formControlName="time" [format]="24" [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
+          <input matInput [(ngModel)]="pickedTime" formControlName="time" [format]="24" [ngxTimepicker]="toggleTimepicker" [disableClick]="true" placeholder="now" readonly>
           <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
           <ngx-material-timepicker #toggleTimepicker [theme]="timePickerTheme"></ngx-material-timepicker>
       </div>

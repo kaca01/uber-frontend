@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { COMMA, ENTER, T } from '@angular/cdk/keycodes';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FavoriteRideDialogComponent } from '../favorite-ride-dialog/favorite-ride-dialog.component';
 import { MapService } from '../../map/map.service';
@@ -191,13 +191,19 @@ export class OrderDetailsDialog implements OnInit {
               this.openSnackBar("Select vehicle type");
               return;
             }
-            rideRequest["vehicleType"] = "STANDARD";
             rideRequest["babyTransport"] = this.babies;
             rideRequest["petTransport"] = this.pets;
-            rideRequest["scheduledTime"] = new Date().toISOString();
 
-            console.log("TIMEEEEEE " + this.pickedTime);
-            console.log(this.orderForm.controls.time.value);
+
+            if (this.pickedTime != undefined) {
+              rideRequest["scheduledTime"] = this.getChosenTime();
+            }
+            else rideRequest["scheduledTime"] = new Date().toISOString();
+
+            if (rideRequest["scheduledTime"] == "") {
+              this.openSnackBar("Ride can be ordered only 5 hours in advance!");
+              return;
+            }
 
             this.rideService.createRide(rideRequest)
             .subscribe(
@@ -206,10 +212,8 @@ export class OrderDetailsDialog implements OnInit {
             },
               (error: HttpErrorResponse) => {
                 this.openSnackBar("Can't order a ride while you have one already pending!");
-
             }
           );
-            
           }
         });
       }
@@ -218,8 +222,38 @@ export class OrderDetailsDialog implements OnInit {
 
   openSnackBar(snackMsg : string) : void {
     this.snackBar.open(snackMsg, "Dismiss", {
-      duration: 3000
+      duration: 4000
     });
+  }
+
+  getChosenTime() : string {
+    let now = new Date();
+    // time zone
+    now.setHours(now.getHours() + 1);
+    now.setMonth(now.getMonth() + 1);
+    let tomorrow : Date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes());
+    let hours : number = Number(this.pickedTime.split(':')[0]) + 1;
+    let minutes : number = Number(this.pickedTime.split(':')[1]);
+
+    if ((now.getHours() > (hours)) || (now.getHours() == (hours)) && (now.getMinutes() > minutes)) {
+      tomorrow.setDate(tomorrow.getDate()+1);
+      tomorrow.setHours(hours);
+      tomorrow.setMinutes(minutes);
+    } else if ((now.getHours() == (hours)) && (now.getMinutes() == minutes)) {
+      return new Date().toISOString();
+    } else tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+
+    if (!this.isChosenTimeValid(now, tomorrow)) return "";
+
+    if (tomorrow != undefined)
+      return tomorrow.toISOString();
+    return "";
+  }
+
+  isChosenTimeValid(now: Date, chosenDate: Date) : boolean {
+    var diff = (chosenDate.getTime() - now.getTime()) / (60 * 60 * 1000);
+    if (diff < 5) return true; 
+    return false;
   }
 }
 
