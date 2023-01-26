@@ -44,7 +44,7 @@ export class OrderDetailsDialog implements OnInit {
   ];
 
   selectedValue : any;
-
+  pickedTime: any;
 
   orderForm = new FormGroup({
     vehicleType: new FormControl(''),
@@ -144,6 +144,7 @@ export class OrderDetailsDialog implements OnInit {
         },
         (error: HttpErrorResponse) => {
           // handle error
+          this.openSnackBar("Please check if all emails are correct!");
           console.log("ERROR 404");
           console.log(error.message);
       });
@@ -194,6 +195,10 @@ export class OrderDetailsDialog implements OnInit {
             rideRequest["babyTransport"] = this.babies;
             rideRequest["petTransport"] = this.pets;
             rideRequest["scheduledTime"] = new Date().toISOString();
+
+            console.log("TIMEEEEEE " + this.pickedTime);
+            console.log(this.orderForm.controls.time.value);
+
             this.rideService.createRide(rideRequest)
             .subscribe(
               (res: any) => {
