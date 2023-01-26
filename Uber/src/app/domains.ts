@@ -52,7 +52,7 @@ id: number;
 startTime: string; 
 endTime: string;
 totalCost: number;
-driver: User;
+driver: UserEmail;
 passengers: UserEmail[];
 estimatedTimeInMinutes : number;
 vehicleType: string;

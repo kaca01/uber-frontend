@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RideService } from '../service/ride.service';
 import { UserService } from '../../list-of-users/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { waitForAsync } from '@angular/core/testing';
 
 interface VehicleType {
   value: string;
@@ -29,6 +30,7 @@ export interface Email {
 export class OrderDetailsDialog implements OnInit {
   private departure: string = "";
   private destination: string = "";
+  private users : UserEmail[] = [];
   babies = false;
   pets = false;
 
@@ -123,14 +125,13 @@ export class OrderDetailsDialog implements OnInit {
     }
   };
 
-  convertEmailsToUsers() : UserEmail[] {
-    let users : UserEmail[] = [];
+  convertEmailsToUsers() : void {
     let userEmail : UserEmail = {} as UserEmail;
 
     if (this.userService.currentUser) {
       userEmail.id = this.userService.currentUser.id;
       userEmail.email = this.userService.currentUser.email;
-      users.push(userEmail);
+      this.users.push(userEmail);
     }
 
     this.emails.forEach(email => {
@@ -139,19 +140,18 @@ export class OrderDetailsDialog implements OnInit {
           let linkedPassenger : UserEmail = {} as UserEmail;
           linkedPassenger.id = res.id;
           linkedPassenger.email = res.email;
-          users.push(linkedPassenger);
+          this.users.push(linkedPassenger);
         },
         (error: HttpErrorResponse) => {
           // handle error
-          console.log("ERROR 404!!!");
+          console.log("ERROR 404");
           console.log(error.message);
       });
     });
-
-    return users;
   }
 
   orderRide() {
+    this.convertEmailsToUsers();
     this.mapService.search(this.departure).subscribe({
       next: (result) => {
         let depratureLat : number = Number(result[0].lat);
@@ -182,7 +182,7 @@ export class OrderDetailsDialog implements OnInit {
             
             let rideRequest : RideRequest = {} as RideRequest;
             rideRequest["locations"] = locations;
-            rideRequest["passengers"] = this.convertEmailsToUsers();
+            rideRequest["passengers"] = this.users;
             if (this.selectedValue == "standard-0") rideRequest["vehicleType"] = "STANDARD";
             else if (this.selectedValue == "luxury-1") rideRequest["vehicleType"] = "LUXURY";
             else if (this.selectedValue == "van-2") rideRequest["vehicleType"] = "VAN";
@@ -194,8 +194,6 @@ export class OrderDetailsDialog implements OnInit {
             rideRequest["babyTransport"] = this.babies;
             rideRequest["petTransport"] = this.pets;
             rideRequest["scheduledTime"] = new Date().toISOString();
-            console.log("RIDE REQUEST");
-            console.log(rideRequest);
             this.rideService.createRide(rideRequest)
             .subscribe(
               (res: any) => {
