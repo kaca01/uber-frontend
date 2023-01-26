@@ -33,6 +33,9 @@ export class OrderDetailsDialog implements OnInit {
   private users : UserEmail[] = [];
   babies = false;
   pets = false;
+  private departureLocation : Location = {} as Location;
+  private destinationLocation : Location = {} as Location;
+
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -157,24 +160,22 @@ export class OrderDetailsDialog implements OnInit {
       next: (result) => {
         let depratureLat : number = Number(result[0].lat);
         let departureLong : number = Number(result[0].lon);
-        let departureLocation : Location = {} as Location;
-        departureLocation.address = this.departure.toString();
-        departureLocation.latitude = depratureLat;
-        departureLocation.longitude = departureLong;
+        this.departureLocation.address = this.departure.toString();
+        this.departureLocation.latitude = depratureLat;
+        this.departureLocation.longitude = departureLong;
 
         this.mapService.search(this.destination).subscribe({
           next: (result) => {
             let destinationLat : number = Number(result[0].lat);
             let destinationLong : number = Number(result[0].lon);
 
-            let destinationLocation : Location = {} as Location;
-            destinationLocation.address = this.destination.toString();
-            destinationLocation.latitude = destinationLat;
-            destinationLocation.longitude = destinationLong;
+            this.destinationLocation.address = this.destination.toString();
+            this.destinationLocation.latitude = destinationLat;
+            this.destinationLocation.longitude = destinationLong;
 
             let route : Route = {} as Route;
-            route["departure"] = departureLocation;
-            route["destination"] = destinationLocation;
+            route["departure"] = this.departureLocation;
+            route["destination"] = this.destinationLocation;
 
             // this list will always have only one element
             // because on front we don't have more than one route
@@ -254,6 +255,14 @@ export class OrderDetailsDialog implements OnInit {
     var diff = (chosenDate.getTime() - now.getTime()) / (60 * 60 * 1000);
     if (diff < 5) return true; 
     return false;
+  }
+
+  setDeparture() {
+
+  }
+
+  setDestination() {
+    
   }
 }
 

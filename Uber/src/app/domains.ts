@@ -73,6 +73,26 @@ export interface RideRequest {
   scheduledTime: String;
 }
 
+export interface FavoriteRide {
+  id: number;
+  favoriteName: string;
+  scheduledTime: string;
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: string;
+  babyTransport: boolean;
+  petTransport: boolean;
+}
+
+export interface FavoriteRideRequest {
+  favoriteName: string;
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: string;
+  babyTransport: boolean;
+  petTransport: boolean;
+}
+
 export interface Rejection {
 reason: String;
 timeOfRejection: String;

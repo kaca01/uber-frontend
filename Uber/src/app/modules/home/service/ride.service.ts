@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RideRequest, Ride, UserEmail } from 'src/app/domains';
+import { RideRequest, Ride, UserEmail, FavoriteRideRequest, FavoriteRide } from 'src/app/domains';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 
@@ -17,5 +17,9 @@ export class RideService {
 
   checkIfInvitedPassengerExists(email : string) : Observable<UserEmail> {
     return this.http.get<UserEmail>(environment.apiHost + "api/passenger/invitation/" + email);
+  }
+
+  addFavorite(ride: FavoriteRideRequest) : Observable<FavoriteRide> {
+    return this.http.post<FavoriteRide>(environment.apiHost + "api/ride/favorites", ride);
   }
 }
