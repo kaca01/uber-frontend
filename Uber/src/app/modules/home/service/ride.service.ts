@@ -12,6 +12,7 @@ export class RideService {
   constructor(private http: HttpClient) { }
 
   createRide(ride : RideRequest) : Observable<Ride> {
+    console.log("USAO U CREATE")
     return this.http.post<Ride>(environment.apiHost + "api/ride", ride);
   }
 

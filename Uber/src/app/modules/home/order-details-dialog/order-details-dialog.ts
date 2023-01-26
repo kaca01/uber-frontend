@@ -173,8 +173,8 @@ export class OrderDetailsDialog implements OnInit {
             // because on front we don't have more than one route
 
             let userEmail : UserEmail = {} as UserEmail;
-            userEmail["id"] = 3;
-            userEmail["email"] = "pera@gmail.com"
+            userEmail["id"] = 1;
+            userEmail["email"] = "marko@gmail.com"
 
             let locations : Route[] = [route];
             
@@ -187,17 +187,19 @@ export class OrderDetailsDialog implements OnInit {
             rideRequest["scheduledTime"] = "2023-01-13T16:00:24.893Z";
             console.log("RIDE REQUESTTT");
             console.log(rideRequest);
-            this.rideService.createRide(rideRequest).subscribe(
+
+            this.rideService.createRide(rideRequest)
+            .subscribe(
               (res: any) => {
-                console.log("ORDERED RIDEEEE");
+                console.log("DODAOOOOOOOOOOOO");
             },
               (error: HttpErrorResponse) => {
-                console.log(error.name);
-                console.log(error.status);
-                console.log(error.statusText);
-                console.log(error.type);
-                console.log(error.message);
-            });
+                console.log("PUKAOOOOOOOOOOOOO");
+                // Handle error
+                // Use if conditions to check error code, this depends on your api, how it sends error messages
+            }
+          );
+            
           }
         });
       }
