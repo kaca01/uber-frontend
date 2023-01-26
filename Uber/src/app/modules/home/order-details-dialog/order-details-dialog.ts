@@ -10,6 +10,7 @@ import { RideRequest, Location, Route, UserEmail, User } from 'src/app/domains';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RideService } from '../service/ride.service';
 import { UserService } from '../../list-of-users/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface VehicleType {
   value: string;
@@ -28,7 +29,6 @@ export interface Email {
 export class OrderDetailsDialog implements OnInit {
   private departure: string = "";
   private destination: string = "";
-  selectedValue!: string;
   babies = false;
   pets = false;
 
@@ -41,6 +41,9 @@ export class OrderDetailsDialog implements OnInit {
     {value: 'van-2', viewValue: 'VAN'},
   ];
 
+  selectedValue : any;
+
+
   orderForm = new FormGroup({
     vehicleType: new FormControl(''),
     email: new FormControl('', [Validators.required]),
@@ -49,7 +52,7 @@ export class OrderDetailsDialog implements OnInit {
   });
   
   constructor(private dialog: MatDialog, private mapService: MapService, private rideService: RideService,
-              private userService: UserService) { }
+              private userService: UserService, private snackBar: MatSnackBar) { }
   
   ngOnInit(): void {
     this.mapService.currentMessage.subscribe(message => {
@@ -151,9 +154,9 @@ export class OrderDetailsDialog implements OnInit {
         let depratureLat : number = Number(result[0].lat);
         let departureLong : number = Number(result[0].lon);
         let departureLocation : Location = {} as Location;
-        departureLocation.address = "adresa";
-        departureLocation.latitude = 42.2;
-        departureLocation.longitude = 18.2;
+        departureLocation.address = this.departure.toString();
+        departureLocation.latitude = depratureLat;
+        departureLocation.longitude = departureLong;
 
         this.mapService.search(this.destination).subscribe({
           next: (result) => {
@@ -161,9 +164,9 @@ export class OrderDetailsDialog implements OnInit {
             let destinationLong : number = Number(result[0].lon);
 
             let destinationLocation : Location = {} as Location;
-            destinationLocation.address = "adresa";
-            destinationLocation.latitude = 42.2;
-            destinationLocation.longitude = 18.2;
+            destinationLocation.address = this.destination.toString();
+            destinationLocation.latitude = destinationLat;
+            destinationLocation.longitude = destinationLong;
 
             let route : Route = {} as Route;
             route["departure"] = departureLocation;
@@ -172,22 +175,24 @@ export class OrderDetailsDialog implements OnInit {
             // this list will always have only one element
             // because on front we don't have more than one route
 
-            let userEmail : UserEmail = {} as UserEmail;
-            userEmail["id"] = 1;
-            userEmail["email"] = "marko@gmail.com"
-
             let locations : Route[] = [route];
             
             let rideRequest : RideRequest = {} as RideRequest;
             rideRequest["locations"] = locations;
-            rideRequest["passengers"] = [userEmail];
+            rideRequest["passengers"] = this.convertEmailsToUsers();
+            if (this.selectedValue == "standard-0") rideRequest["vehicleType"] = "STANDARD";
+            else if (this.selectedValue == "luxury-1") rideRequest["vehicleType"] = "LUXURY";
+            else if (this.selectedValue == "van-2") rideRequest["vehicleType"] = "VAN";
+            else {
+              this.openSnackBar("Select vehicle type");
+              return;
+            }
             rideRequest["vehicleType"] = "STANDARD";
-            rideRequest["babyTransport"] = true;
-            rideRequest["petTransport"] = true;
-            rideRequest["scheduledTime"] = "2023-01-13T16:00:24.893Z";
-            console.log("RIDE REQUESTTT");
+            rideRequest["babyTransport"] = this.babies;
+            rideRequest["petTransport"] = this.pets;
+            rideRequest["scheduledTime"] = new Date().toISOString();
+            console.log("RIDE REQUEST");
             console.log(rideRequest);
-
             this.rideService.createRide(rideRequest)
             .subscribe(
               (res: any) => {
@@ -203,6 +208,12 @@ export class OrderDetailsDialog implements OnInit {
           }
         });
       }
+    });
+  }
+
+  openSnackBar(snackMsg : string) : void {
+    this.snackBar.open(snackMsg, "Dismiss", {
+      duration: 2000
     });
   }
 }
