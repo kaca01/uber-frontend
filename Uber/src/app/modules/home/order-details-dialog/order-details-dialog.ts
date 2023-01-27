@@ -207,7 +207,7 @@ export class OrderDetailsDialog implements OnInit {
     let now = new Date();
     // time zone
     now.setHours(now.getHours() + 1);
-    now.setMonth(now.getMonth() + 1);
+    now.setMonth(now.getMonth());
     let tomorrow : Date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes());
     let hours : number = Number(this.pickedTime.split(':')[0]) + 1;
     let minutes : number = Number(this.pickedTime.split(':')[1]);
@@ -280,7 +280,9 @@ export class OrderDetailsDialog implements OnInit {
     if (this.pickedTime != undefined) {
       return this.getChosenTime();
     }
-    return new Date().toISOString();
+    let date = new Date();
+    date.setHours(date.getHours()+1)
+    return date.toISOString();
   }
 
   delay(ms: number) {
