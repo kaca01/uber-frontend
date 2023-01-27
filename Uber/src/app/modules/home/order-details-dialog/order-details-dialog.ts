@@ -130,7 +130,6 @@ export class OrderDetailsDialog implements OnInit {
   };
 
   convertEmailsToUsers() : void {
-    this.emails = [];
     this.users = [];
     let userEmail : UserEmail = {} as UserEmail;
 
@@ -152,13 +151,15 @@ export class OrderDetailsDialog implements OnInit {
           this.openSnackBar("Please check if all emails are correct!");
           console.log("ERROR 404");
           console.log(error.message);
-      });
+      }
+      );
     });
   }
 
-  orderRide() {
+  async orderRide() {
     this.convertEmailsToUsers();
     this.setRoute();
+    await this.delay(5000);
     // this list will always have only one element
     // because on front we don't have more than one route
 
@@ -282,9 +283,12 @@ export class OrderDetailsDialog implements OnInit {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-  addFavoriteLocation(name: string) {
+  async addFavoriteLocation(name: string) {
     this.convertEmailsToUsers();
     this.setRoute();
+
+    await this.delay(5000);
+
     // this list will always have only one element
     // because on front we don't have more than one route
 
