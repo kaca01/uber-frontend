@@ -37,14 +37,14 @@
           <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
           <ngx-material-timepicker #toggleTimepicker [theme]="timePickerTheme"></ngx-material-timepicker>
       </div>
-
-      <section class="section">
-          <mat-checkbox id="babies" [(ngModel)]="babies">Babies</mat-checkbox>
-          <mat-checkbox id="pets" [(ngModel)]="pets">Pets</mat-checkbox>
-      </section>
-
-      <button mat-raised-button id="fav" (click)="openFavRideDialog()">Add to favorite</button>
-
-      <button mat-raised-button color="green" id="order-btn" (click)="orderRide()">Order</button>
     </form>
+
+    <section class="section">
+        <mat-checkbox id="babies" [(ngModel)]="babies">Babies</mat-checkbox>
+        <mat-checkbox id="pets" [(ngModel)]="pets">Pets</mat-checkbox>
+    </section>
+
+    <button mat-raised-button id="fav" (click)="openFavRideDialog()">Add to favorite</button>
+
+    <button mat-raised-button color="green" id="order-btn" (click)="orderRide()">Order</button>
 </div>

@@ -6,7 +6,7 @@ import { COMMA, ENTER, T } from '@angular/cdk/keycodes';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FavoriteRideDialogComponent } from '../favorite-ride-dialog/favorite-ride-dialog.component';
 import { MapService } from '../../map/map.service';
-import { RideRequest, Location, Route, UserEmail, User } from 'src/app/domains';
+import { RideRequest, Location, Route, UserEmail, User, FavoriteRideRequest } from 'src/app/domains';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RideService } from '../service/ride.service';
 import { UserService } from '../../list-of-users/user.service';
@@ -30,12 +30,12 @@ export interface Email {
 export class OrderDetailsDialog implements OnInit {
   private departure: string = "";
   private destination: string = "";
-  private users : UserEmail[] = [];
-  babies = false;
-  pets = false;
-  private departureLocation : Location = {} as Location;
-  private destinationLocation : Location = {} as Location;
-
+  public users : UserEmail[] = [];
+  public babies: boolean = false;
+  public pets: boolean = false;
+  public departureLocation : Location = {} as Location;
+  public destinationLocation : Location = {} as Location;
+  public route : Route = {} as Route;
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -102,6 +102,7 @@ export class OrderDetailsDialog implements OnInit {
   }
 
   openFavRideDialog() {
+    this.setRoute();
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
@@ -110,7 +111,6 @@ export class OrderDetailsDialog implements OnInit {
 
     this.dialog.open(FavoriteRideDialogComponent, dialogConfig);
   }
-
 
   // picker theme
   timePickerTheme: NgxMaterialTimepickerTheme = {
@@ -146,7 +146,6 @@ export class OrderDetailsDialog implements OnInit {
           this.users.push(linkedPassenger);
         },
         (error: HttpErrorResponse) => {
-          // handle error
           this.openSnackBar("Please check if all emails are correct!");
           console.log("ERROR 404");
           console.log(error.message);
@@ -154,71 +153,47 @@ export class OrderDetailsDialog implements OnInit {
     });
   }
 
-  orderRide() {
+  setAttributes(){
     this.convertEmailsToUsers();
-    this.mapService.search(this.departure).subscribe({
-      next: (result) => {
-        let depratureLat : number = Number(result[0].lat);
-        let departureLong : number = Number(result[0].lon);
-        this.departureLocation.address = this.departure.toString();
-        this.departureLocation.latitude = depratureLat;
-        this.departureLocation.longitude = departureLong;
+    this.setRoute();
+  }
 
-        this.mapService.search(this.destination).subscribe({
-          next: (result) => {
-            let destinationLat : number = Number(result[0].lat);
-            let destinationLong : number = Number(result[0].lon);
+  orderRide() {
+    this.setAttributes();
+    // this list will always have only one element
+    // because on front we don't have more than one route
 
-            this.destinationLocation.address = this.destination.toString();
-            this.destinationLocation.latitude = destinationLat;
-            this.destinationLocation.longitude = destinationLong;
+    let locations : Route[] = [this.route];
+    
+    let rideRequest : RideRequest = {} as RideRequest;
+    rideRequest["locations"] = locations;
+    rideRequest["passengers"] = this.users;
+    
+    rideRequest["babyTransport"] = this.babies;
+    rideRequest["petTransport"] = this.pets;
 
-            let route : Route = {} as Route;
-            route["departure"] = this.departureLocation;
-            route["destination"] = this.destinationLocation;
+    rideRequest["vehicleType"] = this.getVehicleType();
+    if (rideRequest["vehicleType"] == "") return;
 
-            // this list will always have only one element
-            // because on front we don't have more than one route
+    rideRequest["scheduledTime"] = this.getScheduledTime();
 
-            let locations : Route[] = [route];
-            
-            let rideRequest : RideRequest = {} as RideRequest;
-            rideRequest["locations"] = locations;
-            rideRequest["passengers"] = this.users;
-            if (this.selectedValue == "standard-0") rideRequest["vehicleType"] = "STANDARD";
-            else if (this.selectedValue == "luxury-1") rideRequest["vehicleType"] = "LUXURY";
-            else if (this.selectedValue == "van-2") rideRequest["vehicleType"] = "VAN";
-            else {
-              this.openSnackBar("Select vehicle type");
-              return;
-            }
-            rideRequest["babyTransport"] = this.babies;
-            rideRequest["petTransport"] = this.pets;
+    if (rideRequest["scheduledTime"] == "") {
+      this.openSnackBar("Ride can be ordered only 5 hours in advance!");
+      return;
+    }
 
-
-            if (this.pickedTime != undefined) {
-              rideRequest["scheduledTime"] = this.getChosenTime();
-            }
-            else rideRequest["scheduledTime"] = new Date().toISOString();
-
-            if (rideRequest["scheduledTime"] == "") {
-              this.openSnackBar("Ride can be ordered only 5 hours in advance!");
-              return;
-            }
-
-            this.rideService.createRide(rideRequest)
-            .subscribe(
-              (res: any) => {
-                this.openSnackBar("Please wait. System is searching for drivers.")
-            },
-              (error: HttpErrorResponse) => {
-                this.openSnackBar("Can't order a ride while you have one already pending!");
-            }
-          );
-          }
-        });
+    this.rideService.createRide(rideRequest)
+    .subscribe(
+      (res: any) => {
+        this.openSnackBar("Please wait. System is searching for drivers.")
+    },
+      (error: HttpErrorResponse) => {
+        this.openSnackBar("Can't order a ride while you have one already pending!");
       }
-    });
+    );
+
+    this.emails = [];
+    this.users = [];
   }
 
   openSnackBar(snackMsg : string) : void {
@@ -257,12 +232,87 @@ export class OrderDetailsDialog implements OnInit {
     return false;
   }
 
-  setDeparture() {
-
+  public setDeparture() {
+    this.mapService.search(this.departure).subscribe({
+      next: (result) => {
+        let depratureLat : number = Number(result[0].lat);
+        let departureLong : number = Number(result[0].lon);
+        this.departureLocation.address = this.departure.toString();
+        this.departureLocation.latitude = depratureLat;
+        this.departureLocation.longitude = departureLong;
+      }
+    });
   }
 
-  setDestination() {
+  public setDestination() {
+    this.mapService.search(this.destination).subscribe({
+      next: (result) => {
+        let destinationLat : number = Number(result[0].lat);
+        let destinationLong : number = Number(result[0].lon);
+
+        this.destinationLocation.address = this.destination.toString();
+        this.destinationLocation.latitude = destinationLat;
+        this.destinationLocation.longitude = destinationLong;
+      }
+    });
+  }
+
+  async setRoute() {
+    this.setDeparture();
+    this.setDestination();
+    await this.delay(5000);
+    this.route["departure"] = this.departureLocation;
+    this.route["destination"] = this.destinationLocation;
+  }
+
+  getVehicleType() : string {
+    if (this.selectedValue == "standard-0") return "STANDARD";
+    else if (this.selectedValue == "luxury-1") return "LUXURY";
+    else if (this.selectedValue == "van-2") return "VAN";
+    else {
+      this.openSnackBar("Please select vehicle type!");
+      return "";
+    }
+  }
+
+  getScheduledTime() : string {
+    if (this.pickedTime != undefined) {
+      return this.getChosenTime();
+    }
+    return new Date().toISOString();
+  }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  addFavoriteLocation(name: string) {
+    this.setAttributes();
+    // this list will always have only one element
+    // because on front we don't have more than one route
+
+    let locations : Route[] = [this.route];
     
+    let rideRequest : FavoriteRideRequest = {} as FavoriteRideRequest;
+    rideRequest["favoriteName"] = name;
+    rideRequest["locations"] = locations;
+    rideRequest["passengers"] = this.users;
+    
+    rideRequest["babyTransport"] = this.babies;
+    rideRequest["petTransport"] = this.pets;
+
+    rideRequest["vehicleType"] = this.getVehicleType();
+    if (rideRequest["vehicleType"] == "") return;
+
+
+    this.rideService.addFavorite(rideRequest)
+    .subscribe(
+      (res: any) => {
+        // do not add error handler, subscribe will become deprecated
+    }
+    );
+
+    this.emails = [];
+    this.users = [];
   }
 }
-
