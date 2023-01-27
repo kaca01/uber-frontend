@@ -129,7 +129,7 @@ export class OrderDetailsDialog implements OnInit {
     }
   };
 
-  convertEmailsToUsers() : void {
+  async convertEmailsToUsers() {
     this.users = [];
     let userEmail : UserEmail = {} as UserEmail;
 
@@ -146,18 +146,22 @@ export class OrderDetailsDialog implements OnInit {
           linkedPassenger.id = res.id;
           linkedPassenger.email = res.email;
           this.users.push(linkedPassenger);
+          return true;
         },
         (error: HttpErrorResponse) => {
           this.openSnackBar("Please check if all emails are correct!");
           console.log("ERROR 404");
           console.log(error.message);
+          return false;
       }
       );
     });
+    await this.delay(5000);
+    return true;
   }
 
   async orderRide() {
-    this.convertEmailsToUsers();
+    if(!this.convertEmailsToUsers()) return;
     this.setRoute();
     await this.delay(5000);
     // this list will always have only one element
@@ -284,7 +288,7 @@ export class OrderDetailsDialog implements OnInit {
   }
 
   async addFavoriteLocation(name: string) {
-    this.convertEmailsToUsers();
+    if(!this.convertEmailsToUsers()) return;
     this.setRoute();
 
     await this.delay(5000);
