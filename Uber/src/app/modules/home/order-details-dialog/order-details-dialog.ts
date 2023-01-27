@@ -63,6 +63,8 @@ export class OrderDetailsDialog implements OnInit {
     this.mapService.currentMessage.subscribe(message => {
       this.departure = message[0];
       this.destination = message[1];
+      this.setRoute();
+
     });
   }
 
@@ -102,7 +104,6 @@ export class OrderDetailsDialog implements OnInit {
   }
 
   openFavRideDialog() {
-    this.setRoute();
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
@@ -129,6 +130,8 @@ export class OrderDetailsDialog implements OnInit {
   };
 
   convertEmailsToUsers() : void {
+    this.emails = [];
+    this.users = [];
     let userEmail : UserEmail = {} as UserEmail;
 
     if (this.userService.currentUser) {
@@ -153,13 +156,9 @@ export class OrderDetailsDialog implements OnInit {
     });
   }
 
-  setAttributes(){
+  orderRide() {
     this.convertEmailsToUsers();
     this.setRoute();
-  }
-
-  orderRide() {
-    this.setAttributes();
     // this list will always have only one element
     // because on front we don't have more than one route
 
@@ -191,9 +190,6 @@ export class OrderDetailsDialog implements OnInit {
         this.openSnackBar("Can't order a ride while you have one already pending!");
       }
     );
-
-    this.emails = [];
-    this.users = [];
   }
 
   openSnackBar(snackMsg : string) : void {
@@ -287,7 +283,8 @@ export class OrderDetailsDialog implements OnInit {
   }
 
   addFavoriteLocation(name: string) {
-    this.setAttributes();
+    this.convertEmailsToUsers();
+    this.setRoute();
     // this list will always have only one element
     // because on front we don't have more than one route
 
@@ -311,8 +308,5 @@ export class OrderDetailsDialog implements OnInit {
         // do not add error handler, subscribe will become deprecated
     }
     );
-
-    this.emails = [];
-    this.users = [];
   }
 }
