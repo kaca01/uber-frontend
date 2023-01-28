@@ -145,3 +145,18 @@ export interface ChangePassword {
   newPassword: string,
   oldPassword: string
 }
+
+export interface AllFavoriteRides {
+  totalCount : number;
+  results : FavoriteRide[];
+}
+
+export interface FavoriteRide {
+  id: number;
+  favoriteName: string;
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: String;
+  babyTransport: String;
+  petTransport: String;
+}
