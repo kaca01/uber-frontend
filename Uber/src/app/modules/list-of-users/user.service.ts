@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser, ResetPassword, ChangePassword, Vehicle, Driver } from 'src/app/domains';
+import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser, ResetPassword, ChangePassword, Vehicle, Driver, Ride } from 'src/app/domains';
 
 import {map} from 'rxjs/operators'
 import { ApiService } from '../auth/services/api.service';
@@ -123,6 +123,10 @@ export class UserService {
 
   getDriver(driverId: Number): Observable<Driver>  {
     return this.http.get<Driver>(environment.apiHost + "api/driver/" + driverId);
+  }
+
+  getDriversActiveRide(driverId: Number): Observable<Ride>  {
+    return this.http.get<Ride>(environment.apiHost + "api/ride/driver/" + driverId +"/active");
   }
 
   deleteDriver(driverId : Number): Observable<any> {

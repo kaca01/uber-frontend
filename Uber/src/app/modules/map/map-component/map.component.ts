@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, AfterViewChecked, Output, EventEmitter } from '@angular/core';
+import { Component, Input, AfterViewInit, AfterViewChecked, Output, EventEmitter, OnInit } from '@angular/core';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import * as L from 'leaflet';
 import { LayerGroup } from 'leaflet';
@@ -15,9 +15,7 @@ import { UserService } from '../../list-of-users/user.service';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements AfterViewInit {
-
-
+export class MapComponent implements OnInit {
 
   @Input() pickup = '';
   @Input() destination = '';
@@ -34,6 +32,16 @@ export class MapComponent implements AfterViewInit {
   mainGroup: LayerGroup[] = [];
   private stompClient: any;
 
+  ngOnInit() {
+    let DefaultIcon = L.icon({
+      iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
+    });
+    L.Marker.prototype.options.icon = DefaultIcon;
+    this.initMap();
+    this.initializeWebSocketConnection();
+    //dopisati funkciju koja dobavlja iz baze sve aktivne vozace i setuje sve inicijalno 
+}
+
   private initMap(): void {
     this.map = L.map('map', {
       center: [ 45.23707, 19.83538 ],
@@ -48,6 +56,7 @@ export class MapComponent implements AfterViewInit {
     tiles.addTo(this.map);
 
     this.registerOnClick();
+    console.log("map created");
   }
 
   constructor(
@@ -74,7 +83,7 @@ export class MapComponent implements AfterViewInit {
       });
     }
 
-  initializeWebSocketConnection() {
+  async initializeWebSocketConnection() {
     let ws = new SockJS('http://localhost:8081/socket');
     console.log("connected socket");
     this.stompClient = Stomp.over(ws);
@@ -95,8 +104,7 @@ export class MapComponent implements AfterViewInit {
       //negdje drugo ce trebati update-ovati poziciju na beku (trenutno se iz pajtona salje beku, pa sa beka frontu)
     });
 
-    this.stompClient.subscribe('/map-updates/driver-login', (message: { body: string }) => {
-      //await new Promise(f => setTimeout(f, 5000));
+    this.stompClient.subscribe('/map-updates/driver-login', async (message: { body: string }) => {      
       console.log("driver has logged in");
       let driver: Driver = JSON.parse(message.body);
       let geoLayerRouteGroup: LayerGroup = new LayerGroup();
@@ -108,24 +116,28 @@ export class MapComponent implements AfterViewInit {
       //   //routeLayer.addTo(geoLayerRouteGroup);
       //   this.rides[ride.id] = geoLayerRouteGroup;
       // }
-      
-      let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
-        icon: L.icon({
-          iconUrl: 'assets/images/car.png', //todo ikonu postaviti zavisno od toga da li ima aktivnu voznju (ili odmah na zeleno?)
-          iconSize: [35, 45],
-          iconAnchor: [18, 45],
-        }),
-      });
-      
-      //markerLayer.addTo(this.map);
-      markerLayer.addTo(geoLayerRouteGroup);
-      this.vehicles[driver.vehicle.id.toString()] = markerLayer;
-      //this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
 
-      // this.markerPickup = L.marker([45.235866, 19.807387])
-      //   .addTo(this.map)
-      //   .bindPopup(this.pickup)
-      //   .openPopup();
+      this.userService.getDriversActiveRide(driver.id).subscribe((res: any) => {
+        let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
+          icon: L.icon({
+            iconUrl: 'assets/images/red-car.png',
+            iconSize: [35, 45],
+            iconAnchor: [18, 45],
+          }),
+        });
+        markerLayer.addTo(this.map);
+        this.vehicles[driver.vehicle.id.toString()] = markerLayer;
+      }, (error) => {    
+        let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
+          icon: L.icon({
+            iconUrl: 'assets/images/green-car.png',
+            iconSize: [35, 45],
+            iconAnchor: [18, 45],
+          }),
+        });
+        markerLayer.addTo(this.map);
+        this.vehicles[driver.vehicle.id.toString()] = markerLayer;
+      });
     });
     
     this.stompClient.subscribe('/map-updates/start-ride', (message: { body: string }) => {
@@ -148,7 +160,7 @@ export class MapComponent implements AfterViewInit {
       // }
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
         icon: L.icon({
-          iconUrl: 'assets/images/car.png', //todo ikonu postaviti na crveno
+          iconUrl: 'assets/images/red-car.png',
           iconSize: [35, 45],
           iconAnchor: [18, 45],
         }),
@@ -171,7 +183,7 @@ export class MapComponent implements AfterViewInit {
       let geoLayerRouteGroup: LayerGroup = new LayerGroup();
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
         icon: L.icon({
-          iconUrl: 'assets/images/car.png', //todo ikonu postaviti na zeleno
+          iconUrl: 'assets/images/green-car.png',
           iconSize: [35, 45],
           iconAnchor: [18, 45],
         }),
@@ -233,16 +245,6 @@ export class MapComponent implements AfterViewInit {
       },
       error: () => {},
     });
-  }
-
-  ngAfterViewInit(): void { 
-    let DefaultIcon = L.icon({
-      iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
-    });
-    L.Marker.prototype.options.icon = DefaultIcon;
-    this.initMap();
-    this.initializeWebSocketConnection();
-    //dopisati funkciju koja dobavlja iz baze i setuje sve inicijalno 
   }
 
   ngOnChanges() { 
