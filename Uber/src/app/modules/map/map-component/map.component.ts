@@ -16,6 +16,9 @@ import { UserService } from '../../list-of-users/user.service';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements AfterViewInit {
+
+
+
   @Input() pickup = '';
   @Input() destination = '';
   @Output() pickup_out = new EventEmitter<string>();
@@ -71,12 +74,6 @@ export class MapComponent implements AfterViewInit {
       });
     }
 
-    
-  ngOnInit(): void {
-    this.initializeWebSocketConnection();
-    //dopisati funkciju koja dobavlja iz baze i setuje sve inicijalno 
-  }
-
   initializeWebSocketConnection() {
     let ws = new SockJS('http://localhost:8081/socket');
     console.log("connected socket");
@@ -99,6 +96,7 @@ export class MapComponent implements AfterViewInit {
     });
 
     this.stompClient.subscribe('/map-updates/driver-login', (message: { body: string }) => {
+      //await new Promise(f => setTimeout(f, 5000));
       console.log("driver has logged in");
       let driver: Driver = JSON.parse(message.body);
       let geoLayerRouteGroup: LayerGroup = new LayerGroup();
@@ -110,16 +108,24 @@ export class MapComponent implements AfterViewInit {
       //   //routeLayer.addTo(geoLayerRouteGroup);
       //   this.rides[ride.id] = geoLayerRouteGroup;
       // }
+      
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
         icon: L.icon({
-          iconUrl: 'assets/car.png', //todo ikonu postaviti zavisno od toga da li ima aktivnu voznju (ili odmah na zeleno?)
+          iconUrl: 'assets/images/car.png', //todo ikonu postaviti zavisno od toga da li ima aktivnu voznju (ili odmah na zeleno?)
           iconSize: [35, 45],
           iconAnchor: [18, 45],
         }),
       });
+      
+      //markerLayer.addTo(this.map);
       markerLayer.addTo(geoLayerRouteGroup);
       this.vehicles[driver.vehicle.id.toString()] = markerLayer;
-      this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
+      //this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
+
+      // this.markerPickup = L.marker([45.235866, 19.807387])
+      //   .addTo(this.map)
+      //   .bindPopup(this.pickup)
+      //   .openPopup();
     });
     
     this.stompClient.subscribe('/map-updates/start-ride', (message: { body: string }) => {
@@ -142,12 +148,13 @@ export class MapComponent implements AfterViewInit {
       // }
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
         icon: L.icon({
-          iconUrl: 'assets/car.png', //todo ikonu postaviti na crveno
+          iconUrl: 'assets/images/car.png', //todo ikonu postaviti na crveno
           iconSize: [35, 45],
           iconAnchor: [18, 45],
         }),
       });
       markerLayer.addTo(geoLayerRouteGroup);
+      //markerLayer.addTo(this.map);
       this.vehicles[driver.vehicle.id.toString()] = markerLayer;
       this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
     });
@@ -164,12 +171,13 @@ export class MapComponent implements AfterViewInit {
       let geoLayerRouteGroup: LayerGroup = new LayerGroup();
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
         icon: L.icon({
-          iconUrl: 'assets/car.png', //todo ikonu postaviti na zeleno
+          iconUrl: 'assets/images/car.png', //todo ikonu postaviti na zeleno
           iconSize: [35, 45],
           iconAnchor: [18, 45],
         }),
       });
       markerLayer.addTo(geoLayerRouteGroup);
+      //markerLayer.addTo(this.map);
       this.vehicles[driver.vehicle.id.toString()] = markerLayer;
       this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
     });
@@ -233,6 +241,8 @@ export class MapComponent implements AfterViewInit {
     });
     L.Marker.prototype.options.icon = DefaultIcon;
     this.initMap();
+    this.initializeWebSocketConnection();
+    //dopisati funkciju koja dobavlja iz baze i setuje sve inicijalno 
   }
 
   ngOnChanges() { 
