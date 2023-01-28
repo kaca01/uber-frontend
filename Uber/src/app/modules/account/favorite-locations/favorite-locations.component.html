@@ -1,9 +1,9 @@
 <div class="right-side">
     <div class="container">
         <mat-selection-list #locations [multiple]="false" style="font-size: large;">
-            <mat-list-option *ngFor="let name of favoriteNames" [value]="name" (click)="naklik(name)">
+            <mat-list-option *ngFor="let name of favoriteNames" [value]="name" (click)="openDialog(name)">
               {{name}}
-              <img class="star" src="../../assets/images/star.png"/>
+              <img class="star" src="../../assets/images/star.png">
             </mat-list-option>
         </mat-selection-list>
         <hr>

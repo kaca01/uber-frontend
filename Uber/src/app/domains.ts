@@ -95,9 +95,9 @@ timeOfRejection: String;
 }
 
 export interface Location {
-address: String;
-longitude: Number;
-latitude: Number;
+address: string;
+longitude: number;
+latitude: number;
 }
 
 export interface Route {
@@ -156,7 +156,7 @@ export interface FavoriteRide {
   favoriteName: string;
   locations: Route[];
   passengers: UserEmail[];
-  vehicleType: String;
-  babyTransport: String;
-  petTransport: String;
+  vehicleType: string;
+  babyTransport: string;
+  petTransport: string;
 }

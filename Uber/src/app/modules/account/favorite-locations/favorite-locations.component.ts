@@ -1,24 +1,30 @@
 import { A } from '@angular/cdk/keycodes';
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AllFavoriteRides, FavoriteRide } from 'src/app/domains';
 import { UserService } from '../../list-of-users/user.service';
+import { FavoriteDialogComponent } from '../favorite-dialog/favorite-dialog.component';
 
 @Component({
   selector: 'favorite-locations',
   templateUrl: './favorite-locations.component.html',
   styleUrls: ['./favorite-locations.component.css']
 })
-export class FavoriteLocationsComponent implements OnInit {
+export class FavoriteLocationsComponent implements AfterContentInit {
 
   favoriteNames: string[] = [];
   all = {} as AllFavoriteRides;
   selectedRide = {} as FavoriteRide;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private dialog: MatDialog) {}
 
-  ngOnInit(): void {
+  ngAfterContentInit(): void {
     this.getNames();
   }
+
+  // ngOnInit(): void {
+  //   this.getNames();
+  // }
 
   getNames(): void {
     this.favoriteNames = [];
@@ -31,12 +37,26 @@ export class FavoriteLocationsComponent implements OnInit {
     })
   }
 
-  naklik(lokacija: string): void {
-    this.all['results'].forEach(ride => {
-      if(lokacija === ride['favoriteName'])
+  selectRide(name: string) {
+    this.all['results'].forEach((ride, i) => {
+      if(name === ride['favoriteName'])
         this.selectedRide = ride;
     });
-    this.userService.removeFavorite(this.selectedRide.id).subscribe();
-    this.getNames();
+  }
+
+  openDialog(name: string): void {
+    this.selectRide(name);
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = this.selectedRide;
+
+    const dialogRef = this.dialog.open(FavoriteDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+        this.getNames();
+    });
   }
 }
