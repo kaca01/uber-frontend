@@ -79,6 +79,7 @@ export class MapComponent implements AfterViewInit {
 
   initializeWebSocketConnection() {
     let ws = new SockJS('http://localhost:8081/socket');
+    console.log("connected socket");
     this.stompClient = Stomp.over(ws);
     this.stompClient.debug = null;
     let that = this;
@@ -98,6 +99,7 @@ export class MapComponent implements AfterViewInit {
     });
 
     this.stompClient.subscribe('/map-updates/driver-login', (message: { body: string }) => {
+      console.log("driver has logged in");
       let driver: Driver = JSON.parse(message.body);
       let geoLayerRouteGroup: LayerGroup = new LayerGroup();
       let color = Math.floor(Math.random() * 16777215).toString(16);
