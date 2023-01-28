@@ -15,24 +15,26 @@ export class FavoriteDialogComponent {
   departure: string | undefined = "";
   destination: string | undefined = "";
 
-  deleted: boolean = false;
-
   constructor(private userService: UserService, private dialogRef: MatDialogRef<FavoriteDialogComponent>, 
-    private snackbar: MatSnackBar, @Inject(MAT_DIALOG_DATA) data: FavoriteRide) {
+    private snackBar: MatSnackBar, @Inject(MAT_DIALOG_DATA) data: FavoriteRide) {
       this.favoriteRide = data;
       this.departure = data.locations.at(0)?.departure.address;
       this.destination = data.locations.at(0)?.destination.address;
     }
 
     close() : void {
-      this.dialogRef.close();
+      this.dialogRef.close({event: "Close"});
     }
 
     delete(): void {
       this.userService.removeFavorite(this.favoriteRide.id).subscribe();
-      console.log("obrisanooooo")
-      this.deleted = true;
-      // dodaj snek bar da je obrisana
-      this.close();
+      this.openSnackBar("Successfully removed ride!");
+      this.dialogRef.close({event: "Delete"});
+    }
+
+    openSnackBar(snackMsg : string) : void {
+      this.snackBar.open(snackMsg, "Dismiss", {
+        duration: 2000
+      });
     }
 }

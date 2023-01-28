@@ -1,6 +1,7 @@
 import { A } from '@angular/cdk/keycodes';
 import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AllFavoriteRides, FavoriteRide } from 'src/app/domains';
 import { UserService } from '../../list-of-users/user.service';
 import { FavoriteDialogComponent } from '../dialogs/favorite-dialog/favorite-dialog.component';
@@ -17,15 +18,11 @@ export class FavoriteLocationsComponent implements AfterContentInit {
   all = {} as AllFavoriteRides;
   selectedRide = {} as FavoriteRide;
 
-  constructor(private userService: UserService, private dialog: MatDialog) {}
+  constructor(private snackBar: MatSnackBar, private userService: UserService, private dialog: MatDialog) {}
 
   ngAfterContentInit(): void {
     this.getNames();
   }
-
-  // ngOnInit(): void {
-  //   this.getNames();
-  // }
 
   getNames(): void {
     this.favoriteNames = [];
@@ -57,17 +54,30 @@ export class FavoriteLocationsComponent implements AfterContentInit {
     const dialogRef = this.dialog.open(FavoriteDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-        this.getNames();
-    });
+      this.getNames();
+      if(result.event == "Delete")
+        this.selectedRide = {} as FavoriteRide;
+    }); 
   }
 
   orderRide() {
-    const dialogConfig = new MatDialogConfig();
+    if(this.selectedRide.id == undefined) 
+      this.openSnackBar("Please select a ride!");
+    
+    else {
+      const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = this.selectedRide;
+      dialogConfig.disableClose = false;
+      dialogConfig.autoFocus = true;
+      dialogConfig.data = this.selectedRide;
 
-    const dialogRef = this.dialog.open(OrderFavoriteComponent, dialogConfig);
+      const dialogRef = this.dialog.open(OrderFavoriteComponent, dialogConfig);
+    }
+  }
+
+  openSnackBar(snackMsg : string) : void {
+    this.snackBar.open(snackMsg, "Dismiss", {
+      duration: 2000
+    });
   }
 }
