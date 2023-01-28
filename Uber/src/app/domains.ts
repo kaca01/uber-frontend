@@ -56,10 +56,12 @@ export interface Driver {
   telephoneNumber: String,
   username: String,
   drivingLicense : String,
-  password : String
+  password : String,
+  vehicle : Vehicle,
 }
 
 export interface Vehicle{
+  id: Number;
   babyTransport: Boolean,
   petTransport: Boolean,
   model: String,

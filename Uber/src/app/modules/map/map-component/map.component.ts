@@ -1,9 +1,14 @@
 import { Component, Input, AfterViewInit, AfterViewChecked, Output, EventEmitter } from '@angular/core';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import * as L from 'leaflet';
+import { LayerGroup } from 'leaflet';
 import 'leaflet-routing-machine';
+import { Driver, Ride, Vehicle } from 'src/app/domains';
 import { LocationDialog } from '../../home/location-dialog/location_dialog';
 import { MapService } from '../map.service';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import { UserService } from '../../list-of-users/user.service';
 
 @Component({
   selector: 'app-map',
@@ -21,6 +26,10 @@ export class MapComponent implements AfterViewInit {
 
   private map : any;
   private routingControl: any;
+
+  vehicles: any = {};
+  mainGroup: LayerGroup[] = [];
+  private stompClient: any;
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -40,7 +49,8 @@ export class MapComponent implements AfterViewInit {
 
   constructor(
     private mapService: MapService,
-    private dialog: MatDialog) {}
+    private dialog: MatDialog,
+    private userService: UserService) {}
 
     openDialog(): void {
       let dialogRef = this.dialog.open(LocationDialog);
@@ -60,6 +70,108 @@ export class MapComponent implements AfterViewInit {
         }
       });
     }
+
+    
+  ngOnInit(): void {
+    this.initializeWebSocketConnection();
+    //dopisati funkciju koja dobavlja iz baze i setuje sve inicijalno 
+  }
+
+  initializeWebSocketConnection() {
+    let ws = new SockJS('http://localhost:8081/socket');
+    this.stompClient = Stomp.over(ws);
+    this.stompClient.debug = null;
+    let that = this;
+    this.stompClient.connect({}, function () {
+      that.openGlobalSocket();
+    });
+  }
+
+  openGlobalSocket() {
+
+    this.stompClient.subscribe('/map-updates/update-vehicle-position', (message: { body: string }) => {
+      let vehicle: Vehicle = JSON.parse(message.body);
+      let existingVehicle = this.vehicles[vehicle.id.toString()];
+      existingVehicle.setLatLng([vehicle.currentLocation.longitude, vehicle.currentLocation.latitude]);
+      existingVehicle.update();
+      //negdje drugo ce trebati update-ovati poziciju na beku (trenutno se iz pajtona salje beku, pa sa beka frontu)
+    });
+
+    this.stompClient.subscribe('/map-updates/driver-login', (message: { body: string }) => {
+      let driver: Driver = JSON.parse(message.body);
+      let geoLayerRouteGroup: LayerGroup = new LayerGroup();
+      let color = Math.floor(Math.random() * 16777215).toString(16);
+      // nema jos kretanja za ulogovanog vozaca
+      // for (let step of JSON.parse(ride.routeJSON)['routes'][0]['legs'][0]['steps']) {
+      //   let routeLayer = geoJSON(step.geometry);
+      //   routeLayer.setStyle({ color: `#${color}` });
+      //   //routeLayer.addTo(geoLayerRouteGroup);
+      //   this.rides[ride.id] = geoLayerRouteGroup;
+      // }
+      let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
+        icon: L.icon({
+          iconUrl: 'assets/car.png', //todo ikonu postaviti zavisno od toga da li ima aktivnu voznju (ili odmah na zeleno?)
+          iconSize: [35, 45],
+          iconAnchor: [18, 45],
+        }),
+      });
+      markerLayer.addTo(geoLayerRouteGroup);
+      this.vehicles[driver.vehicle.id.toString()] = markerLayer;
+      this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
+    });
+    
+    this.stompClient.subscribe('/map-updates/start-ride', (message: { body: string }) => {
+      let ride: Ride = JSON.parse(message.body);
+      let driver! : Driver;
+      this.userService.getDriver(ride.driver.id).subscribe((res: any) => {
+        driver= res;
+      });
+      this.mainGroup = this.mainGroup.filter((lg: LayerGroup) => lg !== this.vehicles[driver.vehicle.id.toString()]);
+      delete this.vehicles[driver.vehicle.id.toString()]; //brisanje stare ikone
+
+      let geoLayerRouteGroup: LayerGroup = new LayerGroup();
+      let color = Math.floor(Math.random() * 16777215).toString(16);
+      //todo ovaj dio otkomentarisati kad dodam routeJson atribut na beku i svugdje (ne mora na beku ako cu api slati sa fronta?)
+      // for (let step of JSON.parse(ride.routeJSON)['routes'][0]['legs'][0]['steps']) {
+      //   let routeLayer = geoJSON(step.geometry);
+      //   routeLayer.setStyle({ color: `#${color}` });
+      //   //routeLayer.addTo(geoLayerRouteGroup);
+      //   this.rides[ride.id] = geoLayerRouteGroup;
+      // }
+      let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
+        icon: L.icon({
+          iconUrl: 'assets/car.png', //todo ikonu postaviti na crveno
+          iconSize: [35, 45],
+          iconAnchor: [18, 45],
+        }),
+      });
+      markerLayer.addTo(geoLayerRouteGroup);
+      this.vehicles[driver.vehicle.id.toString()] = markerLayer;
+      this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
+    });
+
+    this.stompClient.subscribe('/map-updates/ended-ride', (message: { body: string }) => {
+      let ride: Ride = JSON.parse(message.body);
+      let driver! : Driver;
+      this.userService.getDriver(ride.driver.id).subscribe((res: any) => {
+        driver= res;
+      });
+      this.mainGroup = this.mainGroup.filter((lg: LayerGroup) => lg !== this.vehicles[driver.vehicle.id.toString()]);
+      delete this.vehicles[driver.vehicle.id.toString()]; //brisanje stare ikone
+
+      let geoLayerRouteGroup: LayerGroup = new LayerGroup();
+      let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
+        icon: L.icon({
+          iconUrl: 'assets/car.png', //todo ikonu postaviti na zeleno
+          iconSize: [35, 45],
+          iconAnchor: [18, 45],
+        }),
+      });
+      markerLayer.addTo(geoLayerRouteGroup);
+      this.vehicles[driver.vehicle.id.toString()] = markerLayer;
+      this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
+    });
+  }
 
   registerOnClick(): void {
     this.map.on('click', (e: any) => {

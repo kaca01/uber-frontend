@@ -121,6 +121,10 @@ export class UserService {
     return this.http.post<string>(environment.apiHost + 'api/driver', user, options);
   }
 
+  getDriver(driverId: Number): Observable<Driver>  {
+    return this.http.get<Driver>(environment.apiHost + "api/driver/" + driverId);
+  }
+
   deleteDriver(driverId : Number): Observable<any> {
     const options: any = {
       responseType: 'text',
