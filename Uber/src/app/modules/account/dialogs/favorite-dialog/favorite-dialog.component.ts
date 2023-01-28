@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FavoriteRide } from 'src/app/domains';
-import { UserService } from '../../list-of-users/user.service';
+import { UserService } from '../../../list-of-users/user.service';
 
 @Component({
   selector: 'app-favorite-dialog',

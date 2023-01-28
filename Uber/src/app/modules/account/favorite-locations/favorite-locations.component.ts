@@ -3,7 +3,8 @@ import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AllFavoriteRides, FavoriteRide } from 'src/app/domains';
 import { UserService } from '../../list-of-users/user.service';
-import { FavoriteDialogComponent } from '../favorite-dialog/favorite-dialog.component';
+import { FavoriteDialogComponent } from '../dialogs/favorite-dialog/favorite-dialog.component';
+import { OrderFavoriteComponent } from '../dialogs/order-favorite/order-favorite.component';
 
 @Component({
   selector: 'favorite-locations',
@@ -44,7 +45,7 @@ export class FavoriteLocationsComponent implements AfterContentInit {
     });
   }
 
-  openDialog(name: string): void {
+  showDetails(name: string): void {
     this.selectRide(name);
 
     const dialogConfig = new MatDialogConfig();
@@ -58,5 +59,15 @@ export class FavoriteLocationsComponent implements AfterContentInit {
     dialogRef.afterClosed().subscribe(result => {
         this.getNames();
     });
+  }
+
+  orderRide() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = this.selectedRide;
+
+    const dialogRef = this.dialog.open(OrderFavoriteComponent, dialogConfig);
   }
 }
