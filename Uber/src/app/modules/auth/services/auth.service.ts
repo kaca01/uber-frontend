@@ -5,6 +5,7 @@ import { ConfigService } from './config.service';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserService } from '../../list-of-users/user.service';
+import { Driver } from 'src/app/domains';
 
 @Injectable()
 export class AuthService {
@@ -35,6 +36,12 @@ export class AuthService {
   }
 
   logout() {
+    if (this.userService.currentUser?.roles[0].name == "ROLE_DRIVER") {
+      this.userService.logoutDriver(this.userService.currentUser.id).subscribe((res: any) => {
+        let driver= res as Driver;
+        //console.log(driver);
+      });
+    }
     this.userService.currentUser = null;
     localStorage.removeItem("jwt");
     this.access_token = null;

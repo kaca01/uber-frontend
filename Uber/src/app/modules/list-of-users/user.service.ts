@@ -34,6 +34,15 @@ export class UserService {
     this.value$.next(test);
   }
 
+  logoutDriver(id: Number): Observable<Driver> {
+    return this.http.get<Driver>(environment.apiHost + 'api/driver/' + id + '/logout');
+  }
+
+  setDriverToActive(id: Number): Observable<Driver> {
+    return this.http.get<Driver>(environment.apiHost + 'api/driver/' + id + '/active');
+  }
+
+
   getAllDrivers(): Observable<AllUsers> {
     return this.http.get<AllUsers>(environment.apiHost + 'api/driver');
   }

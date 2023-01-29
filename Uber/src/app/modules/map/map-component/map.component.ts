@@ -61,7 +61,6 @@ export class MapComponent implements OnInit {
 
     initMapSimulation(){
     this.userService.getAllActiveDrivers().subscribe((res: any) => {
-      console.log(res);
       for (let i=0; i<res.results.length; i++){
         let d = res.results[i] as Driver;
         if(!d.active) continue;
@@ -179,6 +178,13 @@ export class MapComponent implements OnInit {
         this.vehicles[driver.vehicle.id.toString()] = markerLayer;
       });
     });
+
+    this.stompClient.subscribe('/map-updates/logout', (message: { body: string }) => {
+    let driver: Driver = JSON.parse(message.body);
+    this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
+    delete this.vehicles[driver.vehicle.id.toString()];
+    });
+
   }
 
   setMarkerActivity(driver : Driver){

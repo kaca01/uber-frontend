@@ -5,3 +5,9 @@
   height: 40px;
   font-weight: bold;
 }
+
+#button-container {
+  position: relative;
+  z-index: 10;
+  height: 38.5em;
+}
