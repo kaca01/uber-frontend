@@ -39,13 +39,13 @@ export class MapComponent implements OnInit {
     L.Marker.prototype.options.icon = DefaultIcon;
     this.initMap();
     this.initializeWebSocketConnection();
-    //dopisati funkciju koja dobavlja iz baze sve aktivne vozace i setuje sve inicijalno 
+    this.initMapSimulation();
 }
 
   private initMap(): void {
     this.map = L.map('map', {
       center: [ 45.23707, 19.83538 ],
-      zoom: 15
+      zoom: 14
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -58,6 +58,18 @@ export class MapComponent implements OnInit {
     this.registerOnClick();
     console.log("map created");
   }
+
+    initMapSimulation(){
+    this.userService.getAllActiveDrivers().subscribe((res: any) => {
+      console.log(res);
+      for (let i=0; i<res.results.length; i++){
+        let d = res.results[i] as Driver;
+        console.log(d);
+        if(!d.active) continue;
+        this.setMarkerActivity(d);
+      }
+  });
+}
 
   constructor(
     private mapService: MapService,
@@ -83,7 +95,7 @@ export class MapComponent implements OnInit {
       });
     }
 
-  async initializeWebSocketConnection() {
+  initializeWebSocketConnection() {
     let ws = new SockJS('http://localhost:8081/socket');
     console.log("connected socket");
     this.stompClient = Stomp.over(ws);
@@ -117,27 +129,7 @@ export class MapComponent implements OnInit {
       //   this.rides[ride.id] = geoLayerRouteGroup;
       // }
 
-      this.userService.getDriversActiveRide(driver.id).subscribe((res: any) => {
-        let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
-          icon: L.icon({
-            iconUrl: 'assets/images/red-car.png',
-            iconSize: [35, 45],
-            iconAnchor: [18, 45],
-          }),
-        });
-        markerLayer.addTo(this.map);
-        this.vehicles[driver.vehicle.id.toString()] = markerLayer;
-      }, (error) => {    
-        let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
-          icon: L.icon({
-            iconUrl: 'assets/images/green-car.png',
-            iconSize: [35, 45],
-            iconAnchor: [18, 45],
-          }),
-        });
-        markerLayer.addTo(this.map);
-        this.vehicles[driver.vehicle.id.toString()] = markerLayer;
-      });
+      this.setMarkerActivity(driver);
     });
     
     this.stompClient.subscribe('/map-updates/start-ride', (message: { body: string }) => {
@@ -192,6 +184,30 @@ export class MapComponent implements OnInit {
       //markerLayer.addTo(this.map);
       this.vehicles[driver.vehicle.id.toString()] = markerLayer;
       this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
+    });
+  }
+
+  setMarkerActivity(driver : Driver){
+    this.userService.getDriversActiveRide(driver.id).subscribe((res: any) => {
+      let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
+        icon: L.icon({
+          iconUrl: 'assets/images/red-car.png',
+          iconSize: [35, 45],
+          iconAnchor: [18, 45],
+        }),
+      });
+      markerLayer.addTo(this.map);
+      this.vehicles[driver.vehicle.id.toString()] = markerLayer;
+    }, (error) => {    
+      let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
+        icon: L.icon({
+          iconUrl: 'assets/images/green-car.png',
+          iconSize: [35, 45],
+          iconAnchor: [18, 45],
+        }),
+      });
+      markerLayer.addTo(this.map);
+      this.vehicles[driver.vehicle.id.toString()] = markerLayer;
     });
   }
 

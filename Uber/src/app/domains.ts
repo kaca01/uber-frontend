@@ -46,6 +46,7 @@ export interface Driver {
   active: Boolean,
   address: String,
   blocked: Boolean,
+  changed: boolean,
   email: String,
   id: Number,
   lastPasswordResetDate: Number,

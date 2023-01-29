@@ -38,6 +38,10 @@ export class UserService {
     return this.http.get<AllUsers>(environment.apiHost + 'api/driver');
   }
 
+  getAllActiveDrivers(): Observable<any> {
+    return this.http.get<any>(environment.apiHost + 'api/driver/all/active');
+  }
+
   getAllPassengers(): Observable<AllUsers> {
     return this.http.get<AllUsers>(environment.apiHost + 'api/passenger');
   }
