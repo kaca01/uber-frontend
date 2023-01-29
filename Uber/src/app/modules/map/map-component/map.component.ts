@@ -64,7 +64,6 @@ export class MapComponent implements OnInit {
       console.log(res);
       for (let i=0; i<res.results.length; i++){
         let d = res.results[i] as Driver;
-        console.log(d);
         if(!d.active) continue;
         this.setMarkerActivity(d);
       }
@@ -116,7 +115,7 @@ export class MapComponent implements OnInit {
       //negdje drugo ce trebati update-ovati poziciju na beku (trenutno se iz pajtona salje beku, pa sa beka frontu)
     });
 
-    this.stompClient.subscribe('/map-updates/driver-login', async (message: { body: string }) => {      
+    this.stompClient.subscribe('/map-updates/driver-login', (message: { body: string }) => {      
       console.log("driver has logged in");
       let driver: Driver = JSON.parse(message.body);
       let geoLayerRouteGroup: LayerGroup = new LayerGroup();
@@ -134,56 +133,51 @@ export class MapComponent implements OnInit {
     
     this.stompClient.subscribe('/map-updates/start-ride', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
-      let driver! : Driver;
-      this.userService.getDriver(ride.driver.id).subscribe((res: any) => {
-        driver= res;
-      });
-      this.mainGroup = this.mainGroup.filter((lg: LayerGroup) => lg !== this.vehicles[driver.vehicle.id.toString()]);
-      delete this.vehicles[driver.vehicle.id.toString()]; //brisanje stare ikone
+      this.userService.getRealDriver(ride.driver.id).subscribe((res: any) => {
+        let driver= res as Driver;
+        this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
+        delete this.vehicles[driver.vehicle.id.toString()]; //brisanje stare ikone
 
-      let geoLayerRouteGroup: LayerGroup = new LayerGroup();
-      let color = Math.floor(Math.random() * 16777215).toString(16);
-      //todo ovaj dio otkomentarisati kad dodam routeJson atribut na beku i svugdje (ne mora na beku ako cu api slati sa fronta?)
-      // for (let step of JSON.parse(ride.routeJSON)['routes'][0]['legs'][0]['steps']) {
-      //   let routeLayer = geoJSON(step.geometry);
-      //   routeLayer.setStyle({ color: `#${color}` });
-      //   //routeLayer.addTo(geoLayerRouteGroup);
-      //   this.rides[ride.id] = geoLayerRouteGroup;
-      // }
-      let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
-        icon: L.icon({
-          iconUrl: 'assets/images/red-car.png',
-          iconSize: [35, 45],
-          iconAnchor: [18, 45],
-        }),
+        //let geoLayerRouteGroup: LayerGroup = new LayerGroup();
+        //let color = Math.floor(Math.random() * 16777215).toString(16);
+        //todo ovaj dio otkomentarisati kad dodam routeJson atribut na beku i svugdje (ne mora na beku ako cu api slati sa fronta?)
+        // for (let step of JSON.parse(ride.routeJSON)['routes'][0]['legs'][0]['steps']) {
+        //   let routeLayer = geoJSON(step.geometry);
+        //   routeLayer.setStyle({ color: `#${color}` });
+        //   //routeLayer.addTo(geoLayerRouteGroup);
+        //   this.rides[ride.id] = geoLayerRouteGroup;
+        // }
+        let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
+          icon: L.icon({
+            iconUrl: 'assets/images/red-car.png',
+            iconSize: [35, 45],
+            iconAnchor: [18, 45],
+          }),
+        });
+        //markerLayer.addTo(geoLayerRouteGroup);
+        markerLayer.addTo(this.map);
+        this.vehicles[driver.vehicle.id.toString()] = markerLayer;
+        //this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
       });
-      markerLayer.addTo(geoLayerRouteGroup);
-      //markerLayer.addTo(this.map);
-      this.vehicles[driver.vehicle.id.toString()] = markerLayer;
-      this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
     });
 
     this.stompClient.subscribe('/map-updates/ended-ride', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
-      let driver! : Driver;
-      this.userService.getDriver(ride.driver.id).subscribe((res: any) => {
-        driver= res;
-      });
-      this.mainGroup = this.mainGroup.filter((lg: LayerGroup) => lg !== this.vehicles[driver.vehicle.id.toString()]);
-      delete this.vehicles[driver.vehicle.id.toString()]; //brisanje stare ikone
+      this.userService.getRealDriver(ride.driver.id).subscribe((res: any) => {
+        let driver= res as Driver;
+        this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
+        delete this.vehicles[driver.vehicle.id.toString()]; //brisanje stare ikone
 
-      let geoLayerRouteGroup: LayerGroup = new LayerGroup();
-      let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
-        icon: L.icon({
-          iconUrl: 'assets/images/green-car.png',
-          iconSize: [35, 45],
-          iconAnchor: [18, 45],
-        }),
+        let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
+          icon: L.icon({
+            iconUrl: 'assets/images/green-car.png',
+            iconSize: [35, 45],
+            iconAnchor: [18, 45],
+          }),
+        });
+        markerLayer.addTo(this.map);
+        this.vehicles[driver.vehicle.id.toString()] = markerLayer;
       });
-      markerLayer.addTo(geoLayerRouteGroup);
-      //markerLayer.addTo(this.map);
-      this.vehicles[driver.vehicle.id.toString()] = markerLayer;
-      this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
     });
   }
 

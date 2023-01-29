@@ -129,6 +129,10 @@ export class UserService {
     return this.http.get<Driver>(environment.apiHost + "api/driver/" + driverId);
   }
 
+  getRealDriver(driverId: Number): Observable<Driver>  {
+    return this.http.get<Driver>(environment.apiHost + "api/driver/" + driverId +"/driver/real");
+  }
+
   getDriversActiveRide(driverId: Number): Observable<Ride>  {
     return this.http.get<Ride>(environment.apiHost + "api/ride/driver/" + driverId +"/active");
   }
