@@ -206,11 +206,13 @@ export class OrderDetailsDialog implements OnInit {
           (res: any) => {
             this.openSnackBar("Please wait. System is searching for drivers.")
             this.emails = [];
+            this.users = [];
             return true;
         },
           (error: HttpErrorResponse) => {
             this.openSnackBar("Error occured while ordering a ride!");
             this.emails = [];
+            this.users = [];
             return false;
           }
         );
@@ -222,6 +224,7 @@ export class OrderDetailsDialog implements OnInit {
         console.log(error.message);
         this.validMails = true;
         this.emails = [];
+        this.users = [];
         return false;
     }
     );
@@ -382,6 +385,7 @@ export class OrderDetailsDialog implements OnInit {
         console.log(error.message);
         this.validMails = true;
         this.emails = [];
+        this.users = [];
         return false;
     }
     );
