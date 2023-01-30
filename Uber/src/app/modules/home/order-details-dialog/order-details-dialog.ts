@@ -184,10 +184,12 @@ export class OrderDetailsDialog implements OnInit {
         // this.users.push(linkedPassenger);
         this.validMails = true;
         res.forEach(element => {
-          let linkedPassenger : UserEmail = {} as UserEmail;
-          linkedPassenger.id = element.id;
-          linkedPassenger.email = element.email;
-          this.users.push(linkedPassenger);
+          if (element.email.trim() != this.userService.currentUser?.email){
+            let linkedPassenger : UserEmail = {} as UserEmail;
+            linkedPassenger.id = element.id;
+            linkedPassenger.email = element.email;
+            this.users.push(linkedPassenger);
+          }
         });
         console.log("USERSSSSSS");
         console.log(this.users);
@@ -338,17 +340,43 @@ export class OrderDetailsDialog implements OnInit {
     rideRequest["vehicleType"] = this.getVehicleType();
     if (rideRequest["vehicleType"] == "") return;
 
-
-    this.rideService.addFavorite(rideRequest)
-    .subscribe(
-      (res: any) => {
-        return true;
-    },  (error: HttpErrorResponse) => {
-          this.openSnackBar("Error occured while adding favorite location!");
-          console.log("ERROR 404");
-          console.log(error.message);
-          return false;
-      }
+    this.rideService.checkIfInvitedPassengerExists(this.emails).subscribe(
+      (res: UserEmail[]) => {
+        // linkedPassenger.id = res.id;
+        // linkedPassenger.email = res.email;
+        console.log("RESSSSSSSSSS");
+        console.log(res);
+        // this.users.push(linkedPassenger);
+        this.validMails = true;
+        res.forEach(element => {
+          let linkedPassenger : UserEmail = {} as UserEmail;
+          linkedPassenger.id = element.id;
+          linkedPassenger.email = element.email;
+          this.users.push(linkedPassenger);
+        });
+        console.log("USERSSSSSS");
+        console.log(this.users);
+        rideRequest.passengers = this.users;
+        this.rideService.addFavorite(rideRequest)
+        .subscribe(
+          (res: any) => {
+            return true;
+        },  (error: HttpErrorResponse) => {
+              this.openSnackBar("Error occured while adding favorite location!");
+              console.log("ERROR 404");
+              console.log(error.message);
+              return false;
+          }
+        );
+      },
+      (error: HttpErrorResponse) => {
+        this.openSnackBar("Please check if all emails are correct!");
+        console.log("ERROR 404");
+        console.log(error.message);
+        this.validMails = true;
+        this.emails = [];
+        return false;
+    }
     );
   }
 }
