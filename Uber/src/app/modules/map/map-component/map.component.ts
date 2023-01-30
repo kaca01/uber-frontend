@@ -22,6 +22,9 @@ export class MapComponent implements AfterViewInit {
   private map : any;
   private routingControl: any;
 
+  public pickup_coord : any;
+  public destination_coord : any;
+
   private initMap(): void {
     this.map = L.map('map', {
       center: [ 45.23707, 19.83538 ],
@@ -42,24 +45,26 @@ export class MapComponent implements AfterViewInit {
     private mapService: MapService,
     private dialog: MatDialog) {}
 
-    openDialog(): void {
-      let dialogRef = this.dialog.open(LocationDialog);
-    
-      dialogRef.afterClosed().subscribe(result => {
-        if (result == 1){
-          this.pickup = this.json_result.display_name;
-          this.setPickup();
-          this.pickup = this.getAddress();
-          this.pickup_out.emit(this.pickup);
-        }
-        else if (result == 2) {
-          this.destination = this.json_result.display_name;
-          this.setDestination();
-          this.destination = this.getAddress();
-          this.destination_out.emit(this.destination);
-        }
-      });
-    }
+  openDialog(coord : any): void {
+    let dialogRef = this.dialog.open(LocationDialog);
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 1){
+        this.pickup = this.json_result.display_name;
+        this.setPickup();
+        this.pickup_coord = coord;
+        this.pickup = this.getAddress();
+        this.pickup_out.emit(this.pickup);
+      }
+      else if (result == 2) {
+        this.destination = this.json_result.display_name;
+        this.setDestination();
+        this.destination_coord = coord;
+        this.destination = this.getAddress();
+        this.destination_out.emit(this.destination);
+      }
+    });
+  }
 
   registerOnClick(): void {
     this.map.on('click', (e: any) => {
@@ -70,7 +75,7 @@ export class MapComponent implements AfterViewInit {
       this.mapService.reverseSearch(lat, lng).subscribe((res) => {
         this.json_result = res;
       });
-      this.openDialog()
+      this.openDialog(coord);
     });
   }
 
