@@ -1,9 +1,10 @@
 import { Component, Input, AfterViewInit, AfterViewChecked, Output, EventEmitter, OnInit } from '@angular/core';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import {HttpClient} from '@angular/common/http';
 import * as L from 'leaflet';
 import { LayerGroup } from 'leaflet';
 import 'leaflet-routing-machine';
-import { Driver, Ride, Vehicle } from 'src/app/domains';
+import { Driver, Ride, Vehicle, Location } from 'src/app/domains';
 import { LocationDialog } from '../../home/location-dialog/location_dialog';
 import { MapService } from '../map.service';
 import * as Stomp from 'stompjs';
@@ -67,12 +68,14 @@ export class MapComponent implements OnInit {
         this.setMarkerActivity(d);
       }
   });
+    this.sendApis();
 }
 
   constructor(
     private mapService: MapService,
     private dialog: MatDialog,
-    private userService: UserService) {}
+    private userService: UserService, 
+    private http: HttpClient) {}
 
     openDialog(): void {
       let dialogRef = this.dialog.open(LocationDialog);
@@ -108,24 +111,15 @@ export class MapComponent implements OnInit {
 
     this.stompClient.subscribe('/map-updates/update-vehicle-position', (message: { body: string }) => {
       let vehicle: Vehicle = JSON.parse(message.body);
-      let existingVehicle = this.vehicles[vehicle.id.toString()];
+      let existingVehicle = this.vehicles[vehicle.id.toString()];  //todo sta ako ga nema? ako je npr izasao u po aktivne voznje
       existingVehicle.setLatLng([vehicle.currentLocation.longitude, vehicle.currentLocation.latitude]);
       existingVehicle.update();
-      //negdje drugo ce trebati update-ovati poziciju na beku (trenutno se iz pajtona salje beku, pa sa beka frontu)
     });
 
     this.stompClient.subscribe('/map-updates/driver-login', (message: { body: string }) => {      
       console.log("driver has logged in");
       let driver: Driver = JSON.parse(message.body);
-      let geoLayerRouteGroup: LayerGroup = new LayerGroup();
-      let color = Math.floor(Math.random() * 16777215).toString(16);
       // nema jos kretanja za ulogovanog vozaca
-      // for (let step of JSON.parse(ride.routeJSON)['routes'][0]['legs'][0]['steps']) {
-      //   let routeLayer = geoJSON(step.geometry);
-      //   routeLayer.setStyle({ color: `#${color}` });
-      //   //routeLayer.addTo(geoLayerRouteGroup);
-      //   this.rides[ride.id] = geoLayerRouteGroup;
-      // }
 
       this.setMarkerActivity(driver);
     });
@@ -137,15 +131,11 @@ export class MapComponent implements OnInit {
         this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
         delete this.vehicles[driver.vehicle.id.toString()]; //brisanje stare ikone
 
-        //let geoLayerRouteGroup: LayerGroup = new LayerGroup();
-        //let color = Math.floor(Math.random() * 16777215).toString(16);
-        //todo ovaj dio otkomentarisati kad dodam routeJson atribut na beku i svugdje (ne mora na beku ako cu api slati sa fronta?)
-        // for (let step of JSON.parse(ride.routeJSON)['routes'][0]['legs'][0]['steps']) {
-        //   let routeLayer = geoJSON(step.geometry);
-        //   routeLayer.setStyle({ color: `#${color}` });
-        //   //routeLayer.addTo(geoLayerRouteGroup);
-        //   this.rides[ride.id] = geoLayerRouteGroup;
-        // }
+        //da se promijeni iz zelene u crvenu (teleport na departure)
+        let location = {} as Location;
+        location.latitude = ride.locations[0].departure.latitude;
+        location.longitude =  ride.locations[0].departure.longitude;
+        driver.vehicle.currentLocation = location;
         let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
           icon: L.icon({
             iconUrl: 'assets/images/red-car.png',
@@ -153,10 +143,10 @@ export class MapComponent implements OnInit {
             iconAnchor: [18, 45],
           }),
         });
-        //markerLayer.addTo(geoLayerRouteGroup);
         markerLayer.addTo(this.map);
         this.vehicles[driver.vehicle.id.toString()] = markerLayer;
-        //this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
+        
+        this.initCarMovement(driver, ride); 
       });
     });
 
@@ -185,10 +175,10 @@ export class MapComponent implements OnInit {
     delete this.vehicles[driver.vehicle.id.toString()];
     });
 
-  }
+    }
 
   setMarkerActivity(driver : Driver){
-    this.userService.getDriversActiveRide(driver.id).subscribe((res: any) => {
+    this.userService.getDriversActiveRide(driver.id).subscribe((res: Ride) => {
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
         icon: L.icon({
           iconUrl: 'assets/images/red-car.png',
@@ -209,6 +199,37 @@ export class MapComponent implements OnInit {
       markerLayer.addTo(this.map);
       this.vehicles[driver.vehicle.id.toString()] = markerLayer;
     });
+  }
+
+  initCarMovement(driver:Driver, ride:Ride){
+    let coordinates: any[] = [];
+    this.http.get<any>('https://routing.openstreetmap.de/routed-car/route/v1/driving/'
+    + driver.vehicle.currentLocation.latitude + ',' + driver.vehicle.currentLocation.longitude + ';' + ride.locations[0].destination.latitude + ','
+    + ride.locations[0].destination.longitude + '?geometries=geojson&overview=false&alternatives=true&steps=true').subscribe(async routes => {
+      for (let step of routes['routes'][0]['legs'][0]['steps']) {
+        for (let c of step['geometry']['coordinates']) {
+          coordinates.push(c);
+          }
+        }
+      for (let c of coordinates){
+        await new Promise(f => setTimeout(f, 1500));
+        let location = {} as Location;
+        location.latitude = c[0];
+        location.longitude = c[1];
+        this.userService.updateLocation(driver.vehicle.id.valueOf(), location).subscribe((res: any) => {
+          console.log(res);
+        })
+      }
+    })
+  }
+
+  sendApis(){
+    // this.userService.startRide(4).subscribe((res: Ride) => {
+    //   console.log("ride started");
+    // })
+    // this.userService.startRide(9).subscribe((res: Ride) => {
+    //   console.log("ride started");
+    // })
   }
 
   registerOnClick(): void {

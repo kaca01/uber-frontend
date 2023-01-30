@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser, ResetPassword, ChangePassword, Vehicle, Driver, Ride } from 'src/app/domains';
+import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser, ResetPassword, ChangePassword, Vehicle, Driver, Ride, Location } from 'src/app/domains';
 
 import {map} from 'rxjs/operators'
 import { ApiService } from '../auth/services/api.service';
@@ -97,6 +97,10 @@ export class UserService {
     return this.http.put<User>(environment.apiHost + "api/driver/" + driverId.toString(), driver);
   }
 
+  updateLocation(vehicleId: number, location: Location): Observable<Vehicle> {
+    return this.http.put<Vehicle>(environment.apiHost + "api/vehicle/" + vehicleId.toString() +"/location", location);
+  }
+
   addChanges(driverId: number, driver: UpdateUser): Observable<User> {
     return this.http.post<User>(environment.apiHost + 'api/driver/changes/' + driverId, driver);
   }
@@ -158,5 +162,9 @@ export class UserService {
       responseType: 'text',
     };
     return this.http.post<string>(environment.apiHost + "api/driver/" + driverId + "/vehicle", vehicle, options);
+  }
+
+  startRide(rideId: number): Observable<Ride> {
+    return this.http.put<Ride>(environment.apiHost + "api/ride/" + rideId.toString() +"/start", {});
   }
 }
