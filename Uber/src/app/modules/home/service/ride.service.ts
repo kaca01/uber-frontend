@@ -15,8 +15,8 @@ export class RideService {
     return this.http.post<Ride>(environment.apiHost + "api/ride", ride);
   }
 
-  checkIfInvitedPassengerExists(email : string) : Observable<UserEmail> {
-    return this.http.get<UserEmail>(environment.apiHost + "api/passenger/invitation/" + email);
+  checkIfInvitedPassengerExists(emails : String[]) : Observable<UserEmail[]> {
+    return this.http.put<UserEmail[]>(environment.apiHost + "api/passenger/invitation", emails);
   }
 
   addFavorite(ride: FavoriteRideRequest) : Observable<FavoriteRide> {

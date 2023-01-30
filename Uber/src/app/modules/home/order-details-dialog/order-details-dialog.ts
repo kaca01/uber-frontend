@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RideService } from '../service/ride.service';
 import { UserService } from '../../list-of-users/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { waitForAsync } from '@angular/core/testing';
+import { AuthService } from '../../auth/services/auth.service';
 
 interface VehicleType {
   value: string;
@@ -36,10 +36,12 @@ export class OrderDetailsDialog implements OnInit {
   public departureLocation : Location = {} as Location;
   public destinationLocation : Location = {} as Location;
   public route : Route = {} as Route;
+  private validMails = true;
+  private validRoute = true;
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  emails: Email[] = [];
+  emails: String[] = [];
   types: VehicleType[] = [
     {value: 'standard-0', viewValue: 'STANDARD'},
     {value: 'luxury-1', viewValue: 'LUXURY'},
@@ -64,7 +66,7 @@ export class OrderDetailsDialog implements OnInit {
       this.departure = message[0];
       this.destination = message[1];
       this.setRoute();
-
+      return true;
     });
   }
 
@@ -73,13 +75,13 @@ export class OrderDetailsDialog implements OnInit {
 
     // Add email
     if (value) {
-      this.emails.push({name: value});
+      this.emails.push(value);
     }
     // Clear the input value
     event.chipInput!.clear();
   }
 
-  remove(email: Email): void {
+  remove(email: String): void {
     const index = this.emails.indexOf(email);
 
     if (index >= 0) {
@@ -87,7 +89,7 @@ export class OrderDetailsDialog implements OnInit {
     }
   }
 
-  edit(email: Email, event: MatChipEditedEvent) {
+  edit(email: String, event: MatChipEditedEvent) {
     const value = event.value.trim();
 
     // Remove email if it no longer has a name
@@ -99,7 +101,7 @@ export class OrderDetailsDialog implements OnInit {
     // Edit existing email
     const index = this.emails.indexOf(email);
     if (index > 0) {
-      this.emails[index].name = value;
+      this.emails[index] = value;
     }
   }
 
@@ -129,41 +131,26 @@ export class OrderDetailsDialog implements OnInit {
     }
   };
 
-  async convertEmailsToUsers() {
-    this.users = [];
-    let userEmail : UserEmail = {} as UserEmail;
+  // convertEmailsToUsers() : boolean {
+  //   this.users = [];
+  //   let userEmail : UserEmail = {} as UserEmail;
 
-    if (this.userService.currentUser) {
-      userEmail.id = this.userService.currentUser.id;
-      userEmail.email = this.userService.currentUser.email;
-      this.users.push(userEmail);
-    }
+  //   if (this.userService.currentUser) {
+  //     userEmail.id = this.userService.currentUser.id;
+  //     userEmail.email = this.userService.currentUser.email;
+  //     this.users.push(userEmail);
+  //   }
 
-    this.emails.forEach(email => {
-      this.rideService.checkIfInvitedPassengerExists(email.name).subscribe(
-        (res: UserEmail) => {
-          let linkedPassenger : UserEmail = {} as UserEmail;
-          linkedPassenger.id = res.id;
-          linkedPassenger.email = res.email;
-          this.users.push(linkedPassenger);
-          return true;
-        },
-        (error: HttpErrorResponse) => {
-          this.openSnackBar("Please check if all emails are correct!");
-          console.log("ERROR 404");
-          console.log(error.message);
-          return false;
-      }
-      );
-    });
-    await this.delay(5000);
-    return true;
-  }
+  //   // await this.delay(5000);
+  //   return true;
+  // }
 
-  async orderRide() {
-    if(!this.convertEmailsToUsers()) return;
-    this.setRoute();
-    await this.delay(5000);
+  orderRide() {
+      // Call the setDelay function again with the remaining times
+    // if (!this.convertEmailsToUsers()) return;
+    this.validRoute = this.setRoute();
+    
+    // await this.delay(5000);
     // this list will always have only one element
     // because on front we don't have more than one route
 
@@ -186,14 +173,48 @@ export class OrderDetailsDialog implements OnInit {
       return;
     }
 
-    this.rideService.createRide(rideRequest)
-    .subscribe(
-      (res: any) => {
-        this.openSnackBar("Please wait. System is searching for drivers.")
-    },
+    if (this.userService.currentUser != null) this.emails.push(this.userService.currentUser.email);
+        
+    this.rideService.checkIfInvitedPassengerExists(this.emails).subscribe(
+      (res: UserEmail[]) => {
+        // linkedPassenger.id = res.id;
+        // linkedPassenger.email = res.email;
+        console.log("RESSSSSSSSSS");
+        console.log(res);
+        // this.users.push(linkedPassenger);
+        this.validMails = true;
+        res.forEach(element => {
+          let linkedPassenger : UserEmail = {} as UserEmail;
+          linkedPassenger.id = element.id;
+          linkedPassenger.email = element.email;
+          this.users.push(linkedPassenger);
+        });
+        console.log("USERSSSSSS");
+        console.log(this.users);
+        rideRequest.passengers = this.users;
+        this.rideService.createRide(rideRequest)
+        .subscribe(
+          (res: any) => {
+            this.openSnackBar("Please wait. System is searching for drivers.")
+            this.emails = [];
+            return true;
+        },
+          (error: HttpErrorResponse) => {
+            this.openSnackBar("Error occured while ordering a ride!");
+            this.emails = [];
+            return false;
+          }
+        );
+        return true;
+      },
       (error: HttpErrorResponse) => {
-        this.openSnackBar("Can't order a ride while you have one already pending!");
-      }
+        this.openSnackBar("Please check if all emails are correct!");
+        console.log("ERROR 404");
+        console.log(error.message);
+        this.validMails = true;
+        this.emails = [];
+        return false;
+    }
     );
   }
 
@@ -233,37 +254,43 @@ export class OrderDetailsDialog implements OnInit {
     return false;
   }
 
-  public setDeparture() {
-    this.mapService.search(this.departure).subscribe({
-      next: (result) => {
+  public setDeparture() : boolean {
+    this.mapService.search(this.departure).subscribe(
+      (result: any) => {
         let depratureLat : number = Number(result[0].lat);
         let departureLong : number = Number(result[0].lon);
         this.departureLocation.address = this.departure.toString();
         this.departureLocation.latitude = depratureLat;
         this.departureLocation.longitude = departureLong;
-      }
-    });
+        return true;
+      } 
+    );
+    return true;
   }
 
-  public setDestination() {
-    this.mapService.search(this.destination).subscribe({
-      next: (result) => {
+  public setDestination() : boolean {
+    this.mapService.search(this.destination).subscribe(
+      (result : any) => {
         let destinationLat : number = Number(result[0].lat);
         let destinationLong : number = Number(result[0].lon);
 
         this.destinationLocation.address = this.destination.toString();
         this.destinationLocation.latitude = destinationLat;
         this.destinationLocation.longitude = destinationLong;
+        return true;
       }
-    });
+    );
+
+    return true;
   }
 
-  async setRoute() {
-    this.setDeparture();
-    this.setDestination();
-    await this.delay(5000);
+  setRoute() : boolean {
+    if(!this.setDeparture()) return false;
+    if(!this.setDestination()) return false;
+    // await this.delay(5000);
     this.route["departure"] = this.departureLocation;
     this.route["destination"] = this.destinationLocation;
+    return true;
   }
 
   getVehicleType() : string {
@@ -285,15 +312,15 @@ export class OrderDetailsDialog implements OnInit {
     return date.toISOString();
   }
 
-  delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-  }
+  // delay(ms: number) {
+  //   return new Promise( resolve => setTimeout(resolve, ms) );
+  // }
 
-  async addFavoriteLocation(name: string) {
-    if(!this.convertEmailsToUsers()) return;
-    this.setRoute();
+  addFavoriteLocation(name: string) {
+    // if(!this.convertEmailsToUsers()) return;
+    if(!this.setRoute()) return;
 
-    await this.delay(5000);
+    // await this.delay(5000);
 
     // this list will always have only one element
     // because on front we don't have more than one route
@@ -315,8 +342,13 @@ export class OrderDetailsDialog implements OnInit {
     this.rideService.addFavorite(rideRequest)
     .subscribe(
       (res: any) => {
-        // do not add error handler, subscribe will become deprecated
-    }
+        return true;
+    },  (error: HttpErrorResponse) => {
+          this.openSnackBar("Error occured while adding favorite location!");
+          console.log("ERROR 404");
+          console.log(error.message);
+          return false;
+      }
     );
   }
 }
