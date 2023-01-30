@@ -26,8 +26,10 @@ export class FavoriteRideDialogComponent {
   save() : void {
     this.name = this.name.trim();
     if(this.name != '') {
-      this.orderDetails.addFavoriteLocation(this.name);
-      this.openSnackBar("Successfully added!");
+      if (this.orderDetails.getVehicleType() != ""){  
+        this.orderDetails.addFavoriteLocation(this.name);
+        this.openSnackBar("Successfully added!");
+      }
     }
     else
       this.openSnackBar("Name should not be empty!");
