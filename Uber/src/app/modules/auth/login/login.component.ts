@@ -42,12 +42,6 @@ export class LoginComponent implements OnInit {
           if(this.userService.currentUser.roles.find(x => x.authority === "ROLE_ADMIN"))
             this.router.navigate(['admin-home']);
           else {
-            if (this.userService.currentUser?.roles[0].name == "ROLE_DRIVER") {
-              this.userService.setDriverToActive(this.userService.currentUser.id).subscribe((res: any) => {
-                let driver= res as Driver;
-                //console.log(driver);
-              });
-            }
             this.router.navigate(['home-page']);
           }
           }
