@@ -42,7 +42,7 @@
             </mat-form-field >
         </div>
         <button mat-raised-button color="green" (click)="addVehicle()" class="next-btn">Create</button>
-        <a class="back" [routerLink]="['/add-driver']">Go back</a>
+        <a class="back" (click)="goBack()">Go back</a>
     </form>
     <p class="bottom">Bottom</p>
 </div>

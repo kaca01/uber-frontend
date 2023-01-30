@@ -42,6 +42,33 @@ export interface User {
   changed: boolean
 }
 
+export interface Driver {
+  active: Boolean,
+  address: String,
+  blocked: Boolean,
+  email: String,
+  id: Number,
+  lastPasswordResetDate: Number,
+  name: String,
+  profilePicture: String,
+  roles: Role[],
+  surname: String,
+  telephoneNumber: String,
+  username: String,
+  drivingLicense : String,
+  password : String
+}
+
+export interface Vehicle{
+  babyTransport: Boolean,
+  petTransport: Boolean,
+  model: String,
+  vehicleType: String,
+  passengerSeats: Number,
+  licenseNumber: String,
+  currentLocation: Location
+}
+
 export interface AllRides {
     totalCount : Number;
     results : Ride[];
@@ -138,4 +165,14 @@ export interface UpdateUser {
   surname: string,
   telephoneNumber: string,
   username: string
+}
+
+export interface ResetPassword {  
+  newPassword: string,
+  code: string
+}
+
+export interface ChangePassword {  
+  newPassword: string,
+  oldPassword: string
 }

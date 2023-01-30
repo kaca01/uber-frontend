@@ -154,7 +154,7 @@ button:hover {
 
 @media (max-width:850px) {
     .bottom-margin{
-        height: 40px;
+        height: 100px;
     }
 
     .table-container{

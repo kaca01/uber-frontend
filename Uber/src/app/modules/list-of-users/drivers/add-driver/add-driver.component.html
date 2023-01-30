@@ -15,8 +15,8 @@
 
             <mat-form-field appearance="outline" class="advanced_width left">
                 <mat-label>Last name</mat-label>
-                <input matInput type="text" name="lastname" formControlName="lastname" />
-                <mat-error *ngIf="!addDriverForm.controls['lastname'].valid"></mat-error>
+                <input matInput type="text" name="surname" formControlName="surname" />
+                <mat-error *ngIf="!addDriverForm.controls['surname'].valid"></mat-error>
             </mat-form-field>
         </div>
 
@@ -29,8 +29,8 @@
 
             <mat-form-field appearance="outline" class="advanced_width left">
                 <mat-label>Phone</mat-label>
-                <input matInput type="tel" name="phone" formControlName="phone" />
-                <mat-error *ngIf="!addDriverForm.controls['phone'].valid"></mat-error>
+                <input matInput type="tel" name="telephoneNumber" formControlName="telephoneNumber" />
+                <mat-error *ngIf="!addDriverForm.controls['telephoneNumber'].valid"></mat-error>
             </mat-form-field>
         </div>
 
@@ -48,19 +48,29 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="advanced_width left">
-                <mat-label>Postal address</mat-label>
-                <input matInput type="text" name="postalAddress" formControlName="postalAddress" />
-                <mat-error *ngIf="!addDriverForm.controls['postalAddress'].valid"></mat-error>
-            </mat-form-field >
+                <mat-label>Repeat password</mat-label>
+                <input name="repeatPassword" formControlName="repeatPassword" matInput [type]=" hideAgain ? 'password' : 'text'" required />
+                <button  mat-icon-button matSuffix (click)="hideAgain = !hideAgain" [attr.aria-label]="'Hide Password'"
+                        [attr.aria-pressed]="hideAgain" type="button">
+                <mat-icon>
+                    {{hideAgain ? 'visibility_off' : 'visibility'}}
+                </mat-icon>
+            </button>
+                <mat-error *ngIf="!addDriverForm.controls['password'].valid"></mat-error>
+            </mat-form-field>
         </div>
 
         <div class="group">
-            <button mat-raised-button type="button" class="right files-btn" (click)="uploadDocuments()" >Upload documents</button>
+            <mat-form-field appearance="outline" class="advanced_width right">
+                <mat-label>Address</mat-label>
+                <input matInput type="text" name="address" formControlName="address" />
+                <mat-error *ngIf="!addDriverForm.controls['address'].valid"></mat-error>
+            </mat-form-field >
 
             <mat-form-field appearance="outline" class="advanced_width left">
                 <mat-label>Driving license</mat-label>
-                <input matInput type="number" name="license" formControlName="license" />
-                <mat-error *ngIf="!addDriverForm.controls['license'].valid"></mat-error>
+                <input matInput type="text" name="drivingLicense" formControlName="drivingLicense" />
+                <mat-error *ngIf="!addDriverForm.controls['drivingLicense'].valid"></mat-error>
             </mat-form-field>
         </div>
 

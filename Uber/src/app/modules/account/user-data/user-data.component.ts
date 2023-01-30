@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UpdateUser } from 'src/app/domains';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
 import { ChangesDialogComponent } from '../changes-dialog/changes-dialog.component';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
 
 @Component({
   selector: 'user-data',
@@ -48,7 +49,7 @@ export class UserDataComponent implements OnInit {
     }
   }
 
-  openDialog() {
+  openEditDialog() {
     if(this.editForm.controls['name'].value != '' && 
         this.editForm.controls['surname'].value != '' &&
         this.editForm.controls['phone'].value != '' &&
@@ -109,5 +110,15 @@ export class UserDataComponent implements OnInit {
     this._snackBar.open(snackMsg, "Dismiss", {
       duration: 2000
     });
+  }
+
+  openChangePasswordDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = this;
+
+    this.dialog.open(ChangePasswordComponent, dialogConfig);
   }
 }
