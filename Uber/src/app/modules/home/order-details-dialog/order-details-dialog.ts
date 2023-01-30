@@ -173,7 +173,13 @@ export class OrderDetailsDialog implements OnInit {
       return;
     }
 
-    if (this.userService.currentUser != null) this.emails.push(this.userService.currentUser.email);
+ 
+    if (this.userService.currentUser != null){
+      let linkedPassenger : UserEmail = {} as UserEmail;
+      linkedPassenger.id = this.userService.currentUser.id;
+      linkedPassenger.email = this.userService.currentUser.email;
+      this.users.push(linkedPassenger);
+    } 
         
     this.rideService.checkIfInvitedPassengerExists(this.emails).subscribe(
       (res: UserEmail[]) => {
@@ -184,6 +190,7 @@ export class OrderDetailsDialog implements OnInit {
         // this.users.push(linkedPassenger);
         this.validMails = true;
         res.forEach(element => {
+          console.log(this.userService.currentUser?.email);
           if (element.email.trim() != this.userService.currentUser?.email){
             let linkedPassenger : UserEmail = {} as UserEmail;
             linkedPassenger.id = element.id;
