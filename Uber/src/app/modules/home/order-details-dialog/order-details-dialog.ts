@@ -11,7 +11,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RideService } from '../service/ride.service';
 import { UserService } from '../../list-of-users/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from '../../auth/services/auth.service';
 
 interface VehicleType {
   value: string;
@@ -131,26 +130,8 @@ export class OrderDetailsDialog implements OnInit {
     }
   };
 
-  // convertEmailsToUsers() : boolean {
-  //   this.users = [];
-  //   let userEmail : UserEmail = {} as UserEmail;
-
-  //   if (this.userService.currentUser) {
-  //     userEmail.id = this.userService.currentUser.id;
-  //     userEmail.email = this.userService.currentUser.email;
-  //     this.users.push(userEmail);
-  //   }
-
-  //   // await this.delay(5000);
-  //   return true;
-  // }
-
   orderRide() {
-      // Call the setDelay function again with the remaining times
-    // if (!this.convertEmailsToUsers()) return;
     this.validRoute = this.setRoute();
-    
-    // await this.delay(5000);
     // this list will always have only one element
     // because on front we don't have more than one route
 
@@ -172,22 +153,9 @@ export class OrderDetailsDialog implements OnInit {
       this.openSnackBar("Ride can be ordered only 5 hours in advance!");
       return;
     }
-
- 
-    if (this.userService.currentUser != null){
-      let linkedPassenger : UserEmail = {} as UserEmail;
-      linkedPassenger.id = this.userService.currentUser.id;
-      linkedPassenger.email = this.userService.currentUser.email;
-      this.users.push(linkedPassenger);
-    } 
         
     this.rideService.checkIfInvitedPassengerExists(this.emails).subscribe(
       (res: UserEmail[]) => {
-        // linkedPassenger.id = res.id;
-        // linkedPassenger.email = res.email;
-        console.log("RESSSSSSSSSS");
-        console.log(res);
-        // this.users.push(linkedPassenger);
         this.validMails = true;
         res.forEach(element => {
           console.log(this.userService.currentUser?.email);
@@ -198,8 +166,14 @@ export class OrderDetailsDialog implements OnInit {
             this.users.push(linkedPassenger);
           }
         });
-        console.log("USERSSSSSS");
-        console.log(this.users);
+
+        if (this.userService.currentUser != null){
+          let linkedPassenger : UserEmail = {} as UserEmail;
+          linkedPassenger.id = this.userService.currentUser.id;
+          linkedPassenger.email = this.userService.currentUser.email;
+          this.users.push(linkedPassenger);
+        } 
+
         rideRequest.passengers = this.users;
         this.rideService.createRide(rideRequest)
         .subscribe(
@@ -299,7 +273,6 @@ export class OrderDetailsDialog implements OnInit {
   setRoute() : boolean {
     if(!this.setDeparture()) return false;
     if(!this.setDestination()) return false;
-    // await this.delay(5000);
     this.route["departure"] = this.departureLocation;
     this.route["destination"] = this.destinationLocation;
     return true;
@@ -324,18 +297,8 @@ export class OrderDetailsDialog implements OnInit {
     return date.toISOString();
   }
 
-  // delay(ms: number) {
-  //   return new Promise( resolve => setTimeout(resolve, ms) );
-  // }
-
   addFavoriteLocation(name: string) {
-    // if(!this.convertEmailsToUsers()) return;
     if(!this.setRoute()) return;
-
-    // await this.delay(5000);
-
-    // this list will always have only one element
-    // because on front we don't have more than one route
 
     let locations : Route[] = [this.route];
     
@@ -352,11 +315,6 @@ export class OrderDetailsDialog implements OnInit {
 
     this.rideService.checkIfInvitedPassengerExists(this.emails).subscribe(
       (res: UserEmail[]) => {
-        // linkedPassenger.id = res.id;
-        // linkedPassenger.email = res.email;
-        console.log("RESSSSSSSSSS");
-        console.log(res);
-        // this.users.push(linkedPassenger);
         this.validMails = true;
         res.forEach(element => {
           let linkedPassenger : UserEmail = {} as UserEmail;
@@ -364,8 +322,7 @@ export class OrderDetailsDialog implements OnInit {
           linkedPassenger.email = element.email;
           this.users.push(linkedPassenger);
         });
-        console.log("USERSSSSSS");
-        console.log(this.users);
+
         rideRequest.passengers = this.users;
         this.rideService.addFavorite(rideRequest)
         .subscribe(
