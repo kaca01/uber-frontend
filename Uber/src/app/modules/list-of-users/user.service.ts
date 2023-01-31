@@ -163,8 +163,4 @@ export class UserService {
     };
     return this.http.post<string>(environment.apiHost + "api/driver/" + driverId + "/vehicle", vehicle, options);
   }
-
-  startRide(rideId: number): Observable<Ride> {
-    return this.http.put<Ride>(environment.apiHost + "api/ride/" + rideId.toString() +"/start", {});
-  }
 }

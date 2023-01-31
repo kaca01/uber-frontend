@@ -68,7 +68,6 @@ export class MapComponent implements OnInit {
         this.setMarkerActivity(d);
       }
   });
-    this.sendApis();
 }
 
   constructor(
@@ -111,7 +110,7 @@ export class MapComponent implements OnInit {
 
     this.stompClient.subscribe('/map-updates/update-vehicle-position', (message: { body: string }) => {
       let vehicle: Vehicle = JSON.parse(message.body);
-      let existingVehicle = this.vehicles[vehicle.id.toString()];  //todo sta ako ga nema? ako je npr izasao u po aktivne voznje
+      let existingVehicle = this.vehicles[vehicle.id.toString()]; 
       existingVehicle.setLatLng([vehicle.currentLocation.longitude, vehicle.currentLocation.latitude]);
       existingVehicle.update();
     });
@@ -119,8 +118,7 @@ export class MapComponent implements OnInit {
     this.stompClient.subscribe('/map-updates/driver-login', (message: { body: string }) => {      
       console.log("driver has logged in");
       let driver: Driver = JSON.parse(message.body);
-      // nema jos kretanja za ulogovanog vozaca
-
+      if(this.vehicles[driver.vehicle.id.toString()] != null) return;
       this.setMarkerActivity(driver);
     });
     
@@ -216,20 +214,9 @@ export class MapComponent implements OnInit {
         let location = {} as Location;
         location.latitude = c[0];
         location.longitude = c[1];
-        this.userService.updateLocation(driver.vehicle.id.valueOf(), location).subscribe((res: any) => {
-          console.log(res);
-        })
+        this.userService.updateLocation(driver.vehicle.id.valueOf(), location).subscribe((res: any) => {})
       }
     })
-  }
-
-  sendApis(){
-    // this.userService.startRide(4).subscribe((res: Ride) => {
-    //   console.log("ride started");
-    // })
-    // this.userService.startRide(9).subscribe((res: Ride) => {
-    //   console.log("ride started");
-    // })
   }
 
   registerOnClick(): void {
