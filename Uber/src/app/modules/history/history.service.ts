@@ -29,9 +29,6 @@ export class HistoryService {
   }
 
   leaveReviewForDriver(review : ReviewRequest, all : AllRides) : Observable<Review> {
-    console.log("ALLLLL " + all.results);
-    console.log("REVIEWWWWW comment" + review.comment);
-    console.log("REVIEWWWW rating " + review.rating);
     return this.http.post<Review>(environment.apiHost + "api/review/" + all.results[this.selectedRide].id + "/driver", review);
 
   }

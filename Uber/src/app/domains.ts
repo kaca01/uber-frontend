@@ -78,18 +78,49 @@ export interface AllRides {
 }
 
 export interface Ride {
-id: Number;
-startTime: String; 
-endTime: String;
-totalCost: Number;
+id: number;
+startTime: string; 
+endTime: string;
+totalCost: number;
 driver: UserEmail;
 passengers: UserEmail[];
-estimatedTimeInMinutes : Number;
-vehicleType: String;
-babyTransport: String;
-petTransport: String;
+estimatedTimeInMinutes : number;
+vehicleType: string;
+babyTransport: boolean;
+petTransport: boolean;
 rejection : Rejection;
 locations: Route[];
+status: string;
+scheduledTime: string;
+}
+
+export interface RideRequest {
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: string;
+  babyTransport: boolean;
+  petTransport: boolean;
+  scheduledTime: String;
+}
+
+export interface FavoriteRide {
+  id: number;
+  favoriteName: string;
+  scheduledTime: string;
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: string;
+  babyTransport: boolean;
+  petTransport: boolean;
+}
+
+export interface FavoriteRideRequest {
+  favoriteName: string;
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: string;
+  babyTransport: boolean;
+  petTransport: boolean;
 }
 
 export interface Rejection {
@@ -99,8 +130,8 @@ timeOfRejection: String;
 
 export interface Location {
 address: String;
-longitude: Number;
-latitude: Number;
+longitude: number;
+latitude: number;
 }
 
 export interface Route {
