@@ -10,6 +10,8 @@ import { MapService } from '../map.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { UserService } from '../../list-of-users/user.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -61,7 +63,12 @@ export class MapComponent implements OnInit {
   }
 
     initMapSimulation(){
-    this.userService.getAllActiveDrivers().subscribe((res: any) => {
+    // this.router.events.pipe(
+    //     filter(value => value instanceof NavigationEnd),
+    //   ).subscribe(event => {
+    //     window.location.reload();
+    // });
+    this.mapService.getAllActiveDrivers().subscribe((res: any) => {
       for (let i=0; i<res.results.length; i++){
         let d = res.results[i] as Driver;
         if(!d.active) continue;
@@ -74,7 +81,8 @@ export class MapComponent implements OnInit {
     private mapService: MapService,
     private dialog: MatDialog,
     private userService: UserService, 
-    private http: HttpClient) {}
+    private http: HttpClient,
+    private router: Router) {}
 
     openDialog(): void {
       let dialogRef = this.dialog.open(LocationDialog);
@@ -124,11 +132,10 @@ export class MapComponent implements OnInit {
     
     this.stompClient.subscribe('/map-updates/start-ride', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
-      this.userService.getRealDriver(ride.driver.id).subscribe((res: any) => {
+      this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
         let driver= res as Driver;
         this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
         delete this.vehicles[driver.vehicle.id.toString()]; //brisanje stare ikone
-
         //da se promijeni iz zelene u crvenu (teleport na departure)
         let location = {} as Location;
         location.latitude = ride.locations[0].departure.latitude;
@@ -150,11 +157,10 @@ export class MapComponent implements OnInit {
 
     this.stompClient.subscribe('/map-updates/ended-ride', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
-      this.userService.getRealDriver(ride.driver.id).subscribe((res: any) => {
+      this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
         let driver= res as Driver;
         this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
         delete this.vehicles[driver.vehicle.id.toString()]; //brisanje stare ikone
-
         let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
           icon: L.icon({
             iconUrl: 'assets/images/green-car.png',
@@ -176,7 +182,7 @@ export class MapComponent implements OnInit {
     }
 
   setMarkerActivity(driver : Driver){
-    this.userService.getDriversActiveRide(driver.id).subscribe((res: Ride) => {
+    this.mapService.getDriversActiveRide(driver.id).subscribe((res: Ride) => {
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
         icon: L.icon({
           iconUrl: 'assets/images/red-car.png',
@@ -186,6 +192,7 @@ export class MapComponent implements OnInit {
       });
       markerLayer.addTo(this.map).bindPopup(driver.vehicle.licenseNumber.toString());
       this.vehicles[driver.vehicle.id.toString()] = markerLayer;
+      //this.initCarMovement(driver, res);
     }, (error) => {    
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
         icon: L.icon({
@@ -201,9 +208,7 @@ export class MapComponent implements OnInit {
 
   initCarMovement(driver:Driver, ride:Ride){
     let coordinates: any[] = [];
-    this.http.get<any>('https://routing.openstreetmap.de/routed-car/route/v1/driving/'
-    + driver.vehicle.currentLocation.latitude + ',' + driver.vehicle.currentLocation.longitude + ';' + ride.locations[0].destination.latitude + ','
-    + ride.locations[0].destination.longitude + '?geometries=geojson&overview=false&alternatives=true&steps=true').subscribe(async routes => {
+    this.mapService.getRouteSteps(driver, ride).subscribe(async routes => {
       for (let step of routes['routes'][0]['legs'][0]['steps']) {
         for (let c of step['geometry']['coordinates']) {
           coordinates.push(c);
@@ -214,7 +219,7 @@ export class MapComponent implements OnInit {
         let location = {} as Location;
         location.latitude = c[0];
         location.longitude = c[1];
-        this.userService.updateLocation(driver.vehicle.id.valueOf(), location).subscribe((res: any) => {})
+        this.mapService.updateLocation(driver.vehicle.id.valueOf(), location).subscribe((res: any) => {})
       }
     })
   }
