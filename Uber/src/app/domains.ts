@@ -148,3 +148,9 @@ export interface ChangePassword {
   newPassword: string,
   oldPassword: string
 }
+
+export interface Message {
+  message: string,
+  fromId: string,
+  toId: string,
+}
