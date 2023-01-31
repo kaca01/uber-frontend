@@ -33,3 +33,11 @@
     background-color: rgb(243, 237, 237);
     cursor: pointer;
 }
+
+#decline {
+    display: inline-block;
+}
+
+#accept {
+    display: inline-block;
+}

@@ -19,4 +19,8 @@ export class NotificationDialogComponent {
     this.dialogRef.close();
   }
 
+  accept() : void {
+    // TODO : call api ride/accept
+  }
+
 }

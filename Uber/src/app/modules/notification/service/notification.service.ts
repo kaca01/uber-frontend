@@ -100,7 +100,7 @@ export class NotificationService {
     this.dialog.open(NotificationDialogComponent, dialogConfig);
   }
 
-  // Funckija salje poruku na REST endpoint na serveru
+  // Funkcija salje poruku na REST endpoint na serveru
   // sendMessageUsingRest() {
   //     let message: Message = {
   //       message: "poruka iz resta",
