@@ -54,7 +54,8 @@ export class OrderDetailsDialog implements OnInit {
     vehicleType: new FormControl(''),
     email: new FormControl('', [Validators.required]),
     time: new FormControl('', [Validators.required]),
-    favorite: new FormControl('', [Validators.required]),
+    baby: new FormControl(false),
+    pet: new FormControl(false),
   });
   
   constructor(private dialog: MatDialog, private mapService: MapService, private rideService: RideService,

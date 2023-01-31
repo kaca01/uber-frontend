@@ -25,10 +25,6 @@ export class PassengerHomeComponent implements OnInit {
     destination: new FormControl('', [Validators.required]),
   });
 
-  orderForm = new FormGroup({
-    favorite: new FormControl('', [Validators.required]),
-  });
-
   constructor(private userService: UserService, private mapService: MapService) {}
 
   ngOnInit(): void {

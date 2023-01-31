@@ -48,8 +48,16 @@ input {
     width: 100%;
 }
 
+#cancel {
+    width: 25%;
+    background-color: #FF6961;
+    color: white;
+    margin-left: 10px;
+    margin-top: 3%;
+  }
+
 #order-btn {
     float: right;
     margin-right: 10px;
     margin-top: 3%;
-  }
+}
