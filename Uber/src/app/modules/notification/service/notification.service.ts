@@ -6,6 +6,8 @@ import { from, map } from 'rxjs';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { UserService } from '../../list-of-users/user.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { NotificationDialogComponent } from '../dialog/notification-dialog/notification-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,7 @@ export class NotificationService {
   restUrl:string = environment.apiHost + "sendMessageRest";
   serverUrl: string = environment.apiHost + "notif";
 
-  constructor(private http: HttpClient, private userService: UserService) { }
+  constructor(private http: HttpClient, private userService: UserService, private dialog: MatDialog) { }
 
   post(data: Message) {
     return this.http.post<Message>(this.url, data)
@@ -67,17 +69,16 @@ export class NotificationService {
     }
   }
 
-  // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
   handleResult(message: { body: string; }) {
     console.log("usao u hendler");
     if (message.body) {
       let messageResult: Message = JSON.parse(message.body);
       console.log("IZ HENDLERA PORUKA PRIMLJENA");
+      this.openDialog(messageResult);
       // this.messages.push(messageResult);
     }
   }
 
-    // Funkcija salje poruku na WebSockets endpoint na serveru
   sendMessageUsingSocket(notificationMessage: string, fromId: string, toId: string) {
       let message: Message = {
         message: notificationMessage,
@@ -85,24 +86,31 @@ export class NotificationService {
         toId: toId
       };
 
-      // Primer slanja poruke preko web socketa sa klijenta. URL je 
-      //  - ApplicationDestinationPrefix definisan u config klasi na serveru (configureMessageBroker() metoda) : /socket-subscriber
-      //  - vrednost @MessageMapping anotacije iz kontrolera na serveru : /send/message
       this.stompClient.send("/socket-subscriber/send/message", {}, JSON.stringify(message));
     
   }
 
-  // Funckija salje poruku na REST endpoint na serveru
-  sendMessageUsingRest() {
-      let message: Message = {
-        message: "poruka iz resta",
-        fromId: "1",
-        toId: "1"
-      };
+  openDialog(message: Message) {
+    const dialogConfig = new MatDialogConfig();
 
-      this.postRest(message).subscribe(res => {
-        console.log(res);
-      })
-    
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = false;
+
+    dialogConfig.data = message;
+    this.dialog.open(NotificationDialogComponent, dialogConfig);
   }
+
+  // Funckija salje poruku na REST endpoint na serveru
+  // sendMessageUsingRest() {
+  //     let message: Message = {
+  //       message: "poruka iz resta",
+  //       fromId: "1",
+  //       toId: "1"
+  //     };
+
+  //     this.postRest(message).subscribe(res => {
+  //       console.log(res);
+  //     })
+    
+  // }
 }
