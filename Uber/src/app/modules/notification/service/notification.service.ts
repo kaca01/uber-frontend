@@ -78,9 +78,9 @@ export class NotificationService {
   }
 
     // Funkcija salje poruku na WebSockets endpoint na serveru
-  sendMessageUsingSocket(fromId: string, toId: string) {
+  sendMessageUsingSocket(notificationMessage: string, fromId: string, toId: string) {
       let message: Message = {
-        message: "poruka soketttt",
+        message: notificationMessage,
         fromId: fromId,
         toId: toId
       };

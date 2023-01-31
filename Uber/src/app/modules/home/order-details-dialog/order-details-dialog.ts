@@ -185,7 +185,8 @@ export class OrderDetailsDialog implements OnInit {
           (res: Ride) => {
             this.openSnackBar("Please wait. System is searching for drivers.")
             if (this.userService.currentUser != undefined)
-              this.notificationService.sendMessageUsingSocket(this.userService.currentUser.id.toString(), res.driver.id.toString());
+              this.notificationService.sendMessageUsingSocket("You have a new ride request from " + rideRequest.locations[0].departure.address + " to " +
+                                                              rideRequest.locations[0].destination.address, this.userService.currentUser.id.toString(), res.driver.id.toString());
             this.emails = [];
             this.users = [];
             return true;
