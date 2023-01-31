@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Message } from 'src/app/domains';
-import { map } from 'rxjs';
+import { from, map } from 'rxjs';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import { UserService } from '../../list-of-users/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class NotificationService {
   restUrl:string = environment.apiHost + "sendMessageRest";
   serverUrl: string = environment.apiHost + "notif";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
   post(data: Message) {
     return this.http.post<Message>(this.url, data)
@@ -58,7 +59,8 @@ export class NotificationService {
     if (this.isLoaded) {
       console.log("PRETPLACEN");
       this.isCustomSocketOpened = true;
-      this.stompClient.subscribe("/socket-publisher/" + "1", (message: { body: string; }) => {
+      let id = this.userService.currentUser?.id.toString();
+      this.stompClient.subscribe("/socket-publisher/" + id, (message: { body: string; }) => {
         this.handleResult(message);
       });
     }
@@ -75,11 +77,11 @@ export class NotificationService {
   }
 
     // Funkcija salje poruku na WebSockets endpoint na serveru
-  sendMessageUsingSocket() {
+  sendMessageUsingSocket(fromId: string, toId: string) {
       let message: Message = {
         message: "poruka soketttt",
-        fromId: "1",
-        toId: "1"
+        fromId: fromId,
+        toId: toId
       };
 
       // Primer slanja poruke preko web socketa sa klijenta. URL je 

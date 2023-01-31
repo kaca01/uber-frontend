@@ -10,6 +10,7 @@ import { MapService } from '../map.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { UserService } from '../../list-of-users/user.service';
+// import { NotificationService } from '../../notification/service/notification.service';
 
 @Component({
   selector: 'app-map',
@@ -41,6 +42,8 @@ export class MapComponent implements OnInit {
     this.initMap();
     this.initializeWebSocketConnection();
     this.initMapSimulation();
+
+    // this.notificationService.initializeWebSocketConnection();
 }
 
   private initMap(): void {
@@ -73,6 +76,7 @@ export class MapComponent implements OnInit {
 
   constructor(
     private mapService: MapService,
+    // public notificationService: NotificationService,
     private dialog: MatDialog,
     private userService: UserService, 
     private http: HttpClient) {}
