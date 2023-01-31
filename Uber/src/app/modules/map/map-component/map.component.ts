@@ -141,7 +141,7 @@ export class MapComponent implements OnInit {
             iconAnchor: [18, 45],
           }),
         });
-        markerLayer.addTo(this.map);
+        markerLayer.addTo(this.map).bindPopup(driver.vehicle.licenseNumber.toString());
         this.vehicles[driver.vehicle.id.toString()] = markerLayer;
         
         this.initCarMovement(driver, ride); 
@@ -162,7 +162,7 @@ export class MapComponent implements OnInit {
             iconAnchor: [18, 45],
           }),
         });
-        markerLayer.addTo(this.map);
+        markerLayer.addTo(this.map).bindPopup(driver.vehicle.licenseNumber.toString());
         this.vehicles[driver.vehicle.id.toString()] = markerLayer;
       });
     });
@@ -184,7 +184,7 @@ export class MapComponent implements OnInit {
           iconAnchor: [18, 45],
         }),
       });
-      markerLayer.addTo(this.map);
+      markerLayer.addTo(this.map).bindPopup(driver.vehicle.licenseNumber.toString());
       this.vehicles[driver.vehicle.id.toString()] = markerLayer;
     }, (error) => {    
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
@@ -194,7 +194,7 @@ export class MapComponent implements OnInit {
           iconAnchor: [18, 45],
         }),
       });
-      markerLayer.addTo(this.map);
+      markerLayer.addTo(this.map).bindPopup(driver.vehicle.licenseNumber.toString());
       this.vehicles[driver.vehicle.id.toString()] = markerLayer;
     });
   }
