@@ -39,6 +39,7 @@ export class AuthService {
     localStorage.removeItem("jwt");
     this.access_token = null;
     this.router.navigate(['/home-page']);
+    window.location.reload();
   }
 
   tokenIsPresent() {
