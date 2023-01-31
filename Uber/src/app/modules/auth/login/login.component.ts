@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
         this.userService.getMyInfo().subscribe((res: any) => {
           if(this.userService.currentUser != null) {
             this.notificationService.initializeWebSocketConnection();
-            this.notificationService.openSocket();
           if(this.userService.currentUser.roles.find(x => x.authority === "ROLE_ADMIN"))
             this.router.navigate(['admin-home']);
           else {

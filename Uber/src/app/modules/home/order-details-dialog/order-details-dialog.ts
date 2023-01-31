@@ -6,11 +6,12 @@ import { COMMA, ENTER, T } from '@angular/cdk/keycodes';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FavoriteRideDialogComponent } from '../favorite-ride-dialog/favorite-ride-dialog.component';
 import { MapService } from '../../map/map.service';
-import { RideRequest, Location, Route, UserEmail, User, FavoriteRideRequest } from 'src/app/domains';
+import { RideRequest, Location, Route, UserEmail, User, FavoriteRideRequest, Ride } from 'src/app/domains';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RideService } from '../service/ride.service';
 import { UserService } from '../../list-of-users/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from '../../notification/service/notification.service';
 
 interface VehicleType {
   value: string;
@@ -57,8 +58,12 @@ export class OrderDetailsDialog implements OnInit {
     favorite: new FormControl('', [Validators.required]),
   });
   
-  constructor(private dialog: MatDialog, private mapService: MapService, private rideService: RideService,
-              private userService: UserService, private snackBar: MatSnackBar) { }
+  constructor(private dialog: MatDialog,
+              private mapService: MapService, 
+              private rideService: RideService,
+              private userService: UserService, 
+              private notificationService: NotificationService,
+              private snackBar: MatSnackBar) { }
   
   ngOnInit(): void {
     this.mapService.currentMessage.subscribe(message => {
@@ -177,8 +182,10 @@ export class OrderDetailsDialog implements OnInit {
         rideRequest.passengers = this.users;
         this.rideService.createRide(rideRequest)
         .subscribe(
-          (res: any) => {
+          (res: Ride) => {
             this.openSnackBar("Please wait. System is searching for drivers.")
+            if (this.userService.currentUser != undefined)
+              this.notificationService.sendMessageUsingSocket(this.userService.currentUser.id.toString(), res.driver.id.toString());
             this.emails = [];
             this.users = [];
             return true;

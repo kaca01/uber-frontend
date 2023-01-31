@@ -42,7 +42,8 @@ export class NotificationService {
     this.stompClient.connect({}, function () {
       console.log("INICIJALIZOVAO");
       that.isLoaded = true;
-      that.openGlobalSocket()
+      that.openGlobalSocket();
+      that.openSocket();
     });
 
   }
