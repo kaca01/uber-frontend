@@ -63,11 +63,11 @@ export class MapComponent implements OnInit {
   }
 
     initMapSimulation(){
-    // this.router.events.pipe(
-    //     filter(value => value instanceof NavigationEnd),
-    //   ).subscribe(event => {
-    //     window.location.reload();
-    // });
+    this.router.events.pipe(
+        filter(value => value instanceof NavigationEnd),
+      ).subscribe(event => {
+        window.location.reload();
+    });
     this.mapService.getAllActiveDrivers().subscribe((res: any) => {
       for (let i=0; i<res.results.length; i++){
         let d = res.results[i] as Driver;
@@ -192,7 +192,7 @@ export class MapComponent implements OnInit {
       });
       markerLayer.addTo(this.map).bindPopup(driver.vehicle.licenseNumber.toString());
       this.vehicles[driver.vehicle.id.toString()] = markerLayer;
-      //this.initCarMovement(driver, res);
+      this.initCarMovement(driver, res);
     }, (error) => {    
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
         icon: L.icon({
