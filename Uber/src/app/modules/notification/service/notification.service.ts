@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Message } from 'src/app/domains';
+import { Message, Ride } from 'src/app/domains';
 import { from, map } from 'rxjs';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
@@ -20,6 +20,9 @@ export class NotificationService {
   url: string = environment.apiHost + "api/notif";
   restUrl:string = environment.apiHost + "sendMessageRest";
   serverUrl: string = environment.apiHost + "notif";
+
+  public message: Message = {} as Message;
+  public rideId: string = "";
 
   constructor(private http: HttpClient, private userService: UserService, private dialog: MatDialog) { }
 
@@ -79,11 +82,12 @@ export class NotificationService {
     }
   }
 
-  sendMessageUsingSocket(notificationMessage: string, fromId: string, toId: string) {
+  sendMessageUsingSocket(notificationMessage: string, fromId: string, toId: string, rideId: number) {
       let message: Message = {
         message: notificationMessage,
         fromId: fromId,
-        toId: toId
+        toId: toId,
+        rideId: rideId
       };
 
       this.stompClient.send("/socket-subscriber/send/message", {}, JSON.stringify(message));
@@ -96,7 +100,8 @@ export class NotificationService {
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = false;
 
-    dialogConfig.data = message;
+    this.message = message;
+    dialogConfig.data = this.message;
     this.dialog.open(NotificationDialogComponent, dialogConfig);
   }
 

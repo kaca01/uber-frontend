@@ -22,4 +22,8 @@ export class RideService {
   addFavorite(ride: FavoriteRideRequest) : Observable<FavoriteRide> {
     return this.http.post<FavoriteRide>(environment.apiHost + "api/ride/favorites", ride);
   }
+
+  accept(id: number) : Observable<Ride> {
+    return this.http.put<Ride>(environment.apiHost + "api/ride/" + id + "/accept", {});
+  }
 }

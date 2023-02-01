@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Message } from 'src/app/domains';
+import { Message, Ride } from 'src/app/domains';
+import { RideService } from 'src/app/modules/home/service/ride.service';
+import { UserService } from 'src/app/modules/list-of-users/user.service';
 
 @Component({
   selector: 'app-notification-dialog',
@@ -10,7 +12,8 @@ import { Message } from 'src/app/domains';
 export class NotificationDialogComponent {
   message: Message = {} as Message;
 
-  constructor(private dialogRef: MatDialogRef<NotificationDialogComponent>,
+  constructor(private rideService: RideService,
+              private dialogRef: MatDialogRef<NotificationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: Message) {
       this.message = data;
     }
@@ -20,7 +23,8 @@ export class NotificationDialogComponent {
   }
 
   accept() : void {
-    // TODO : call api ride/accept
+    this.rideService.accept(this.message.rideId).subscribe((res: Ride) => {
+        console.log("RIDE ACCEPTED!");
+    });
   }
-
 }
