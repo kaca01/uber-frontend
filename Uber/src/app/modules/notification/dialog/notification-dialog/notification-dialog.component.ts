@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Message, Ride } from 'src/app/domains';
 import { RideService } from 'src/app/modules/home/service/ride.service';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
   selector: 'app-notification-dialog',
@@ -17,6 +18,7 @@ export class NotificationDialogComponent implements OnInit{
 
   constructor(private rideService: RideService,
               private userService: UserService,
+              private notificationService: NotificationService,
               private dialogRef: MatDialogRef<NotificationDialogComponent>,
               private snackBar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) data: Message) {
@@ -34,6 +36,9 @@ export class NotificationDialogComponent implements OnInit{
     this.rideService.accept(this.message.rideId).subscribe((res: Ride) => {
         this.dialogRef.close();
         this.openSnackBar("Successfully accepted!");
+        res.passengers.forEach(passenger => {
+          this.notificationService.sendMessageUsingSocket("Your ride is accepted!", "-1", passenger.id.toString(), res.id);
+        });
     }, (error: HttpErrorResponse) => {
       this.openSnackBar("Error occured while ride acceptance!");
       return false;
