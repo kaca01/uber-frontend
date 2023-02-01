@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Driver, Ride, Vehicle, Location } from 'src/app/domains';
@@ -9,7 +9,11 @@ import { ApiService } from '../auth/services/api.service';
   providedIn: 'root',
 })
 export class MapService {
-  constructor(private http: HttpClient) {}
+  private reqClient: HttpClient;
+
+  constructor(private http: HttpClient, private handler: HttpBackend) {
+      this.reqClient = new HttpClient(handler);
+    }
 
   search(street: string): Observable<any> {
     return this.http.get(
@@ -24,7 +28,7 @@ export class MapService {
   }
 
   getRouteSteps(driver:Driver, ride:Ride): Observable<any> {
-    return this.http.get<any>('https://routing.openstreetmap.de/routed-car/route/v1/driving/'
+    return this.reqClient.get<any>('https://routing.openstreetmap.de/routed-car/route/v1/driving/'
     + driver.vehicle.currentLocation.latitude + ',' + driver.vehicle.currentLocation.longitude + ';' + ride.locations[0].destination.latitude + ','
     + ride.locations[0].destination.longitude + '?geometries=geojson&overview=false&alternatives=true&steps=true')
   }
