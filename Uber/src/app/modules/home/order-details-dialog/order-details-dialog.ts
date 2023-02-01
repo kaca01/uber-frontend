@@ -185,17 +185,20 @@ export class OrderDetailsDialog implements OnInit {
           (res: Ride) => {
             this.openSnackBar("Please wait. System is searching for drivers.")
             if (this.userService.currentUser != undefined) {
-              this.notificationService.sendMessageUsingSocket("You have a new ride request from " + rideRequest.locations[0].departure.address + " to " +
-                                                              rideRequest.locations[0].destination.
-                                                              address, this.userService.currentUser.id.toString(),
+              this.notificationService.sendMessageUsingSocket("You have a new ride request! \nFrom: " + 
+                                                              rideRequest.locations[0].departure.address + "\nTo: " +
+                                                              rideRequest.locations[0].destination.address +
+                                                              "\nSchedule time: " + res.scheduledTime,
+                                                               this.userService.currentUser.id.toString(),
                                                               res.driver.id.toString(), res.id);
               res.passengers.forEach(passenger => {
                 if (passenger.id != this.userService.currentUser?.id) {
                   if (this.userService.currentUser != undefined)  // won't work without this check
-                  this.notificationService.sendMessageUsingSocket("You are invited for a ride from " + rideRequest.locations[0].departure.address + " to " +
-                                                              rideRequest.locations[0].destination.
-                                                              address, this.userService.currentUser.id.toString(),
-                                                              passenger.id.toString(), res.id);
+                  this.notificationService.sendMessageUsingSocket("You are invited for a ride!\nFrom: " + rideRequest.locations[0].departure.address +
+                                                                  "\nTo: " + rideRequest.locations[0].destination.address +
+                                                                  "\nScheduled time: " + res.scheduledTime,
+                                                                  this.userService.currentUser.id.toString(),
+                                                                  passenger.id.toString(), res.id);
                 }
               });
             }

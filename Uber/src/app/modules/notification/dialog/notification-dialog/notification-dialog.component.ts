@@ -37,7 +37,11 @@ export class NotificationDialogComponent implements OnInit{
         this.dialogRef.close();
         this.openSnackBar("Successfully accepted!");
         res.passengers.forEach(passenger => {
-          this.notificationService.sendMessageUsingSocket("Your ride is accepted!", "-1", passenger.id.toString(), res.id);
+          this.notificationService.sendMessageUsingSocket("Your ride is accepted!\n From: "+
+                                                          res.locations[0].departure.address +
+                                                          "\n To: " + res.locations[0].destination.address +
+                                                          "\nScheduled time: " + res.scheduledTime,
+                                                           "-1", passenger.id.toString(), res.id);
         });
     }, (error: HttpErrorResponse) => {
       this.openSnackBar("Error occured while ride acceptance!");
