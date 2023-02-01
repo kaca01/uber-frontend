@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RideRequest, Ride, UserEmail, FavoriteRideRequest, FavoriteRide } from 'src/app/domains';
+import { RideRequest, Ride, UserEmail, FavoriteRideRequest, FavoriteRide, Panic } from 'src/app/domains';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 
@@ -25,5 +25,9 @@ export class RideService {
 
   accept(id: number) : Observable<Ride> {
     return this.http.put<Ride>(environment.apiHost + "api/ride/" + id + "/accept", {});
+  }
+
+  panic(id: number, panic: Panic) : Observable<Panic> {
+    return this.http.put<Panic>(environment.apiHost + "api/ride/" + id + "/panic", panic);
   }
 }

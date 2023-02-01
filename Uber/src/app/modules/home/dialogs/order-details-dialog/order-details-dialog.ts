@@ -5,13 +5,13 @@ import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { COMMA, ENTER, T } from '@angular/cdk/keycodes';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FavoriteRideDialogComponent } from '../favorite-ride-dialog/favorite-ride-dialog.component';
-import { MapService } from '../../map/map.service';
+import { MapService } from '../../../map/map.service';
 import { RideRequest, Location, Route, UserEmail, User, FavoriteRideRequest, Ride } from 'src/app/domains';
 import { HttpErrorResponse } from '@angular/common/http';
-import { RideService } from '../service/ride.service';
-import { UserService } from '../../list-of-users/user.service';
+import { RideService } from '../../service/ride.service';
+import { UserService } from '../../../list-of-users/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationService } from '../../notification/service/notification.service';
+import { NotificationService } from '../../../notification/service/notification.service';
 
 interface VehicleType {
   value: string;

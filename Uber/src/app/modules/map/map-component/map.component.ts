@@ -5,7 +5,7 @@ import * as L from 'leaflet';
 import { LayerGroup } from 'leaflet';
 import 'leaflet-routing-machine';
 import { Driver, Ride, Vehicle, Location } from 'src/app/domains';
-import { LocationDialog } from '../../home/location-dialog/location_dialog';
+import { LocationDialog } from '../../home/dialogs/location-dialog/location_dialog';
 import { MapService } from '../map.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';

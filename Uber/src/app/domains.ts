@@ -186,3 +186,11 @@ export interface Message {
   toId: string,
   rideId: number
 }
+
+export interface Panic {
+  id: number, 
+  reason: string,
+  user: User,
+  ride: Ride,
+  time: string
+}
