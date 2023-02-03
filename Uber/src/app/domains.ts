@@ -126,9 +126,9 @@ timeOfRejection: String;
 }
 
 export interface Location {
-address: String;
-longitude: number;
-latitude: number;
+  address: string;
+  longitude: number;
+  latitude: number;
 }
 
 export interface Route {
@@ -175,4 +175,19 @@ export interface ResetPassword {
 export interface ChangePassword {  
   newPassword: string,
   oldPassword: string
+}
+
+export interface AllFavoriteRides {
+  totalCount : number;
+  results : FavoriteRide[];
+}
+
+export interface FavoriteRide {
+  id: number;
+  favoriteName: string;
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: string;
+  babyTransport: string;
+  petTransport: string;
 }

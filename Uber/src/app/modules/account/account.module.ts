@@ -6,8 +6,11 @@ import { FavoriteLocationsComponent } from './favorite-locations/favorite-locati
 import { MaterialModule } from 'src/infrastructure/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
-import { ChangesDialogComponent } from './changes-dialog/changes-dialog.component';
+import { ChangesDialogComponent } from './dialogs/changes-dialog/changes-dialog.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { FavoriteDialogComponent } from './dialogs/favorite-dialog/favorite-dialog.component';
+import { OrderFavoriteComponent } from './dialogs/order-favorite/order-favorite.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
@@ -15,9 +18,10 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     UserDataComponent,
     FavoriteLocationsComponent,
     ChangesDialogComponent, 
-    ChangePasswordComponent
+    ChangePasswordComponent, FavoriteDialogComponent, OrderFavoriteComponent
     ],
   imports: [
+    NgxMaterialTimepickerModule,
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
