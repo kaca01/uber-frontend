@@ -188,6 +188,6 @@ export interface FavoriteRide {
   locations: Route[];
   passengers: UserEmail[];
   vehicleType: string;
-  babyTransport: string;
-  petTransport: string;
+  babyTransport: boolean;
+  petTransport: boolean;
 }
