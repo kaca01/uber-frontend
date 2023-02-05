@@ -1,7 +1,6 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Observable } from 'rxjs';
 import { Driver, Ride, Vehicle, Location } from 'src/app/domains';
 import { environment } from 'src/environments/environment.prod';
 import { ApiService } from '../auth/services/api.service';
@@ -13,7 +12,6 @@ export class MapService {
   route: string[] = [];
   private messageSource = new BehaviorSubject<string[]>(this.route);
   currentMessage = this.messageSource.asObservable();
-  constructor(private http: HttpClient) {}
 
   private reqClient: HttpClient;
 
@@ -35,6 +33,7 @@ export class MapService {
 
   sendRoute(route: string[]) {
     this.messageSource.next(route);
+  }
 
   getRouteSteps(driver:Driver, ride:Ride): Observable<any> {
     return this.reqClient.get<any>('https://routing.openstreetmap.de/routed-car/route/v1/driving/'
