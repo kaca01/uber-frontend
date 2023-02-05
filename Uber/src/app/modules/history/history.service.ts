@@ -20,6 +20,10 @@ export class HistoryService {
     return this.http.get<AllRides>(environment.apiHost + "api/passenger/" + userId.toString() + "/ride?page=1&size=10&sort='DATE'&from='bla'&to='bla'");
   }
 
+  getDriverHistory(userId : number) : Observable<AllRides> {
+    return this.http.get<AllRides>(environment.apiHost + "api/driver/" + userId.toString() + "/ride?page=1&size=10&sort='DATE'&from='bla'&to='bla'");
+  }
+
   getReviews(all : AllRides) : Observable<RideReview[]> {
     return this.http.get<RideReview[]>(environment.apiHost + "api/review/" + all.results[this.selectedRide].id);
   }

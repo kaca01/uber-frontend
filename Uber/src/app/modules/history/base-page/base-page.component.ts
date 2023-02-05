@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./base-page.component.css']
 })
 export class BasePageComponent implements OnInit{
+	public userId: number = -1;
 
   constructor() {}
 
