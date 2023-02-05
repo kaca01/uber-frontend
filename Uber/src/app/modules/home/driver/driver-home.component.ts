@@ -18,6 +18,7 @@ export class DriverHomeComponent implements OnInit{
   constructor (private userService : UserService, private _snackBar: MatSnackBar, private mapService: MapService) {}
 
   ngOnInit(): void {
+    this.checkForActiveRide();
   }
 
     changeActivity(){
@@ -73,8 +74,15 @@ export class DriverHomeComponent implements OnInit{
   }
 
   checkForActiveRide(){
-    //todo samo radi nginit funkcije (ako se izloguje tokom aktivne voznje)
-    //simulacija bi trebalo da sama radi
+    const button = document.getElementById("ride-btn");
+    this.mapService.getDriversActiveRide(this.userService.currentUser!.id).subscribe((res: Ride) => {
+      if (res != null) {
+        button!.innerText = "END RIDE";
+        this.hasRide = true;
+        button!.style.backgroundColor = "#209538";
+        }
+      }
+    );
   }
 
   openSnackBar(snackMsg : string) : void {
