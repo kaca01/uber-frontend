@@ -11,6 +11,8 @@ import { MapService } from '../../map/map.service';
   styleUrls: ['./driver-home.component.css']
 })
 export class DriverHomeComponent implements OnInit{
+  private active: boolean = true;
+
   constructor (private userService : UserService, private router : Router, private mapService: MapService) {}
 
   ngOnInit(): void {
@@ -25,14 +27,36 @@ export class DriverHomeComponent implements OnInit{
       });
       button.innerText = "INACTIVE";
       button.style.color = "red";
+      this.active = false;
     }
     else if (button?.innerText == "INACTIVE"){
       button.innerText = "ACTIVE";
       button.style.color = "black";
+      this.active = true;
+      this.mapService.setDriverToActive(this.userService.currentUser!.id).subscribe((res: any) => {
+        let driver = res as Driver;
+        //console.log(driver);
+      });
+    }
+  }
+
+  changeRideStatus(){
+    const button = document.getElementById("ride-btn");
+    if (button?.innerText == "START RIDE"){
+      this.userService.logoutDriver(this.userService.currentUser!.id).subscribe((res: any) => {
+        let driver= res as Driver;
+        //console.log(driver);
+      });
+      button.innerText = "END RIDE";
+      button.style.backgroundColor = "#209538";
+    }
+    else if (button?.innerText == "END RIDE"){
       this.mapService.setDriverToActive(this.userService.currentUser!.id).subscribe((res: any) => {
         let driver= res as Driver;
         //console.log(driver);
       });
+      button.innerText = "START RIDE";
+      button.style.backgroundColor = "#C44545";
     }
   }
 }
