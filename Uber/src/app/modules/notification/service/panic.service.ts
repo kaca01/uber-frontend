@@ -73,6 +73,8 @@ export class PanicService {
         rideId: rideId
       };
 
+      console.log("sent messageeeeeeeeee");
+
       this.stompClient.send("/socket-subscriber/send/panic", {}, JSON.stringify(message));
   }
 

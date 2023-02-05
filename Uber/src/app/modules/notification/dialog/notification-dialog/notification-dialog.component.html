@@ -4,8 +4,8 @@
     <div id="title">New notification</div>
     <p class="message">{{message.message}}</p>
 
-    <button mat-button id="decline" (click)="close()">CLOSE</button>
     <ng-template [ngIf]="user == 'driver'">
+        <button mat-button id="decline" (click)="cancel()">CANCEL</button>
         <button mat-button id="accept" (click)="accept()">ACCEPT</button>
     </ng-template>
 </div>

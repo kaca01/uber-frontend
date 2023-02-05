@@ -32,6 +32,11 @@ export class NotificationDialogComponent implements OnInit{
     this.dialogRef.close();
   }
 
+  cancel() : void {
+    // todo uradi da se otvoti dialog za unos poruke, zasto odbija voznju
+    this.dialogRef.close();
+  }
+
   accept() : void {
     this.rideService.accept(this.message.rideId).subscribe((res: Ride) => {
         this.dialogRef.close();
