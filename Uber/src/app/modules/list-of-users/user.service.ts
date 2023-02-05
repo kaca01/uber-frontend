@@ -34,21 +34,8 @@ export class UserService {
     this.value$.next(test);
   }
 
-  logoutDriver(id: Number): Observable<Driver> {
-    return this.http.get<Driver>(environment.apiHost + 'api/driver/' + id + '/logout');
-  }
-
-  setDriverToActive(id: Number): Observable<Driver> {
-    return this.http.get<Driver>(environment.apiHost + 'api/driver/' + id + '/active');
-  }
-
-
   getAllDrivers(): Observable<AllUsers> {
     return this.http.get<AllUsers>(environment.apiHost + 'api/driver');
-  }
-
-  getAllActiveDrivers(): Observable<any> {
-    return this.http.get<any>(environment.apiHost + 'api/driver/all/active');
   }
 
   getAllPassengers(): Observable<AllUsers> {
@@ -97,10 +84,6 @@ export class UserService {
     return this.http.put<User>(environment.apiHost + "api/driver/" + driverId.toString(), driver);
   }
 
-  updateLocation(vehicleId: number, location: Location): Observable<Vehicle> {
-    return this.http.put<Vehicle>(environment.apiHost + "api/vehicle/" + vehicleId.toString() +"/location", location);
-  }
-
   addChanges(driverId: number, driver: UpdateUser): Observable<User> {
     return this.http.post<User>(environment.apiHost + 'api/driver/changes/' + driverId, driver);
   }
@@ -142,14 +125,6 @@ export class UserService {
     return this.http.get<Driver>(environment.apiHost + "api/driver/" + driverId);
   }
 
-  getRealDriver(driverId: Number): Observable<Driver>  {
-    return this.http.get<Driver>(environment.apiHost + "api/driver/" + driverId +"/driver/real");
-  }
-
-  getDriversActiveRide(driverId: Number): Observable<Ride>  {
-    return this.http.get<Ride>(environment.apiHost + "api/ride/driver/" + driverId +"/active");
-  }
-
   deleteDriver(driverId : Number): Observable<any> {
     const options: any = {
       responseType: 'text',
@@ -164,7 +139,7 @@ export class UserService {
     return this.http.post<string>(environment.apiHost + "api/driver/" + driverId + "/vehicle", vehicle, options);
   }
 
-  startRide(rideId: number): Observable<Ride> {
-    return this.http.put<Ride>(environment.apiHost + "api/ride/" + rideId.toString() +"/start", {});
+  logoutDriver(id: Number): Observable<Driver> {
+    return this.http.get<Driver>(environment.apiHost + 'api/driver/' + id + '/logout');
   }
 }
