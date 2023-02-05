@@ -18,27 +18,37 @@ export class RatingsComponent implements OnInit {
   constructor(private service: HistoryService, private userService: UserService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    if (this,this.userService.currentUser != undefined)
-      this.service.getPassengerHistory(this.userService.currentUser.id).subscribe((res) =>{
-        this.history = res;
-      });
+    if (this.userService.currentUser != undefined)
+      if (this.userService.currentUser.roles[0].name === "ROLE_PASSENGER") {
+        this.service.getPassengerHistory(this.userService.currentUser.id).subscribe((res) =>{
+          this.history = res;
+        });
+      } else {
+        this.service.getDriverHistory(this.userService.currentUser.id).subscribe((res) =>{
+          this.history = res;
+        });
+      }
 
       this.service.currentMessage.subscribe(message => {
         this.service.selectedRide = message;
-        if (this.service.selectedRide != -1)
-        this.service.getReviews(this.history).subscribe((res) =>{
-          this.ratings = res;
-          this.setDisplayReviewButton();
-        });
+          if (this.service.selectedRide != -1) {
+            console.log(this.service.selectedRide);
+            this.service.getReviews(this.history).subscribe((res) =>{
+              this.ratings = res;
+              this.setDisplayReviewButton();
+            });
+        }
       });
   }
 
   public refresh() : void {
-    if (this.service.selectedRide != -1)
+    if (this.service.selectedRide != -1) {
+      console.log(this.service.selectedRide);
         this.service.getReviews(this.history).subscribe((res) =>{
           this.ratings = res;
           this.setDisplayReviewButton();
         });
+      }
   }
 
   showIcon(index: number, rating: Number) {
@@ -65,6 +75,14 @@ export class RatingsComponent implements OnInit {
 
   setDisplayReviewButton() : void {
     const reviewBtn = document.getElementById('rate');
+
+    if (this.userService.currentUser != null) {
+      if (this.userService.currentUser.roles[0].name === "ROLE_DRIVER") {
+        if (reviewBtn != null) reviewBtn.style.display = 'none';
+        return;
+      }
+    }
+
     if (this.isReviewed()){
       if (reviewBtn != null) reviewBtn.style.display = 'none';
     }

@@ -18,10 +18,20 @@ export class RideDetailsComponent implements OnInit{
   constructor(private service : HistoryService, private userService: UserService) {}
 
   ngOnInit(): void {
-    if (this.userService.currentUser != undefined)
-    this.service.getPassengerHistory(this.userService.currentUser.id).subscribe((res) => {
-      this.all = res;
-    });
+    if (this.basePage.userId == -1) {
+      if (this.userService.currentUser != undefined) {
+        if (this.userService.currentUser.roles[0].name === "ROLE_PASSENGER") {
+          this.service.getPassengerHistory(this.userService.currentUser.id).subscribe((res) => {
+            this.all = res;
+          });
+        } else {
+          this.service.getDriverHistory(this.userService.currentUser.id).subscribe((res) => {
+            this.all = res;
+          });
+        }
+      }
+     
+    }
     this.service.currentMessage.subscribe(message => {
       this.chosenRide = message;
       if (this.all.results != undefined) this.ride = this.all.results[this.chosenRide];
