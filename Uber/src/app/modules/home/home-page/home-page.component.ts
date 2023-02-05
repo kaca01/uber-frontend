@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserService } from '../../list-of-users/user.service';
+import { PanicDialogComponent } from '../dialogs/panic-dialog/panic-dialog.component';
+import { RideService } from '../service/ride.service';
 
 @Component({
   selector: 'app-home-page',
@@ -11,7 +14,8 @@ export class HomePageComponent implements OnInit {
 	@Input() destination = '';
 	user!: string;
 
-	constructor(private userService: UserService){}
+	constructor(private userService: UserService, private rideService: RideService, 
+				private dialog: MatDialog){}
 
 	ngOnInit() : void {
 		const Menu = document.getElementById("menu-container");
@@ -65,5 +69,15 @@ export class HomePageComponent implements OnInit {
 			return this.user = "admin";
 		}
 		return this.user = "none";
+	}
+
+	panic() {
+		const dialogConfig = new MatDialogConfig();
+	
+		dialogConfig.disableClose = false;
+		dialogConfig.autoFocus = true;
+	
+		// dialogConfig.data = this.allNotes.results;
+		this.dialog.open(PanicDialogComponent, dialogConfig);
 	}
 }

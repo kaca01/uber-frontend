@@ -5,12 +5,13 @@ import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { COMMA, ENTER, T } from '@angular/cdk/keycodes';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FavoriteRideDialogComponent } from '../favorite-ride-dialog/favorite-ride-dialog.component';
-import { MapService } from '../../map/map.service';
-import { RideRequest, Location, Route, UserEmail, User, FavoriteRideRequest } from 'src/app/domains';
+import { MapService } from '../../../map/map.service';
+import { RideRequest, Location, Route, UserEmail, User, FavoriteRideRequest, Ride } from 'src/app/domains';
 import { HttpErrorResponse } from '@angular/common/http';
-import { RideService } from '../service/ride.service';
-import { UserService } from '../../list-of-users/user.service';
+import { RideService } from '../../service/ride.service';
+import { UserService } from '../../../list-of-users/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from '../../../notification/service/notification.service';
 
 interface VehicleType {
   value: string;
@@ -58,8 +59,12 @@ export class OrderDetailsDialog implements OnInit {
     pet: new FormControl(false),
   });
   
-  constructor(private dialog: MatDialog, private mapService: MapService, private rideService: RideService,
-              private userService: UserService, private snackBar: MatSnackBar) { }
+  constructor(private dialog: MatDialog,
+              private mapService: MapService, 
+              private rideService: RideService,
+              private userService: UserService, 
+              private notificationService: NotificationService,
+              private snackBar: MatSnackBar) { }
   
   ngOnInit(): void {
     this.mapService.currentMessage.subscribe(message => {
@@ -178,8 +183,26 @@ export class OrderDetailsDialog implements OnInit {
         rideRequest.passengers = this.users;
         this.rideService.createRide(rideRequest)
         .subscribe(
-          (res: any) => {
+          (res: Ride) => {
             this.openSnackBar("Please wait. System is searching for drivers.")
+            if (this.userService.currentUser != undefined) {
+              this.notificationService.sendMessageUsingSocket("You have a new ride request! \nFrom: " + 
+                                                              rideRequest.locations[0].departure.address + "\nTo: " +
+                                                              rideRequest.locations[0].destination.address +
+                                                              "\nSchedule time: " + res.scheduledTime,
+                                                               this.userService.currentUser.id.toString(),
+                                                              res.driver.id.toString(), res.id);
+              res.passengers.forEach(passenger => {
+                if (passenger.id != this.userService.currentUser?.id) {
+                  if (this.userService.currentUser != undefined)  // won't work without this check
+                  this.notificationService.sendMessageUsingSocket("You are invited for a ride!\nFrom: " + rideRequest.locations[0].departure.address +
+                                                                  "\nTo: " + rideRequest.locations[0].destination.address +
+                                                                  "\nScheduled time: " + res.scheduledTime,
+                                                                  this.userService.currentUser.id.toString(),
+                                                                  passenger.id.toString(), res.id);
+                }
+              });
+            }
             this.emails = [];
             this.users = [];
             return true;

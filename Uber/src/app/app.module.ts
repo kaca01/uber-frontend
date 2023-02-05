@@ -2,6 +2,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatTreeModule } from '@angular/material/tree';
 import { HttpClientModule } from '@angular/common/http';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { AppRoutingModule } from '../infrastructure/app-routing.module';
 import { AppComponent } from './app.component';
@@ -43,7 +44,8 @@ import { HomeModule } from './modules/home/home.module';
     HistoryModule,
     ListOfUsersModule,
     MapModule,
-    NavBarModule
+    NavBarModule, 
+    LeafletModule,
   ],
   providers: [
     {
