@@ -254,24 +254,23 @@ export class MapComponent implements OnInit {
   addRoute(ride:Ride){
     if (this.userService.currentUser != undefined && this.userService.currentUser != null){
       if (this.userService.currentUser.roles.find(x => x.authority === "ROLE_DRIVER")){
-        this.mapService.getDriversActiveRide(this.userService.currentUser.id).subscribe((res: Ride) => {
-        if (res == null) return;
+        if (ride.driver.id != this.userService.currentUser!.id) return;
         this.currentRoute = L.Routing.control({
           waypoints: [L.latLng(ride.locations[0].departure.longitude, ride.locations[0].departure.latitude),
            L.latLng(ride.locations[0].destination.longitude, ride.locations[0].destination.latitude)],
         });
         this.currentRoute.addTo(this.map);
-        });
       }
       else if(this.userService.currentUser.roles.find(x => x.authority === "ROLE_PASSENGER")){
-        this.mapService.getPassengersActiveRide(this.userService.currentUser.id).subscribe((res: Ride) => {
-        if (res == null) return;
-        this.currentRoute = L.Routing.control({
-          waypoints: [L.latLng(ride.locations[0].departure.longitude, ride.locations[0].departure.latitude),
-           L.latLng(ride.locations[0].destination.longitude, ride.locations[0].destination.latitude)],
+        ride.passengers.forEach( (p) => {
+          if (p.email == this.userService.currentUser!.email){
+            this.currentRoute = L.Routing.control({
+              waypoints: [L.latLng(ride.locations[0].departure.longitude, ride.locations[0].departure.latitude),
+               L.latLng(ride.locations[0].destination.longitude, ride.locations[0].destination.latitude)],
+            });
+            this.currentRoute.addTo(this.map);
+          }
         });
-        this.currentRoute.addTo(this.map);
-      });
       }
     }
 }
