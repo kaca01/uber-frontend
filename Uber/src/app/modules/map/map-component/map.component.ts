@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import * as L from 'leaflet';
 import { LayerGroup } from 'leaflet';
 import 'leaflet-routing-machine';
-import { Driver, Ride, Vehicle, Location } from 'src/app/domains';
+import { Driver, Ride, Vehicle, Location, User } from 'src/app/domains';
 import { LocationDialog } from '../../home/dialogs/location-dialog/location_dialog';
 import { MapService } from '../map.service';
 import * as Stomp from 'stompjs';
@@ -30,7 +30,7 @@ export class MapComponent implements OnInit {
   json_result : any;
 
   private map : any;
-  private routingControl: any;
+  private currentRoute: any;
 
   vehicles: any = {};
   mainGroup: LayerGroup[] = [];
@@ -161,6 +161,7 @@ export class MapComponent implements OnInit {
 
     this.stompClient.subscribe('/map-updates/ended-ride', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
+      this.removeRoute(ride);
       this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
         let driver= res as Driver;
         this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
@@ -227,8 +228,53 @@ export class MapComponent implements OnInit {
         location.longitude = c[1];
         this.mapService.updateLocation(driver.vehicle.id.valueOf(), location).subscribe((res: any) => {})
       }
-    })
+    });
+    this.addRoute(ride);
   }
+
+  removeRoute(ride:Ride){
+    if (this.userService.currentUser != undefined && this.userService.currentUser != null){
+      if (this.userService.currentUser.roles.find(x => x.authority === "ROLE_DRIVER")){
+        if (ride.driver.email == this.userService.currentUser.email){
+          this.map.removeLayer(this.currentRoute);
+          this.currentRoute= null;
+        }
+      }
+      else if(this.userService.currentUser.roles.find(x => x.authority === "ROLE_PASSENGER")){
+        ride.passengers.forEach( (p) => {
+          if (p.email == this.userService.currentUser!.email){
+            this.map.removeLayer(this.currentRoute);
+          this.currentRoute= null;
+          }
+        }); 
+      }
+    }
+  }
+
+  addRoute(ride:Ride){
+    if (this.userService.currentUser != undefined && this.userService.currentUser != null){
+      if (this.userService.currentUser.roles.find(x => x.authority === "ROLE_DRIVER")){
+        this.mapService.getDriversActiveRide(this.userService.currentUser.id).subscribe((res: Ride) => {
+        if (res == null) return;
+        this.currentRoute = L.Routing.control({
+          waypoints: [L.latLng(ride.locations[0].departure.longitude, ride.locations[0].departure.latitude),
+           L.latLng(ride.locations[0].destination.longitude, ride.locations[0].destination.latitude)],
+        });
+        this.currentRoute.addTo(this.map);
+        });
+      }
+      else if(this.userService.currentUser.roles.find(x => x.authority === "ROLE_PASSENGER")){
+        this.mapService.getPassengersActiveRide(this.userService.currentUser.id).subscribe((res: Ride) => {
+        if (res == null) return;
+        this.currentRoute = L.Routing.control({
+          waypoints: [L.latLng(ride.locations[0].departure.longitude, ride.locations[0].departure.latitude),
+           L.latLng(ride.locations[0].destination.longitude, ride.locations[0].destination.latitude)],
+        });
+        this.currentRoute.addTo(this.map);
+      });
+      }
+    }
+}
 
   registerOnClick(): void {
     this.map.on('click', (e: any) => {
