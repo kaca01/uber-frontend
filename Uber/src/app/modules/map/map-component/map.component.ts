@@ -5,11 +5,12 @@ import * as L from 'leaflet';
 import { LayerGroup } from 'leaflet';
 import 'leaflet-routing-machine';
 import { Driver, Ride, Vehicle, Location } from 'src/app/domains';
-import { LocationDialog } from '../../home/location-dialog/location_dialog';
+import { LocationDialog } from '../../home/dialogs/location-dialog/location_dialog';
 import { MapService } from '../map.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { UserService } from '../../list-of-users/user.service';
+// import { NotificationService } from '../../notification/service/notification.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
@@ -35,6 +36,9 @@ export class MapComponent implements OnInit {
   mainGroup: LayerGroup[] = [];
   private stompClient: any;
 
+  public pickup_coord : any;
+  public destination_coord : any;
+
   ngOnInit() {
     let DefaultIcon = L.icon({
       iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
@@ -43,6 +47,8 @@ export class MapComponent implements OnInit {
     this.initMap();
     this.initializeWebSocketConnection();
     this.initMapSimulation();
+
+    // this.notificationService.initializeWebSocketConnection();
 }
 
   private initMap(): void {
@@ -79,29 +85,32 @@ export class MapComponent implements OnInit {
 
   constructor(
     private mapService: MapService,
+    // public notificationService: NotificationService,
     private dialog: MatDialog,
     private userService: UserService, 
     private http: HttpClient,
     private router: Router) {}
 
-    openDialog(): void {
-      let dialogRef = this.dialog.open(LocationDialog);
-    
-      dialogRef.afterClosed().subscribe(result => {
-        if (result == 1){
-          this.pickup = this.json_result.display_name;
-          this.setPickup();
-          this.pickup = this.getAddress();
-          this.pickup_out.emit(this.pickup);
-        }
-        else if (result == 2) {
-          this.destination = this.json_result.display_name;
-          this.setDestination();
-          this.destination = this.getAddress();
-          this.destination_out.emit(this.destination);
-        }
-      });
-    }
+  openDialog(coord : any): void {
+    let dialogRef = this.dialog.open(LocationDialog);
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 1){
+        this.pickup = this.json_result.display_name;
+        this.setPickup();
+        this.pickup_coord = coord;
+        this.pickup = this.getAddress();
+        this.pickup_out.emit(this.pickup);
+      }
+      else if (result == 2) {
+        this.destination = this.json_result.display_name;
+        this.setDestination();
+        this.destination_coord = coord;
+        this.destination = this.getAddress();
+        this.destination_out.emit(this.destination);
+      }
+    });
+  }
 
   initializeWebSocketConnection() {
     let ws = new SockJS('http://localhost:8081/socket');
@@ -233,7 +242,7 @@ export class MapComponent implements OnInit {
       this.mapService.reverseSearch(lat, lng).subscribe((res) => {
         this.json_result = res;
       });
-      this.openDialog()
+      this.openDialog(coord);
     });
   }
 

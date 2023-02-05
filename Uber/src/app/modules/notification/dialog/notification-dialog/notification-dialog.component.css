@@ -1,0 +1,43 @@
+.container {
+    margin: 10px;
+}
+
+#title {
+    margin-top: 3%;
+    margin-left: 5%;
+    font-weight: bold;
+    font-size: x-large;
+    width: 10em;
+}
+
+.message {
+    font-size: 20px;
+    margin-left: 5%;
+    margin-bottom: 15px;
+    color: black;
+    font-size: large;
+}
+
+.line {
+    border-top: 0.1em solid #B4B4B4;
+}
+
+#close-dialog{
+    float: right;
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+  }
+  
+.close:hover{
+    background-color: rgb(243, 237, 237);
+    cursor: pointer;
+}
+
+#decline {
+    display: inline-block;
+}
+
+#accept {
+    display: inline-block;
+}
