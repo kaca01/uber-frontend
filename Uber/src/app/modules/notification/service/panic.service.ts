@@ -12,14 +12,12 @@ import { NotificationDialogComponent } from '../dialog/notification-dialog/notif
 @Injectable({
   providedIn: 'root'
 })
-export class NotificationService {
+export class PanicService {
   private stompClient: any;
   isLoaded: boolean = false;
-  isCustomSocketOpened = false;
 
-  url: string = environment.apiHost + "api/notif";
-  restUrl:string = environment.apiHost + "sendMessageRest";
-  serverUrl: string = environment.apiHost + "notif";
+  url: string = environment.apiHost + "api/panic";
+  serverUrl: string = environment.apiHost + "panic";
 
   public message: Message = {} as Message;
   public rideId: string = "";
@@ -31,34 +29,28 @@ export class NotificationService {
       .pipe(map((data: Message) => { return data; }));
   }
 
-  postRest(data: Message) {
-    return this.http.post<Message>(this.restUrl, data)
-      .pipe(map((data: Message) => { return data; }));
-  }
-
   // Funkcija za otvaranje konekcije sa serverom
   initializeWebSocketConnection() {
     console.log("USAO U INICIJALIZACIJU");
-    // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
+    // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru (WebSockerCoonfig.java)
     let ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
     let that = this;
 
-    this.stompClient.connect({}, function () {
-      console.log("INICIJALIZOVAO");
+    this.stompClient.connect({},  () => {
+      console.log("INICIJALIZOVAO 2");
       that.isLoaded = true;
-      that.openSocket();
+      if(this.userService.currentUser?.roles.find(x => x.authority === "ROLE_ADMIN"))
+        that.openGlobalSocket();
     });
 
   }
 
-  openSocket() {
+  openGlobalSocket() {
     if (this.isLoaded) {
-      console.log("PRETPLACEN");
-      this.isCustomSocketOpened = true;
-      let id = this.userService.currentUser?.id.toString();
-      this.stompClient.subscribe("/socket-publisher/" + id, (message: { body: string; }) => {
-        this.handleResult(message);
+      console.log("PRETPLACEN 2");
+      this.stompClient.subscribe("/socket-publisher", (message: { body: string; }) => {
+      this.handleResult(message);
       });
     }
   }
@@ -81,8 +73,7 @@ export class NotificationService {
         rideId: rideId
       };
 
-      this.stompClient.send("/socket-subscriber/send/message", {}, JSON.stringify(message));
-    
+      this.stompClient.send("/socket-subscriber/send/panic", {}, JSON.stringify(message));
   }
 
   openDialog(message: Message) {
@@ -95,18 +86,4 @@ export class NotificationService {
     dialogConfig.data = this.message;
     this.dialog.open(NotificationDialogComponent, dialogConfig);
   }
-
-  // Funkcija salje poruku na REST endpoint na serveru
-  // sendMessageUsingRest() {
-  //     let message: Message = {
-  //       message: "poruka iz resta",
-  //       fromId: "1",
-  //       toId: "1"
-  //     };
-
-  //     this.postRest(message).subscribe(res => {
-  //       console.log(res);
-  //     })
-    
-  // }
 }
