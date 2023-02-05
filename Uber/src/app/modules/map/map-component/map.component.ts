@@ -69,11 +69,6 @@ export class MapComponent implements OnInit {
   }
 
     initMapSimulation(){
-    this.router.events.pipe(
-        filter(value => value instanceof NavigationEnd),
-      ).subscribe(event => {
-        window.location.reload();
-    });
     this.mapService.getAllActiveDrivers().subscribe((res: any) => {
       for (let i=0; i<res.results.length; i++){
         let d = res.results[i] as Driver;
@@ -225,6 +220,8 @@ export class MapComponent implements OnInit {
         }
       for (let c of coordinates){
         await new Promise(f => setTimeout(f, 1500));
+        if (this.router.url != '/home-page' && this.router.url != "/admin-home")
+          return;
         let location = {} as Location;
         location.latitude = c[0];
         location.longitude = c[1];
