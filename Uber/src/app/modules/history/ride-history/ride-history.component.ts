@@ -21,7 +21,7 @@ export class RideHistoryComponent implements OnInit {
       if (this.baseComponent.userId == -1) {
         console.log("ROLEEEE");
         console.log(this.userService.currentUser.roles[0].name);
-        if (this.userService.currentUser.roles[0].name == "PASSENGER") {
+        if (this.userService.currentUser.roles[0].name === "ROLE_PASSENGER") {
           this.service.getPassengerHistory(this.userService.currentUser.id).subscribe((res) => {
             this.all = res;
           });
