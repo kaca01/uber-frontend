@@ -142,4 +142,8 @@ export class UserService {
   removeFavorite(rideId: number): Observable<void> {
     return this.http.delete<void>(environment.apiHost + "api/ride/favorites/" + rideId);
   }
+
+  getPassenger(userId : Number) : Observable<void> {
+    return this.http.put<any>(environment.apiHost + "api/passenger/" + userId.toString(), {});
+  }
 }

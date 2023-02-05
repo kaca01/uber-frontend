@@ -11,6 +11,7 @@ import { AllNotes, User } from 'src/app/domains';
 import { DriverChangesComponent } from '../dialogs/driver-changes/driver-changes.component';
 import { BasePageComponent } from '../../history/base-page/base-page.component';
 import { Router } from '@angular/router';
+import { HistoryService } from '../../history/history.service';
 
 @Component({
   selector: 'app-drivers',
@@ -18,7 +19,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./drivers.component.css'],
 })
 export class DriversComponent implements OnInit {
-  base : BasePageComponent = new BasePageComponent();
+  base : BasePageComponent = new BasePageComponent(this.userService);
   public selectedRowIndex : number = -1;
   displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked', 'changes'];
   dataSource!: MatTableDataSource<User>;
@@ -33,6 +34,7 @@ export class DriversComponent implements OnInit {
   @ViewChild(MatSort) sort!: any;
 
   constructor(private userService: UserService,
+              private historyService: HistoryService,
               private dialog: MatDialog, 
               private _snackBar: MatSnackBar,
               private router: Router) {}
@@ -186,12 +188,12 @@ export class DriversComponent implements OnInit {
   }
 
   // history
-  openHistory() : void {
-    console.log("Usao u open history")
-    console.log(this.selectedRowIndex);
-    if (this.selectedRowIndex != -1) {
-      this.base.userId = this.selectedRowIndex;
-      
-    }
+  openHistory() {
+    this.sendUserId();
+    this.router.navigate(['/base-page']);
+  }
+
+  sendUserId() {
+    this.historyService.sendMessage(this.user.id);
   }
 }

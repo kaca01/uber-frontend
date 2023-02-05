@@ -11,10 +11,11 @@ import { UserService } from '../../list-of-users/user.service';
   styleUrls: ['./ride-details.component.css']
 })
 export class RideDetailsComponent implements OnInit{
-  private basePage : BasePageComponent = new BasePageComponent();
+  private basePage : BasePageComponent = new BasePageComponent(this.userService);
   all : AllRides = {} as AllRides;
   ride : Ride = {} as Ride;
   chosenRide : number = -1;
+  chosenUser : number = -1;
   constructor(private service : HistoryService, private userService: UserService) {}
 
   ngOnInit(): void {
@@ -24,7 +25,7 @@ export class RideDetailsComponent implements OnInit{
           this.service.getPassengerHistory(this.userService.currentUser.id).subscribe((res) => {
             this.all = res;
           });
-        } else {
+        } else if(this.userService.currentUser.roles[0].name === "ROLE_DRIVER")  {
           this.service.getDriverHistory(this.userService.currentUser.id).subscribe((res) => {
             this.all = res;
           });
@@ -35,6 +36,13 @@ export class RideDetailsComponent implements OnInit{
     this.service.currentMessage.subscribe(message => {
       this.chosenRide = message;
       if (this.all.results != undefined) this.ride = this.all.results[this.chosenRide];
+    });
+
+    this.service.currentUserMessage.subscribe(message => {
+      this.chosenUser = message;
+      this.service.getPassengerHistory(this.chosenUser).subscribe((res) => {
+        this.all = res;
+      });
     });
 
   }

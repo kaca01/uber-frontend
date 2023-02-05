@@ -9,9 +9,13 @@ import { AllRides, Review, ReviewRequest, Ride, RideReview } from '../../domains
 })
 export class HistoryService {
   public selectedRide : number = -1;
+  public selectedUser: number = -1;
 
   private messageSource = new BehaviorSubject<number>(this.selectedRide);
   currentMessage = this.messageSource.asObservable();
+
+  private userMessageSource = new BehaviorSubject<number>(this.selectedRide);
+  currentUserMessage = this.userMessageSource.asObservable();
 
   constructor(private http : HttpClient) { 
   }
@@ -39,6 +43,10 @@ export class HistoryService {
 
   sendMessage(message: number) {
     this.messageSource.next(message);
+  }
+
+  sendUserId(message: number) {
+    this.userMessageSource.next(message);
   }
 
   getSelectedRide(all : AllRides) : Ride {

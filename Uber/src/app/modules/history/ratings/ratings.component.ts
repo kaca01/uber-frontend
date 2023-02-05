@@ -12,7 +12,7 @@ import { BasePageComponent } from '../base-page/base-page.component';
   styleUrls: ['./ratings.component.css']
 })
 export class RatingsComponent implements OnInit {
-  private basePage : BasePageComponent = new BasePageComponent();
+  private basePage : BasePageComponent = new BasePageComponent(this.userService);
   history : AllRides = {} as AllRides;
   ratings : RideReview[] = [];
   constructor(private service: HistoryService, private userService: UserService, private dialog: MatDialog) {}
@@ -23,7 +23,7 @@ export class RatingsComponent implements OnInit {
         this.service.getPassengerHistory(this.userService.currentUser.id).subscribe((res) =>{
           this.history = res;
         });
-      } else {
+      } else if (this.userService.currentUser.roles[0].name === "ROLE_DRIVER"){
         this.service.getDriverHistory(this.userService.currentUser.id).subscribe((res) =>{
           this.history = res;
         });
@@ -31,6 +31,8 @@ export class RatingsComponent implements OnInit {
 
       this.service.currentMessage.subscribe(message => {
         this.service.selectedRide = message;
+        console.log("CURRENT RIDEEEE ratings");
+        console.log(message);
           if (this.service.selectedRide != -1) {
             console.log(this.service.selectedRide);
             this.service.getReviews(this.history).subscribe((res) =>{
@@ -38,6 +40,12 @@ export class RatingsComponent implements OnInit {
               this.setDisplayReviewButton();
             });
         }
+      });
+
+      this.service.currentUserMessage.subscribe(message => {
+        this.service.getPassengerHistory(message).subscribe((res) => {
+          this.history = res;
+        });
       });
   }
 
@@ -77,7 +85,10 @@ export class RatingsComponent implements OnInit {
     const reviewBtn = document.getElementById('rate');
 
     if (this.userService.currentUser != null) {
-      if (this.userService.currentUser.roles[0].name === "ROLE_DRIVER") {
+      console.log("ROLEEEEEEEE");
+      console.log(this.userService.currentUser.roles[0].name);
+      if ((this.userService.currentUser.roles[0].name === "ROLE_DRIVER") || 
+          this.userService.currentUser.roles[0].name === "ROLE_ADMIN"){
         if (reviewBtn != null) reviewBtn.style.display = 'none';
         return;
       }

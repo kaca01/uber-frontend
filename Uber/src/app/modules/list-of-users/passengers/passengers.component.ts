@@ -12,6 +12,10 @@ import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dial
 import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AllNotes, RequestNote, User } from 'src/app/domains';
+import { Router } from '@angular/router';
+import { BasePageComponent } from '../../history/base-page/base-page.component';
+import { RideHistoryComponent } from '../../history/ride-history/ride-history.component';
+import { HistoryService } from '../../history/history.service';
 
 
 @Component({
@@ -34,7 +38,11 @@ export class PassengersComponent implements OnInit{
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private userService: UserService, private dialog: MatDialog, private _snackBar: MatSnackBar) {}
+  constructor(private userService: UserService,
+              private dialog: MatDialog, 
+              private _snackBar: MatSnackBar, 
+              private router: Router,
+              private historyService: HistoryService) {}
 
   ngOnInit(): void {
     this.userService.selectedValue$.subscribe((value) => {
@@ -144,5 +152,14 @@ export class PassengersComponent implements OnInit{
       return true;
     }
     return false;
+  }
+
+  openHistory() {
+    this.sendUserId();
+    this.router.navigate(['/base-page']);
+  }
+
+  sendUserId() {
+    this.historyService.sendUserId(this.user.id);
   }
 }
