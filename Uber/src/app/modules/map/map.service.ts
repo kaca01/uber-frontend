@@ -52,4 +52,16 @@ export class MapService {
   getDriversActiveRide(driverId: Number): Observable<Ride>  {
     return this.http.get<Ride>(environment.apiHost + "api/ride/driver/" + driverId +"/active");
   }
+
+  startRide(rideId: number): Observable<Ride> {
+    return this.http.put<Ride>(environment.apiHost + "api/ride/" + rideId +"/start", {});
+  }
+
+  endRide(rideId: number): Observable<Ride> {
+    return this.http.put<Ride>(environment.apiHost + "api/ride/" + rideId +"/end", {});
+  }
+
+  getNextRide(driverId: Number): Observable<Driver>  {
+    return this.http.get<Driver>(environment.apiHost + "api/ride/nextRide/" + driverId);
+  }
 }
