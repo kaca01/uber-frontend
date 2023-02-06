@@ -15,6 +15,7 @@ export class OptionsComponent implements OnInit {
 
   updateData: boolean = true;
   favoriteLocations: boolean = false;
+  reports: boolean = false;
 
   url: string | ArrayBuffer | null | undefined;
 
@@ -80,11 +81,19 @@ export class OptionsComponent implements OnInit {
   loadUpdateData() {
     this.updateData = true;
     this.favoriteLocations = false;
+    this.reports = false;
   }
 
   loadFavoriteLocations() {
     this.updateData = false;
     this.favoriteLocations = true;
+    this.reports = false;
+  }
+
+  loadReports() {
+    this.updateData = false;
+    this.favoriteLocations = false;
+    this.reports = true;
   }
 
   openSnackBar(snackMsg : string) : void {

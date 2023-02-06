@@ -11,6 +11,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { FavoriteDialogComponent } from './dialogs/favorite-dialog/favorite-dialog.component';
 import { OrderFavoriteComponent } from './dialogs/order-favorite/order-favorite.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     UserDataComponent,
     FavoriteLocationsComponent,
     ChangesDialogComponent, 
-    ChangePasswordComponent, FavoriteDialogComponent, OrderFavoriteComponent
+    ChangePasswordComponent, FavoriteDialogComponent, OrderFavoriteComponent, ReportsComponent
     ],
   imports: [
     NgxMaterialTimepickerModule,
