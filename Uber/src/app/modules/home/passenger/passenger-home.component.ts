@@ -136,6 +136,8 @@ export class PassengerHomeComponent implements OnInit {
   checkForActiveRide(){
     this.mapService.getPassengersActiveRide(this.userService.currentUser!.id).subscribe((res: Ride) => {
       if (res != null) {
+        const order = document.getElementById("order");
+        if(order != null) order.style.display = 'none';
         const Menu = document.getElementById("form");
         if(Menu != null) Menu.style.display = 'none';
         this.hasRide = true;

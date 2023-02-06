@@ -95,14 +95,16 @@ export class MapComponent implements OnInit {
         this.pickup = this.json_result.display_name;
         this.setPickup();
         this.pickup_coord = coord;
-        this.pickup = this.getAddress();
+        this.json_result = null;
+        //this.pickup = this.getAddress();
         this.pickup_out.emit(this.pickup);
       }
       else if (result == 2) {
         this.destination = this.json_result.display_name;
         this.setDestination();
         this.destination_coord = coord;
-        this.destination = this.getAddress();
+        this.json_result = null;
+        //this.destination = this.getAddress();
         this.destination_out.emit(this.destination);
       }
     });
