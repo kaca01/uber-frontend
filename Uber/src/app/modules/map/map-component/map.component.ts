@@ -121,12 +121,12 @@ export class MapComponent implements OnInit {
 
   openGlobalSocket() {
 
-    this.stompClient.subscribe('/socket-publisher/map-updates/update-vehicle-position', (message: { body: string }) => {
-      let vehicle: Vehicle = JSON.parse(message.body);
-      let existingVehicle = this.vehicles[vehicle.id.toString()]; 
-      existingVehicle.setLatLng([vehicle.currentLocation.longitude, vehicle.currentLocation.latitude]);
-      existingVehicle.update();
-    });
+    // this.stompClient.subscribe('/socket-publisher/map-updates/update-vehicle-position', (message: { body: string }) => {
+    //   let vehicle: Vehicle = JSON.parse(message.body);
+    //   let existingVehicle = this.vehicles[vehicle.id.toString()]; 
+    //   existingVehicle.setLatLng([vehicle.currentLocation.longitude, vehicle.currentLocation.latitude]);
+    //   existingVehicle.update();
+    // });
 
     this.stompClient.subscribe('/socket-publisher/map-updates/driver-login', (message: { body: string }) => {      
       console.log("driver has logged in");
@@ -272,13 +272,18 @@ export class MapComponent implements OnInit {
           }
         }
       for (let c of coordinates){
-        await new Promise(f => setTimeout(f, 1500));
+        await new Promise(f => setTimeout(f, 1000));
         if (this.router.url != '/home-page' && this.router.url != "/admin-home")
           return;
         let location = {} as Location;
         location.latitude = c[0];
         location.longitude = c[1];
-        this.mapService.updateLocation(driver.vehicle.id.valueOf(), location).subscribe((res: any) => {})
+        this.mapService.updateLocation(driver.vehicle.id.valueOf(), location).subscribe((res: Vehicle) => {
+
+          let existingVehicle = this.vehicles[driver.vehicle.id.toString()]; 
+          existingVehicle.setLatLng([res.currentLocation.longitude, res.currentLocation.latitude]);
+          existingVehicle.update();
+        })
       }
     });
     this.addRoute(ride);
