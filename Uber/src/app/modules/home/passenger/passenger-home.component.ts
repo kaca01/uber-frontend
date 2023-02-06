@@ -7,6 +7,9 @@ import { Ride } from 'src/app/domains';
 import { UserService } from '../../list-of-users/user.service';
 import { MapService } from '../../map/map.service';
 import { RideService } from '../service/ride.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { RatingsComponent } from '../../history/ratings/ratings.component';
+import { ReviewDialogComponent } from '../../review/review-dialog/review-dialog.component';
 
 @Component({
   selector: 'passenger-home',
@@ -33,7 +36,7 @@ export class PassengerHomeComponent implements OnInit {
   });
 
   constructor(private userService: UserService, private mapService: MapService, private router : Router,
-    private rideService: RideService) {}
+    private rideService: RideService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     const Menu = document.getElementById("menu-container");
@@ -163,10 +166,24 @@ export class PassengerHomeComponent implements OnInit {
     });
 
     this.stompClient.subscribe('/map-updates/change-page-end', (message: { body: string }) => {
-      //show review dialog
-      const Menu = document.getElementById("form");
-      if(Menu != null) Menu.style.display = 'block';
-      this.hasRide = false;
+      let ride: Ride = JSON.parse(message.body);
+      ride.passengers.forEach( (p) => {
+        if (p.email == this.userService.currentUser!.email){
+          this.hasRide = false;
+          const Menu = document.getElementById("form");
+          if(Menu != null) Menu.style.display = 'block';
+          this.openReviewDialog();
+        }
+      }); 
     });
   }
+  
+  openReviewDialog() {
+		const dialogConfig = new MatDialogConfig();
+	
+		dialogConfig.disableClose = false;
+		dialogConfig.autoFocus = true;
+	
+		this.dialog.open(ReviewDialogComponent, dialogConfig);
+	}
 }
