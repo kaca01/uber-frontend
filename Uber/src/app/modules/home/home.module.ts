@@ -16,7 +16,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { FavoriteRideDialogComponent } from './dialogs/favorite-ride-dialog/favorite-ride-dialog.component';
 import { ReviewModule } from '../review/review.module';
 import { PanicDialogComponent } from './dialogs/panic-dialog/panic-dialog.component';
-import { PassengerCurrentComponent } from './passenger-current/passenger-current-component';
 
 @NgModule({
   declarations: [
@@ -28,7 +27,6 @@ import { PassengerCurrentComponent } from './passenger-current/passenger-current
     OrderDetailsDialog,
     FavoriteRideDialogComponent,
     PanicDialogComponent,
-    PassengerCurrentComponent,
   ],
   imports: [
     NgxMaterialTimepickerModule,

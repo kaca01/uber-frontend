@@ -52,6 +52,7 @@ export class MapComponent implements OnInit {
 }
 
   private initMap(): void {
+
     this.map = L.map('map', {
       center: [ 45.253434, 19.831323 ],
       zoom: 13
@@ -109,7 +110,7 @@ export class MapComponent implements OnInit {
 
   initializeWebSocketConnection() {
     let ws = new SockJS('http://localhost:8081/socket');
-    console.log("connected socket");
+    console.log("connected socket-map-updates");
     this.stompClient = Stomp.over(ws);
     this.stompClient.debug = null;
     let that = this;
