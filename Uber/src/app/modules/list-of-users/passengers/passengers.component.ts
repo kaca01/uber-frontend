@@ -155,6 +155,7 @@ export class PassengersComponent implements OnInit{
   }
 
   openHistory() {
+    if (this.checkIfSelected()) return;
     this.sendUserId();
     this.router.navigate(['/base-page']);
   }

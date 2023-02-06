@@ -189,6 +189,7 @@ export class DriversComponent implements OnInit {
 
   // history
   openHistory() {
+    if(this.checkIfSelected()) return;
     this.sendUserId();
     this.router.navigate(['/base-page']);
   }
