@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Driver } from 'src/app/domains';
 import { UserService } from '../../list-of-users/user.service';
+import { NotificationService } from '../../notification/service/notification.service';
 import { AuthService } from '../services/auth.service';
 
 
@@ -26,7 +28,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private router : Router, 
     private authService: AuthService,
-    private userService: UserService) {}
+    private userService: UserService,
+    private notificationService: NotificationService) {}
 
   ngOnInit(): void { }
 
@@ -38,10 +41,12 @@ export class LoginComponent implements OnInit {
     .subscribe(data => {
         this.userService.getMyInfo().subscribe((res: any) => {
           if(this.userService.currentUser != null) {
+            this.notificationService.initializeWebSocketConnection();
           if(this.userService.currentUser.roles.find(x => x.authority === "ROLE_ADMIN"))
             this.router.navigate(['admin-home']);
-          else 
+          else {
             this.router.navigate(['home-page']);
+          }
           }
           });
         },

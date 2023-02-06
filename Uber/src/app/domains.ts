@@ -46,6 +46,7 @@ export interface Driver {
   active: Boolean,
   address: String,
   blocked: Boolean,
+  changed: boolean,
   email: String,
   id: Number,
   lastPasswordResetDate: Number,
@@ -56,10 +57,12 @@ export interface Driver {
   telephoneNumber: String,
   username: String,
   drivingLicense : String,
-  password : String
+  password : String,
+  vehicle : Vehicle,
 }
 
 export interface Vehicle{
+  id: Number;
   babyTransport: Boolean,
   petTransport: Boolean,
   model: String,
@@ -190,4 +193,19 @@ export interface FavoriteRide {
   vehicleType: string;
   babyTransport: boolean;
   petTransport: boolean;
+}
+
+export interface Message {
+  message: string,
+  fromId: string,
+  toId: string,
+  rideId: number
+}
+
+export interface Panic {
+  id: number, 
+  reason: string,
+  user: User,
+  ride: Ride,
+  time: string
 }

@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { FavoriteRideRequest, RideRequest, Route } from 'src/app/domains';
 import { OrderDetailsDialog } from '../order-details-dialog/order-details-dialog';
-import { RideService } from '../service/ride.service';
+import { RideService } from '../../service/ride.service';
 
 @Component({
   selector: 'fav-ride-dialog',

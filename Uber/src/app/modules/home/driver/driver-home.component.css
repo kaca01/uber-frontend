@@ -1,7 +1,30 @@
 #activity-btn {
-  margin-left: 4%;
-  margin-top: 2%;
+  margin-left: 70px;
+  margin-top: 40px;
   width: 150px;
   height: 40px;
   font-weight: bold;
+}
+
+#button-container {
+  width: fit-content;
+  position: relative;
+  z-index: 10;
+  height: 37.5em;
+}
+
+#ride-btn{
+  margin-left: auto;
+  margin-right: auto;
+  height: 40px;
+  width: 130px;
+  background-color:rgb(196, 69, 69);
+  color: white;
+}
+
+#ride-container {
+  text-align: center;
+  position: relative;
+  z-index: 500;
+  height: 50px;
 }

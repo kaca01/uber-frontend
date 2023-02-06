@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser, ResetPassword, ChangePassword, Vehicle, Driver, AllFavoriteRides, Role } from 'src/app/domains';
+import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser, ResetPassword, ChangePassword, Vehicle, Driver, AllFavoriteRides, Ride, Location } from 'src/app/domains';
 
 import {map} from 'rxjs/operators'
 import { ApiService } from '../auth/services/api.service';
@@ -121,6 +121,10 @@ export class UserService {
     return this.http.post<string>(environment.apiHost + 'api/driver', user, options);
   }
 
+  getDriver(driverId: Number): Observable<Driver>  {
+    return this.http.get<Driver>(environment.apiHost + "api/driver/" + driverId);
+  }
+
   deleteDriver(driverId : Number): Observable<any> {
     const options: any = {
       responseType: 'text',
@@ -145,5 +149,8 @@ export class UserService {
 
   getRole(userId : Number) : Observable<Role> {
     return this.http.get<Role>(environment.apiHost + "api/user/" + userId.toString() + "/role", {});
+  
+  logoutDriver(id: Number): Observable<Driver> {
+    return this.http.get<Driver>(environment.apiHost + 'api/driver/' + id + '/logout');
   }
 }
