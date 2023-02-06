@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Ride, Vehicle } from 'src/app/domains';
+import { PanicRequest, Ride, Vehicle } from 'src/app/domains';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
 import { PanicService } from 'src/app/modules/notification/service/panic.service';
 
@@ -13,11 +13,11 @@ import { PanicService } from 'src/app/modules/notification/service/panic.service
 export class PanicDialogComponent {
 
   message : string = "";
-  ride = {} as Ride;
-  vehicle = {} as Vehicle;
+  ride: Ride = {} as Ride;
+  vehicle: Vehicle = {} as Vehicle;
+  panicRequest: PanicRequest = {} as PanicRequest;
 
-  constructor(private userService : UserService, 
-              private _snackBar: MatSnackBar, 
+  constructor(private userService : UserService,
               private dialogRef: MatDialogRef<PanicDialogComponent>,
               private panicService: PanicService,
               @Inject(MAT_DIALOG_DATA) data: any) {
@@ -34,21 +34,19 @@ export class PanicDialogComponent {
       if(this.userService.currentUser?.roles.find(x => x.authority === "ROLE_PASSENGER")) {
         this.userService.getPassengerActiveRide(this.userService.currentUser.id).subscribe((result : Ride) => {
           this.ride = result;
-          console.log("passenger")
-          console.log(this.ride)
           this.sendMessage(this.ride.driver.id);
+          this.panicRequest.reason = this.message; 
+          this.userService.panic(this.ride.id, this.panicRequest).subscribe((res: Ride) => console.log(res));
         })
       }
       else if(this.userService.currentUser?.roles.find(x => x.authority === "ROLE_DRIVER")) {
         this.userService.getDriverActiveRide(this.userService.currentUser.id).subscribe((result : Ride) => {
           this.ride = result;
-          console.log("driver")
-          console.log(this.ride)
           this.sendMessage(this.ride.driver.id);
+          this.panicRequest.reason = this.message; 
+          this.userService.panic(this.ride.id, this.panicRequest).subscribe((res: Ride) => console.log(res));
         })
       }
-
-      // todo pozovi api za panic, da se upise u bazu
       this.dialogRef.close();
     }
   }
