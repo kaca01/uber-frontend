@@ -162,7 +162,6 @@ export class MapComponent implements OnInit {
 
     this.stompClient.subscribe('/map-updates/ended-ride', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
-      this.removeRoute(ride);
       this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
         let driver= res as Driver;
         this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
@@ -177,6 +176,7 @@ export class MapComponent implements OnInit {
         markerLayer.addTo(this.map).bindPopup(driver.vehicle.licenseNumber.toString());
         this.vehicles[driver.vehicle.id.toString()] = markerLayer;
       });
+      this.removeRoute(ride);
     });
 
     this.stompClient.subscribe('/map-updates/logout', (message: { body: string }) => {
@@ -185,10 +185,25 @@ export class MapComponent implements OnInit {
     delete this.vehicles[driver.vehicle.id.toString()];
     });
 
-    }
+    this.stompClient.subscribe('/map-updates/panic', (message: { body: string }) => {
+      let ride: Ride = JSON.parse(message.body);
+      this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
+        let driver= res as Driver;
+        if (this.userService.currentUser != undefined && this.userService.currentUser != null
+           && this.userService.currentUser.roles.find(x => x.authority === "ROLE_ADMIN")){
+          this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
+          delete this.vehicles[driver.vehicle.id.toString()];
+        }
+        this.setPanicMarker(driver, ride);
+      });
+
+    });
+  }
 
   setMarkerActivity(driver : Driver){
     this.mapService.getDriversActiveRide(driver.id).subscribe((res: Ride) => {
+      let value = this.setPanicMarker(driver, res);
+      if (value) return;
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
         icon: L.icon({
           iconUrl: 'assets/images/red-car.png',
@@ -211,6 +226,26 @@ export class MapComponent implements OnInit {
       this.vehicles[driver.vehicle.id.toString()] = markerLayer;
     });
   }
+
+  setPanicMarker(driver: Driver, ride:Ride): boolean {
+    let flag = false;
+    if(this.userService.currentUser != undefined && this.userService.currentUser != null){
+      if (this.userService.currentUser.roles.find(x => x.authority === "ROLE_ADMIN")){
+        let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
+          icon: L.icon({
+            iconUrl: 'assets/images/panic.png',
+            iconSize: [35, 35],
+            iconAnchor: [18, 45],
+          }),
+        });
+        markerLayer.addTo(this.map).bindPopup(driver.vehicle.licenseNumber.toString());
+        this.vehicles[driver.vehicle.id.toString()] = markerLayer;
+        this.initCarMovement(driver, ride);
+        flag  = true;
+    }
+  }
+  return flag;
+}
 
   initCarMovement(driver:Driver, ride:Ride){
     let coordinates: any[] = [];
@@ -245,7 +280,7 @@ export class MapComponent implements OnInit {
         ride.passengers.forEach( (p) => {
           if (p.email == this.userService.currentUser!.email){
             this.map.removeLayer(this.currentRoute);
-          this.currentRoute= null;
+            this.currentRoute= null;
           }
         }); 
       }
