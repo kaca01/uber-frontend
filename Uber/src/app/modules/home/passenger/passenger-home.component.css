@@ -5,8 +5,8 @@
 
 #menu-container {
   position: relative;
+  margin-left: 40px;
   z-index: 10;
-  height: 38.5em;
 }
 
 mat-icon {
@@ -15,6 +15,22 @@ mat-icon {
 
 #menu-btn {
   margin-left: 3%;
+}
+
+#button-container {
+  width: fit-content;
+  position: relative;
+  z-index: 10;
+  float: left;
+}
+
+.panic{
+  float: left;
+  margin-left: 50px;
+  background-color:red !important;
+  color: white !important;
+  height: 40px;
+  width: 110px;
 }
 
 .form {
@@ -144,13 +160,6 @@ mat-form-field {
   margin-left: 5%;
   width: 100%;
   color: red;
-}
-
-#cancel {
-  width: 25%;
-  background-color: #FF6961;
-  color: white;
-  margin-left: 10px;
 }
 
 @media (max-width:1280px) {

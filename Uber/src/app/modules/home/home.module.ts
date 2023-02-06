@@ -26,7 +26,7 @@ import { PanicDialogComponent } from './dialogs/panic-dialog/panic-dialog.compon
     PassengerHomeComponent,
     OrderDetailsDialog,
     FavoriteRideDialogComponent,
-    PanicDialogComponent
+    PanicDialogComponent,
   ],
   imports: [
     NgxMaterialTimepickerModule,

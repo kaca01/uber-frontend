@@ -13,6 +13,10 @@ body {
     position: absolute;
 }
 
+#details {
+    display: none;
+}
+
 @media (max-height: 590px) and (max-width: 1300px) {
     body {
         height: 120vh;

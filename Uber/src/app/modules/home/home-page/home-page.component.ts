@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Ride } from 'src/app/domains';
 import { UserService } from '../../list-of-users/user.service';
+import { MapService } from '../../map/map.service';
 import { PanicDialogComponent } from '../dialogs/panic-dialog/panic-dialog.component';
 import { RideService } from '../service/ride.service';
 
@@ -13,8 +15,9 @@ export class HomePageComponent implements OnInit {
 	@Input() pickup = '';
 	@Input() destination = '';
 	user!: string;
+	hasRide = true;
 
-	constructor(private userService: UserService, private rideService: RideService, 
+	constructor(private userService: UserService, private rideService: RideService, private mapService: MapService,
 				private dialog: MatDialog){}
 
 	ngOnInit() : void {
@@ -71,13 +74,13 @@ export class HomePageComponent implements OnInit {
 		return this.user = "none";
 	}
 
-	panic() {
-		const dialogConfig = new MatDialogConfig();
-	
-		dialogConfig.disableClose = false;
-		dialogConfig.autoFocus = true;
-	
-		// dialogConfig.data = this.allNotes.results;
-		this.dialog.open(PanicDialogComponent, dialogConfig);
-	}
+	checkForActiveRide(){
+		const button = document.getElementsByClassName("panic");
+		this.mapService.getDriversActiveRide(this.userService.currentUser!.id).subscribe((res: Ride) => {
+		  if (res != null) {
+			this.hasRide = true;
+			}
+		  }
+		);
+	  }
 }

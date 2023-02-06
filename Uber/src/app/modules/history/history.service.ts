@@ -9,15 +9,23 @@ import { AllRides, Review, ReviewRequest, Ride, RideReview } from '../../domains
 })
 export class HistoryService {
   public selectedRide : number = -1;
+  public selectedUser: number = -1;
 
   private messageSource = new BehaviorSubject<number>(this.selectedRide);
   currentMessage = this.messageSource.asObservable();
+
+  private userMessageSource = new BehaviorSubject<number>(this.selectedRide);
+  currentUserMessage = this.userMessageSource.asObservable();
 
   constructor(private http : HttpClient) { 
   }
 
   getPassengerHistory(userId : number) : Observable<AllRides> {
     return this.http.get<AllRides>(environment.apiHost + "api/passenger/" + userId.toString() + "/ride?page=1&size=10&sort='DATE'&from='bla'&to='bla'");
+  }
+
+  getDriverHistory(userId : number) : Observable<AllRides> {
+    return this.http.get<AllRides>(environment.apiHost + "api/driver/" + userId.toString() + "/ride?page=1&size=10&sort='DATE'&from='bla'&to='bla'");
   }
 
   getReviews(all : AllRides) : Observable<RideReview[]> {
@@ -35,6 +43,10 @@ export class HistoryService {
 
   sendMessage(message: number) {
     this.messageSource.next(message);
+  }
+
+  sendUserId(message: number) {
+    this.userMessageSource.next(message);
   }
 
   getSelectedRide(all : AllRides) : Ride {

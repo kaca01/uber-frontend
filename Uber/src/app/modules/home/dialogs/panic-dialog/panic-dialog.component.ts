@@ -1,10 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PanicRequest, Ride, Vehicle } from 'src/app/domains';
+import { PanicRequest, Vehicle } from 'src/app/domains';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
 import { PanicService } from 'src/app/modules/notification/service/panic.service';
 import { RideService } from '../../service/ride.service';
+import { Panic, Ride } from 'src/app/domains';
+import { MapService } from 'src/app/modules/map/map.service';
 
 @Component({
   selector: 'app-panic-dialog',
@@ -18,7 +20,10 @@ export class PanicDialogComponent {
   vehicle: Vehicle = {} as Vehicle;
   panicRequest: PanicRequest = {} as PanicRequest;
 
-  constructor(private userService : UserService,
+
+  constructor(private userService : UserService, 
+              private _snackBar: MatSnackBar, 
+              private mapService : MapService,
               private dialogRef: MatDialogRef<PanicDialogComponent>,
               private panicService: PanicService,
               private rideService: RideService,
@@ -62,5 +67,20 @@ export class PanicDialogComponent {
         "\nReason: " + this.message,
         "\nVehicle: " + this.vehicle.licenseNumber);
     })
+
+    let panic = {} as Panic;
+    panic.reason = this.message;
+
+    if (this.userService.currentUser!.roles.find(x => x.authority === "ROLE_DRIVER")){
+      this.mapService.getDriversActiveRide(this.userService.currentUser!.id).subscribe((res: Ride) => {
+        this.rideService.panic(res.id.valueOf(), panic).subscribe(() => {});
+      });
+      }
+    else if(this.userService.currentUser!.roles.find(x => x.authority === "ROLE_PASSENGER")){
+        this.mapService.getPassengersActiveRide(this.userService.currentUser!.id).subscribe((res: Ride) => {
+        this.rideService.panic(res.id.valueOf(), panic).subscribe(() => {});
+      });
+    }
+  this.dialogRef.close();
   }
 }

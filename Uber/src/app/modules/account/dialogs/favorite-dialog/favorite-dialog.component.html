@@ -1,0 +1,37 @@
+<div>
+    <img src="../../assets/images/close.png" id="close-dialog" class="close" (click)="close()"/>
+
+    <div class="container"> 
+        <span id="title">{{favoriteRide.favoriteName}}</span>
+    </div>
+
+    <mat-dialog-content>
+        <div class="field">
+            <img class="pin" src="../../assets/images/placeholder.png"/>
+            <span class="full-width">{{departure}}</span>
+        </div>
+
+        <div class="field">
+            <img class="pin" src="../../assets/images/placeholder.png"/>
+            <span class="full-width">{{destination}}</span>
+        </div>
+
+        <div class="field">
+            <span class="left">Vehicle type</span>
+            <span class="full-width">{{favoriteRide.vehicleType}}</span>
+        </div>
+
+        <div class="field">
+            <span class="left">Baby transport</span>
+            <span class="full-width">{{favoriteRide.babyTransport}}</span>
+        </div>
+
+        <div class="field">
+            <span class="left">Pet transport</span>
+            <span class="full-width">{{favoriteRide.petTransport}}</span>
+        </div>
+
+        <button id="remove" mat-button (click)="delete()">Remove from favorite</button>
+    </mat-dialog-content>
+</div>
+

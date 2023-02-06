@@ -1,0 +1,16 @@
+<div class="container">
+    <div id="title">Schedule a ride</div>
+
+    <form [formGroup]="orderRide" (ngSubmit)="order()">
+        <div class="toggle">
+            <input formControlName="time" [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
+            <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
+            <ngx-material-timepicker #toggleTimepicker [theme]="timePickerTheme"></ngx-material-timepicker>
+        </div>
+
+        <div class="buttons">
+            <a id="cancel" mat-button (click)="close()">Cancel</a>
+            <button id="order" color="green" mat-raised-button>Order</button>
+        </div>
+    </form>   
+</div>

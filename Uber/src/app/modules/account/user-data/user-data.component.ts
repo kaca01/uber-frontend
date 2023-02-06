@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UpdateUser } from 'src/app/domains';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
-import { ChangesDialogComponent } from '../changes-dialog/changes-dialog.component';
+import { ChangesDialogComponent } from '../dialogs/changes-dialog/changes-dialog.component';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 
 @Component({

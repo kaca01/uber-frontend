@@ -40,19 +40,17 @@
                 </form>
             </mat-card-content>
         </mat-card>
-
+        <div id="button-container">
+            <button mat-raised-button *ngIf="this.hasRide" class="panic" (click)="panic()">PANIC</button>
+        </div>
         <div id="order" class="container">
 
             <mat-card class="dialog form"> 
               <mat-card-content>
 
                 <div class="order-title">Order details</div>
-
-                <form [formGroup]="orderForm" fxLayout="column">
                 <order-details-dialog></order-details-dialog>   
-
-                <button mat-button id="cancel" (click)="cancelRide()">Cancel</button>
-              </form>
+                
             </mat-card-content>
           </mat-card>
 

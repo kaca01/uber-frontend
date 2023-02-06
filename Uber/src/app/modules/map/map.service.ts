@@ -61,6 +61,10 @@ export class MapService {
     return this.http.get<Ride>(environment.apiHost + "api/ride/driver/" + driverId +"/active");
   }
 
+  getPassengersActiveRide(passengerId: Number): Observable<Ride>  {
+    return this.http.get<Ride>(environment.apiHost + "api/ride/passenger/" + passengerId +"/active");
+  }
+
   startRide(rideId: number): Observable<Ride> {
     return this.http.put<Ride>(environment.apiHost + "api/ride/" + rideId +"/start", {});
   }

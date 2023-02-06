@@ -3,13 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { RideRequest, Ride, UserEmail, FavoriteRideRequest, FavoriteRide, Panic, PanicRequest } from 'src/app/domains';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { PanicDialogComponent } from '../dialogs/panic-dialog/panic-dialog.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RideService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dialog: MatDialog) { }
 
   createRide(ride : RideRequest) : Observable<Ride> {
     return this.http.post<Ride>(environment.apiHost + "api/ride", ride);
@@ -27,6 +29,7 @@ export class RideService {
     return this.http.put<Ride>(environment.apiHost + "api/ride/" + id + "/accept", {});
   }
 
+
   panic(rideId: number, panic: PanicRequest): Observable<Ride> {
     return this.http.put<Ride>(environment.apiHost + 'api/ride/' + rideId + '/panic', panic);
   } 
@@ -42,4 +45,14 @@ export class RideService {
   passengerCancelRide(rideId: number, cancel: PanicRequest): Observable<Ride> {
     return this.http.put<Ride>(environment.apiHost + 'api/ride/' + rideId + '/withdraw', cancel);
   } 
+ 
+	panicButton() {
+		const dialogConfig = new MatDialogConfig();
+	
+		dialogConfig.disableClose = false;
+		dialogConfig.autoFocus = true;
+	
+		// dialogConfig.data = this.allNotes.results;
+		this.dialog.open(PanicDialogComponent, dialogConfig);
+	}
 }

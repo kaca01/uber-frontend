@@ -1,7 +1,15 @@
 import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
+import { Ride } from 'src/app/domains';
 import { UserService } from '../../list-of-users/user.service';
 import { MapService } from '../../map/map.service';
+import { RideService } from '../service/ride.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { RatingsComponent } from '../../history/ratings/ratings.component';
+import { ReviewDialogComponent } from '../../review/review-dialog/review-dialog.component';
 
 @Component({
   selector: 'passenger-home',
@@ -19,17 +27,16 @@ export class PassengerHomeComponent implements OnInit {
   price!: number;
   time!: number;
   notification = "";
+  hasRide = false;
+  private stompClient: any;
 
   destinationForm = new FormGroup({
     pickup: new FormControl('', [Validators.required]),
     destination: new FormControl('', [Validators.required]),
   });
 
-  orderForm = new FormGroup({
-    favorite: new FormControl('', [Validators.required]),
-  });
-
-  constructor(private userService: UserService, private mapService: MapService) {}
+  constructor(private userService: UserService, private mapService: MapService, private router : Router,
+    private rideService: RideService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     const Menu = document.getElementById("menu-container");
@@ -37,6 +44,9 @@ export class PassengerHomeComponent implements OnInit {
 
     const order = document.getElementById("order");
     if(order != null) order.style.display = 'none';
+
+    this.initializeWebSocketConnection();
+    this.checkForActiveRide();
   }
 
   isLoggedIn(): boolean {
@@ -123,4 +133,57 @@ export class PassengerHomeComponent implements OnInit {
     if(order != null) order.style.display = 'none';
   }
 
+  checkForActiveRide(){
+    this.mapService.getPassengersActiveRide(this.userService.currentUser!.id).subscribe((res: Ride) => {
+      if (res != null) {
+        const Menu = document.getElementById("form");
+        if(Menu != null) Menu.style.display = 'none';
+        this.hasRide = true;
+        }
+      }
+    );
+  }
+
+  panic(){
+    this.rideService.panicButton();
+  }
+
+  initializeWebSocketConnection() {
+    let ws = new SockJS('http://localhost:8081/socket');
+    console.log("connected socket-current");
+    this.stompClient = Stomp.over(ws);
+    this.stompClient.debug = null;
+    let that = this;
+    this.stompClient.connect({}, function () {
+      that.openGlobalSocket();
+    });
+  }
+
+  openGlobalSocket() {
+
+    this.stompClient.subscribe('/map-updates/change-page-start', (message: { body: string }) => {
+      this.checkForActiveRide();
+    });
+
+    this.stompClient.subscribe('/map-updates/change-page-end', (message: { body: string }) => {
+      let ride: Ride = JSON.parse(message.body);
+      ride.passengers.forEach( (p) => {
+        if (p.email == this.userService.currentUser!.email){
+          this.hasRide = false;
+          const Menu = document.getElementById("form");
+          if(Menu != null) Menu.style.display = 'block';
+          this.openReviewDialog();
+        }
+      }); 
+    });
+  }
+  
+  openReviewDialog() {
+		const dialogConfig = new MatDialogConfig();
+	
+		dialogConfig.disableClose = false;
+		dialogConfig.autoFocus = true;
+	
+		this.dialog.open(ReviewDialogComponent, dialogConfig);
+	}
 }

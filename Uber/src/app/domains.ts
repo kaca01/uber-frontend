@@ -92,6 +92,7 @@ rejection : Rejection;
 locations: Route[];
 status: string;
 scheduledTime: string;
+panic: boolean;
 }
 
 export interface RideRequest {
@@ -154,7 +155,7 @@ export interface RequestNote {
     message: string;
 }
 
-interface Role {
+export interface Role {
   id: number,
   name: string,
   authority: string
@@ -178,6 +179,21 @@ export interface ResetPassword {
 export interface ChangePassword {  
   newPassword: string,
   oldPassword: string
+}
+
+export interface AllFavoriteRides {
+  totalCount : number;
+  results : FavoriteRide[];
+}
+
+export interface FavoriteRide {
+  id: number;
+  favoriteName: string;
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: string;
+  babyTransport: boolean;
+  petTransport: boolean;
 }
 
 export interface Message {
