@@ -29,7 +29,7 @@ export class MapComponent implements OnInit {
   markerDestination : any;
   json_result : any;
 
-  private map : any;
+  public map : any;
   private currentRoute: any;
 
   vehicles: any = {};
@@ -121,21 +121,21 @@ export class MapComponent implements OnInit {
 
   openGlobalSocket() {
 
-    this.stompClient.subscribe('/map-updates/update-vehicle-position', (message: { body: string }) => {
+    this.stompClient.subscribe('/socket-publisher/map-updates/update-vehicle-position', (message: { body: string }) => {
       let vehicle: Vehicle = JSON.parse(message.body);
       let existingVehicle = this.vehicles[vehicle.id.toString()]; 
       existingVehicle.setLatLng([vehicle.currentLocation.longitude, vehicle.currentLocation.latitude]);
       existingVehicle.update();
     });
 
-    this.stompClient.subscribe('/map-updates/driver-login', (message: { body: string }) => {      
+    this.stompClient.subscribe('/socket-publisher/map-updates/driver-login', (message: { body: string }) => {      
       console.log("driver has logged in");
       let driver: Driver = JSON.parse(message.body);
       if(this.vehicles[driver.vehicle.id.toString()] != null) return;
       this.setMarkerActivity(driver);
     });
     
-    this.stompClient.subscribe('/map-updates/start-ride', (message: { body: string }) => {
+    this.stompClient.subscribe('/socket-publisher/map-updates/start-ride', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
       this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
         let driver= res as Driver;
@@ -160,7 +160,7 @@ export class MapComponent implements OnInit {
       });
     });
 
-    this.stompClient.subscribe('/map-updates/ended-ride', (message: { body: string }) => {
+    this.stompClient.subscribe('/socket-publisher/map-updates/ended-ride', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
       this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
         let driver= res as Driver;
@@ -179,13 +179,13 @@ export class MapComponent implements OnInit {
       this.removeRoute(ride);
     });
 
-    this.stompClient.subscribe('/map-updates/logout', (message: { body: string }) => {
+    this.stompClient.subscribe('/socket-publisher/map-updates/logout', (message: { body: string }) => {
     let driver: Driver = JSON.parse(message.body);
     this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
     delete this.vehicles[driver.vehicle.id.toString()];
     });
 
-    this.stompClient.subscribe('/map-updates/panic', (message: { body: string }) => {
+    this.stompClient.subscribe('/socket-publisher/map-updates/panic', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
       this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
         let driver= res as Driver;
