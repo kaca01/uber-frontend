@@ -194,6 +194,7 @@ export class DriversComponent implements OnInit {
   }
 
   sendUserId() {
-    this.historyService.sendMessage(this.user.id);
+    console.log(this.user.id);
+    this.historyService.sendUserId(this.user.id);
   }
 }

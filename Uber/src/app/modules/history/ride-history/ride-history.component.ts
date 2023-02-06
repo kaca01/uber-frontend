@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AllRides } from 'src/app/domains';
 import { HistoryService } from 'src/app/modules/history/history.service';
@@ -24,7 +25,7 @@ export class RideHistoryComponent implements OnInit {
           this.service.getPassengerHistory(this.userService.currentUser.id).subscribe((res) => {
             this.all = res;
           });
-        } else {
+        } else if (this.userService.currentUser.roles[0].name === "ROLE_DRIVER") {
           this.service.getDriverHistory(this.userService.currentUser.id).subscribe((res) => {
             this.all = res;
           });
@@ -34,8 +35,16 @@ export class RideHistoryComponent implements OnInit {
 
     this.service.currentUserMessage.subscribe(message => {
       this.chosenUser = message;
-      this.service.getPassengerHistory(this.chosenUser).subscribe((res) => {
-        this.all = res;
+      this.userService.getRole(this.chosenUser).subscribe((res) => {
+        if (res.name === "ROLE_PASSENGER")
+        this.service.getPassengerHistory(this.chosenUser).subscribe((res) => {
+          this.all = res;
+        });
+        else {
+          this.service.getDriverHistory(this.chosenUser).subscribe((res) => {
+            this.all = res;
+          });
+        }
       });
     });
   }

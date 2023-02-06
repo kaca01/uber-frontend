@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AllRides, RideReview, User } from 'src/app/domains';
@@ -43,8 +44,16 @@ export class RatingsComponent implements OnInit {
       });
 
       this.service.currentUserMessage.subscribe(message => {
-        this.service.getPassengerHistory(message).subscribe((res) => {
-          this.history = res;
+        this.userService.getRole(message).subscribe((res) => {
+          if (res.name === "ROLE_PASSENGER")
+          this.service.getPassengerHistory(message).subscribe((res) => {
+            this.history = res;
+          });
+          else {
+            this.service.getDriverHistory(message).subscribe((res) => {
+              this.history = res;
+            });
+          }
         });
       });
   }

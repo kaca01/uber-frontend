@@ -4,6 +4,7 @@ import { HistoryService } from 'src/app/modules/history/history.service';
 import { BasePageComponent } from '../base-page/base-page.component';
 import { AllRides, Ride } from 'src/app/domains';
 import { UserService } from '../../list-of-users/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-ride-details',
@@ -40,8 +41,16 @@ export class RideDetailsComponent implements OnInit{
 
     this.service.currentUserMessage.subscribe(message => {
       this.chosenUser = message;
-      this.service.getPassengerHistory(this.chosenUser).subscribe((res) => {
-        this.all = res;
+      this.userService.getRole(this.chosenUser).subscribe((res) => {
+        if (res.name === "ROLE_PASSENGER")
+        this.service.getPassengerHistory(this.chosenUser).subscribe((res) => {
+          this.all = res;
+        });
+        else {
+          this.service.getDriverHistory(this.chosenUser).subscribe((res) => {
+            this.all = res;
+          });
+        }
       });
     });
 
