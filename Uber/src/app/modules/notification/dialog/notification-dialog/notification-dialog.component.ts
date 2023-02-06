@@ -12,7 +12,7 @@ import { NotificationService } from '../../service/notification.service';
   templateUrl: './notification-dialog.component.html',
   styleUrls: ['./notification-dialog.component.css']
 })
-export class NotificationDialogComponent implements OnInit{
+export class NotificationDialogComponent implements OnInit {
   user: string = "";
   message: Message = {} as Message;
 
@@ -24,6 +24,7 @@ export class NotificationDialogComponent implements OnInit{
               @Inject(MAT_DIALOG_DATA) data: Message) {
       this.message = data;
     }
+    
   ngOnInit(): void {
     this.whoIsUser();
   }

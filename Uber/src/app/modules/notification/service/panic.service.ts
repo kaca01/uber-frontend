@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Message, Ride } from 'src/app/domains';
 import { from, map } from 'rxjs';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { UserService } from '../../list-of-users/user.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NotificationDialogComponent } from '../dialog/notification-dialog/notification-dialog.component';
+import { Panic } from 'src/app/domains';
+import { PanicNotificationComponent } from '../dialog/panic-notification/panic-notification.component';
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +20,13 @@ export class PanicService {
   url: string = environment.apiHost + "api/panic";
   serverUrl: string = environment.apiHost + "panic";
 
-  public message: Message = {} as Message;
-  public rideId: string = "";
+  public message: Panic = {} as Panic;
 
   constructor(private http: HttpClient, private userService: UserService, private dialog: MatDialog) { }
 
-  post(data: Message) {
-    return this.http.post<Message>(this.url, data)
-      .pipe(map((data: Message) => { return data; }));
+  post(data: Panic) {
+    return this.http.post<Panic>(this.url, data)
+      .pipe(map((data: Panic) => { return data; }));
   }
 
   // Funkcija za otvaranje konekcije sa serverom
@@ -43,42 +43,36 @@ export class PanicService {
       if(this.userService.currentUser?.roles.find(x => x.authority === "ROLE_ADMIN"))
         that.openGlobalSocket();
     });
-
   }
 
   openGlobalSocket() {
     if (this.isLoaded) {
       console.log("PRETPLACEN 2");
       this.stompClient.subscribe("/socket-publisher", (message: { body: string; }) => {
-      this.handleResult(message);
+        this.handleResult(message);
       });
     }
   }
 
   handleResult(message: { body: string; }) {
-    console.log("usao u hendler");
     if (message.body) {
-      let messageResult: Message = JSON.parse(message.body);
+      let messageResult: Panic = JSON.parse(message.body);
       console.log("IZ HENDLERA PORUKA PRIMLJENA");
       this.openDialog(messageResult);
-      // this.messages.push(messageResult);
     }
   }
 
-  sendMessageUsingSocket(notificationMessage: string, fromId: string, toId: string, rideId: number) {
-      let message: Message = {
-        message: notificationMessage,
-        fromId: fromId,
-        toId: toId,
-        rideId: rideId
+  sendMessageUsingSocket(user: string, reason: string, vehicle: string) {
+      let message: Panic = {
+        user: user,
+        reason: reason,
+        licenseNum: vehicle
       };
-
-      console.log("sent messageeeeeeeeee");
 
       this.stompClient.send("/socket-subscriber/send/panic", {}, JSON.stringify(message));
   }
 
-  openDialog(message: Message) {
+  openDialog(message: Panic) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = false;
@@ -86,6 +80,6 @@ export class PanicService {
 
     this.message = message;
     dialogConfig.data = this.message;
-    this.dialog.open(NotificationDialogComponent, dialogConfig);
+    this.dialog.open(PanicNotificationComponent, dialogConfig);
   }
 }

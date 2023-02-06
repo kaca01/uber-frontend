@@ -142,4 +142,16 @@ export class UserService {
   logoutDriver(id: Number): Observable<Driver> {
     return this.http.get<Driver>(environment.apiHost + 'api/driver/' + id + '/logout');
   }
+
+  getDriverActiveRide(driverId: number): Observable<Ride> {
+    return this.http.get<Ride>(environment.apiHost + 'api/ride/driver/' + driverId + '/active');
+  }
+
+  getPassengerActiveRide(passengerId: number): Observable<Ride> {
+    return this.http.get<Ride>(environment.apiHost + 'api/ride/passenger/' + passengerId + '/active');
+  }
+
+  getVehicle(driverId: number): Observable<Vehicle> {
+    return this.http.get<Vehicle>(environment.apiHost + 'api/driver/' + driverId + '/vehicle');
+  }
 }
