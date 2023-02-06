@@ -92,6 +92,7 @@ rejection : Rejection;
 locations: Route[];
 status: string;
 scheduledTime: string;
+panic: boolean;
 }
 
 export interface RideRequest {

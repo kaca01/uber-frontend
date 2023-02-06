@@ -189,12 +189,13 @@ export class MapComponent implements OnInit {
       let ride: Ride = JSON.parse(message.body);
       this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
         let driver= res as Driver;
-        if (this.userService.currentUser != undefined && this.userService.currentUser != null
-           && this.userService.currentUser.roles.find(x => x.authority === "ROLE_ADMIN")){
+        let value = this.checkUserForPanic(driver, ride);
+        console.log(value);
+        if (value){
           this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
           delete this.vehicles[driver.vehicle.id.toString()];
+          this.setPanicMarker(driver, ride, false)
         }
-        this.setPanicMarker(driver, ride);
       });
 
     });
@@ -202,8 +203,11 @@ export class MapComponent implements OnInit {
 
   setMarkerActivity(driver : Driver){
     this.mapService.getDriversActiveRide(driver.id).subscribe((res: Ride) => {
-      let value = this.setPanicMarker(driver, res);
-      if (value) return;
+      let value = this.checkUserForPanic(driver, res);
+      if (value && res.panic) {
+        this.setPanicMarker(driver, res, true)
+        return;
+      }
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
         icon: L.icon({
           iconUrl: 'assets/images/red-car.png',
@@ -227,25 +231,37 @@ export class MapComponent implements OnInit {
     });
   }
 
-  setPanicMarker(driver: Driver, ride:Ride): boolean {
+  checkUserForPanic(driver: Driver, ride:Ride): boolean {
     let flag = false;
     if(this.userService.currentUser != undefined && this.userService.currentUser != null){
       if (this.userService.currentUser.roles.find(x => x.authority === "ROLE_ADMIN")){
-        let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
-          icon: L.icon({
-            iconUrl: 'assets/images/panic.png',
-            iconSize: [35, 35],
-            iconAnchor: [18, 45],
-          }),
-        });
-        markerLayer.addTo(this.map).bindPopup(driver.vehicle.licenseNumber.toString());
-        this.vehicles[driver.vehicle.id.toString()] = markerLayer;
-        this.initCarMovement(driver, ride);
-        flag  = true;
+          flag  = true;
+    }else if (driver.id == this.userService.currentUser.id){
+        flag = true;
     }
+    else {
+      ride.passengers.forEach( (p) => {
+        if (p.email == this.userService.currentUser!.email){
+            flag = true;
+          }
+        }); 
+      }
+    }
+    return flag;
   }
-  return flag;
-}
+
+  setPanicMarker(driver: Driver, ride:Ride, callInit : boolean){
+    let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
+      icon: L.icon({
+        iconUrl: 'assets/images/panic.png',
+        iconSize: [35, 35],
+        iconAnchor: [18, 45],
+      }),
+    });
+    markerLayer.addTo(this.map).bindPopup(driver.vehicle.licenseNumber.toString());
+    this.vehicles[driver.vehicle.id.toString()] = markerLayer;
+    if(callInit) this.initCarMovement(driver, ride);
+  }
 
   initCarMovement(driver:Driver, ride:Ride){
     let coordinates: any[] = [];
