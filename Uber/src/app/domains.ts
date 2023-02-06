@@ -136,8 +136,8 @@ latitude: number;
 }
 
 export interface Route {
-    departure: Location;
-    destination: Location;
+  departure: Location;
+  destination: Location;
 }
 
 export interface AllNotes {
@@ -216,3 +216,12 @@ export interface PanicRequest {
   reason: string
 }
 
+export interface Report {
+  date: string;
+  value: number;
+}
+
+export interface AllReports {
+  totalCount: number;
+  results: Report[];
+}
