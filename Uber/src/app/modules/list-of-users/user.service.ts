@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser, ResetPassword, ChangePassword, Vehicle, Driver, AllFavoriteRides, Ride, Location, Role } from 'src/app/domains';
 
-import {map} from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 import { ApiService } from '../auth/services/api.service';
 import { ConfigService } from '../auth/services/config.service';
 
@@ -155,5 +155,17 @@ export class UserService {
   logoutDriver(id: Number): Observable<Driver> {
     return this.http.get<Driver>(environment.apiHost + 'api/driver/' + id + '/logout');
   
+  }
+
+  getDriverActiveRide(driverId: number): Observable<Ride> {
+    return this.http.get<Ride>(environment.apiHost + 'api/ride/driver/' + driverId + '/active');
+  }
+
+  getPassengerActiveRide(passengerId: number): Observable<Ride> {
+    return this.http.get<Ride>(environment.apiHost + 'api/ride/passenger/' + passengerId + '/active');
+  }
+
+  getVehicle(driverId: number): Observable<Vehicle> {
+    return this.http.get<Vehicle>(environment.apiHost + 'api/driver/' + driverId + '/vehicle');
   }
 }

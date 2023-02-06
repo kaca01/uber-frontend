@@ -2,10 +2,17 @@
     <img src="../../assets/images/close.png" id="close-dialog" class="close" (click)="close()"/>
 
     <div id="title">New notification</div>
-    <p class="message">{{message.message}}</p>
+    <div class="notification">
+        <p id="header">{{message.header}}</p>
+        <p class="message">{{message.from}}</p>
+        <p class="message">{{message.to}}</p>
+        <p class="message">{{message.scheduledTime}}</p>
+    </div>
 
-    <button mat-button id="decline" (click)="close()">CLOSE</button>
     <ng-template [ngIf]="user == 'driver'">
-        <button mat-button id="accept" (click)="accept()">ACCEPT</button>
+        <div class="buttons">
+            <button mat-button id="reject" (click)="cancel()">REJECT</button>
+            <button mat-raised-button color="green" id="accept" (click)="accept()">ACCEPT</button>
+        </div>
     </ng-template>
 </div>

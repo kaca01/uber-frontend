@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RideRequest, Ride, UserEmail, FavoriteRideRequest, FavoriteRide, Panic } from 'src/app/domains';
+import { RideRequest, Ride, UserEmail, FavoriteRideRequest, FavoriteRide, Panic, PanicRequest } from 'src/app/domains';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -29,11 +29,23 @@ export class RideService {
     return this.http.put<Ride>(environment.apiHost + "api/ride/" + id + "/accept", {});
   }
 
-  panic(id: number, panic: Panic) : Observable<Panic> {
-    return this.http.put<Panic>(environment.apiHost + "api/ride/" + id + "/panic", panic);
-  }
 
-  
+  panic(rideId: number, panic: PanicRequest): Observable<Ride> {
+    return this.http.put<Ride>(environment.apiHost + 'api/ride/' + rideId + '/panic', panic);
+  } 
+
+  cancelRide(rideId: number, cancel: PanicRequest): Observable<Ride> {
+    return this.http.put<Ride>(environment.apiHost + 'api/ride/' + rideId + '/cancel', cancel);
+  } 
+
+  getRide(rideId: number): Observable<Ride> {
+    return this.http.get<Ride>(environment.apiHost + 'api/ride/' + rideId);
+  } 
+
+  passengerCancelRide(rideId: number, cancel: PanicRequest): Observable<Ride> {
+    return this.http.put<Ride>(environment.apiHost + 'api/ride/' + rideId + '/withdraw', cancel);
+  } 
+ 
 	panicButton() {
 		const dialogConfig = new MatDialogConfig();
 	

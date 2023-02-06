@@ -4,9 +4,9 @@ export interface RideReview {
 }
   
 export interface Review {
-id : Number;
-rating : Number;
-comment : String;
+id : number;
+rating : number;
+comment : string;
 passenger : UserEmail;
 }
 
@@ -16,8 +16,8 @@ export interface ReviewRequest {
 }
   
 export interface UserEmail {
-id : Number;
-email : String;
+id : number;
+email : string;
 }
 
 export interface AllUsers {
@@ -44,36 +44,36 @@ export interface User {
 
 export interface Driver {
   active: Boolean,
-  address: String,
-  blocked: Boolean,
+  address: string,
+  blocked: boolean,
   changed: boolean,
-  email: String,
-  id: Number,
-  lastPasswordResetDate: Number,
-  name: String,
-  profilePicture: String,
+  email: string,
+  id: number,
+  lastPasswordResetDate: number,
+  name: string,
+  profilePicture: string,
   roles: Role[],
-  surname: String,
-  telephoneNumber: String,
-  username: String,
-  drivingLicense : String,
-  password : String,
+  surname: string,
+  telephoneNumber: string,
+  username: string,
+  drivingLicense : string,
+  password : string,
   vehicle : Vehicle,
 }
 
 export interface Vehicle{
   id: Number;
-  babyTransport: Boolean,
-  petTransport: Boolean,
-  model: String,
-  vehicleType: String,
-  passengerSeats: Number,
-  licenseNumber: String,
+  babyTransport: boolean,
+  petTransport: boolean,
+  model: string,
+  vehicleType: string,
+  passengerSeats: number,
+  licenseNumber: string,
   currentLocation: Location
 }
 
 export interface AllRides {
-    totalCount : Number;
+    totalCount : number;
     results : Ride[];
 }
 
@@ -101,7 +101,7 @@ export interface RideRequest {
   vehicleType: string;
   babyTransport: boolean;
   petTransport: boolean;
-  scheduledTime: String;
+  scheduledTime: string;
 }
 
 export interface FavoriteRide {
@@ -125,14 +125,14 @@ export interface FavoriteRideRequest {
 }
 
 export interface Rejection {
-reason: String;
-timeOfRejection: String;
+reason: string;
+timeOfRejection: string;
 }
 
 export interface Location {
-  address: string;
-  longitude: number;
-  latitude: number;
+address: string;
+longitude: number;
+latitude: number;
 }
 
 export interface Route {
@@ -197,16 +197,22 @@ export interface FavoriteRide {
 }
 
 export interface Message {
-  message: string,
+  header: string,
+  from: string,
+  to: string,
+  scheduledTime: string,
   fromId: string,
   toId: string,
   rideId: number
 }
 
 export interface Panic {
-  id: number, 
+  user: string,
   reason: string,
-  user: User,
-  ride: Ride,
-  time: string
+  licenseNum: string
 }
+
+export interface PanicRequest {
+  reason: string
+}
+

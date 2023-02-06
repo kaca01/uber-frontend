@@ -47,18 +47,9 @@ export class NotificationService {
     this.stompClient.connect({}, function () {
       console.log("INICIJALIZOVAO");
       that.isLoaded = true;
-      that.openGlobalSocket();
       that.openSocket();
     });
 
-  }
-
-  openGlobalSocket() {
-    if (this.isLoaded) {
-      this.stompClient.subscribe("/socket-publisher", (message: { body: string; }) => {
-        this.handleResult(message);
-      });
-    }
   }
 
   openSocket() {
@@ -82,9 +73,13 @@ export class NotificationService {
     }
   }
 
-  sendMessageUsingSocket(notificationMessage: string, fromId: string, toId: string, rideId: number) {
+  sendMessageUsingSocket(header: string, from: string, to: string, time: string, 
+                          fromId: string, toId: string, rideId: number) {
       let message: Message = {
-        message: notificationMessage,
+        header: header,
+        from: from,
+        to: to,
+        scheduledTime: time,
         fromId: fromId,
         toId: toId,
         rideId: rideId

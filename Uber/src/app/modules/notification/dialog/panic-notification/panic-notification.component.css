@@ -15,40 +15,22 @@
 }
 
 #title {
-    margin-top: 5%;
+    margin-top: 3%;
     margin-left: 5%;
     font-weight: bold;
     font-size: x-large;
     width: 10em;
+    color: red;
     margin-bottom: 30px;
 }
 
-.notification {
+.message {
     margin-left: 5%;
     margin-bottom: 15px;
     color: black;
 }
 
-#header {
+#who {
     margin-bottom: 10px;
-    font-size: 20px;
-}
-
-.buttons {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-#reject {
-    margin-left: 5%;
-    display: inline-block;
-    background-color: red;
-    color: white;
-    width: 25%;
-}
-
-#accept {
-    margin-right: 5%;
-    float: right;
-    width: 25%;
+    font-size: large;
 }
