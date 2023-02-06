@@ -34,9 +34,9 @@
     font-size: 20px;
 }
 
-.message {
+/* .message {
     margin-bottom: 1px;
-}
+} */
 
 .buttons {
     margin-top: 10px;
@@ -48,11 +48,11 @@
     display: inline-block;
     background-color: red;
     color: white;
-    width: 15%;
+    width: 25%;
 }
 
 #accept {
     margin-right: 5%;
     float: right;
-    width: 15%;
+    width: 25%;
 }

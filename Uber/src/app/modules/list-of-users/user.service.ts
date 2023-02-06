@@ -158,4 +158,8 @@ export class UserService {
   panic(rideId: number, panic: PanicRequest): Observable<Ride> {
     return this.http.put<Ride>(environment.apiHost + 'api/ride/' + rideId + '/panic', panic);
   } 
+
+  cancelRide(rideId: number, cancel: PanicRequest): Observable<Ride> {
+    return this.http.put<Ride>(environment.apiHost + 'api/ride/' + rideId + '/cancel', cancel);
+  } 
 }

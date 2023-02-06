@@ -1,11 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Message, Ride } from 'src/app/domains';
 import { RideService } from 'src/app/modules/home/service/ride.service';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
 import { NotificationService } from '../../service/notification.service';
+import { RejectDialogComponent } from '../reject-dialog/reject-dialog.component';
 
 @Component({
   selector: 'app-notification-dialog',
@@ -19,6 +20,7 @@ export class NotificationDialogComponent implements OnInit {
   constructor(private rideService: RideService,
               private userService: UserService,
               private notificationService: NotificationService,
+              private dialog: MatDialog,
               private dialogRef: MatDialogRef<NotificationDialogComponent>,
               private snackBar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) data: Message) {
@@ -34,8 +36,15 @@ export class NotificationDialogComponent implements OnInit {
   }
 
   cancel() : void {
-    // todo uradi da se otvoti dialog za unos poruke, zasto odbija voznju
     this.dialogRef.close();
+    // todo uradi da se otvoti dialog za unos poruke, zasto odbija voznju
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = false;
+
+    dialogConfig.data = this.message.rideId;
+    this.dialog.open(RejectDialogComponent, dialogConfig);
   }
 
   accept() : void {
