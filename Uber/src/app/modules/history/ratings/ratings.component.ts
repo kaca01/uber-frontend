@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AllRides, RideReview, User } from 'src/app/domains';
@@ -12,33 +13,59 @@ import { BasePageComponent } from '../base-page/base-page.component';
   styleUrls: ['./ratings.component.css']
 })
 export class RatingsComponent implements OnInit {
-  private basePage : BasePageComponent = new BasePageComponent();
+  private basePage : BasePageComponent = new BasePageComponent(this.userService);
   history : AllRides = {} as AllRides;
   ratings : RideReview[] = [];
   constructor(private service: HistoryService, private userService: UserService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    if (this,this.userService.currentUser != undefined)
-      this.service.getPassengerHistory(this.userService.currentUser.id).subscribe((res) =>{
-        this.history = res;
-      });
+    if (this.userService.currentUser != undefined)
+      if (this.userService.currentUser.roles[0].name === "ROLE_PASSENGER") {
+        this.service.getPassengerHistory(this.userService.currentUser.id).subscribe((res) =>{
+          this.history = res;
+        });
+      } else if (this.userService.currentUser.roles[0].name === "ROLE_DRIVER"){
+        this.service.getDriverHistory(this.userService.currentUser.id).subscribe((res) =>{
+          this.history = res;
+        });
+      }
 
       this.service.currentMessage.subscribe(message => {
         this.service.selectedRide = message;
-        if (this.service.selectedRide != -1)
-        this.service.getReviews(this.history).subscribe((res) =>{
-          this.ratings = res;
-          this.setDisplayReviewButton();
+        console.log("CURRENT RIDEEEE ratings");
+        console.log(message);
+          if (this.service.selectedRide != -1) {
+            console.log(this.service.selectedRide);
+            this.service.getReviews(this.history).subscribe((res) =>{
+              this.ratings = res;
+              this.setDisplayReviewButton();
+            });
+        }
+      });
+
+      this.service.currentUserMessage.subscribe(message => {
+        this.userService.getRole(message).subscribe((res) => {
+          if (res.name === "ROLE_PASSENGER")
+          this.service.getPassengerHistory(message).subscribe((res) => {
+            this.history = res;
+          });
+          else {
+            this.service.getDriverHistory(message).subscribe((res) => {
+              this.history = res;
+            });
+          }
         });
       });
   }
 
   public refresh() : void {
-    if (this.service.selectedRide != -1)
+    if (this.service.selectedRide != -1) {
+      console.log(this.service.selectedRide);
         this.service.getReviews(this.history).subscribe((res) =>{
           this.ratings = res;
           this.setDisplayReviewButton();
         });
+      }
   }
 
   showIcon(index: number, rating: Number) {
@@ -65,6 +92,17 @@ export class RatingsComponent implements OnInit {
 
   setDisplayReviewButton() : void {
     const reviewBtn = document.getElementById('rate');
+
+    if (this.userService.currentUser != null) {
+      console.log("ROLEEEEEEEE");
+      console.log(this.userService.currentUser.roles[0].name);
+      if ((this.userService.currentUser.roles[0].name === "ROLE_DRIVER") || 
+          this.userService.currentUser.roles[0].name === "ROLE_ADMIN"){
+        if (reviewBtn != null) reviewBtn.style.display = 'none';
+        return;
+      }
+    }
+
     if (this.isReviewed()){
       if (reviewBtn != null) reviewBtn.style.display = 'none';
     }

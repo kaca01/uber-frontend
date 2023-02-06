@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
 import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dialog.component';
@@ -9,6 +9,9 @@ import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.compo
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AllNotes, User } from 'src/app/domains';
 import { DriverChangesComponent } from '../dialogs/driver-changes/driver-changes.component';
+import { BasePageComponent } from '../../history/base-page/base-page.component';
+import { Router } from '@angular/router';
+import { HistoryService } from '../../history/history.service';
 
 @Component({
   selector: 'app-drivers',
@@ -16,6 +19,7 @@ import { DriverChangesComponent } from '../dialogs/driver-changes/driver-changes
   styleUrls: ['./drivers.component.css'],
 })
 export class DriversComponent implements OnInit {
+  base : BasePageComponent = new BasePageComponent(this.userService);
   public selectedRowIndex : number = -1;
   displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked', 'changes'];
   dataSource!: MatTableDataSource<User>;
@@ -29,7 +33,11 @@ export class DriversComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private userService: UserService, private dialog: MatDialog, private _snackBar: MatSnackBar) {}
+  constructor(private userService: UserService,
+              private historyService: HistoryService,
+              private dialog: MatDialog, 
+              private _snackBar: MatSnackBar,
+              private router: Router) {}
   
   ngOnInit(): void {
     this.userService.selectedValue$.subscribe((value) => {
@@ -177,5 +185,17 @@ export class DriversComponent implements OnInit {
       }
     });
     this.dataSource = new MatTableDataSource<User>(this.all);
+  }
+
+  // history
+  openHistory() {
+    if(this.checkIfSelected()) return;
+    this.sendUserId();
+    this.router.navigate(['/base-page']);
+  }
+
+  sendUserId() {
+    console.log(this.user.id);
+    this.historyService.sendUserId(this.user.id);
   }
 }

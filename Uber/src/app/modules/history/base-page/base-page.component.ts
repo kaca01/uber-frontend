@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../list-of-users/user.service';
 
 
 @Component({
@@ -7,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./base-page.component.css']
 })
 export class BasePageComponent implements OnInit{
+	public userId: number = -1;
+	public role: string = "";
 
-  constructor() {}
+	constructor(private userService: UserService) {}
 
 	ngOnInit() : void {
+		this.setCurrentUserRole();
 		const history = document.getElementById('history');
 		if (history) {
 			this.display("history");
@@ -36,4 +40,10 @@ export class BasePageComponent implements OnInit{
 			else if (dialog == 'ratings') ratings.style.display = 'block';
 		}
 	}
+
+	setCurrentUserRole() {
+		if (this.userService.currentUser != undefined)
+			this.role = this.userService.currentUser?.roles[0].name;
+	}
 }
+

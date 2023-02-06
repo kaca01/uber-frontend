@@ -1,7 +1,10 @@
 <body>
     <div id="page-container">
         <p>
-            <ru-navbar></ru-navbar>
+            <admin-navbar *ngIf="role == 'ROLE_ADMIN' else secondNavbar"></admin-navbar>
+            <ng-template #secondNavbar>
+                <ru-navbar></ru-navbar>
+            </ng-template>
         </p>
         <div id="page-container">
 
