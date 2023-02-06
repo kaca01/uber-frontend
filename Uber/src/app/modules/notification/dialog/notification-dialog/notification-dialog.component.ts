@@ -55,7 +55,7 @@ export class NotificationDialogComponent implements OnInit {
           this.notificationService.sendMessageUsingSocket("Your ride is accepted!", "From: "+
                                                           res.locations[0].departure.address,
                                                           "To: " + res.locations[0].destination.address,
-                                                          "Scheduled time: " + res.scheduledTime,
+                                                          "Scheduled time: " + res.scheduledTime.split("T")[0] + " " + res.scheduledTime.split("T")[1],
                                                            "-1", passenger.id.toString(), res.id);
         });
     }, (error: HttpErrorResponse) => {

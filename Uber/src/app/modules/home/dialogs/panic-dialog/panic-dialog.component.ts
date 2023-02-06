@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PanicRequest, Ride, Vehicle } from 'src/app/domains';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
 import { PanicService } from 'src/app/modules/notification/service/panic.service';
+import { RideService } from '../../service/ride.service';
 
 @Component({
   selector: 'app-panic-dialog',
@@ -20,6 +21,7 @@ export class PanicDialogComponent {
   constructor(private userService : UserService,
               private dialogRef: MatDialogRef<PanicDialogComponent>,
               private panicService: PanicService,
+              private rideService: RideService,
               @Inject(MAT_DIALOG_DATA) data: any) {
       // TODO : put data in some attribute
     }
@@ -36,7 +38,7 @@ export class PanicDialogComponent {
           this.ride = result;
           this.sendMessage(this.ride.driver.id);
           this.panicRequest.reason = this.message; 
-          this.userService.panic(this.ride.id, this.panicRequest).subscribe((res: Ride) => console.log(res));
+          this.rideService.panic(this.ride.id, this.panicRequest).subscribe((res: Ride) => console.log(res));
         })
       }
       else if(this.userService.currentUser?.roles.find(x => x.authority === "ROLE_DRIVER")) {
@@ -44,7 +46,7 @@ export class PanicDialogComponent {
           this.ride = result;
           this.sendMessage(this.ride.driver.id);
           this.panicRequest.reason = this.message; 
-          this.userService.panic(this.ride.id, this.panicRequest).subscribe((res: Ride) => console.log(res));
+          this.rideService.panic(this.ride.id, this.panicRequest).subscribe((res: Ride) => console.log(res));
         })
       }
       this.dialogRef.close();

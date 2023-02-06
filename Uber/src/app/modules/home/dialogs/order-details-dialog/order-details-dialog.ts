@@ -6,12 +6,13 @@ import { COMMA, ENTER, T } from '@angular/cdk/keycodes';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FavoriteRideDialogComponent } from '../favorite-ride-dialog/favorite-ride-dialog.component';
 import { MapService } from '../../../map/map.service';
-import { RideRequest, Location, Route, UserEmail, User, FavoriteRideRequest, Ride } from 'src/app/domains';
+import { RideRequest, Location, Route, UserEmail, User, FavoriteRideRequest, Ride, PanicRequest } from 'src/app/domains';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RideService } from '../../service/ride.service';
 import { UserService } from '../../../list-of-users/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from '../../../notification/service/notification.service';
+import { PanicService } from 'src/app/modules/notification/service/panic.service';
 
 interface VehicleType {
   value: string;
@@ -38,6 +39,8 @@ export class OrderDetailsDialog implements OnInit {
   public route : Route = {} as Route;
   private validMails = true;
   private validRoute = true;
+
+  private cancel: PanicRequest = {} as PanicRequest;
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -180,32 +183,39 @@ export class OrderDetailsDialog implements OnInit {
         } 
 
         rideRequest.passengers = this.users;
+        console.log("rideeeeeeeeeee");
+        console.log(rideRequest);
         this.rideService.createRide(rideRequest)
         .subscribe(
           (res: Ride) => {
             this.openSnackBar("Please wait. System is searching for drivers.")
-            if (this.userService.currentUser != undefined) {
-              this.notificationService.sendMessageUsingSocket("You have a new ride request!", "From: " + 
-                                                              rideRequest.locations[0].departure.address, "To: " +
-                                                              rideRequest.locations[0].destination.address,
-                                                              "Schedule time: " + res.scheduledTime,
-                                                               this.userService.currentUser.id.toString(),
-                                                              res.driver.id.toString(), res.id);
-              res.passengers.forEach(passenger => {
-                if (passenger.id != this.userService.currentUser?.id) {
-                  if (this.userService.currentUser != undefined)  // won't work without this check
-                  this.notificationService.sendMessageUsingSocket("You are invited for a ride!", "From: " + 
-                                                                  rideRequest.locations[0].departure.address,
-                                                                  "To: " + rideRequest.locations[0].destination.address,
-                                                                  "Scheduled time: " + res.scheduledTime,
-                                                                  this.userService.currentUser.id.toString(),
-                                                                  passenger.id.toString(), res.id);
+            this.rideService.getRide(res.id).subscribe((result: Ride) => {
+              if(result.driver == null) this.sendNotification(result);
+              else {
+                if (this.userService.currentUser != undefined) {
+                  this.notificationService.sendMessageUsingSocket("You have a new ride request!", "From: " + 
+                                                                  rideRequest.locations[0].departure.address, "To: " +
+                                                                  rideRequest.locations[0].destination.address,
+                                                                  "Schedule time: " + res.scheduledTime,
+                                                                   this.userService.currentUser.id.toString(),
+                                                                  res.driver.id.toString(), res.id);
+                  res.passengers.forEach(passenger => {
+                    if (passenger.id != this.userService.currentUser?.id) {
+                      if (this.userService.currentUser != undefined)  // won't work without this check
+                      this.notificationService.sendMessageUsingSocket("You are invited for a ride!", "From: " + 
+                                                                      rideRequest.locations[0].departure.address,
+                                                                      "To: " + rideRequest.locations[0].destination.address,
+                                                                      "Scheduled time: " + res.scheduledTime,
+                                                                      this.userService.currentUser.id.toString(),
+                                                                      passenger.id.toString(), res.id);
+                    }
+                  });
                 }
-              });
-            }
-            this.emails = [];
-            this.users = [];
-            return true;
+              }
+              this.emails = [];
+              this.users = [];
+              return true;
+            })   
         },
           (error: HttpErrorResponse) => {
             this.openSnackBar("Error occured while ordering a ride!");
@@ -370,5 +380,20 @@ export class OrderDetailsDialog implements OnInit {
         return false;
     }
     );
+  }
+
+  sendNotification(res: Ride): void {
+    res.passengers.forEach(passenger => {
+      this.notificationService.sendMessageUsingSocket("Sorry, Your ride is rejected! Please try to order a ride later.", "From: "+
+                                                      res.locations[0].departure.address,
+                                                      "To: " + res.locations[0].destination.address,
+                                                      "Scheduled time: " + res.scheduledTime.split("T")[0] + " " + res.scheduledTime.split("T")[1],
+                                                        "-1", passenger.id.toString(), res.id);
+    });
+    this.cancel.reason = "cancel by system";
+    this.rideService.passengerCancelRide(res.id, this.cancel).subscribe((res: Ride) => {
+      console.log("rejectiooooooooooooon");
+      console.log(res)
+    });
   }
 }

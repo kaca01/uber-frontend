@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { AllUsers, AllNotes, User, Note, RequestNote, UpdateUser, ResetPassword, ChangePassword, Vehicle, Driver, Ride, Location, PanicRequest } from 'src/app/domains';
+import { AllUsers, AllNotes, User, RequestNote, UpdateUser, ResetPassword, ChangePassword, Vehicle, Driver, Ride } from 'src/app/domains';
 
-import {map} from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 import { ApiService } from '../auth/services/api.service';
 import { ConfigService } from '../auth/services/config.service';
 
@@ -154,12 +154,4 @@ export class UserService {
   getVehicle(driverId: number): Observable<Vehicle> {
     return this.http.get<Vehicle>(environment.apiHost + 'api/driver/' + driverId + '/vehicle');
   }
-
-  panic(rideId: number, panic: PanicRequest): Observable<Ride> {
-    return this.http.put<Ride>(environment.apiHost + 'api/ride/' + rideId + '/panic', panic);
-  } 
-
-  cancelRide(rideId: number, cancel: PanicRequest): Observable<Ride> {
-    return this.http.put<Ride>(environment.apiHost + 'api/ride/' + rideId + '/cancel', cancel);
-  } 
 }
