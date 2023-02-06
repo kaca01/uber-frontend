@@ -2,26 +2,6 @@
     margin: 10px;
 }
 
-#title {
-    margin-top: 3%;
-    margin-left: 5%;
-    font-weight: bold;
-    font-size: x-large;
-    width: 10em;
-}
-
-.message {
-    font-size: 20px;
-    margin-left: 5%;
-    margin-bottom: 15px;
-    color: black;
-    font-size: large;
-}
-
-.line {
-    border-top: 0.1em solid #B4B4B4;
-}
-
 #close-dialog{
     float: right;
     width: 20px;
@@ -34,10 +14,45 @@
     cursor: pointer;
 }
 
-#decline {
+#title {
+    margin-top: 5%;
+    margin-left: 5%;
+    font-weight: bold;
+    font-size: x-large;
+    width: 10em;
+    margin-bottom: 30px;
+}
+
+.notification {
+    margin-left: 5%;
+    margin-bottom: 15px;
+    color: black;
+}
+
+#header {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.message {
+    margin-bottom: 1px;
+}
+
+.buttons {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#reject {
+    margin-left: 5%;
     display: inline-block;
+    background-color: red;
+    color: white;
+    width: 15%;
 }
 
 #accept {
-    display: inline-block;
+    margin-right: 5%;
+    float: right;
+    width: 15%;
 }

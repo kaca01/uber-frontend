@@ -181,7 +181,10 @@ export interface ChangePassword {
 }
 
 export interface Message {
-  message: string,
+  header: string,
+  from: string,
+  to: string,
+  scheduledTime: string,
   fromId: string,
   toId: string,
   rideId: number
