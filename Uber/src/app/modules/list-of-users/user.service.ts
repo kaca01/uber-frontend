@@ -16,12 +16,13 @@ export class UserService {
   private value$ = new BehaviorSubject<any>({});
   selectedValue$ = this.value$.asObservable();
 
-  public currentUser = {} as User | null;
+  public currentUser : User | null= null;
 
   constructor(
     private apiService: ApiService,
     private config: ConfigService,
-    private http: HttpClient) { }
+    private http: HttpClient) {
+     }
 
   getMyInfo() {
     return this.apiService.get(this.config.current_user_url)

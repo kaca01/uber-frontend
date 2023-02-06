@@ -10,11 +10,9 @@
     <div id="all-components">
         <ng-template [ngIf]="user == 'passenger'">
             <passenger-home (newItemEvent1)="getPickup($event)" (newItemEvent2)="getDestination($event)" [pickup_input]="pickup" [destination_input]="destination" id="passenger-home"></passenger-home>
-            <button class="panic" (click)="panic()">PANIC</button>
         </ng-template>
         <ng-template [ngIf]="user == 'driver'">
             <app-driver-home></app-driver-home>
-            <button class="panic" (click)="panic()">PANIC</button>
         </ng-template>
         <ng-template [ngIf]="user == 'admin'">
             <admin-home></admin-home>

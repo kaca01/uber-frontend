@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { MapService } from '../../map/map.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RideService } from '../service/ride.service';
 
 @Component({
   selector: 'app-driver-home',
@@ -13,9 +14,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class DriverHomeComponent implements OnInit{
   private active: boolean = true;
-  private hasRide = false;
+  hasRide = false;
 
-  constructor (private userService : UserService, private _snackBar: MatSnackBar, private mapService: MapService) {}
+  constructor (private userService : UserService, private _snackBar: MatSnackBar, private mapService: MapService,
+    private rideService: RideService) {}
 
   ngOnInit(): void {
     this.checkForActiveRide();
@@ -66,7 +68,7 @@ export class DriverHomeComponent implements OnInit{
       this.mapService.getDriversActiveRide(this.userService.currentUser!.id).subscribe((ride: any) => {
         this.mapService.endRide(ride.id).subscribe((res: any) => {
           button.innerText = "START RIDE";
-          button.style.backgroundColor = "#C44545";
+          button.style.backgroundColor = "#395099";
           this.hasRide = false;
         });
       });
@@ -89,5 +91,9 @@ export class DriverHomeComponent implements OnInit{
     this._snackBar.open(snackMsg, "Dismiss", {
       duration: 3500
     });
+  }
+
+  panic(){
+    this.rideService.panicButton();
   }
 }

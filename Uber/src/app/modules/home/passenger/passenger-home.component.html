@@ -40,7 +40,9 @@
                 </form>
             </mat-card-content>
         </mat-card>
-
+        <div id="button-container">
+            <button mat-raised-button *ngIf="this.hasRide" class="panic" (click)="panic()">PANIC</button>
+        </div>
         <div id="order" class="container">
 
             <mat-card class="dialog form"> 

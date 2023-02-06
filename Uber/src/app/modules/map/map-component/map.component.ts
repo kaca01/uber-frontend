@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import * as L from 'leaflet';
 import { LayerGroup } from 'leaflet';
 import 'leaflet-routing-machine';
-import { Driver, Ride, Vehicle, Location } from 'src/app/domains';
+import { Driver, Ride, Vehicle, Location, User } from 'src/app/domains';
 import { LocationDialog } from '../../home/dialogs/location-dialog/location_dialog';
 import { MapService } from '../map.service';
 import * as Stomp from 'stompjs';
@@ -30,7 +30,7 @@ export class MapComponent implements OnInit {
   json_result : any;
 
   private map : any;
-  private routingControl: any;
+  private currentRoute: any;
 
   vehicles: any = {};
   mainGroup: LayerGroup[] = [];
@@ -52,6 +52,7 @@ export class MapComponent implements OnInit {
 }
 
   private initMap(): void {
+
     this.map = L.map('map', {
       center: [ 45.253434, 19.831323 ],
       zoom: 13
@@ -109,7 +110,7 @@ export class MapComponent implements OnInit {
 
   initializeWebSocketConnection() {
     let ws = new SockJS('http://localhost:8081/socket');
-    console.log("connected socket");
+    console.log("connected socket-map-updates");
     this.stompClient = Stomp.over(ws);
     this.stompClient.debug = null;
     let that = this;
@@ -175,6 +176,7 @@ export class MapComponent implements OnInit {
         markerLayer.addTo(this.map).bindPopup(driver.vehicle.licenseNumber.toString());
         this.vehicles[driver.vehicle.id.toString()] = markerLayer;
       });
+      this.removeRoute(ride);
     });
 
     this.stompClient.subscribe('/map-updates/logout', (message: { body: string }) => {
@@ -183,10 +185,29 @@ export class MapComponent implements OnInit {
     delete this.vehicles[driver.vehicle.id.toString()];
     });
 
-    }
+    this.stompClient.subscribe('/map-updates/panic', (message: { body: string }) => {
+      let ride: Ride = JSON.parse(message.body);
+      this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
+        let driver= res as Driver;
+        let value = this.checkUserForPanic(driver, ride);
+        console.log(value);
+        if (value){
+          this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
+          delete this.vehicles[driver.vehicle.id.toString()];
+          this.setPanicMarker(driver, ride, false)
+        }
+      });
+
+    });
+  }
 
   setMarkerActivity(driver : Driver){
     this.mapService.getDriversActiveRide(driver.id).subscribe((res: Ride) => {
+      let value = this.checkUserForPanic(driver, res);
+      if (value && res.panic) {
+        this.setPanicMarker(driver, res, true)
+        return;
+      }
       let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
         icon: L.icon({
           iconUrl: 'assets/images/red-car.png',
@@ -210,6 +231,38 @@ export class MapComponent implements OnInit {
     });
   }
 
+  checkUserForPanic(driver: Driver, ride:Ride): boolean {
+    let flag = false;
+    if(this.userService.currentUser != undefined && this.userService.currentUser != null){
+      if (this.userService.currentUser.roles.find(x => x.authority === "ROLE_ADMIN")){
+          flag  = true;
+    }else if (driver.id == this.userService.currentUser.id){
+        flag = true;
+    }
+    else {
+      ride.passengers.forEach( (p) => {
+        if (p.email == this.userService.currentUser!.email){
+            flag = true;
+          }
+        }); 
+      }
+    }
+    return flag;
+  }
+
+  setPanicMarker(driver: Driver, ride:Ride, callInit : boolean){
+    let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
+      icon: L.icon({
+        iconUrl: 'assets/images/panic.png',
+        iconSize: [35, 35],
+        iconAnchor: [18, 45],
+      }),
+    });
+    markerLayer.addTo(this.map).bindPopup(driver.vehicle.licenseNumber.toString());
+    this.vehicles[driver.vehicle.id.toString()] = markerLayer;
+    if(callInit) this.initCarMovement(driver, ride);
+  }
+
   initCarMovement(driver:Driver, ride:Ride){
     let coordinates: any[] = [];
     this.mapService.getRouteSteps(driver, ride).subscribe(async routes => {
@@ -227,8 +280,52 @@ export class MapComponent implements OnInit {
         location.longitude = c[1];
         this.mapService.updateLocation(driver.vehicle.id.valueOf(), location).subscribe((res: any) => {})
       }
-    })
+    });
+    this.addRoute(ride);
   }
+
+  removeRoute(ride:Ride){
+    if (this.userService.currentUser != undefined && this.userService.currentUser != null){
+      if (this.userService.currentUser.roles.find(x => x.authority === "ROLE_DRIVER")){
+        if (ride.driver.email == this.userService.currentUser.email){
+          this.map.removeControl(this.currentRoute);
+          this.currentRoute= null;
+        }
+      }
+      else if(this.userService.currentUser.roles.find(x => x.authority === "ROLE_PASSENGER")){
+        ride.passengers.forEach( (p) => {
+          if (p.email == this.userService.currentUser!.email){
+            this.map.removeControl(this.currentRoute);
+            this.currentRoute= null;
+          }
+        }); 
+      }
+    }
+  }
+
+  addRoute(ride:Ride){
+    if (this.userService.currentUser != undefined && this.userService.currentUser != null){
+      if (this.userService.currentUser.roles.find(x => x.authority === "ROLE_DRIVER")){
+        if (ride.driver.id != this.userService.currentUser!.id) return;
+        this.currentRoute = L.Routing.control({
+          waypoints: [L.latLng(ride.locations[0].departure.longitude, ride.locations[0].departure.latitude),
+           L.latLng(ride.locations[0].destination.longitude, ride.locations[0].destination.latitude)],
+        });
+        this.currentRoute.addTo(this.map);
+      }
+      else if(this.userService.currentUser.roles.find(x => x.authority === "ROLE_PASSENGER")){
+        ride.passengers.forEach( (p) => {
+          if (p.email == this.userService.currentUser!.email){
+            this.currentRoute = L.Routing.control({
+              waypoints: [L.latLng(ride.locations[0].departure.longitude, ride.locations[0].departure.latitude),
+               L.latLng(ride.locations[0].destination.longitude, ride.locations[0].destination.latitude)],
+            });
+            this.currentRoute.addTo(this.map);
+          }
+        });
+      }
+    }
+}
 
   registerOnClick(): void {
     this.map.on('click', (e: any) => {
