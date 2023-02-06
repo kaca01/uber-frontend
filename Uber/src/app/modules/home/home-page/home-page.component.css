@@ -8,11 +8,6 @@
     position: absolute;
 }
 
-.panic {
-    position: relative;
-    z-index: 11;
-}
-
 @media (max-height: 660px) {
     #container {
         height: 100vh;

@@ -15,6 +15,7 @@ import { DriversComponent } from 'src/app/modules/list-of-users/drivers/drivers.
 import { PassengersComponent } from 'src/app/modules/list-of-users/passengers/passengers.component';
 import { ResetPasswordComponent } from 'src/app/modules/auth/reset-password/reset-password.component';
 import { ActivationComponent } from 'src/app/modules/auth/registration/activation/activation.component';
+import { PassengerCurrentComponent } from 'src/app/modules/home/passenger-current/passenger-current-component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -31,6 +32,7 @@ export const routes: Routes = [
   { path: 'admin-home', component: AdminHomeComponent},
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'activation/:id', component: ActivationComponent},
+  { path: 'passenger-current', component: PassengerCurrentComponent},
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
   { path: '**', component: HomePageComponent },
 ];

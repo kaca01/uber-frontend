@@ -1,0 +1,13 @@
+<p>
+    <ru-navbar></ru-navbar>
+</p>
+
+<div id="page-container">
+    <div id="container">
+        <app-map> 
+        </app-map>
+        <div id="button-container">
+            <button mat-raised-button *ngIf="this.hasRide" class="panic" (click)="panic()">PANIC</button>
+        </div>
+    </div>
+</div>

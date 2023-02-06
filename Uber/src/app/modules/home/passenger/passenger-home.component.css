@@ -5,6 +5,8 @@
 
 #menu-container {
   position: relative;
+  width: fit-content;
+  margin-left: 50px;
   z-index: 10;
   height: 38.5em;
 }

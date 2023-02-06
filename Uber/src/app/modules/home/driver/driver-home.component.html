@@ -4,5 +4,6 @@
     </div>
     <div id="ride-container">
     <button mat-raised-button id="ride-btn" (click)="changeRideStatus()">START RIDE</button>
+    <button mat-raised-button *ngIf="this.hasRide" class="panic" (click)="panic()">PANIC</button>
     </div>
 </div>
