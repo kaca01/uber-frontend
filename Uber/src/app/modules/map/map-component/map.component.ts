@@ -272,14 +272,14 @@ export class MapComponent implements OnInit {
     if (this.userService.currentUser != undefined && this.userService.currentUser != null){
       if (this.userService.currentUser.roles.find(x => x.authority === "ROLE_DRIVER")){
         if (ride.driver.email == this.userService.currentUser.email){
-          this.map.removeLayer(this.currentRoute);
+          this.map.removeControl(this.currentRoute);
           this.currentRoute= null;
         }
       }
       else if(this.userService.currentUser.roles.find(x => x.authority === "ROLE_PASSENGER")){
         ride.passengers.forEach( (p) => {
           if (p.email == this.userService.currentUser!.email){
-            this.map.removeLayer(this.currentRoute);
+            this.map.removeControl(this.currentRoute);
             this.currentRoute= null;
           }
         }); 
