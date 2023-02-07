@@ -22,6 +22,11 @@
   color: white;
 }
 
+#ride-details{
+  padding-top: 7px;
+  float: left;
+}
+
 .panic{
   float: right;
   margin-right: 60px;

@@ -42,6 +42,10 @@ export class RideService {
     return this.http.get<Ride>(environment.apiHost + 'api/ride/' + rideId);
   } 
 
+  getNextAcceptedRide(driverId: number): Observable<Ride> {
+    return this.http.get<Ride>(environment.apiHost + 'api/ride/accepted/next/' + driverId);
+  } 
+
   passengerCancelRide(rideId: number, cancel: PanicRequest): Observable<Ride> {
     return this.http.put<Ride>(environment.apiHost + 'api/ride/' + rideId + '/withdraw', cancel);
   } 
