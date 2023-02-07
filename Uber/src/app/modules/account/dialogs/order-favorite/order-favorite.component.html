@@ -3,7 +3,7 @@
 
     <form [formGroup]="orderRide" (ngSubmit)="order()">
         <div class="toggle">
-            <input formControlName="time" [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
+            <input formControlName="pickedTime" [ngxTimepicker]="toggleTimepicker" [format]="24" [disableClick]="true" readonly>
             <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
             <ngx-material-timepicker #toggleTimepicker [theme]="timePickerTheme"></ngx-material-timepicker>
         </div>

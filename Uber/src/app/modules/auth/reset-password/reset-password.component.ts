@@ -41,7 +41,7 @@ export class ResetPasswordComponent {
   sendEmail() {
     if(this.emailForm.controls['email'].value != '') {
       this.email = this.emailForm.controls['email']?.value!;
-      this.userService.sendEmail(this.email).subscribe((res: any) => {
+      this.userService.sendEmail(this.email).subscribe(() => {
         this.openSnackBar("A verification code has been sent to your email!");
         this.checkEmail();
       },
@@ -64,7 +64,7 @@ export class ResetPasswordComponent {
 
           this.userService.resetPassword(this.email, this.resetPassword)
       .subscribe(
-        (res: any) => {
+        () => {
         this.openSnackBar("Successfully reset password!");
         this.authService.logout();
         this.router.navigate(['login']);

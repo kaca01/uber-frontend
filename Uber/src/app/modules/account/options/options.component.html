@@ -22,12 +22,14 @@
         <div id="passenger" *ngIf="passenger">Passenger</div>
         <div id="passenger" *ngIf="!passenger">Driver</div>
 
-        <ul *ngIf="passenger" class="options">
+        <ul class="options">
             <li><a id="profile" class="option" (click)="loadUpdateData()" [ngClass]="{'selected' : updateData}">Profile</a></li>
-            <li><a id="favorite" class="option" (click)="loadFavoriteLocations()" [ngClass]="{'selected' : favoriteLocations}">Favorite Locations</a></li>
+            <li><a *ngIf="passenger" id="favorite" class="option" (click)="loadFavoriteLocations()" [ngClass]="{'selected' : favoriteLocations}">Favorite Locations</a></li>
+            <li><a id="profile" class="option" (click)="loadReports()"  [ngClass]="{'selected' : reports}">Reports</a></li>
         </ul>
     </div>
 
     <user-data *ngIf="updateData" id="user-data"></user-data>
     <favorite-locations *ngIf="favoriteLocations" id="favorite-locations"></favorite-locations>
+    <reports *ngIf="reports" id="reports" [report1]="reports1" [report2]="reports2" [report3]="reports3"></reports>
 </div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UpdateUser } from 'src/app/domains';
+import { UpdateUser, User } from 'src/app/domains';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
 import { ChangesDialogComponent } from '../dialogs/changes-dialog/changes-dialog.component';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
@@ -87,8 +87,11 @@ export class UserDataComponent implements OnInit {
       this.updateUser.email = this.editForm.get('email')?.value!;
       this.updateUser.profilePicture = this.userService.currentUser.profilePicture;
 
-      this.userService.updatePassenger(this.userService.currentUser.id, this.updateUser).subscribe((res) => {
-        this.userService.currentUser = res
+      this.userService.updatePassenger(this.userService.currentUser.id, this.updateUser).subscribe((res: User) => {
+        this.userService.currentUser!.name = res.name;
+        this.userService.currentUser!.surname = res.surname;
+        this.userService.currentUser!.address = res.address;
+        this.userService.currentUser!.telephoneNumber = res.telephoneNumber;
       });
     }
   }

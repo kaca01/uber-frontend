@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.loginForm.value)
     .subscribe(data => {
-        this.userService.getMyInfo().subscribe((res: any) => {
+        this.userService.getMyInfo().subscribe(() => {
           if(this.userService.currentUser != null) {
             this.notificationService.initializeWebSocketConnection();
             this.panicService.initializeWebSocketConnection();

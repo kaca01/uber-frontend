@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AllReports, Report } from 'src/app/domains';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
+import { ReportService } from '../service/report.service';
 
 @Component({
   selector: 'account',
@@ -15,14 +17,33 @@ export class OptionsComponent implements OnInit {
 
   updateData: boolean = true;
   favoriteLocations: boolean = false;
+  reports: boolean = false;
 
   url: string | ArrayBuffer | null | undefined;
 
   image: string = '';
 
-  constructor(private userService: UserService, private _snackBar: MatSnackBar) {}
+  reports1: Report[] = [];
+  reports2: Report[] = [];
+  reports3: Report[] = [];
+
+  constructor(private userService: UserService, private _snackBar: MatSnackBar, private reportService: ReportService) {}
 
   ngOnInit(): void {
+    if(this.userService.currentUser != undefined) {
+      this.reportService.getCrossedKmsReport(this.userService.currentUser?.id).subscribe((res: AllReports) => {
+          this.reports1 = res.results;
+      })
+
+      this.reportService.getNumOfRidesReport(this.userService.currentUser?.id).subscribe((res: AllReports) => {
+        this.reports2 = res.results;
+      })
+
+      this.reportService.getSumOfMoneyReport(this.userService.currentUser?.id).subscribe((res: AllReports) => {
+        this.reports3 = res.results;
+      })
+    }
+
     if(this.userService.currentUser != undefined) {
       this.image = this.userService.currentUser.profilePicture;
 
@@ -44,7 +65,7 @@ export class OptionsComponent implements OnInit {
 
   onSelectFile(event : any) {
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
+      let reader = new FileReader();
 
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
@@ -80,16 +101,28 @@ export class OptionsComponent implements OnInit {
   loadUpdateData() {
     this.updateData = true;
     this.favoriteLocations = false;
+    this.reports = false;
   }
 
   loadFavoriteLocations() {
     this.updateData = false;
     this.favoriteLocations = true;
+    this.reports = false;
+  }
+
+  loadReports() {
+    this.updateData = false;
+    this.favoriteLocations = false;
+    this.reports = true;
   }
 
   openSnackBar(snackMsg : string) : void {
     this._snackBar.open(snackMsg, "Dismiss", {
       duration: 2000
     });
+  }
+
+  getCrossedKmsReport() {
+    
   }
 }
