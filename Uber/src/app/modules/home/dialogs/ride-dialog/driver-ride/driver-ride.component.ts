@@ -52,6 +52,7 @@ export class DriverRideComponent {
       this.rideService.cancelRide(this.rideId, panic).subscribe((res: Ride) => {
         this.openSnackBar("Ride successfully canceled!");
       });
+      this.close();
     }
 
     openSnackBar(snackMsg : string) : void {
