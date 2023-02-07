@@ -12,6 +12,9 @@ import { FavoriteDialogComponent } from './dialogs/favorite-dialog/favorite-dial
 import { OrderFavoriteComponent } from './dialogs/order-favorite/order-favorite.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { ReportsComponent } from './reports/reports.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { ReportsComponent } from './reports/reports.component';
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    NavBarModule
+    NavBarModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    NgxChartsModule
   ]
 })
 export class AccountModule { }

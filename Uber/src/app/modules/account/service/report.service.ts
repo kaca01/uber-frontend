@@ -8,33 +8,14 @@ import { map } from 'rxjs/operators'
 import { ApiService } from '../../auth/services/api.service';
 import { ConfigService } from '../../auth/services/config.service';
 
-
-
 @Injectable({
   providedIn: 'root',
 })
 export class ReportService {
-  private value$ = new BehaviorSubject<any>({});
-  selectedValue$ = this.value$.asObservable();
 
-  public currentUser : User | null= null;
+  public currentUser : User | null = null;
 
-  constructor(
-    private apiService: ApiService,
-    private config: ConfigService,
-    private http: HttpClient) {
-     }
-
-  getMyInfo() {
-    return this.apiService.get(this.config.current_user_url)
-      .pipe(map(user => {
-        this.currentUser = user;
-        return user;
-    }));
-  }
-  setValue(test: any) {
-    this.value$.next(test);
-  }
+  constructor(private http: HttpClient) { }
 
   getCrossedKmsReport(userId: number): Observable<AllReports> {
     return this.http.get<AllReports>(environment.apiHost + 'api/report/crossed-kms/' + userId);

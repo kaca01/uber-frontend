@@ -217,7 +217,7 @@ export interface PanicRequest {
 }
 
 export interface Report {
-  date: string;
+  name: string;
   value: number;
 }
 

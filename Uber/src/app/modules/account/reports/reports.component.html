@@ -1,14 +1,39 @@
-<!-- <ngx-charts-bar-vertical 
-    [view]="[1000,400]"
-    [results]="saleData"
-    [xAxisLabel]="'Products'"
-    [legendTitle]="'Product Sale Chart'"
-    [yAxisLabel]="'Sale'"
+<ngx-charts-bar-vertical class="graph" 
+    [view]="[800,400]"
+    [results]="report1"
+    [xAxisLabel]="'Date'"
+    [legendTitle]="'Crossed Kms'"
+    [yAxisLabel]="'Kms'"
     [legend]="true"
     [showXAxisLabel]="true"
     [showYAxisLabel]="true"
     [xAxis]="true"
     [yAxis]="true"
     [gradient]="true">
-</ngx-charts-bar-vertical> -->
-<!-- <p-chart type="line" [data]="data"></p-chart> -->
+</ngx-charts-bar-vertical>
+<ngx-charts-bar-vertical class="graph" 
+    [view]="[800,400]"
+    [results]="report2"
+    [xAxisLabel]="'Date'"
+    [legendTitle]="'Rides Num'"
+    [yAxisLabel]="'Number of rides'"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+    [gradient]="true">
+</ngx-charts-bar-vertical>
+<ngx-charts-bar-vertical class="graph" 
+    [view]="[800,400]"
+    [results]="report3"
+    [xAxisLabel]="'Date'"
+    [legendTitle]="'Spend Money'"
+    [yAxisLabel]="'Amount'"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+    [gradient]="true">
+</ngx-charts-bar-vertical>
