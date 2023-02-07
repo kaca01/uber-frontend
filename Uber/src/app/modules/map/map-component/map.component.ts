@@ -139,8 +139,7 @@ export class MapComponent implements OnInit {
     
     this.stompClient.subscribe('/socket-publisher/map-updates/start-ride', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
-      this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
-        let driver= res as Driver;
+      this.mapService.getRealDriver(ride.driver.id).subscribe((driver: Driver) => {
         this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
         delete this.vehicles[driver.vehicle.id.toString()]; //brisanje stare ikone
         //da se promijeni iz zelene u crvenu (teleport na departure)
@@ -164,8 +163,7 @@ export class MapComponent implements OnInit {
 
     this.stompClient.subscribe('/socket-publisher/map-updates/ended-ride', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
-      this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
-        let driver= res as Driver;
+      this.mapService.getRealDriver(ride.driver.id).subscribe((driver: Driver) => {
         this.map.removeLayer(this.vehicles[driver.vehicle.id.toString()]);
         delete this.vehicles[driver.vehicle.id.toString()]; //brisanje stare ikone
         let markerLayer = L.marker([driver.vehicle.currentLocation.longitude.valueOf(), driver.vehicle.currentLocation.latitude.valueOf()], {
@@ -189,8 +187,7 @@ export class MapComponent implements OnInit {
 
     this.stompClient.subscribe('/socket-publisher/map-updates/panic', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
-      this.mapService.getRealDriver(ride.driver.id).subscribe((res: any) => {
-        let driver= res as Driver;
+      this.mapService.getRealDriver(ride.driver.id).subscribe((driver: Driver) => {
         let value = this.checkUserForPanic(driver, ride);
         console.log(value);
         if (value){

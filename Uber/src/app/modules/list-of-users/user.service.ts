@@ -62,11 +62,8 @@ export class UserService {
     return this.http.get<AllNotes>(environment.apiHost + "api/user/" + driverId + "/note");
   }
 
-  addPassenger(passenger: any): Observable<any> {
-    const options: any = {
-      responseType: 'text',
-    };
-    return this.http.post<string>(environment.apiHost + 'api/passenger', passenger, options);
+  addPassenger(passenger: any): Observable<User> {
+    return this.http.post<User>(environment.apiHost + 'api/passenger', passenger);
   }
 
   updatePassenger(passengerId: number, passeneger: UpdateUser): Observable<User> {
@@ -115,29 +112,20 @@ export class UserService {
     return this.http.put<void>(environment.apiHost + 'api/user/' + userId + "/changePassword", changePassword);
   }
 
-  addDriver(user : Driver): Observable<any> {
-    const options: any = {
-      responseType: 'text',
-    };
-    return this.http.post<string>(environment.apiHost + 'api/driver', user, options);
+  addDriver(user : Driver): Observable<Driver> {
+    return this.http.post<Driver>(environment.apiHost + 'api/driver', user);
   }
 
   getDriver(driverId: Number): Observable<Driver>  {
     return this.http.get<Driver>(environment.apiHost + "api/driver/" + driverId);
   }
 
-  deleteDriver(driverId : Number): Observable<any> {
-    const options: any = {
-      responseType: 'text',
-    };
-    return this.http.delete<string>(environment.apiHost + 'api/driver/' + driverId, options);
+  deleteDriver(driverId : Number): Observable<Driver> {
+    return this.http.delete<Driver>(environment.apiHost + 'api/driver/' + driverId);
   }
 
-  addVehicle(vehicle : any, driverId : Number): Observable<any> {
-    const options: any = {
-      responseType: 'text',
-    };
-    return this.http.post<string>(environment.apiHost + "api/driver/" + driverId + "/vehicle", vehicle, options);
+  addVehicle(vehicle : Vehicle, driverId : Number): Observable<Vehicle> {
+    return this.http.post<Vehicle>(environment.apiHost + "api/driver/" + driverId + "/vehicle", vehicle);
   }
 
   getFavorite(): Observable<AllFavoriteRides> {

@@ -37,7 +37,7 @@ export class AuthService {
 
   logout() {
     if (this.userService.currentUser?.roles[0].name == "ROLE_DRIVER") {
-      this.userService.logoutDriver(this.userService.currentUser.id).subscribe((res: any) => {
+      this.userService.logoutDriver(this.userService.currentUser.id).subscribe((res: Driver) => {
         let driver= res as Driver;
         //console.log(driver);
       });
