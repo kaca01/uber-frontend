@@ -96,22 +96,17 @@ export class PassengersComponent implements OnInit{
 
     const dialogRef = this.dialog.open(AddNoteDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((res: any) => {
+    dialogRef.afterClosed().subscribe(() => {
         this.selectedRowIndex = -1;
       });
     }
     
   getNotes() : void {
     this.userService.getNotes(this.user.id)
-    .subscribe((res: any) => {
+    .subscribe((res: AllNotes) => {
       this.allNotes = res;
     }); 
   }
-
-  // ngAfterViewInit() {
-  //   this.dataSource.paginator = this.paginator;
-  //   this.dataSource.sort = this.sort;
-  // }
 
   // blocking
   blockUser() : void{

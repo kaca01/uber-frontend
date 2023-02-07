@@ -41,7 +41,7 @@ export class ChangePasswordComponent {
 
           this.userService.changePassword(this.userService.currentUser?.id!, this.changePassword)
       .subscribe(
-        (res: any) => {
+        (res: void) => {
         this.openSnackBar("Successfully changed password!");
         this.authService.logout();
         this.router.navigate(['login']);

@@ -58,7 +58,7 @@ export class UserService {
     return this.http.post<string>(environment.apiHost + "api/user/" + userId.toString() + "/note", note, options);
   }
 
-  getNotes(driverId: Number) : Observable<AllNotes> {
+  getNotes(driverId: number) : Observable<AllNotes> {
     return this.http.get<AllNotes>(environment.apiHost + "api/user/" + driverId + "/note");
   }
 

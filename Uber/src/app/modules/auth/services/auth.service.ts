@@ -18,7 +18,7 @@ export class AuthService {
 
   private access_token = null;
 
-  login(user:any) {
+  login(user: any) {
     const loginHeaders = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
