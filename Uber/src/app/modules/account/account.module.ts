@@ -15,6 +15,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { AdminReportsComponent } from './reports/admin-reports/admin-reports/admin-reports.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     UserDataComponent,
     FavoriteLocationsComponent,
     ChangesDialogComponent, 
-    ChangePasswordComponent, FavoriteDialogComponent, OrderFavoriteComponent, ReportsComponent
+    ChangePasswordComponent, FavoriteDialogComponent, OrderFavoriteComponent, ReportsComponent, AdminReportsComponent
     ],
   imports: [
     NgxMaterialTimepickerModule,

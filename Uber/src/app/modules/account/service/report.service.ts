@@ -28,4 +28,18 @@ export class ReportService {
   getSumOfMoneyReport(userId: number): Observable<AllReports> {
     return this.http.get<AllReports>(environment.apiHost + 'api/report/money-sum/' + userId);
   }
+
+  getSumOfMoneyReportDrivers(): Observable<AllReports> {
+    return this.http.get<AllReports>(environment.apiHost + 'api/report/money-sum/drivers');
+  }
+
+  getSumOfMoneyReportPassengers(): Observable<AllReports> {
+    return this.http.get<AllReports>(environment.apiHost + 'api/report/money-sum/passengers');
+  }
+  getCrossedKmsReportDrivers(): Observable<AllReports> {
+    return this.http.get<AllReports>(environment.apiHost + 'api/report/crossed-kms/drivers');
+  }
+  getCrossedKmsReportPassengers(): Observable<AllReports> {
+    return this.http.get<AllReports>(environment.apiHost + 'api/report/crossed-kms/passengers');
+  }
 }
