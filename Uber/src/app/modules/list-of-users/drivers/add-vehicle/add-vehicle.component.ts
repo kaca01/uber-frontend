@@ -43,22 +43,20 @@ export class AddVehicleComponent implements OnInit{
   addVehicle() {
     if (this.addVehicleForm.valid) {
       this.service.addDriver(this.driver)
-      .subscribe((res: any) => {
+      .subscribe((res: Driver) => {
 
-        let resJson = JSON.parse(res);
-        console.log(resJson);
-        this.driver.id = resJson["id"];
+        this.driver.id = res.id;
         this.setVehicle();
 
         this.service.addVehicle(this.vehicle, this.driver.id )
-        .subscribe((res2: any) => {
+        .subscribe((res2: Vehicle) => {
 
         this.openSnackBar("Driver and vehicle have been successfully created!");
         this.router.navigate(['drivers']);
       },
         (error) => {    
           this.service.deleteDriver(this.driver.id)
-          .subscribe((res2: any) => {
+          .subscribe((res2: Driver) => {
             console.log(this.driver.id);
           }, (error) => {console.log(error);}
           )

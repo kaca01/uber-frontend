@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from 'src/app/domains';
 
 @Component({
   selector: 'app-registration',
@@ -38,7 +39,7 @@ export class RegistrationComponent implements OnInit{
         return;
       }
       this.service.addPassenger(this.registrationForm.value)
-      .subscribe((res: any) => {
+      .subscribe((res: User) => {
         console.log(res);
         this.notification = {msgType: 'activation', msgBody: 'Please visit your email address to activate your account!'};
       },
