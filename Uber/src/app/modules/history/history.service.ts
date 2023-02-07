@@ -32,13 +32,14 @@ export class HistoryService {
     return this.http.get<RideReview[]>(environment.apiHost + "api/review/" + all.results[this.selectedRide].id);
   }
 
-  leaveReviewForVehicle(review : ReviewRequest, all : AllRides) : Observable<Review> {
+  leaveReviewForVehicle(review : ReviewRequest, all : AllRides, fromHistory: boolean) : Observable<Review> {
+    if (!fromHistory) this.selectedRide = all.results.length - 1;
     return this.http.post<Review>(environment.apiHost + "api/review/" + all.results[this.selectedRide].id + "/vehicle", review);
   }
 
-  leaveReviewForDriver(review : ReviewRequest, all : AllRides) : Observable<Review> {
+  leaveReviewForDriver(review : ReviewRequest, all : AllRides, fromHistory : boolean) : Observable<Review> {
+    if (!fromHistory) this.selectedRide = all.results.length - 1;
     return this.http.post<Review>(environment.apiHost + "api/review/" + all.results[this.selectedRide].id + "/driver", review);
-
   }
 
   sendMessage(message: number) {
