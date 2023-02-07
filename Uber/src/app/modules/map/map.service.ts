@@ -73,7 +73,7 @@ export class MapService {
     return this.http.put<Ride>(environment.apiHost + "api/ride/" + rideId +"/end", {});
   }
 
-  getNextRide(driverId: Number): Observable<Driver>  {
-    return this.http.get<Driver>(environment.apiHost + "api/ride/nextRide/" + driverId);
+  getNextRide(driverId: Number): Observable<Ride>  {
+    return this.http.get<Ride>(environment.apiHost + "api/ride/nextRide/" + driverId);
   }
 }

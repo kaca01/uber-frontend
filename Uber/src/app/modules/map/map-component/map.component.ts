@@ -267,6 +267,8 @@ export class MapComponent implements OnInit {
 
   initCarMovement(driver:Driver, ride:Ride){
     let coordinates: any[] = [];
+    console.log(driver);
+    console.log(ride);
     this.mapService.getRouteSteps(driver, ride).subscribe(async routes => {
       for (let step of routes['routes'][0]['legs'][0]['steps']) {
         for (let c of step['geometry']['coordinates']) {

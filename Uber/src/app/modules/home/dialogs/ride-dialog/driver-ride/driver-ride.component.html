@@ -1,0 +1,18 @@
+<div class="container">
+    <img src="../../assets/images/close.png" id="close-dialog" class="close" (click)="close()"/>
+
+    <div id="title">Details about next ride</div>
+
+    <h3>Departure location: {{ departure }}</h3>
+    <h3>Destination location: {{ destination }}</h3>
+    <h3>Scheduled time: {{ scheduled }}</h3>
+    <h3>Number of passengers: {{ passengersNum }}</h3>
+    <h3>Baby transport: {{ babyTransport }}</h3>
+    <h3>Pet transport {{ petTransport }}</h3>
+    <mat-dialog-content>
+        <textarea id="textarea" *ngIf="!this.isActiveRide" placeholder="Enter your explanation here if you want to reject the ride" [(ngModel)]="rejection"></textarea>
+    </mat-dialog-content>
+    <div id="btn-container">
+        <button id="reject" *ngIf="!this.isActiveRide" (click)="reject()">REJECT RIDE</button>
+    </div>  
+</div>
