@@ -3,7 +3,7 @@
   <form [formGroup]="orderForm" (ngSubmit)="orderRide()">
     <mat-form-field class="vehicle-type" appearance="fill">
         <mat-label>Choose vehicle type</mat-label>
-        <mat-select formControlName="vehicleType" [(value)]="selectedValue" name="vehicle">
+        <mat-select id="vehicle-type" formControlName="vehicleType" [(value)]="selectedValue" name="vehicle">
           <mat-option *ngFor="let type of types" [value]="type.value">
             {{type.viewValue}}
           </mat-option>
