@@ -5,6 +5,7 @@
 
 #title {
     margin-top: 20px;
+    margin-bottom: 10px;
     text-align: center;
     font-weight: bold;
     width: fit-content;
@@ -13,7 +14,7 @@
     font-size: x-large;
 }
 h3{
-    margin-left: 151px;
+    margin-left: 20px;
 }
 
 #textarea {
