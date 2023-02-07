@@ -25,12 +25,16 @@ export class ReviewDialogComponent implements OnInit {
   public ratingArr2 = [] as number[];
   public reviewDriver : ReviewRequest = {} as ReviewRequest;
   public reviewVehicle : ReviewRequest = {} as ReviewRequest;
+  private fromHistory: boolean = true;
   all : AllRides = {} as AllRides;
 
   // TODO : add service here
   constructor(private service : HistoryService, private userService: UserService, private _snackBar : MatSnackBar,
               private dialogRef: MatDialogRef<ReviewDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data: any) {
+    @Inject(MAT_DIALOG_DATA) data: RatingsComponent) {
+      if (data == null) {
+        this.fromHistory = false;
+      }
       this.ratings = data;
       // TODO : set data here
     }
@@ -96,15 +100,18 @@ export class ReviewDialogComponent implements OnInit {
     }
 
     if (this.userService.currentUser != null) {
-      this.service.leaveReviewForDriver(this.reviewDriver, this.all).subscribe(
+      this.service.leaveReviewForDriver(this.reviewDriver, this.all, this.fromHistory).subscribe(
         (res: any) => {
+          this.openSnackBar("Successfully added!");
+          this.ratings.refresh();
+          this.dialogRef.close();
       },
         (error: HttpErrorResponse) => {
           // Handle error
           // Use if conditions to check error code, this depends on your api, how it sends error messages
       });
 
-      this.service.leaveReviewForDriver(this.reviewVehicle, this.all).subscribe(
+      this.service.leaveReviewForVehicle(this.reviewVehicle, this.all, this.fromHistory).subscribe(
         (res: any) => {
         this.openSnackBar("Successfully added!");
         this.ratings.refresh();

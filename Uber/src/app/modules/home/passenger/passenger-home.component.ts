@@ -136,6 +136,8 @@ export class PassengerHomeComponent implements OnInit {
   checkForActiveRide(){
     this.mapService.getPassengersActiveRide(this.userService.currentUser!.id).subscribe((res: Ride) => {
       if (res != null) {
+        const order = document.getElementById("order");
+        if(order != null) order.style.display = 'none';
         const Menu = document.getElementById("form");
         if(Menu != null) Menu.style.display = 'none';
         this.hasRide = true;
@@ -161,11 +163,11 @@ export class PassengerHomeComponent implements OnInit {
 
   openGlobalSocket() {
 
-    this.stompClient.subscribe('/map-updates/change-page-start', (message: { body: string }) => {
+    this.stompClient.subscribe('/socket-publisher/map-updates/change-page-start', (message: { body: string }) => {
       this.checkForActiveRide();
     });
 
-    this.stompClient.subscribe('/map-updates/change-page-end', (message: { body: string }) => {
+    this.stompClient.subscribe('/socket-publisher/map-updates/change-page-end', (message: { body: string }) => {
       let ride: Ride = JSON.parse(message.body);
       ride.passengers.forEach( (p) => {
         if (p.email == this.userService.currentUser!.email){

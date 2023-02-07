@@ -32,10 +32,7 @@ export class RatingsComponent implements OnInit {
 
       this.service.currentMessage.subscribe(message => {
         this.service.selectedRide = message;
-        console.log("CURRENT RIDEEEE ratings");
-        console.log(message);
           if (this.service.selectedRide != -1) {
-            console.log(this.service.selectedRide);
             this.service.getReviews(this.history).subscribe((res) =>{
               this.ratings = res;
               this.setDisplayReviewButton();

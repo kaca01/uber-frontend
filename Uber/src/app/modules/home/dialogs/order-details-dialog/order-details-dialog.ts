@@ -281,8 +281,8 @@ export class OrderDetailsDialog implements OnInit {
         let depratureLat : number = Number(result[0].lat);
         let departureLong : number = Number(result[0].lon);
         this.departureLocation.address = this.departure.toString();
-        this.departureLocation.latitude = depratureLat;
-        this.departureLocation.longitude = departureLong;
+        this.departureLocation.latitude = departureLong;
+        this.departureLocation.longitude = depratureLat;
         return true;
       } 
     );
@@ -296,8 +296,8 @@ export class OrderDetailsDialog implements OnInit {
         let destinationLong : number = Number(result[0].lon);
 
         this.destinationLocation.address = this.destination.toString();
-        this.destinationLocation.latitude = destinationLat;
-        this.destinationLocation.longitude = destinationLong;
+        this.destinationLocation.latitude = destinationLong;
+        this.destinationLocation.longitude = destinationLat;
         return true;
       }
     );
