@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Driver } from 'src/app/domains';
 import { UserService } from '../../list-of-users/user.service';
 import { NotificationService } from '../../notification/service/notification.service';
 import { PanicService } from '../../notification/service/panic.service';
@@ -36,9 +35,13 @@ export class LoginComponent implements OnInit {
     this.notification;
     this.submitted = true;
 
-    this.authService.login(this.loginForm.value)
+    this.userService.login(this.loginForm.value)
     .subscribe(data => {
-        this.userService.getMyInfo().subscribe(() => {
+        localStorage.setItem("jwt", data.accessToken);
+        this.authService.setToken(data.accessToken);
+      
+      console.log('Login success');
+        this.userService.getMyInfo().subscribe((res:any) => {
           if(this.userService.currentUser != null) {
             this.notificationService.initializeWebSocketConnection();
             this.panicService.initializeWebSocketConnection();

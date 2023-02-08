@@ -18,16 +18,12 @@ export class AuthService {
 
   private access_token = null;
 
-  login(user: any) {
-    const loginHeaders = new HttpHeaders({
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    });
+  login(user:any) {
     const body = {
       'email': user.email,
       'password': user.password
     };
-    return this.apiService.post(this.config.login_url, JSON.stringify(body), loginHeaders)
+    return this.apiService.post(this.config.login_url, JSON.stringify(body))
       .pipe(map((res) => {
         console.log('Login success');
         this.access_token = res.body.accessToken;
@@ -52,6 +48,10 @@ export class AuthService {
 
   tokenIsPresent() {
     return this.access_token != undefined && this.access_token != null;
+  }
+
+  setToken(access_token: any) {
+    this.access_token = access_token;
   }
 
   getToken() {

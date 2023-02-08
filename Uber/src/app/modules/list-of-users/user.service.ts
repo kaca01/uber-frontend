@@ -16,13 +16,12 @@ export class UserService {
   private value$ = new BehaviorSubject<any>({});
   selectedValue$ = this.value$.asObservable();
 
-  public currentUser : User | null= null;
+  public currentUser : User | null = null;
 
   constructor(
     private apiService: ApiService,
     private config: ConfigService,
-    private http: HttpClient) {
-     }
+    private http: HttpClient) { }
 
   getMyInfo() {
     return this.apiService.get(this.config.current_user_url)
@@ -31,8 +30,9 @@ export class UserService {
         return user;
     }));
   }
-  setValue(test: any) {
-    this.value$.next(test);
+
+  login(user:any) : Observable<any>{
+    return this.http.post<any>(environment.apiHost + "api/user/login", user);
   }
 
   getAllDrivers(): Observable<AllUsers> {

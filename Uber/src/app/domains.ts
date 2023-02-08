@@ -1,13 +1,13 @@
 export interface RideReview {
-    vehicleReview : Review;
-    driverReview : Review;
+  vehicleReview : Review;
+  driverReview : Review;
 }
   
 export interface Review {
-id : number;
-rating : number;
-comment : string;
-passenger : UserEmail;
+  id : number;
+  rating : number;
+  comment : string;
+  passenger : UserEmail;
 }
 
 export interface ReviewRequest {
@@ -16,8 +16,8 @@ export interface ReviewRequest {
 }
   
 export interface UserEmail {
-id : number;
-email : string;
+  id : number;
+  email : string;
 }
 
 export interface AllUsers {
@@ -62,7 +62,7 @@ export interface Driver {
 }
 
 export interface Vehicle{
-  id: Number;
+  id: number;
   babyTransport: boolean,
   petTransport: boolean,
   model: string,
@@ -73,26 +73,26 @@ export interface Vehicle{
 }
 
 export interface AllRides {
-    totalCount : number;
-    results : Ride[];
+  totalCount : number;
+  results : Ride[];
 }
 
 export interface Ride {
-id: number;
-startTime: string; 
-endTime: string;
-totalCost: number;
-driver: UserEmail;
-passengers: UserEmail[];
-estimatedTimeInMinutes : number;
-vehicleType: string;
-babyTransport: boolean;
-petTransport: boolean;
-rejection : Rejection;
-locations: Route[];
-status: string;
-scheduledTime: string;
-panic: boolean;
+  id: number;
+  startTime: string; 
+  endTime: string;
+  totalCost: number;
+  driver: UserEmail;
+  passengers: UserEmail[];
+  estimatedTimeInMinutes : number;
+  vehicleType: string;
+  babyTransport: boolean;
+  petTransport: boolean;
+  rejection : Rejection;
+  locations: Route[];
+  status: string;
+  scheduledTime: string;
+  panic: boolean;
 }
 
 export interface RideRequest {
@@ -125,14 +125,14 @@ export interface FavoriteRideRequest {
 }
 
 export interface Rejection {
-reason: string;
-timeOfRejection: string;
+  reason: string;
+  timeOfRejection: string;
 }
 
 export interface Location {
-address: string;
-longitude: number;
-latitude: number;
+  address: string;
+  longitude: number;
+  latitude: number;
 }
 
 export interface Route {
@@ -146,13 +146,13 @@ export interface AllNotes {
 }
 
 export interface Note {  
-    id: number;
-    message: string,
-    date: string
+  id: number;
+  message: string,
+  date: string
 }
 
 export interface RequestNote {
-    message: string;
+  message: string;
 }
 
 export interface Role {
@@ -224,4 +224,19 @@ export interface Report {
 export interface AllReports {
   totalCount: number;
   results: Report[];
+}
+
+export interface Passenger {
+  name: string,
+  surname: string,
+  email: string,
+  password: string,
+  repeatPassword: string,
+  telephoneNumber: string,
+  address: string
+}
+
+export interface Login {
+  email: string,
+  password: string
 }
