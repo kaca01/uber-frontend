@@ -2,8 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { RegistrationComponent } from './registration.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('RegistrationComponent', () => {
   let component: RegistrationComponent;
@@ -16,7 +21,12 @@ describe('RegistrationComponent', () => {
       declarations: [ RegistrationComponent ],
       imports: [
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        MatSnackBarModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatIconModule
       ]
     })
     .compileComponents();
@@ -35,7 +45,7 @@ describe('RegistrationComponent', () => {
 
   it('should call the onSubmit method', () => {
     spyOn(component, "reg");
-    element = fixture.debugElement.query(By.css('reg-btn')).nativeElement;
+    element = fixture.debugElement.query(By.css('.reg-btn')).nativeElement;
     element.click();
     expect(component.reg).toHaveBeenCalledTimes(0);
   });
