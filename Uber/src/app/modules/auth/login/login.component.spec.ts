@@ -1,5 +1,11 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { By } from '@angular/platform-browser';
 
 import { LoginComponent } from './login.component';
@@ -12,7 +18,16 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginComponent ]
+      declarations: [ LoginComponent ],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        MatSnackBarModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatIconModule
+      ]
     })
     .compileComponents();
 
@@ -34,7 +49,7 @@ describe('LoginComponent', () => {
 
   it('should call the submit method', () => {
     spyOn(component, 'login');
-    el = fixture.debugElement.query(By.css('button')).nativeElement;
+    el = fixture.debugElement.query(By.css('.login-btn')).nativeElement;
     el.click();
     expect(component.login).toHaveBeenCalledTimes(0);
   });
