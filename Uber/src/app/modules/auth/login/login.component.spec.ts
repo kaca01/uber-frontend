@@ -9,6 +9,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { By } from '@angular/platform-browser';
 
 import { LoginComponent } from './login.component';
+import { AuthService } from '../services/auth.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -27,11 +28,10 @@ describe('LoginComponent', () => {
         MatCardModule,
         MatFormFieldModule,
         MatIconModule
-      ]
+      ],
+      providers: [ AuthService ]
     })
     .compileComponents();
-
-    fixture.detectChanges();
   });
 
   beforeEach(async () => {
