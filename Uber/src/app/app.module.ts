@@ -23,6 +23,8 @@ import { UserService } from './modules/list-of-users/user.service';
 import { ConfigService } from './modules/auth/services/config.service';
 import { TokenInterceptor } from './modules/auth/interceptor/TokenInterceptor';
 import { HomeModule } from './modules/home/home.module';
+import { NotificationService } from './modules/notification/service/notification.service';
+import { PanicService } from './modules/notification/service/panic.service';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { HomeModule } from './modules/home/home.module';
     ApiService,
     UserService,
     ConfigService,
+    NotificationService,
+    PanicService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],
