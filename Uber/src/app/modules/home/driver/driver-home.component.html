@@ -1,9 +1,12 @@
-<p>
-    <ru-navbar></ru-navbar>
-</p>
-
 <div id="container">
     <div id="button-container">
-        <button mat-raised-button color="white" id="activity-btn"></button>
+        <button mat-raised-button color="white" id="activity-btn" (click)="changeActivity()">ACTIVE</button>
+    </div>
+    <div id="ride-container">
+        <button id="ride-details" mat-fab color="white" (click)="openRideDetails()">
+            <img src="../../assets/images/ride_details.png" width="30px" height="30px">
+        </button>
+    <button mat-raised-button id="ride-btn" (click)="changeRideStatus()">START RIDE</button>
+    <button mat-raised-button *ngIf="this.hasRide" class="panic" (click)="panic()">PANIC</button>
     </div>
 </div>

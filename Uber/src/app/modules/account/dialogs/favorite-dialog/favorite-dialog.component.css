@@ -1,0 +1,57 @@
+.container {
+    margin-top: 50px ;
+}
+
+#close-dialog {
+    float: right;
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+}
+  
+.close:hover {
+    background-color: rgb(243, 237, 237);
+    cursor: pointer;
+}
+
+#title {
+    font-size: x-large;
+    margin-left: 25px;
+    margin-right: 15px;
+}
+
+.star {
+    width: 25px;
+    height: 25px;
+    margin-right: 15%;
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+.field {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.pin {
+    float: left;
+    width: 25px;
+    height: 25px;
+}
+
+.left {
+    margin-right: 20px;
+    color: black;
+}
+
+.full-width {
+    margin-left: 10px;
+    width: 100%;
+    vertical-align: middle;
+}
+
+#remove {
+    width: 100%;
+    background-color: #ff6961;
+    color: white;
+}

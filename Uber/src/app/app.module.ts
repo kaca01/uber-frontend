@@ -2,6 +2,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatTreeModule } from '@angular/material/tree';
 import { HttpClientModule } from '@angular/common/http';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { AppRoutingModule } from '../infrastructure/app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,7 +12,6 @@ import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';import { AuthModule } from './modules/auth/auth.module';
 import { AccountModule } from './modules/account/account.module';
-import { HomeModule } from './modules/home/home.module';
 import { HistoryModule } from './modules/history/history.module';
 import { ListOfUsersModule } from './modules/list-of-users/list-of-users.module';
 import { MapModule } from './modules/map/map.module';
@@ -22,6 +22,9 @@ import { ApiService } from './modules/auth/services/api.service';
 import { UserService } from './modules/list-of-users/user.service';
 import { ConfigService } from './modules/auth/services/config.service';
 import { TokenInterceptor } from './modules/auth/interceptor/TokenInterceptor';
+import { HomeModule } from './modules/home/home.module';
+import { NotificationService } from './modules/notification/service/notification.service';
+import { PanicService } from './modules/notification/service/panic.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,8 @@ import { TokenInterceptor } from './modules/auth/interceptor/TokenInterceptor';
     HistoryModule,
     ListOfUsersModule,
     MapModule,
-    NavBarModule
+    NavBarModule, 
+    LeafletModule,
   ],
   providers: [
     {
@@ -55,6 +59,8 @@ import { TokenInterceptor } from './modules/auth/interceptor/TokenInterceptor';
     ApiService,
     UserService,
     ConfigService,
+    NotificationService,
+    PanicService
   ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA],

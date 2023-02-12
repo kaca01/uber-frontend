@@ -1,14 +1,18 @@
-<div id="page-container">
-<p>
-    <ru-navbar></ru-navbar>
-</p>
-<div id="page-container">
-    <div id="container">
-    </div>
+<body>
+    <div id="page-container">
+        <p>
+            <admin-navbar *ngIf="role == 'ROLE_ADMIN' else secondNavbar"></admin-navbar>
+            <ng-template #secondNavbar>
+                <ru-navbar></ru-navbar>
+            </ng-template>
+        </p>
+        <div id="page-container">
 
-    <div id="all-components">
-        <app-ride-history id="history"></app-ride-history>
-        <app-ride-details id="details"></app-ride-details>
-        <app-ratings id="ride-ratings"></app-ratings>
+            <div id="all-components">
+                <app-ride-history id="history"></app-ride-history>
+                <app-ride-details id="details"></app-ride-details>
+                <app-ratings id="ride-ratings"></app-ratings>
+            </div>
+        </div>
     </div>
-</div>
+</body>

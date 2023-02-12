@@ -54,7 +54,7 @@
 
         <ng-container matColumnDef="changes">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>CHANGES</th>
-            <td mat-cell *matCellDef="let element">{{ "NO" }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.changed }}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -68,9 +68,11 @@
     ></mat-paginator>
 </div>
 
+<p class="bottom-margin">test</p>
+
 <footer>
     <button id="details" (click)="openDialog()">NOTES</button>
     <button id="block" (click)="blockUser()">BLOCK</button>
-    <button id="history">HISTORY</button>
-    <button id="view-changes">VIEW CHANGES</button>
+    <button id="history" (click)="openHistory()">HISTORY</button>
+    <button id="view-changes" (click)="getChanges()">VIEW CHANGES</button>
 </footer>

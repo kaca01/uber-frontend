@@ -31,6 +31,7 @@ export class AddNoteDialogComponent {
       this.userService.addNote(this.users.user.id, this.requestNote)
       .subscribe(
         (res: any) => {
+          console.log(this.requestNote);
         this.openSnackBar("Successfully added!");
       },
         (error: HttpErrorResponse) => {
@@ -42,14 +43,6 @@ export class AddNoteDialogComponent {
       this.openSnackBar("Note should not be empty!");
     }
     this.dialogRef.close();
-  }
-
-  onDeparture() : void {
-    this.dialogRef.close(1);
-  }
-
-  onDestination() : void {
-    this.dialogRef.close(2);
   }
 
   openSnackBar(snackMsg : string) : void {

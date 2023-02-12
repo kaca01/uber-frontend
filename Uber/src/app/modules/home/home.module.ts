@@ -3,12 +3,20 @@ import { CommonModule } from '@angular/common';
 import { AdminHomeComponent } from './admin/admin-home.component';
 import { DriverHomeComponent } from './driver/driver-home.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { LocationDialog } from './location-dialog/location_dialog';
+import { LocationDialog } from './dialogs/location-dialog/location_dialog';
 import { PassengerHomeComponent } from './passenger/passenger-home.component';
 import { MaterialModule } from 'src/infrastructure/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 import { MapModule } from '../map/map.module';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
+import { OrderDetailsDialog } from './dialogs/order-details-dialog/order-details-dialog';
+import { MatChipsModule } from '@angular/material/chips';
+import { FavoriteRideDialogComponent } from './dialogs/favorite-ride-dialog/favorite-ride-dialog.component';
+import { ReviewModule } from '../review/review.module';
+import { PanicDialogComponent } from './dialogs/panic-dialog/panic-dialog.component';
+import { DriverRideComponent } from './dialogs/ride-dialog/driver-ride/driver-ride.component';
 
 @NgModule({
   declarations: [
@@ -17,13 +25,21 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
     HomePageComponent,
     LocationDialog,
     PassengerHomeComponent,
+    OrderDetailsDialog,
+    FavoriteRideDialogComponent,
+    PanicDialogComponent,
+    DriverRideComponent,
   ],
   imports: [
+    NgxMaterialTimepickerModule,
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     MapModule,
-    NavBarModule
+    NavBarModule,
+    FormsModule,
+    MatChipsModule,
+    ReviewModule
   ],
   exports: [
     AdminHomeComponent,
@@ -31,6 +47,8 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
     HomePageComponent,
     LocationDialog,
     PassengerHomeComponent,
+    OrderDetailsDialog,
+    FavoriteRideDialogComponent
   ]
 })
 export class HomeModule { }

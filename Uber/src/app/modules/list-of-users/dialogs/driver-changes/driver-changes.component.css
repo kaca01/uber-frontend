@@ -1,0 +1,53 @@
+.container {
+    margin: 10px;
+    overflow: hidden;
+}
+
+#close-dialog{
+    float: right;
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+  }
+  
+.close:hover{
+    background-color: rgb(243, 237, 237);
+    cursor: pointer;
+}
+
+#title {
+    margin-top: 10%;
+    margin-left: 5%;
+    font-weight: bold;
+    font-size: x-large;
+    width: 10em;
+}
+
+.field {
+    margin-top: 15px;
+}
+
+.left {
+    color: black;
+    font-size: large;
+    margin-right: 15px;
+}
+
+.right {
+    float: right;
+    font-size: large;
+}
+
+.buttons {
+    margin-top: 40px;
+}
+
+#cancel {
+    width: 30%;
+    color: #9f9f9f;
+}
+  
+#accept {
+    float: right;
+    width: 30%;
+}

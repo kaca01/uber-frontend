@@ -5,12 +5,12 @@
 <span [routerLink]="['/admin-home']" class="clickable logo">Uber</span>
 <div id="navigation">
   <ul>
-    <li><a [routerLink]="['/admin-home']">Map</a></li>
-    <li><a [routerLink]="['/passengers']">Passengers</a></li>
-    <li><a [routerLink]="['/drivers']">Drivers</a></li>
-    <li><a [routerLink]="['/app-profile']">Account</a></li>
+    <li><a [routerLink]="['/admin-home']" class="nav">Map</a></li>
+    <li><a [routerLink]="['/passengers']" class="nav">Passengers</a></li>
+    <li><a [routerLink]="['/drivers']" class="nav">Drivers</a></li>
+    <li><a [routerLink]="['/admin-reports']" class="nav">Reports</a></li>
+    <li><a id="logout" (click)="logOut()">LogOut</a></li>
   </ul>
 </div>
   <span id="userName" class="clickable">Hello, {{userName()}}</span>
-  <!-- <img src="../../assets/images/account.png" id="accountImg" class="clickable"/> -->
 </mat-toolbar>

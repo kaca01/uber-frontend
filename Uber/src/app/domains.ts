@@ -1,18 +1,23 @@
 export interface RideReview {
-    vehicleReview : Review;
-    driverReview : Review;
+  vehicleReview : Review;
+  driverReview : Review;
 }
   
 export interface Review {
-id : Number;
-rating : Number;
-comment : String;
-passenger : UserEmail;
+  id : number;
+  rating : number;
+  comment : string;
+  passenger : UserEmail;
+}
+
+export interface ReviewRequest {
+  rating : number;
+  comment : string;
 }
   
 export interface UserEmail {
-id : Number;
-email : String;
+  id : number;
+  email : string;
 }
 
 export interface AllUsers {
@@ -21,55 +26,118 @@ export interface AllUsers {
 }
 
 export interface User {  
-  active: Boolean,
-  address: String,
-  blocked: Boolean,
-  email: String,
-  enabled: Boolean,
+  active: boolean,
+  address: string,
+  blocked: boolean,
+  email: string,
+  enabled: boolean,
   id: number,
-  lastPasswordResetDate: Number,
-  name: String,
-  profilePicture: String,
+  lastPasswordResetDate: number,
+  name: string,
+  profilePicture: string,
   roles: Role[],
-  surname: String,
-  telephoneNumber: String,
-  username: String
+  surname: string,
+  telephoneNumber: string,
+  username: string,
+  changed: boolean
+}
+
+export interface Driver {
+  active: Boolean,
+  address: string,
+  blocked: boolean,
+  changed: boolean,
+  email: string,
+  id: number,
+  lastPasswordResetDate: number,
+  name: string,
+  profilePicture: string,
+  roles: Role[],
+  surname: string,
+  telephoneNumber: string,
+  username: string,
+  drivingLicense : string,
+  password : string,
+  vehicle : Vehicle,
+}
+
+export interface Vehicle{
+  id: number;
+  babyTransport: boolean,
+  petTransport: boolean,
+  model: string,
+  vehicleType: string,
+  passengerSeats: number,
+  licenseNumber: string,
+  currentLocation: Location
 }
 
 export interface AllRides {
-    totalCount : Number;
-    results : Ride[];
+  totalCount : number;
+  results : Ride[];
 }
 
 export interface Ride {
-id: Number;
-startTime: String; 
-endTime: String;
-totalCost: Number;
-driver: UserEmail;
-passengers: UserEmail[];
-estimatedTimeInMinutes : Number;
-vehicleType: String;
-babyTransport: String;
-petTransport: String;
-rejection : Rejection;
-locations: Route[];
+  id: number;
+  startTime: string; 
+  endTime: string;
+  totalCost: number;
+  driver: UserEmail;
+  passengers: UserEmail[];
+  estimatedTimeInMinutes : number;
+  vehicleType: string;
+  babyTransport: boolean;
+  petTransport: boolean;
+  rejection : Rejection;
+  locations: Route[];
+  status: string;
+  scheduledTime: string;
+  panic: boolean;
+}
+
+export interface RideRequest {
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: string;
+  babyTransport: boolean;
+  petTransport: boolean;
+  scheduledTime: string;
+}
+
+export interface FavoriteRide {
+  id: number;
+  favoriteName: string;
+  scheduledTime: string;
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: string;
+  babyTransport: boolean;
+  petTransport: boolean;
+}
+
+export interface FavoriteRideRequest {
+  favoriteName: string;
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: string;
+  babyTransport: boolean;
+  petTransport: boolean;
 }
 
 export interface Rejection {
-reason: String;
-timeOfRejection: String;
+  reason: string;
+  timeOfRejection: string;
 }
 
 export interface Location {
-address: String;
-longitude: Number;
-latitude: Number;
+  address: string;
+  longitude: number;
+  latitude: number;
 }
 
 export interface Route {
-    departure: Location;
-    destination: Location;
+  departure: Location;
+  destination: Location;
 }
 
 export interface AllNotes {
@@ -78,19 +146,97 @@ export interface AllNotes {
 }
 
 export interface Note {  
-    id: number;
-    message: string,
-    date: string
+  id: number;
+  message: string,
+  date: string
 }
 
 export interface RequestNote {
-    message: string;
+  message: string;
 }
 
-interface Role {
-  id: Number,
-  name: String,
-  authority: String
+export interface Role {
+  id: number,
+  name: string,
+  authority: string
 }
 
-  
+export interface UpdateUser {  
+  address: string,
+  email: string,
+  name: string,
+  profilePicture: string,
+  surname: string,
+  telephoneNumber: string,
+  username: string
+}
+
+export interface ResetPassword {  
+  newPassword: string,
+  code: string
+}
+
+export interface ChangePassword {  
+  newPassword: string,
+  oldPassword: string
+}
+
+export interface AllFavoriteRides {
+  totalCount : number;
+  results : FavoriteRide[];
+}
+
+export interface FavoriteRide {
+  id: number;
+  favoriteName: string;
+  locations: Route[];
+  passengers: UserEmail[];
+  vehicleType: string;
+  babyTransport: boolean;
+  petTransport: boolean;
+}
+
+export interface Message {
+  header: string,
+  from: string,
+  to: string,
+  scheduledTime: string,
+  fromId: string,
+  toId: string,
+  rideId: number
+}
+
+export interface Panic {
+  user: string,
+  reason: string,
+  licenseNum: string
+}
+
+export interface PanicRequest {
+  reason: string
+}
+
+export interface Report {
+  name: string;
+  value: number;
+}
+
+export interface AllReports {
+  totalCount: number;
+  results: Report[];
+}
+
+export interface Passenger {
+  name: string,
+  surname: string,
+  email: string,
+  password: string,
+  repeatPassword: string,
+  telephoneNumber: string,
+  address: string
+}
+
+export interface Login {
+  email: string,
+  password: string
+}

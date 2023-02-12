@@ -5,6 +5,7 @@ import { ConfigService } from './config.service';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserService } from '../../list-of-users/user.service';
+import { Driver } from 'src/app/domains';
 
 @Injectable()
 export class AuthService {
@@ -18,15 +19,11 @@ export class AuthService {
   private access_token = null;
 
   login(user:any) {
-    const loginHeaders = new HttpHeaders({
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    });
     const body = {
       'email': user.email,
       'password': user.password
     };
-    return this.apiService.post(this.config.login_url, JSON.stringify(body), loginHeaders)
+    return this.apiService.post(this.config.login_url, JSON.stringify(body))
       .pipe(map((res) => {
         console.log('Login success');
         this.access_token = res.body.accessToken;
@@ -35,14 +32,26 @@ export class AuthService {
   }
 
   logout() {
+    if (this.userService.currentUser?.roles[0].name == "ROLE_DRIVER") {
+      this.userService.logoutDriver(this.userService.currentUser.id).subscribe((res: Driver) => {
+        let driver= res as Driver;
+        //console.log(driver);
+      });
+    }
     this.userService.currentUser = null;
     localStorage.removeItem("jwt");
     this.access_token = null;
-    this.router.navigate(['/home-page']);
+    this.router.navigate(['/home-page']).then(() => {
+      window.location.reload();
+    });
   }
 
   tokenIsPresent() {
     return this.access_token != undefined && this.access_token != null;
+  }
+
+  setToken(access_token: any) {
+    this.access_token = access_token;
   }
 
   getToken() {

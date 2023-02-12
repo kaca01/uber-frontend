@@ -1,7 +1,51 @@
 #activity-btn {
-  margin-left: 4%;
-  margin-top: 2%;
+  margin-left: 70px;
+  margin-top: 40px;
   width: 150px;
   height: 40px;
   font-weight: bold;
+}
+
+#button-container {
+  width: fit-content;
+  position: relative;
+  z-index: 10;
+  height: 37.5em;
+}
+
+#ride-btn{
+  margin-left: auto;
+  margin-right: auto;
+  height: 40px;
+  width: 150px;
+  background-color:rgb(57, 80, 153);
+  color: white;
+}
+
+#ride-details{
+  padding-top: 7px;
+  float: left;
+}
+
+.panic{
+  float: right;
+  margin-right: 60px;
+  background-color:red;
+  color: white;
+  height: 40px;
+  width: 100px;
+}
+
+#ride-container {
+  margin-left: 100px;
+  text-align: center;
+  position: relative;
+  z-index: 500;
+  height: 50px;
+}
+
+@media (max-width:800px) {
+  #ride-container {
+    margin-left: 0;
+  }
 }

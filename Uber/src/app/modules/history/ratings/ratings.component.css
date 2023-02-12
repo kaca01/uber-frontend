@@ -53,7 +53,7 @@
 ul {
     margin-left: 5%;
     overflow: auto;
-    height: 430px;
+    height: 320px;
 }
 
 ::-webkit-scrollbar {
@@ -122,6 +122,22 @@ li {
     margin-top: 2%;
     margin-left: 1%;
     color: gray;
+}
+
+#rate {
+    margin-left: 5%;
+    width: 60%;
+    height: 2em;
+    margin-top: 15px;
+    background-color: #96D49C;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-size: larger;
+}
+
+#rate:hover {
+    cursor: pointer;
 }
   
 @media(max-width: 1150px) {

@@ -1,17 +1,17 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/modules/list-of-users/user.service';
 import { AddNoteDialogComponent } from '../dialogs/add-note-dialog/add-note-dialog.component';
 import { NotesDialogComponent } from '../dialogs/notes-dialog/notes-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AllNotes, User } from 'src/app/domains';
+import { DriverChangesComponent } from '../dialogs/driver-changes/driver-changes.component';
+import { BasePageComponent } from '../../history/base-page/base-page.component';
+import { Router } from '@angular/router';
+import { HistoryService } from '../../history/history.service';
 
 @Component({
   selector: 'app-drivers',
@@ -19,6 +19,7 @@ import { AllNotes, User } from 'src/app/domains';
   styleUrls: ['./drivers.component.css'],
 })
 export class DriversComponent implements OnInit {
+  base : BasePageComponent = new BasePageComponent(this.userService);
   public selectedRowIndex : number = -1;
   displayedColumns: string[] = ['name', 'email', 'telephoneNumber', 'address', 'blocked', 'changes'];
   dataSource!: MatTableDataSource<User>;
@@ -32,18 +33,26 @@ export class DriversComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: any;
   @ViewChild(MatSort) sort!: any;
 
-  constructor(private userService: UserService, private dialog: MatDialog, private _snackBar: MatSnackBar) {
-    
-  }
+  constructor(private userService: UserService,
+              private historyService: HistoryService,
+              private dialog: MatDialog, 
+              private _snackBar: MatSnackBar,
+              private router: Router) {}
   
   ngOnInit(): void {
     this.userService.selectedValue$.subscribe((value) => {
       this.valueFromCreateComponent = value;
     });
 
+    this.getAllDrivers();
+  }
+
+  getAllDrivers() {
     this.userService.getAllDrivers().subscribe((res) => {
+      console.log(res);
       this.all = res.results;
       this.dataSource = new MatTableDataSource<User>(this.all);
+      this.dataSource.data = this.all;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -79,7 +88,6 @@ export class DriversComponent implements OnInit {
   }
 
   getNotes() : void {
-    console.log(this.user.id);
     this.userService.getNotes(this.user.id)
     .subscribe((res: any) => {
       this.allNotes = res;
@@ -140,5 +148,54 @@ export class DriversComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  getChanges() {
+    if(!this.checkIfSelected()) {
+      if(this.user['changed']) {
+        this.userService.getChanges(this.user.id).subscribe((res: any) => {
+          res['id'] = this.selectedRowIndex;
+
+          const dialogConfig = new MatDialogConfig();
+
+          dialogConfig.disableClose = false;
+          dialogConfig.autoFocus = true;
+          dialogConfig.data = res;
+          const dialogRef = this.dialog.open(DriverChangesComponent, dialogConfig);
+
+          dialogRef.afterClosed().subscribe(result => {
+            if(result.event == 'Accept')
+              this.setDriver(res);
+          })
+        }); 
+      }
+      else 
+        this.openSnackBar("The selected driver has no changes!");
+    }
+  }
+
+  setDriver(editDriver: User) {
+    this.all.forEach(element => {
+      if(element['id'] === this.selectedRowIndex){
+        element['name'] = editDriver['name'];
+        element['surname'] = editDriver['surname'];
+        element['address'] = editDriver['address'];
+        element['telephoneNumber'] = editDriver['telephoneNumber'];
+        element['changed'] = false;
+      }
+    });
+    this.dataSource = new MatTableDataSource<User>(this.all);
+  }
+
+  // history
+  openHistory() {
+    if(this.checkIfSelected()) return;
+    this.sendUserId();
+    this.router.navigate(['/base-page']);
+  }
+
+  sendUserId() {
+    console.log(this.user.id);
+    this.historyService.sendUserId(this.user.id);
   }
 }

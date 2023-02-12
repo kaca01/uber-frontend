@@ -1,0 +1,35 @@
+<p>
+    <ru-navbar></ru-navbar>
+</p>
+
+<div>
+    <div class="left-side">
+
+        <div class="account">
+            <label class="hoverable" for="fileInput">
+                <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> 
+                <div class="hover-text">Choose file</div>
+                <div class="background"></div>
+            </label>
+            <br/>
+            <input id="fileInput" type='file' (change)="onSelectFile($event)">
+            <button mat-mini-fab class="delete" *ngIf="url" (click)="delete()" color="primary">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+
+        <div class="name-surname">{{userName()}}</div>
+        <div id="passenger" *ngIf="passenger">Passenger</div>
+        <div id="passenger" *ngIf="!passenger">Driver</div>
+
+        <ul class="options">
+            <li><a id="profile" class="option" (click)="loadUpdateData()" [ngClass]="{'selected' : updateData}">Profile</a></li>
+            <li><a *ngIf="passenger" id="favorite" class="option" (click)="loadFavoriteLocations()" [ngClass]="{'selected' : favoriteLocations}">Favorite Locations</a></li>
+            <li><a id="profile" class="option" (click)="loadReports()"  [ngClass]="{'selected' : reports}">Reports</a></li>
+        </ul>
+    </div>
+
+    <user-data *ngIf="updateData" id="user-data"></user-data>
+    <favorite-locations *ngIf="favoriteLocations" id="favorite-locations"></favorite-locations>
+    <reports *ngIf="reports" id="reports" [report1]="reports1" [report2]="reports2" [report3]="reports3"></reports>
+</div>

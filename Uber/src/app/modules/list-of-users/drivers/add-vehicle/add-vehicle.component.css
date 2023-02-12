@@ -57,6 +57,10 @@ mat-form-field{
     margin-top: 35px;
 }
 
+.back:hover{
+    cursor: pointer;
+}
+
 @media (min-width:1650px) {
     .main-container{
         margin: 5% 27%;

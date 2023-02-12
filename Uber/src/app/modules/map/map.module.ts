@@ -4,6 +4,8 @@ import { MaterialModule } from 'src/infrastructure/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MapComponent } from './map-component/map.component';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { NotificationModule } from '../notification/notification.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    NavBarModule
+    NavBarModule,
+    LeafletModule,
+    NotificationModule
   ],
   exports: [MapComponent],
 })
