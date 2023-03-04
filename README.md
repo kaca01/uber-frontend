@@ -1,4 +1,4 @@
-# Uber App - Client Side
+# Uber Web application - frontend
 Project assignment for course Client Side Engineering.
 
 ## Team 16 members
