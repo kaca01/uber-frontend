@@ -7,12 +7,12 @@ mat-toolbar {
   padding: 0 10%;
 }
 
-.loginBttn {
+#loginBttn {
   padding: 0 1.4em;
   margin-right: 8px;
 }
 
-.signupBttn {
+#signupBttn {
     padding: 0 1.4em;
 }
 
@@ -35,11 +35,11 @@ mat-toolbar img{
     height: fit-content;
   }
 
-  .loginBttn {
+  #loginBttn {
     margin-bottom: 10px;
   }
   
-  .signupBttn {
+  #signupBttn {
       margin-top: 10px;
   }
 }
